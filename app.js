@@ -13,6 +13,9 @@ App({
       }
     })
   },
+
+  onThemeChange(){},
+  
   globalData: {
     userInfo: null
   }

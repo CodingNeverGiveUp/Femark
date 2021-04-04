@@ -1,0 +1,12 @@
+{
+  "light": {
+    "bgColor": "#f1f1f1",
+    "bgTextStyle": "light",
+    "ngBarTextStyle": "black"
+  },
+  "dark": {
+    "bgColor": "#222426",
+    "bgTextStyle": "dark",
+    "ngBarTextStyle": "white"
+  }
+}
