@@ -18,7 +18,7 @@
 
 
 
-  .material-icons {
+  .material-icons{
     font-family: 'Material Icons Outlined';
     font-weight: normal;
     font-style: normal;

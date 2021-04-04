@@ -17,6 +17,7 @@ App({
   onThemeChange(){},
   
   globalData: {
-    userInfo: null
+    userInfo: null,
+    primaryColor: "#4285f4"
   }
 })

@@ -1,0 +1,53 @@
+@import "/source/icon.wxss";
+
+.main{
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120rpx;
+  /* background: #4981d7; */
+  box-shadow: 0 -5rpx 20rpx #999;
+  border-radius: 25rpx 25rpx 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  color: #666;
+  overflow: hidden;
+}
+
+.item{
+  font-size: .8rem;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 100%;
+}
+
+.item > view{
+  display: flex;
+  flex-direction: column;
+}
+
+.flow{
+  position: fixed;
+  bottom: 170rpx;
+  right: 50rpx;
+  width: 110rpx;
+  height: 110rpx;
+  box-shadow: 0 0 20rpx #999;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hover{
+  background: var(--primaryColor--);
+  opacity: .5;
+}
