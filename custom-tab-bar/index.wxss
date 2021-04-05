@@ -10,6 +10,13 @@
   /* background: #4981d7; */
   box-shadow: 0 -5rpx 20rpx #999;
   border-radius: 25rpx 25rpx 0 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: height .2s ease-in-out;
+}
+
+.main > view{
+  height: 120rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -36,7 +43,7 @@
   align-items: center;
 }
 
-.flow{
+.float{
   position: fixed;
   bottom: 170rpx;
   right: 50rpx;
@@ -47,10 +54,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
 }
 
 .hover{
   background: var(--rgbaprimaryColor--);
   transition: none;
+}
+
+.t_hover{
+  background: var(--rgbaprimaryColor--);
 }

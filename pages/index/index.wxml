@@ -1,2 +1,2 @@
 <!--index.wxml-->
-<text class="material-icons" style="color: #666;">grade</text>
+<text class="material-icons">grade</text>
