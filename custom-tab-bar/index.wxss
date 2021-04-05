@@ -8,7 +8,7 @@
   right: 0;
   height: 120rpx;
   /* background: #4981d7; */
-  box-shadow: 0 -5rpx 20rpx #999;
+  box-shadow: 0 -5rpx 20rpx #bbb;
   border-radius: 25rpx 25rpx 0 0;
   flex-direction: column;
   justify-content: flex-end;
@@ -49,7 +49,7 @@
   right: 50rpx;
   width: 110rpx;
   height: 110rpx;
-  box-shadow: 0 0 20rpx #999;
+  box-shadow: 0 0 20rpx #bbb;
   border-radius: 100%;
   display: flex;
   justify-content: center;

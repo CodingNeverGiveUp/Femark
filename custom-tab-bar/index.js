@@ -27,6 +27,7 @@ Component({
       this.setData({
         mainStyle: "height:400rpx;",
         floatStyle: "bottom:450rpx;transform: rotate(45deg);",
+        slide: true,
       })
     },
     floatTap() {
