@@ -1,0 +1,12 @@
+/**index.wxss**/
+@import "/source/icon.wxss";
+
+page{
+  background-color: #f1f1f1;
+}
+
+@media (prefers-color-scheme: dark) {
+  page{
+    background-color: #222426;
+  }
+}
