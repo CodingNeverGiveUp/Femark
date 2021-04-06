@@ -65,3 +65,15 @@
 .t_hover{
   background: var(--rgbaprimaryColor--);
 }
+
+@media (prefers-color-scheme: dark) {
+  .main{
+    background: #303638;
+    box-shadow: 0 0 0 #444;
+  }
+
+  .float{
+    background: #303638;
+    box-shadow: 0 0 0 #444;
+  }
+}
