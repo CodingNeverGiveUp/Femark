@@ -12,7 +12,8 @@
   border-radius: 25rpx 25rpx 0 0;
   flex-direction: column;
   justify-content: flex-end;
-  transition: height .2s ease-in-out;
+  transition: background .2s ease-in-out, height .2s ease-in-out;
+  background: #ffffff;
 }
 
 .main > view{
@@ -54,6 +55,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #ffffff;
   transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
 }
 
@@ -75,5 +77,9 @@
   .float{
     background: #303638;
     box-shadow: 0 0 0 #444;
+  }
+
+  .t_hover{
+    background: var(--rgbaprimaryColor--);
   }
 }
