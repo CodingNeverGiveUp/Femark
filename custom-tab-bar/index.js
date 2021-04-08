@@ -47,12 +47,12 @@ Component({
       if(this.data.slide) {
         this.setData({
           slide: false,
-          sidebarStyle: "left:-250px",
+          sidebarStyle: "",
         })
       } else {
         this.setData({
           slide: true,
-          sidebarStyle: "",
+          sidebarStyle: "left: 0",
         })
       }
     },

@@ -48,6 +48,15 @@ Page({
           console.log("failed")
         })
     };
+    //拉取选中状态
+    setTimeout(()=>{
+      let tabbar = this.getTabBar()
+      tabbar.setData({
+        btn1: `color:${this.data.primaryColor}`,
+        sidebarStyle: "left:-250px",
+      })
+    },500)
+    //拉取强调色
     if (app.globalData.primaryColor) {
       this.setData({
         primaryColor: app.globalData.primaryColor
@@ -59,6 +68,7 @@ Page({
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn1: `color:${this.data.primaryColor}`,
+      sidebarStyle: "left:-250px",
     })
   },
 
