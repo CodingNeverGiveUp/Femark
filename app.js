@@ -32,7 +32,7 @@ App({
     //获取系统信息
     let systemInfo = wx.getSystemInfoSync()
     this.globalData.systemInfo = systemInfo;
-    if (systemInfo.windowWidth > 375) {
+    if (systemInfo.windowWidth > 600) {
       this.globalData.isPad = true;
     }
   },

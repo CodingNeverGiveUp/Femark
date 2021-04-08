@@ -5,12 +5,23 @@ Component({
     touchE: [0, 0],
     primaryColor: getApp().globalData.primaryColor,
     rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
+    useSidebar: getApp().globalData.useSidebar,
+    isPad: getApp().globalData.isPad,
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
     slide: false,
+    masked: false,
   },
   methods: {
+    back() {
+      this.setData({
+        mainStyle: "",
+        floatStyle: "",
+        sidebarStyle: "",
+        slide: false,
+      })
+    },
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
       setTimeout(() => {
@@ -37,14 +48,14 @@ Component({
 
       } else {
         this.setData({
-          mainStyle: "height:400rpx;",
-          floatStyle: "bottom:450rpx;transform: rotate(45deg);",
+          mainStyle: "height:250px;",
+          floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;") + "transform: rotate(45deg);",
           slide: true,
         })
       }
     },
     menuTap() {
-      if(this.data.slide) {
+      if (this.data.slide) {
         this.setData({
           slide: false,
           sidebarStyle: "",
@@ -94,8 +105,8 @@ Component({
 
         } else {
           this.setData({
-            mainStyle: "height:400rpx;",
-            floatStyle: "bottom:450rpx;transform: rotate(45deg);",
+            mainStyle: "height:250px;",
+            floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;") + "transform: rotate(45deg);",
             slide: true,
           })
         }
