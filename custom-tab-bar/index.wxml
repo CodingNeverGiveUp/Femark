@@ -1,4 +1,5 @@
-<view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}" hover-class="t_hover" bindtap="floatTap" bindlongpress="record">
+<view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}" hover-class="t_hover"
+  bindtap="floatTap" bindlongpress="record">
   <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
 </view>
 
@@ -30,34 +31,27 @@
 
 <view class="sidebar">
   <view class="head">
-    <view>
+    <view class="material-icons"><text>menu</text></view>
+    <view class="head_bar">
       <text>Femark</text>
+      <text class="material-icons">settings</text>
     </view>
-    <view class="material-icons"><text>settings</text></view>
   </view>
-  <view class="sec">
-    <view class="sec_icon">
-      <view class="material-icons"><text>mode</text></view>
-    </view>
+  <view class="sec" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
+    <view class="sec_icon material-icons"><text>mode</text></view>
     <view class="sec_name"><text>笔记</text></view>
   </view>
-  <view class="sec">
-    <view class="sec_icon">
-      <view class="material-icons"><text>done</text></view>
-    </view>
+  <view class="sec" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
+    <view class="sec_icon material-icons"><text>done</text></view>
     <view class="sec_name"><text>待办</text></view>
   </view>
   <view class="sec_blank"></view>
-  <view class="sec">
-    <view class="sec_icon">
-      <view class="material-icons"><text>archive</text></view>
-    </view>
+  <view class="sec" data-path="/pages/category/category" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
+    <view class="sec_icon material-icons"><text>archive</text></view>
     <view class="sec_name"><text>分类</text></view>
   </view>
-  <view class="sec">
-    <view class="sec_icon">
-      <view class="material-icons"><text>account_circle</text></view>
-    </view>
+  <view class="sec" data-path="/pages/account/account" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
+    <view class="sec_icon material-icons"><text>account_circle</text></view>
     <view class="sec_name"><text>我的</text></view>
   </view>
 </view>

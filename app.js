@@ -8,14 +8,14 @@ App({
 
     //获取openid
     wx.cloud.callFunction({
-      name: "getOpenid"
-    }).then(res => {
-      console.log(res);
-      this.globalData.openid = res.result.openid;
-    })
-    .catch(res => {
-      console.log("failed")
-    })
+        name: "getOpenid"
+      }).then(res => {
+        console.log(res);
+        this.globalData.openid = res.result.openid;
+      })
+      .catch(res => {
+        console.log("failed")
+      })
 
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
@@ -30,12 +30,16 @@ App({
     })
 
     //获取系统信息
-    this.globalData.systemInfo = wx.getSystemInfoSync();
+    let systemInfo = wx.getSystemInfoSync()
+    this.globalData.systemInfo = systemInfo;
+    if (systemInfo.windowWidth > 375) {
+      this.globalData.isPad = true;
+    }
   },
 
-  onThemeChange(){},
+  onThemeChange() {},
 
-  colorRgba(sHex,alpha) {
+  colorRgba(sHex, alpha) {
     var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{4}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8})$/
     /* 16进制颜色转为RGB格式 */
     var sColor = sHex.toLowerCase()
@@ -63,21 +67,22 @@ App({
     }
   },
   //跨页面异步传递
-  addListener(callback){
+  addListener(callback) {
     this.callback = callback;
   },
 
-  setChangedData(data){
+  setChangedData(data) {
     this.data = data;
-    if(this.callback != null){
+    if (this.callback != null) {
       this.callback(data)
     }
   },
-  
+
   globalData: {
     userInfo: null,
     primaryColor: "#4285f4",
     openid: null,
     systemInfo: null,
+    idPad: false,
   }
 })

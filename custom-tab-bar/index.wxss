@@ -1,6 +1,6 @@
 @import "/source/icon.wxss";
 
-.main{
+.main {
   position: fixed;
   display: flex;
   bottom: 0;
@@ -16,7 +16,7 @@
   background: #ffffff;
 }
 
-.main > view{
+.main>view {
   height: 120rpx;
   display: flex;
   flex-direction: row;
@@ -26,7 +26,7 @@
   overflow: hidden;
 }
 
-.item{
+.item {
   font-size: .8rem;
   display: flex;
   /* flex-direction: column; */
@@ -38,13 +38,72 @@
   transition: background .2s ease-in-out;
 }
 
-.item > view{
+.item>view {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.float{
+.sidebar{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  width: 250px;
+  background: #ffffff;
+  box-shadow: 0 -5rpx 20rpx #bbb;
+  height: 100vh;
+}
+
+.head{
+  height: 140rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20rpx 0;
+  min-height: 120px;
+}
+
+.head > .material-icons{
+  position: fixed;
+  top: 40px;
+  left: 20px;
+}
+
+.head_bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.sec{
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 0 25px 25px 0 ;
+  transition: background .2s ease-in-out;
+}
+
+.sec_icon{
+  margin: 0 0 0 20px;
+}
+
+.sec_name{
+  margin: 0 0 0 35px;
+}
+
+.sec_blank{
+  height: 1px;
+  background: #ccc;
+  margin: 8px 0;
+}
+
+.float {
   position: fixed;
   bottom: 170rpx;
   right: 50rpx;
@@ -59,40 +118,41 @@
   transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
 }
 
-.hover{
+.hover {
   background: var(--rgbaprimaryColor--);
   transition: none;
 }
 
-.t_hover{
+.t_hover {
   background: var(--rgbaprimaryColor--);
 }
 
-@media (min-width: 375px){
-  .main{
+@media (min-width: 375px) {
+  .main {
     display: none;
   }
-  .float{
-    bottom: 20rpx;
-  right: 20rpx;
-  width: 50rpx;
-  height: 50rpx;
-  box-shadow: 0 0 20rpx #bbb;
+
+  .float {
+    bottom: 50rpx;
+    right: 50rpx;
+    width: 55px;
+    height: 55px;
+    box-shadow: 0 0 20rpx #bbb;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  .main{
+  .main {
     background: #303638;
     box-shadow: 0 0 0 #444;
   }
 
-  .float{
+  .float {
     background: #303638;
     box-shadow: 0 0 0 #444;
   }
 
-  .t_hover{
+  .t_hover {
     background: var(--rgbaprimaryColor--);
   }
 }

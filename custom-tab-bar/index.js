@@ -10,6 +10,14 @@ Component({
     slide: false,
   },
   methods: {
+    sideSwitch (e) {
+      const path = e.currentTarget.dataset.path;
+      setTimeout(() => {
+        wx.switchTab({
+          url: path,
+        });
+      }, 250);
+    },
     switch (e) {
       const path = e.currentTarget.dataset.path;
       this.setData({
@@ -24,11 +32,15 @@ Component({
       }, 250);
     },
     record() {
-      this.setData({
-        mainStyle: "height:400rpx;",
-        floatStyle: "bottom:450rpx;transform: rotate(45deg);",
-        slide: true,
-      })
+      if(getApp().globalData.isPad){
+
+      }else{
+        this.setData({
+          mainStyle: "height:400rpx;",
+          floatStyle: "bottom:450rpx;transform: rotate(45deg);",
+          slide: true,
+        })
+      }
     },
     floatTap() {
       if (this.data.slide) {
@@ -64,11 +76,15 @@ Component({
         })
       } else if (start[1] > end[1] + 70) {
         console.log('上滑')
-        this.setData({
-          mainStyle: "height:400rpx;",
-          floatStyle: "bottom:450rpx;transform: rotate(45deg);",
-          slide: true
-        })
+        if(getApp().globalData.isPad){
+
+        }else{
+          this.setData({
+            mainStyle: "height:400rpx;",
+            floatStyle: "bottom:450rpx;transform: rotate(45deg);",
+            slide: true,
+          })
+        }
       } else {
         console.log('静止')
       }
