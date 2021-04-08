@@ -1,2 +1,3 @@
 <!--pages/category/category.wxml-->
 <text>pages/category/category.wxml</text>
+<view class="btn" bindtap="send">传递数据</view>

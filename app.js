@@ -60,6 +60,17 @@ App({
       return sColor
     }
   },
+  //跨页面异步传递
+  addListener(callback){
+    this.callback = callback;
+  },
+
+  setChangedData(data){
+    this.data = data;
+    if(this.callback != null){
+      this.callback(data)
+    }
+  },
   
   globalData: {
     userInfo: null,

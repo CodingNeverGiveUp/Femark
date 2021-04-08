@@ -17,6 +17,14 @@ Page({
         canIUseGetUserProfile: true,
       })
     }
+
+    //跨页面异步传递
+    app.addListener((changedData) => {
+      this.setData({
+        data: changedData,
+      })
+      console.log(changedData);
+    })
   },
 
   onReady() {

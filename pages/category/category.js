@@ -9,6 +9,12 @@ Page({
 
   },
 
+  //跨页面异步传递
+  send (){
+    console.log("clicked");
+    app.setChangedData("2")
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
