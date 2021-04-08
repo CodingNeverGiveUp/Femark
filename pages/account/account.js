@@ -34,7 +34,9 @@ Page({
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn3: `color:${this.data.primaryColor}`,
-      sld4: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`
+      sld4: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      slide: false,
+      sidebarStyle: "left:-250px",
     })
   },
 

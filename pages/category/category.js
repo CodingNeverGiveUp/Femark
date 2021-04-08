@@ -10,7 +10,7 @@ Page({
   },
 
   //跨页面异步传递
-  send (){
+  send() {
     console.log("clicked");
     app.setChangedData("2")
   },
@@ -40,7 +40,9 @@ Page({
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn2: `color:${this.data.primaryColor}`,
-      sld3: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`
+      sld3: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      slide: false,
+      sidebarStyle: "left:-250px",
     })
   },
 
