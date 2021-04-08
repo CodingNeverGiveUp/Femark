@@ -68,6 +68,19 @@
   background: var(--rgbaprimaryColor--);
 }
 
+@media (min-width: 375px){
+  .main{
+    display: none;
+  }
+  .float{
+    bottom: 20rpx;
+  right: 20rpx;
+  width: 50rpx;
+  height: 50rpx;
+  box-shadow: 0 0 20rpx #bbb;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .main{
     background: #303638;

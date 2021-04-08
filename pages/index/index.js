@@ -30,6 +30,7 @@ Page({
   onReady() {
     //拉取openid
     console.log(app.globalData.openid)
+    console.log(app.globalData.systemInfo)
     if (app.globalData.openid) {
       this.setData({
         openid: app.globalData.openid,

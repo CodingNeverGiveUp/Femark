@@ -5,6 +5,12 @@ page{
   background-color: #f1f1f1;
 }
 
+@media (min-width: 375px){
+  .b{
+    display: none;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   page{
     background-color: #222426;

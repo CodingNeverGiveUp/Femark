@@ -7,7 +7,6 @@ App({
     })
 
     //获取openid
-
     wx.cloud.callFunction({
       name: "getOpenid"
     }).then(res => {
@@ -29,6 +28,9 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
+
+    //获取系统信息
+    this.globalData.systemInfo = wx.getSystemInfoSync();
   },
 
   onThemeChange(){},
@@ -75,6 +77,7 @@ App({
   globalData: {
     userInfo: null,
     primaryColor: "#4285f4",
-    openid: "",
+    openid: null,
+    systemInfo: null,
   }
 })

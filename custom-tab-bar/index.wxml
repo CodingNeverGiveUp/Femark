@@ -27,3 +27,37 @@
     </view>
   </view>
 </view>
+
+<view class="sidebar">
+  <view class="head">
+    <view>
+      <text>Femark</text>
+    </view>
+    <view class="material-icons"><text>settings</text></view>
+  </view>
+  <view class="sec">
+    <view class="sec_icon">
+      <view class="material-icons"><text>mode</text></view>
+    </view>
+    <view class="sec_name"><text>笔记</text></view>
+  </view>
+  <view class="sec">
+    <view class="sec_icon">
+      <view class="material-icons"><text>done</text></view>
+    </view>
+    <view class="sec_name"><text>待办</text></view>
+  </view>
+  <view class="sec_blank"></view>
+  <view class="sec">
+    <view class="sec_icon">
+      <view class="material-icons"><text>archive</text></view>
+    </view>
+    <view class="sec_name"><text>分类</text></view>
+  </view>
+  <view class="sec">
+    <view class="sec_icon">
+      <view class="material-icons"><text>account_circle</text></view>
+    </view>
+    <view class="sec_name"><text>我的</text></view>
+  </view>
+</view>
