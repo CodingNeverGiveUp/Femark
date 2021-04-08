@@ -83,6 +83,7 @@ App({
     primaryColor: "#4285f4",
     openid: null,
     systemInfo: null,
-    idPad: false,
+    isPad: false,
+    useSidebar: false,
   }
 })

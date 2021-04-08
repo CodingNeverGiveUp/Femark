@@ -54,7 +54,7 @@
   background: #ffffff;
   box-shadow: 0 -5rpx 20rpx #bbb;
   height: 100vh;
-  transition: left .5s ease-in-out;
+  transition: background .2s ease-in-out,left .5s ease-in-out;
 }
 
 .head{
@@ -146,6 +146,12 @@
   background: var(--rgbaprimaryColor--);
 }
 
+@media (max-width: 375px) {
+  .sidebar{
+    display: none;
+  }
+}
+
 @media (min-width: 375px) {
   .main {
     display: none;
@@ -174,4 +180,20 @@
   .t_hover {
     background: var(--rgbaprimaryColor--);
   }
+
+  .sidebar{
+    background: #303638;
+    box-shadow: 0 0 0 #444;
+    color: white;
+  }
+
+  .sec{
+    color: #ccc;
+  }
+
+  .sec_blank{
+    background: #666;
+  }
+
+
 }
