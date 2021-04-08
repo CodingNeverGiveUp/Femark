@@ -40,6 +40,7 @@ Page({
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn2: `color:${this.data.primaryColor}`,
+      sld3: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`
     })
   },
 

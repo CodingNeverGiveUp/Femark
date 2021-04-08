@@ -29,29 +29,29 @@
   </view>
 </view>
 
-<view class="sidebar">
+<view class="sidebar" style="{{sidebarStyle}}">
   <view class="head">
-    <view class="material-icons"><text>menu</text></view>
+    <view class="material-icons menu_icon" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover" bindtap="menuTap"><text>menu</text></view>
     <view class="head_bar">
       <text>Femark</text>
       <text class="material-icons">settings</text>
     </view>
   </view>
-  <view class="sec" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
-    <view class="sec_icon material-icons"><text>mode</text></view>
-    <view class="sec_name"><text>笔记</text></view>
+  <view class="sec" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover">
+      <view class="sec_icon material-icons"><text>mode</text></view>
+      <view class="sec_name"><text>笔记</text></view>
   </view>
-  <view class="sec" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
-    <view class="sec_icon material-icons"><text>done</text></view>
-    <view class="sec_name"><text>待办</text></view>
+  <view class="sec" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover">
+      <view class="sec_icon material-icons"><text>done</text></view>
+      <view class="sec_name"><text>待办</text></view>
   </view>
   <view class="sec_blank"></view>
-  <view class="sec" data-path="/pages/category/category" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
-    <view class="sec_icon material-icons"><text>archive</text></view>
-    <view class="sec_name"><text>分类</text></view>
+  <view class="sec" data-path="/pages/category/category" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld3}}" hover-class="t_hover">
+      <view class="sec_icon material-icons"><text>archive</text></view>
+      <view class="sec_name"><text>分类</text></view>
   </view>
-  <view class="sec" data-path="/pages/account/account" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
-    <view class="sec_icon material-icons"><text>account_circle</text></view>
-    <view class="sec_name"><text>我的</text></view>
+  <view class="sec" data-path="/pages/account/account" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld4}}" hover-class="t_hover">
+      <view class="sec_icon material-icons"><text>account_circle</text></view>
+      <view class="sec_name"><text>我的</text></view>
   </view>
 </view>

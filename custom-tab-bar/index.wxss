@@ -54,6 +54,7 @@
   background: #ffffff;
   box-shadow: 0 -5rpx 20rpx #bbb;
   height: 100vh;
+  transition: left .5s ease-in-out;
 }
 
 .head{
@@ -65,10 +66,17 @@
   min-height: 120px;
 }
 
-.head > .material-icons{
+.menu_icon{
   position: fixed;
   top: 40px;
-  left: 20px;
+  left: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background .2s ease-in-out;
 }
 
 .head_bar{
@@ -81,12 +89,11 @@
 
 .sec{
   height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
   border-radius: 0 25px 25px 0 ;
   transition: background .2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .sec_icon{

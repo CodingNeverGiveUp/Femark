@@ -7,10 +7,11 @@ Component({
     rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
     mainStyle: "",
     floatStyle: "",
+    sidebarStyle: "",
     slide: false,
   },
   methods: {
-    sideSwitch (e) {
+    sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
       setTimeout(() => {
         wx.switchTab({
@@ -32,13 +33,26 @@ Component({
       }, 250);
     },
     record() {
-      if(getApp().globalData.isPad){
+      if (getApp().globalData.isPad) {
 
-      }else{
+      } else {
         this.setData({
           mainStyle: "height:400rpx;",
           floatStyle: "bottom:450rpx;transform: rotate(45deg);",
           slide: true,
+        })
+      }
+    },
+    menuTap() {
+      if(this.data.slide) {
+        this.setData({
+          slide: false,
+          sidebarStyle: "left:-250px",
+        })
+      } else {
+        this.setData({
+          slide: true,
+          sidebarStyle: "",
         })
       }
     },
@@ -76,9 +90,9 @@ Component({
         })
       } else if (start[1] > end[1] + 70) {
         console.log('上滑')
-        if(getApp().globalData.isPad){
+        if (getApp().globalData.isPad) {
 
-        }else{
+        } else {
           this.setData({
             mainStyle: "height:400rpx;",
             floatStyle: "bottom:450rpx;transform: rotate(45deg);",
