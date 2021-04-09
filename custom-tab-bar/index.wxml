@@ -1,12 +1,4 @@
-<view wx:if="{{masked}}" class="mask" bindtap="back"></view>
-
-<view class="dialog"></view>
-
-<view class="float {{isPad?'h_float':useSidebar?'h_float':''}}" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}" hover-class="t_hover"
-  bindtap="floatTap" bindlongpress="record">
-  <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
-</view>
-
+<!-- <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view> -->
 <view class="main {{isPad?'h_main':useSidebar?'h_main':''}}" bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd' style="{{mainStyle}};">
   <view class="items">
     <view class="item" data-path="/pages/index/index" bindtap="switch" hover-class="hover"
@@ -26,7 +18,6 @@
     </view>
   </view>
 </view>
-
 <view class="sidebar" style="{{sidebarStyle}};{{useSidebar?'':isPad?'':'display:none;'}}">
   <view class="head">
     <view class="material-icons menu_icon" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover" bindtap="menuTap"><text>menu</text></view>
@@ -55,3 +46,9 @@
       <view class="sec_name"><text>我的</text></view>
   </view>
 </view>
+<view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view>
+<view class="float {{isPad?'h_float':useSidebar?'h_float':''}}" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}" hover-class="t_hover"
+  bindtap="floatTap" bindlongpress="record">
+  <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+</view>
+<view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view>

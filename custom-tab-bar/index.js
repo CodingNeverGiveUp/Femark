@@ -10,10 +10,38 @@ Component({
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
+    maskVisible: "display:none;",
+    maskStyle: "",
+    dialogVisible: "display:none;",
+    dialogStyle: "",
     slide: false,
-    masked: false,
+    masked: true,
   },
   methods: {
+    showDialog() {
+      this.setData({
+        maskVisible: "display:block;",
+        dialogVisible: "display:block;",
+      })
+      setTimeout(() => {
+        this.setData({
+          maskStyle: "opacity:.5;",
+          dialogStyle: "transform:scale(1,1);",
+        })
+      }, 10)
+    },
+    hideDialog() {
+      this.setData({
+        maskStyle: "",
+        dialogStyle: "",
+      })
+      setTimeout(() => {
+        this.setData({
+          maskVisible: "display:none;",
+          dialogVisible: "display:none;",
+        })
+      }, 200)
+    },
     back() {
       this.setData({
         mainStyle: "",
@@ -21,6 +49,7 @@ Component({
         sidebarStyle: "",
         slide: false,
       })
+      this.hideDialog();
     },
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
@@ -45,7 +74,11 @@ Component({
     },
     record() {
       if (getApp().globalData.isPad) {
-
+        this.setData({
+          floatStyle: "transform: rotate(45deg);",
+          slide: true,
+        })
+        this.showDialog();
       } else {
         this.setData({
           mainStyle: "height:250px;",
@@ -74,6 +107,7 @@ Component({
           floatStyle: "",
           slide: false,
         })
+        this.hideDialog();
       } else {}
     },
     touchStart: function (e) {
