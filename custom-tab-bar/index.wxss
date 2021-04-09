@@ -1,7 +1,7 @@
 @import "/source/icon.wxss";
 
 .mask {
-  width: 100vh;
+  width: 100vw;
   height: 100vh;
   background: #000;
   opacity: 0;
@@ -11,7 +11,7 @@
 .dialog {
   position: fixed;
   /* top: 50vh;
-  left: 50vh;
+  left: 50vw;
   transform: translate(-50%, -50%); */
   top: 0;
   right: 0;
