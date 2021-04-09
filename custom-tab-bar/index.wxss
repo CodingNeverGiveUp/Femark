@@ -48,7 +48,7 @@
 }
 
 .items {
-  height: 120rpx;
+  height: 65px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
