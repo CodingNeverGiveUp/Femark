@@ -9,7 +9,13 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
+    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
+    isPad: app.globalData.isPad,
+    primaryColor: app.globalData.primaryColor,
+    rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
+    selectedPage: 1,
+    selectorStyle: "",
+    sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`
   },
   // 事件处理函数
   onLoad() {
@@ -49,20 +55,16 @@ Page({
           console.log("failed")
         })
     };
-    //拉取选中状态
-    setTimeout(()=>{
+    //拉取状态
+    setTimeout(() => {
       let tabbar = this.getTabBar()
       tabbar.setData({
         btn1: `color:${this.data.primaryColor}`,
         sidebarStyle: "left:-250px",
+        currentPage: 1,
       })
-    },500)
+    }, 500)
     //拉取强调色
-    if (app.globalData.primaryColor) {
-      this.setData({
-        primaryColor: app.globalData.primaryColor
-      })
-    }
   },
 
   onShow() {
@@ -70,7 +72,43 @@ Page({
     tabbar.setData({
       btn1: `color:${this.data.primaryColor}`,
       sidebarStyle: "left:-250px",
+      currentPage: 1,
     })
+  },
+
+  showSelector() {
+    this.setData({
+      selectorStyle: "top:0"
+    })
+  },
+
+  sel1() {
+    if (this.data.selectedPage == 2) {
+      this.setData({
+        sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+        sel2: "",
+        selectedPage: 1
+      })
+    }
+    setTimeout(() => {
+      this.setData({
+        selectorStyle: "",
+      })
+    }, 300)
+  },
+  sel2() {
+    if (this.data.selectedPage == 1) {
+      this.setData({
+        sel1: "",
+        sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+        selectedPage: 2
+      })
+    }
+    setTimeout(() => {
+      this.setData({
+        selectorStyle: "",
+      })
+    }, 300)
   },
 
   getUserProfile(e) {

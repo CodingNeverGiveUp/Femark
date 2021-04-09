@@ -5,11 +5,46 @@ page{
   background-color: #f1f1f1;
 }
 
-@media (min-width: 375px){
-  .b{
-    display: none;
-  }
+.hover{
+  background: var(--rgbaprimaryColor--);
 }
+
+.page_selector{
+  position: absolute;
+  top: -125px;
+  left: 0;
+  right: 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 0rpx 10rpx #bbb;
+  overflow: hidden;
+  transition: top .2s ease-in-out, background .2s ease-in-out;
+}
+.page_selector_blank{
+  height: 25px;
+}
+.page_selector_item{
+  /* border: hotpink solid 1px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 50px;
+  color: #666;
+  transition: background .2s ease-in-out, color .2s ease-in-out;
+}
+
+.page_selector .icon{
+  margin: 0 0 0 50rpx
+}
+
+.page_selector .text{
+  margin: 0 0 0 50rpx
+}
+
 
 @media (prefers-color-scheme: dark) {
   page{

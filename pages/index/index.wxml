@@ -1,3 +1,14 @@
 <!--index.wxml-->
-<text class="material-icons">grade</text>
-<text class="b">aaaaaaaaaaaaaaa</text>
+<view wx:if="{{!isPad}}" style="{{selectorStyle}}" class="page_selector">
+  <view class="page_selector_blank"></view>
+  <view class="page_selector_item" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sel1}};" bindtap="sel1" hover-class="hover">
+    <text class="material-icons icon">mode</text>
+    <text class="text">笔记</text>
+  </view>
+  <view class="page_selector_item" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sel2}};" bindtap="sel2" hover-class="hover">
+    <text class="material-icons icon">add_task</text>
+    <text class="text">待办</text>
+  </view>
+</view>
+
+<view style="position:fixed;top:50vh;transform:translate(50%,-50%);width:100px;height:100px;background:pink;" bindtap="showSelector">selector</view>

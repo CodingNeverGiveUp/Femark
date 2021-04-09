@@ -43,6 +43,7 @@ Page({
       sld3: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
       slide: false,
       sidebarStyle: "left:-250px",
+      currentPage: 2,
     })
   },
 

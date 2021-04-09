@@ -7,6 +7,7 @@ Component({
     rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
     useSidebar: getApp().globalData.useSidebar,
     isPad: getApp().globalData.isPad,
+    currentPage: '',
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
