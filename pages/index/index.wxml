@@ -14,7 +14,7 @@
 </view>
 
 
-<view class="account_Container">
+<view class="account_Container" wx:if="{{selectedPage == 1}}">
   <view class="category_title"><text class="material-icons">grade</text><text>笔记</text></view>
   <view class="category_small_title">{{test_Lenth}}个笔记</view>
   <view class="hengpai">
@@ -48,9 +48,10 @@
       <!--ss-->
     </view>
   </view>
+  <button bindtap="showSelector">切换</button>
 </view>
 
-<view>
+<view wx:if="{{selectedPage == 2}}">
   <view class="head">
     <view class="head_1">
       <text>代办</text>
@@ -73,4 +74,5 @@
       </view>
     </view>
   </view>
+  <button bindtap="showSelector">切换</button>
 </view>
