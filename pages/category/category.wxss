@@ -1,12 +1,60 @@
 /* pages/category/category.wxss */
 @import "/source/icon.wxss";
 
-page{
+page {
   background-color: #f1f1f1;
 }
 
+.category_Container2 {
+  flex-direction: column;
+  padding: 65rpx 80rpx 100rpx 65rpx;
+}
+
+.category_title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.category_small_title {
+  color: ffffff;
+  font-size: 0.8rem;
+  margin-bottom: 180rpx;
+}
+
+.category_Card {
+  width: 100%;
+  overflow: hidden;
+  transition: height .5s ease-in-out;
+  display: flex;
+  border-radius: 13rpx;
+  flex-direction: column;
+  margin: 0 0 30rpx 0;
+
+}
+
+.card_Category1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 150rpx;
+  flex-shrink: 0;
+  padding: 0rpx 30rpx 0 50rpx;
+}
+
+.card_Content1 {
+  height: 150rpx;
+  border-top: black solid 1px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 0 0 0 50rpx;
+}
+
 @media (prefers-color-scheme: dark) {
-  page{
+  page {
     background-color: #222426;
   }
 }
