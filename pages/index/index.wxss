@@ -101,6 +101,89 @@ page{
   background-color:#f1f1f1;
 }
 
+/* 代办 */
+.head{
+    margin-top: 70rpx;
+    margin-left: 60rpx;
+    width: 100%;
+}
+
+.head_1{
+    font-size: 1.4rem;
+    margin-bottom: 20rpx;
+    letter-spacing: 2px;
+}
+
+.icon{
+    vertical-align:sub;
+    font-size: 70rpx;
+    margin-left: 20rpx;
+}
+
+.head_2{
+    font-size: 0.8rem;
+    color: #cccccc;
+    letter-spacing: 2px;
+}
+
+.divide{
+    width: 100%;
+    height: 80rpx;
+}
+
+.DBbox{
+    margin: 30rpx 40rpx;
+    border-radius: 1.0ch;
+    padding: 30rpx 50rpx 30rpx 50rpx;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+}
+
+.box_left{
+    width: 25%;
+    margin: 0 auto;
+    text-align: center;
+    padding-right: 30rpx;
+}   
+
+.box_right{
+    width: 75%;
+    margin: 0 auto;
+}
+
+.month{
+    color: #cccccc;
+    font-size: 0.8rem;
+}
+
+.day{
+    font-size: 1.2rem;
+    padding-top: 2px;
+}
+
+.topic{
+    font-size: 1.0rem;
+    text-overflow:ellipsis; 
+    overflow:hidden;
+    white-space:nowrap; 
+}
+
+.ddl{
+    padding-top: 5px;
+    color: #cccccc;
+    font-size: 0.8rem;
+}
+
+.alarm{
+    font-size: 35rpx;
+    margin-left: 10rpx;
+    vertical-align:text-top;
+}
+
+
+
+
 
 @media (prefers-color-scheme: dark) {
   page{

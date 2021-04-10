@@ -49,3 +49,28 @@
     </view>
   </view>
 </view>
+
+<view>
+  <view class="head">
+    <view class="head_1">
+      <text>代办</text>
+      <text class="material-icons icon">view_headline</text>
+    </view>
+    <view class="head_2"><text>{{text_lenth}}个代办</text></view>
+  </view>
+  <view class="divide"></view>
+  <view class="main">
+    <view wx:for="{{test.list}}">
+      <view class="DBbox" style="background-color:{{item.color}};">
+        <view class="box_left">
+          <view class="month">{{item.month}}</view>
+          <view class="day">{{item.day}}</view>
+        </view>
+        <view class="box_right">
+          <view class="topic">{{item.topic}}</view>
+          <view class="ddl">{{item.ddl}}<text class="material-icons alarm">alarm</text></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -17,18 +17,19 @@ Page({
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
 
+
     h1: '',
     h2: '',
     picture_path: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=218852904,1106228157&fm=26&gp=0.jpgs',
     test: {
       test_Array01: [{
-          real: '看fJ#$%392888939hfg872g872'
-        },
-        {
-          real: '发i啊呵呵中'
-        }, {
-          real: '发觉这世界奥哦啊不带u阿飞波尔u'
-        }
+        real: '看fJ#$%392888939hfg872g872'
+      },
+      {
+        real: '发i啊呵呵中'
+      }, {
+        real: '发觉这世界奥哦啊不带u阿飞波尔u'
+      }
       ],
       test_Array02: [{
         real: '今年第哦啊八八七八丢丢八二ui'
@@ -37,6 +38,35 @@ Page({
       }, {
         real: ' 就爱看就看哦额弄Enel发你的那几位'
       }]
+    },
+
+    text_lenth: '',
+    text: {
+      list: [
+        {
+          color: "#20a674",
+          month: 'Nov',
+          day: 21,
+          ddl: '10:00:00',
+          topic: '主标题啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'
+        },
+
+        {
+          color: "#c54949",
+          month: 'Dec',
+          day: 31,
+          ddl: '10:00:00',
+          topic: '主标题啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'
+        },
+
+        {
+          color: "#176095",
+          month: 'Oct',
+          day: 12,
+          ddl: '10:00:00',
+          topic: '主标题啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'
+        }
+      ]
     }
   },
   // 事件处理函数
@@ -67,12 +97,12 @@ Page({
     } else {
       console.log("get openid from server")
       wx.cloud.callFunction({
-          name: "getOpenid"
-        }).then(res => {
-          // console.log(res);
-          this.data.openid = res.result.openid;
-          app.globalData.openid = res.result.openid;
-        })
+        name: "getOpenid"
+      }).then(res => {
+        // console.log(res);
+        this.data.openid = res.result.openid;
+        app.globalData.openid = res.result.openid;
+      })
         .catch(res => {
           console.log("failed")
         })
@@ -106,6 +136,13 @@ Page({
     } else {
       console.log('box2')
     }
+
+
+    //别改我的
+    let n = this.data.text.list.length
+    this.setData({
+      text_lenth: n
+    })
   },
 
   onShow() {
