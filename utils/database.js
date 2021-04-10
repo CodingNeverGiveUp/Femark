@@ -3,8 +3,24 @@ const exampleFunction = () => {
 }
 
 //添加待办数据
-const addTask = () => {
-  console.log("content")
+const addTask = (taskDate, taskContent, taskTitle, taskType) => {
+  const _ = wx.cloud.database().command
+  wx.cloud.database().collection('note').where({
+      _openid: "oxY3r5W1q6qmHTczqCMHbpYc6TCk"
+    }).get()
+    .then(res => {
+      let id = res.data[0]._id
+      wx.cloud.database().collection('note').doc(id).update({
+        data: {
+          'task': _.push({
+            "content": taskContent,
+            "date": taskDate,
+            "title": taskTitle,
+            "type": taskType,
+          }),
+        }
+      })
+    })
 }
 
 //删除待办数据
@@ -60,5 +76,6 @@ const getNote = () => {
 
 module.exports = { //注册函数
   exampleFunction: exampleFunction,
-  addNote: addNote
+  addNote: addNote,
+  addTask: addTask
 }

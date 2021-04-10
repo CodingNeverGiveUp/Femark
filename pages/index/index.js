@@ -211,6 +211,10 @@ Page({
     })
   },
   addNote(){
-  database.addNote(20204851,'学校','学校','学校')
-  }
+    database.addNote(20204851,'学校','学校','学校')
+    },
+    
+  addTask(){
+    database.addTask(20204851,'学校','学校','学校')
+    },
 })
