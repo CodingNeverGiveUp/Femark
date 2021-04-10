@@ -15,7 +15,29 @@ Page({
     rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
     selectedPage: 1,
     selectorStyle: "",
-    sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`
+    sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
+
+    h1: '',
+    h2: '',
+    picture_path: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=218852904,1106228157&fm=26&gp=0.jpgs',
+    test: {
+      test_Array01: [{
+          real: '看fJ#$%392888939hfg872g872'
+        },
+        {
+          real: '发i啊呵呵中'
+        }, {
+          real: '发觉这世界奥哦啊不带u阿飞波尔u'
+        }
+      ],
+      test_Array02: [{
+        real: '今年第哦啊八八七八丢丢八二ui'
+      }, {
+        real: '就拿看就看弄你而安琪儿哦i'
+      }, {
+        real: ' 就爱看就看哦额弄Enel发你的那几位'
+      }]
+    }
   },
   // 事件处理函数
   onLoad() {
@@ -65,6 +87,25 @@ Page({
       })
     }, 500)
     //拉取强调色
+    var hw1, hw2;
+    setTimeout(() => {
+      var query = wx.createSelectorQuery()
+      query.select('#b1').boundingClientRect(function (res) {
+        // that.setData({
+        // h1:res.height
+        // })
+        hw1 = parseInt(res.height)
+      }).exec();
+      query.select('#b2').boundingClientRect(function (res) {
+        hw2 = parseInt(res.height)
+
+      }).exec();
+    }, 300)
+    if (hw1 >= hw2) {
+      console.log('box1')
+    } else {
+      console.log('box2')
+    }
   },
 
   onShow() {
