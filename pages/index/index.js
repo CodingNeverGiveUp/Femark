@@ -209,5 +209,8 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  addNote(){
+  database.addNote(20204851,'学校','学校','学校')
   }
 })

@@ -15,6 +15,7 @@
 
 
 <view class="account_Container" wx:if="{{selectedPage == 1}}">
+  <button bindtap="addNote">点击添加数据</button>
   <view class="category_title"><text class="material-icons">grade</text><text>笔记</text></view>
   <view class="category_small_title">{{test_Lenth}}个笔记</view>
   <view class="hengpai">
