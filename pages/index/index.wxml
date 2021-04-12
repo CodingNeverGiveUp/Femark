@@ -63,7 +63,7 @@
   </view>
   <view class="divide"></view>
   <view class="main">
-    <view wx:for="{{text.list}}">
+    <view wx:for="{{text.list}}" wx:key="id">
       <view class="DBbox" style="background-color:{{item.color}};">
         <view class="box_left">
           <view class="month">{{item.month}}</view>
