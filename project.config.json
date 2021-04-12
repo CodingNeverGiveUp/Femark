@@ -3,6 +3,7 @@
   "packOptions": {
     "ignore": []
   },
+  "cloudfunctionRoot": "cloud/",
   "setting": {
     "urlCheck": false,
     "es6": true,
@@ -49,23 +50,23 @@
   "scripts": {},
   "isGameTourist": false,
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
+    "plugin": {
       "list": []
     },
     "game": {
-      "list": []
-    },
-    "plugin": {
       "list": []
     },
     "gamePlugin": {
       "list": []
     },
     "miniprogram": {
-      "list": []
+      "list": [
+        {
+          "name": "pages/category/category",
+          "pathName": "pages/category/category",
+          "scene": null
+        }
+      ]
     }
   }
 }

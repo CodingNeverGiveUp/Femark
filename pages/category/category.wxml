@@ -1,2 +1,20 @@
 <!--pages/category/category.wxml-->
-<text>pages/category/category.wxml</text>
+<view class="category_Container2">
+  <view>
+    <view class="category_title"><text class="material-icons">grade</text><text class="">分类</text></view>
+    <view class="category_small_title">{{test_Lenth}}个分类</view>
+  </view>
+
+  <view wx:for="{{test01.list01}}" data-xushu="{{index}}"
+    style="background-color:{{test01.test_Color2}} ;height:{{height_Array[index].height}};" class="category_Card"
+    bindtap="zhankai">
+    <view class="card_Category1">
+      <text>{{item.title_Name}}</text>
+      <text class="material-icons">grade</text>
+    </view>
+    <view class="card_Content1" bindtap="switch_Page" wx:for-item="item2" wx:for="{{item.real_Content}}">
+      {{item2.content}}
+    </view>
+  </view>
+  <view style="height:200rpx"></view>
+</view>

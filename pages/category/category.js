@@ -6,7 +6,54 @@ Page({
    * 页面的初始数据
    */
   data: {
+    test_Lenth: '',
+    height_Array: [{
+      height: '150rpx',
+      tips: 1
+    }, {
+      height: '150rpx',
+      tips: 1
+    }, {
+      height: '150rpx',
+      tips: 1
+    }],
+    test01: { //把具体内容嵌套在list01里面
+      test_Color2: '#4285f4',
+      list01: [{
+        title_Name: '学习',
+        real_Content: [{
+          content: '学习一下123Aa222222222222222bsssdrfeeszzzzaaqqqqqqasfghh'
+        }, {
+          content: '学c++898'
+        }, {
+          content: 'uaaohu'
+        }]
+      }, {
+        title_Name: '运动',
+        real_Content: [{
+          content: '学习一下123Aab'
+        }, {
+          content: '学c++898'
+        }, {
+          content: 'uaaohu'
+        }]
+      }, {
+        title_Name: '生活',
+        real_Content: [{
+          content: '学习一下123Aab'
+        }, {
+          content: '学c++898'
+        }, {
+          content: 'uaaohu'
+        }]
+      }]
+    }
+  },
 
+  //跨页面异步传递
+  send() {
+    console.log("clicked");
+    app.setChangedData("2")
   },
 
   /**
@@ -34,6 +81,10 @@ Page({
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn2: `color:${this.data.primaryColor}`,
+      sld3: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      slide: false,
+      sidebarStyle: "left:-250px",
+      currentPage: 2,
     })
   },
 
@@ -70,5 +121,25 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  zhankai: function (e) {
+    var n = e.currentTarget.dataset.xushu
+    let tip = this.data.height_Array[n].tips
+    let content_len = this.data.test01.list01[n].real_Content.length
+    let gao = (content_len + 1) * 150
+    let str = 'height_Array' + '[' + n + ']' + '.height'
+    let str2 = 'height_Array' + '[' + n + ']' + '.tips'
+    if (tip > 0) {
+      this.setData({
+        [str]: gao + 'rpx',
+        [str2]: -1
+      })
+    } else {
+      this.setData({
+        [str]: '150rpx',
+        [str2]: 1
+      })
+    }
+  },
 })
