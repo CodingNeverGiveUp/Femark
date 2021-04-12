@@ -13,7 +13,7 @@ Page({
     isPad: app.globalData.isPad,
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
-    currentPage: 1,
+    currentPage: app.globalData.currentPage,
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
 
@@ -147,30 +147,29 @@ Page({
   onShow(e) {
     console.log(e);
     let tabbar = this.getTabBar()
+    this.setData({
+      currentPage: app.globalData.currentPage,
+    })
     tabbar.setData({
       btn1: `color:${this.data.primaryColor}`,
       slide: false,
       sidebarStyle: "left:-250px",
-      currentPage: 1,
+      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      ["sld" + app.globalData.formerPage]: '',
     })
-    if (this.data.isPad == false) {
-      tabbar.setData({
-        sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
-      })
-    } else {
-      if(app.globalData.currentPage == 1){
-        tabbar.setData({
-          sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
-          sld2: '',
-        })
-      }
-      if(app.globalData.currentPage == 2){
-        tabbar.setData({
-          sld1: '',
-          sld2: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
-        })
-      }
-    }
+    // if(app.globalData.currentPage == 1){
+    //   tabbar.setData({
+    //     sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+    //     sld2: '',
+    //   })
+    // }
+    // if(app.globalData.currentPage == 2){
+    //   tabbar.setData({
+    //     sld1: '',
+    //     sld2: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+    //   })
+    // }
+
   },
 
   showSelector() {
@@ -180,12 +179,13 @@ Page({
   },
 
   sel1() {
-    if (this.data.currentPage == 2) {
+    if (app.globalData.currentPage == 2) {
       this.setData({
         sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         sel2: "",
         currentPage: 1
       })
+      app.globalData.currentPage = 1;
     }
     setTimeout(() => {
       this.setData({
@@ -194,12 +194,13 @@ Page({
     }, 300)
   },
   sel2() {
-    if (this.data.currentPage == 1) {
+    if (app.globalData.currentPage == 1) {
       this.setData({
         sel1: "",
         sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         currentPage: 2
       })
+      app.globalData.currentPage = 2;
     }
     setTimeout(() => {
       this.setData({

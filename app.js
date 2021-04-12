@@ -82,9 +82,10 @@ App({
     userInfo: null,
     primaryColor: "#4285f4",
     openid: null,
-    currentPage: null,
+    currentPage: 1,
+    formerPage: null,
     systemInfo: null,
     isPad: false,
-    useSidebar: false,
+    useSidebar: true,
   }
 })

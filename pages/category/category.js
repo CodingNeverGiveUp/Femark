@@ -81,11 +81,12 @@ Page({
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn2: `color:${this.data.primaryColor}`,
-      sld3: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      ["sld" + app.globalData.formerPage]: '',
       slide: false,
       sidebarStyle: "left:-250px",
-      currentPage: 2,
     })
+    app.globalData.currentPage = 3;
   },
 
   /**

@@ -7,7 +7,6 @@ Component({
     rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
     useSidebar: getApp().globalData.useSidebar,
     isPad: getApp().globalData.isPad,
-    currentPage: '',
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
@@ -54,12 +53,26 @@ Component({
     },
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
-      const page = e.currentTarget.dataset.page;
+      const page = Number(e.currentTarget.dataset.page);
+      let formerPage = getApp().globalData.currentPage;
+      console.log(formerPage, typeof(formerPage))
+      console.log(page, typeof(page))
+      this.setData({
+        ["sld" + formerPage]: '',
+        ["sld" + page]: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+      })
       setTimeout(() => {
+        getApp().globalData.currentPage = page;
+        getApp().globalData.formerPage = formerPage;
+        if(page == 1 || page == 2){
+          this.setData({
+            slide: false,
+            sidebarStyle: "left:-250px",
+          })
+        }
         wx.switchTab({
           url: path,
         });
-        getApp().globalData.currentPage = page;
       }, 250);
     },
     switch (e) {

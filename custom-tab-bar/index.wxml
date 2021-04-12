@@ -30,7 +30,7 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{isPad}}">
+  <view wx:if="{{!isPad}}">
     <view class="sec" data-path="/pages/index/index" data-page="1" bindtap="sideSwitch"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld1}}" hover-class="t_hover">
       <view class="sec_icon material-icons"><text>mode</text></view>
@@ -43,7 +43,7 @@
     </view>
     <view class="sec_blank"></view>
   </view>
-  <view wx:if="{{!isPad}}">
+  <view wx:if="{{isPad}}">
     <view class="sec" data-path="/pages/index/index" data-page="1" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld1}}" data-path="/pages/index/index"
       bindtap="sideSwitch" hover-class="t_hover">
       <view class="sec_icon material-icons"><text>mode</text></view>
@@ -62,7 +62,7 @@
   </view>
 </view>
 <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view>
-<view wx:if="{{currentPage==3?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}"
+<view wx:if="{{currentPage==4?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}" hover-class="t_hover" bindtap="floatTap"
   bindlongpress="record">
   <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
