@@ -50,12 +50,12 @@
       <view class="sec_name"><text>记事</text></view>
     </view>
   </view>
-  <view class="sec" data-path="/pages/category/category" data-page="2" bindtap="sideSwitch"
+  <view class="sec" data-path="/pages/category/category" data-page="3" bindtap="sideSwitch"
     style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld3}}" hover-class="t_hover">
     <view class="sec_icon material-icons"><text>archive</text></view>
     <view class="sec_name"><text>分类</text></view>
   </view>
-  <view class="sec" data-path="/pages/account/account" data-page="3" bindtap="sideSwitch"
+  <view class="sec" data-path="/pages/account/account" data-page="4" bindtap="sideSwitch"
     style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld4}}" hover-class="t_hover">
     <view class="sec_icon material-icons"><text>account_circle</text></view>
     <view class="sec_name"><text>我的</text></view>

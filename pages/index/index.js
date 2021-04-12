@@ -13,7 +13,7 @@ Page({
     isPad: app.globalData.isPad,
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
-    selectedPage: 1,
+    currentPage: 1,
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
 
@@ -158,9 +158,18 @@ Page({
         sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
       })
     } else {
-      tabbar.setData({
-        sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
-      })
+      if(app.globalData.currentPage == 1){
+        tabbar.setData({
+          sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+          sld2: '',
+        })
+      }
+      if(app.globalData.currentPage == 2){
+        tabbar.setData({
+          sld1: '',
+          sld2: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+        })
+      }
     }
   },
 
@@ -171,11 +180,11 @@ Page({
   },
 
   sel1() {
-    if (this.data.selectedPage == 2) {
+    if (this.data.currentPage == 2) {
       this.setData({
         sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         sel2: "",
-        selectedPage: 1
+        currentPage: 1
       })
     }
     setTimeout(() => {
@@ -185,11 +194,11 @@ Page({
     }, 300)
   },
   sel2() {
-    if (this.data.selectedPage == 1) {
+    if (this.data.currentPage == 1) {
       this.setData({
         sel1: "",
         sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
-        selectedPage: 2
+        currentPage: 2
       })
     }
     setTimeout(() => {

@@ -59,6 +59,7 @@ Component({
         wx.switchTab({
           url: path,
         });
+        getApp().globalData.currentPage = page;
       }, 250);
     },
     switch (e) {
