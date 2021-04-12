@@ -23,13 +23,13 @@ Page({
     picture_path: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=218852904,1106228157&fm=26&gp=0.jpgs',
     test: {
       test_Array01: [{
-        real: '看fJ#$%392888939hfg872g872'
-      },
-      {
-        real: '发i啊呵呵中'
-      }, {
-        real: '发觉这世界奥哦啊不带u阿飞波尔u'
-      }
+          real: '看fJ#$%392888939hfg872g872'
+        },
+        {
+          real: '发i啊呵呵中'
+        }, {
+          real: '发觉这世界奥哦啊不带u阿飞波尔u'
+        }
       ],
       test_Array02: [{
         real: '今年第哦啊八八七八丢丢八二ui'
@@ -42,8 +42,7 @@ Page({
 
     text_lenth: '',
     text: {
-      list: [
-        {
+      list: [{
           color: "#20a674",
           month: 'Nov',
           day: 21,
@@ -97,12 +96,12 @@ Page({
     } else {
       console.log("get openid from server")
       wx.cloud.callFunction({
-        name: "getOpenid"
-      }).then(res => {
-        // console.log(res);
-        this.data.openid = res.result.openid;
-        app.globalData.openid = res.result.openid;
-      })
+          name: "getOpenid"
+        }).then(res => {
+          // console.log(res);
+          this.data.openid = res.result.openid;
+          app.globalData.openid = res.result.openid;
+        })
         .catch(res => {
           console.log("failed")
         })
@@ -145,13 +144,24 @@ Page({
     })
   },
 
-  onShow() {
+  onShow(e) {
+    console.log(e);
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn1: `color:${this.data.primaryColor}`,
+      slide: false,
       sidebarStyle: "left:-250px",
       currentPage: 1,
     })
+    if (this.data.isPad == false) {
+      tabbar.setData({
+        sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      })
+    } else {
+      tabbar.setData({
+        sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      })
+    }
   },
 
   showSelector() {
@@ -210,11 +220,11 @@ Page({
       hasUserInfo: true
     })
   },
-  addNote(){
-    database.addNote(20204851,'学校','学校','学校')
-    },
-    
-  addTask(){
-    database.addTask(20204851,'学校','学校','学校')
-    },
+  addNote() {
+    database.addNote(20204851, '学校', '学校', '学校')
+  },
+
+  addTask() {
+    database.addTask(20204851, '学校', '学校', '学校')
+  },
 })

@@ -54,6 +54,7 @@ Component({
     },
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
+      const page = e.currentTarget.dataset.page;
       setTimeout(() => {
         wx.switchTab({
           url: path,
