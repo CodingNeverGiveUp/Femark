@@ -22,8 +22,8 @@
   <view class="hengpai">
     <view class="account_box_1" style="width:50%;">
       <view id="b1">
-        <view bindtap="switch_page" wx:for="{{test.test_Array01}}">
-          <view wx:if="{{0}}" class="picture" style=" background:url({{}}); background-size: 100% 100%;"> <!--如果没有图片就不显示-->
+        <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array01}}">
+          <view wx:if="{{0}}" class="picture" style=" background:url({{picture_path}}); background-size: 100% 100%;"> <!--如果没有图片就不显示-->
             <view  class="word_Tips">共{{}}张图片</view>
           </view>
           <view class="_box_1_nei">
@@ -38,7 +38,7 @@
     <view class="account_box_2" style="width:50%;">
       <view id="b2">
         <!--这里加一个空view的目的是防止最外层的盒子会两边自动相等，如果不加的话会判定为两边高度相等-->
-        <view bindtap="switch_page" wx:for="{{test.test_Array02}}" class="account_box_2">
+        <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array02}}" class="account_box_2">
           <view wx:if="{{1}}" class="picture" style=" background:url({{}}); background-size: 100% 100%;">  <!--如果没有图片就不显示-->
             <view class="word_Tips">共{{}}张图片</view>
           </view>
