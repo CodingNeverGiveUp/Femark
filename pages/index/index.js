@@ -13,7 +13,7 @@ Page({
     isPad: app.globalData.isPad,
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
-    selectedPage: 1,
+    currentPage: app.globalData.currentPage,
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
 
@@ -23,13 +23,13 @@ Page({
     picture_path: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=218852904,1106228157&fm=26&gp=0.jpgs',
     test: {
       test_Array01: [{
-        real: '看fJ#$%392888939hfg872g872'
-      },
-      {
-        real: '发i啊呵呵中'
-      }, {
-        real: '发觉这世界奥哦啊不带u阿飞波尔u'
-      }
+          real: '看fJ#$%392888939hfg872g872'
+        },
+        {
+          real: '发i啊呵呵中'
+        }, {
+          real: '发觉这世界奥哦啊不带u阿飞波尔u'
+        }
       ],
       test_Array02: [{
         real: '今年第哦啊八八七八丢丢八二ui'
@@ -42,8 +42,7 @@ Page({
 
     text_lenth: '',
     text: {
-      list: [
-        {
+      list: [{
           color: "#20a674",
           month: 'Nov',
           day: 21,
@@ -80,9 +79,8 @@ Page({
     //跨页面异步传递
     app.addListener((changedData) => {
       this.setData({
-        data: changedData,
+        currentPage: changedData,
       })
-      console.log(changedData);
     })
   },
 
@@ -97,12 +95,12 @@ Page({
     } else {
       console.log("get openid from server")
       wx.cloud.callFunction({
-        name: "getOpenid"
-      }).then(res => {
-        // console.log(res);
-        this.data.openid = res.result.openid;
-        app.globalData.openid = res.result.openid;
-      })
+          name: "getOpenid"
+        }).then(res => {
+          // console.log(res);
+          this.data.openid = res.result.openid;
+          app.globalData.openid = res.result.openid;
+        })
         .catch(res => {
           console.log("failed")
         })
@@ -147,11 +145,35 @@ Page({
 
   onShow() {
     let tabbar = this.getTabBar()
+    this.setData({
+      currentPage: app.globalData.currentPage,
+    })
     tabbar.setData({
       btn1: `color:${this.data.primaryColor}`,
+      slide: false,
       sidebarStyle: "left:-250px",
-      currentPage: 1,
+      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+      ["sld" + app.globalData.formerPage]: '',
+      sld3: '',
+      sld4: '',
     })
+    // if(app.globalData.currentPage == 1){
+    //   tabbar.setData({
+    //     sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+    //     sld2: '',
+    //   })
+    // }
+    // if(app.globalData.currentPage == 2){
+    //   tabbar.setData({
+    //     sld1: '',
+    //     sld2: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+    //   })
+    // }
+
+  },
+
+  onTabItemTap(e) {
+    console.log("aaaaa");
   },
 
   showSelector() {
@@ -161,12 +183,13 @@ Page({
   },
 
   sel1() {
-    if (this.data.selectedPage == 2) {
+    if (app.globalData.currentPage == 2) {
       this.setData({
         sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         sel2: "",
-        selectedPage: 1
+        currentPage: 1
       })
+      app.globalData.currentPage = 1;
     }
     setTimeout(() => {
       this.setData({
@@ -175,12 +198,13 @@ Page({
     }, 300)
   },
   sel2() {
-    if (this.data.selectedPage == 1) {
+    if (app.globalData.currentPage == 1) {
       this.setData({
         sel1: "",
         sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
-        selectedPage: 2
+        currentPage: 2
       })
+      app.globalData.currentPage = 2;
     }
     setTimeout(() => {
       this.setData({
@@ -210,11 +234,11 @@ Page({
       hasUserInfo: true
     })
   },
-  addNote(){
-    database.addNote(20204851,'学校','学校','学校')
-    },
-    
-  addTask(){
-    database.addTask(20204851,'学校','学校','学校')
-    },
+  addNote() {
+    database.addNote(20204851, '学校', '学校', '学校')
+  },
+
+  addTask() {
+    database.addTask(20204851, '学校', '学校', '学校')
+  },
 })

@@ -7,7 +7,6 @@ Component({
     rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
     useSidebar: getApp().globalData.useSidebar,
     isPad: getApp().globalData.isPad,
-    currentPage: '',
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
@@ -54,10 +53,39 @@ Component({
     },
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
+      const page = Number(e.currentTarget.dataset.page);
+      let formerPage = getApp().globalData.currentPage;
+      // console.log(formerPage, typeof(formerPage))
+      // console.log(page, typeof(page))
+      this.setData({
+        ["sld" + formerPage]: '',
+        ["sld" + page]: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+      })
       setTimeout(() => {
-        wx.switchTab({
-          url: path,
-        });
+        getApp().globalData.currentPage = page;
+        getApp().globalData.formerPage = formerPage;
+        if((formerPage == 1 && page == 2) || (formerPage == 2  && page == 1)){
+          this.setData({
+            slide: false,
+            sidebarStyle: "left:-250px",
+          })
+          this.send(page);
+          wx.switchTab({
+            url: path,
+          });
+        }else if(page == formerPage){
+          this.setData({
+            slide: false,
+            sidebarStyle: "left:-250px",
+          })
+        }else{
+          wx.switchTab({
+            url: path,
+          });
+          this.setData({
+            ["sld" + page]: '',
+          })
+        }
       }, 250);
     },
     switch (e) {
@@ -148,6 +176,10 @@ Component({
       } else {
         console.log('静止')
       }
+    },
+    send(data) {
+      // console.log("clicked");
+      getApp().setChangedData(data);
     },
   }
 })

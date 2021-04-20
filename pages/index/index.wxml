@@ -14,7 +14,7 @@
 </view>
 
 
-<view class="account_Container" wx:if="{{selectedPage == 1}}">
+<view class="account_Container" wx:if="{{currentPage == 1}}">
   <button bindtap="addNote">点击添加note</button>
   <button bindtap="addTask">点击添加task</button>
   <view class="category_title"><text class="material-icons">grade</text><text>笔记</text></view>
@@ -22,9 +22,9 @@
   <view class="hengpai">
     <view class="account_box_1" style="width:50%;">
       <view id="b1">
-        <view bindtap="switch_page" wx:for="{{test.test_Array01}}">
-          <view class="picture" style=" background:url({{}}); background-size: 100% 100%;">
-            <view wx:if="1" class="word_Tips">共{{}}张图片</view>
+        <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array01}}">
+          <view wx:if="{{0}}" class="picture" style=" background:url({{picture_path}}); background-size: 100% 100%;"> <!--如果没有图片就不显示-->
+            <view  class="word_Tips">共{{}}张图片</view>
           </view>
           <view class="_box_1_nei">
             {{item.real}}
@@ -38,9 +38,9 @@
     <view class="account_box_2" style="width:50%;">
       <view id="b2">
         <!--这里加一个空view的目的是防止最外层的盒子会两边自动相等，如果不加的话会判定为两边高度相等-->
-        <view bindtap="switch_page" wx:for="{{test.test_Array02}}" class="account_box_2">
-          <view class="picture" style=" background:url({{}}); background-size: 100% 100%;">
-            <view wx:if="1" class="word_Tips">共{{}}张图片</view>
+        <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array02}}" class="account_box_2">
+          <view wx:if="{{1}}" class="picture" style=" background:url({{}}); background-size: 100% 100%;">  <!--如果没有图片就不显示-->
+            <view class="word_Tips">共{{}}张图片</view>
           </view>
           <view class="_box_2_nei">
             {{item.real}}
@@ -53,7 +53,7 @@
   <button bindtap="showSelector">切换</button>
 </view>
 
-<view wx:if="{{selectedPage == 2}}">
+<view wx:if="{{currentPage == 2}}">
   <view class="head">
     <view class="head_1">
       <text>代办</text>
@@ -63,7 +63,7 @@
   </view>
   <view class="divide"></view>
   <view class="main">
-    <view wx:for="{{text.list}}">
+    <view wx:for="{{text.list}}" wx:key="id">
       <view class="DBbox" style="background-color:{{item.color}};">
         <view class="box_left">
           <view class="month">{{item.month}}</view>
