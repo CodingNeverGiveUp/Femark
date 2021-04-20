@@ -34,15 +34,24 @@ Page({
     let tabbar = this.getTabBar()
     tabbar.setData({
       btn3: `color:${this.data.primaryColor}`,
-      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
-      ["sld" + app.globalData.formerPage]: '',
-      sld1: '',
-      sld2: '',
-      sld3: '',
+      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);transition:none;`,
+      ["sld" + app.globalData.formerPage]: 'transition:none;',
+      sld1: 'transition:none;',
+      sld2: 'transition:none;',
+      sld3: 'transition:none;',
       slide: false,
       sidebarStyle: "left:-250px",
     })
     app.globalData.currentPage = 4;
+    setTimeout(() => {
+      tabbar.setData({
+        ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+        ["sld" + app.globalData.formerPage]: '',
+        sld1: '',
+        sld2: '',
+        sld3: '',
+      })
+    }, 250)
   },
 
   /**

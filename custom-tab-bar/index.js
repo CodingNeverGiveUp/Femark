@@ -79,12 +79,12 @@ Component({
             sidebarStyle: "left:-250px",
           })
         }else{
-          wx.switchTab({
-            url: path,
-          });
           this.setData({
             ["sld" + page]: '',
           })
+          wx.switchTab({
+            url: path,
+          });
         }
       }, 250);
     },

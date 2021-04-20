@@ -152,11 +152,19 @@ Page({
       btn1: `color:${this.data.primaryColor}`,
       slide: false,
       sidebarStyle: "left:-250px",
-      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
-      ["sld" + app.globalData.formerPage]: '',
-      sld3: '',
-      sld4: '',
+      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);transition:none;`,
+      ["sld" + app.globalData.formerPage]: 'transition:none;',
+      sld3: 'transition:none;',
+      sld4: 'transition:none;',
     })
+    setTimeout(() => {
+      tabbar.setData({
+        ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+        ["sld" + app.globalData.formerPage]: '',
+        sld3: '',
+        sld4: '',
+      })
+    }, 250)
     // if(app.globalData.currentPage == 1){
     //   tabbar.setData({
     //     sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
