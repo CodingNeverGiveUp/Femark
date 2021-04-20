@@ -17,7 +17,7 @@
 
 <view class="container">
   <!-- 笔记 -->
-  <view class="note" wx:if="{{currentPage == 1}}">
+  <view class="note" wx:if="{{isPad == true || currentPage == 1}}">
     <view class="category_title"><text class="material-icons">grade</text><text>笔记</text></view>
     <view class="category_small_title">{{test_Lenth}}个笔记</view>
     <view class="hengpai">
@@ -60,7 +60,7 @@
 
 
   <!-- 待办 -->
-  <view class="todo" wx:if="{{currentPage == 2}}">
+  <view class="todo" wx:if="{{isPad == true || currentPage == 2}}">
     <view class="head">
       <view class="head_1">
         <text>待办</text>
