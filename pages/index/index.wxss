@@ -48,7 +48,7 @@ page{
 
 
 /* 笔记 */
-.account_Container{
+.note{
   padding:50rpx 30rpx 0 30rpx;
 }
 .category_title{
@@ -113,12 +113,6 @@ page{
     font-size: 1.4rem;
     margin-bottom: 20rpx;
     letter-spacing: 2px;
-}
-
-.icon{
-    vertical-align:sub;
-    font-size: 70rpx;
-    margin-left: 20rpx;
 }
 
 .head_2{
@@ -301,7 +295,7 @@ page{
       letter-spacing: 2px;
   }
   
-  .icon{
+  .db_icon{
       vertical-align:sub;
       font-size: 70rpx;
       margin-left: 20rpx;
