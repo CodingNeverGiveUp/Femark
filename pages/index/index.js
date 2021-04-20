@@ -79,9 +79,8 @@ Page({
     //跨页面异步传递
     app.addListener((changedData) => {
       this.setData({
-        data: changedData,
+        currentPage: changedData,
       })
-      console.log(changedData);
     })
   },
 
@@ -144,8 +143,7 @@ Page({
     })
   },
 
-  onShow(e) {
-    console.log(e);
+  onShow() {
     let tabbar = this.getTabBar()
     this.setData({
       currentPage: app.globalData.currentPage,
@@ -156,6 +154,8 @@ Page({
       sidebarStyle: "left:-250px",
       ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
       ["sld" + app.globalData.formerPage]: '',
+      sld3: '',
+      sld4: '',
     })
     // if(app.globalData.currentPage == 1){
     //   tabbar.setData({
@@ -170,6 +170,10 @@ Page({
     //   })
     // }
 
+  },
+
+  onTabItemTap(e) {
+    console.log("aaaaa");
   },
 
   showSelector() {

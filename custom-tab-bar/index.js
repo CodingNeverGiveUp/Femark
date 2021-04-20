@@ -55,8 +55,8 @@ Component({
       const path = e.currentTarget.dataset.path;
       const page = Number(e.currentTarget.dataset.page);
       let formerPage = getApp().globalData.currentPage;
-      console.log(formerPage, typeof(formerPage))
-      console.log(page, typeof(page))
+      // console.log(formerPage, typeof(formerPage))
+      // console.log(page, typeof(page))
       this.setData({
         ["sld" + formerPage]: '',
         ["sld" + page]: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
@@ -64,15 +64,28 @@ Component({
       setTimeout(() => {
         getApp().globalData.currentPage = page;
         getApp().globalData.formerPage = formerPage;
-        if(page == 1 || page == 2){
+        if((formerPage == 1 && page == 2) || (formerPage == 2  && page == 1)){
           this.setData({
             slide: false,
             sidebarStyle: "left:-250px",
           })
+          this.send(page);
+          wx.switchTab({
+            url: path,
+          });
+        }else if(page == formerPage){
+          this.setData({
+            slide: false,
+            sidebarStyle: "left:-250px",
+          })
+        }else{
+          wx.switchTab({
+            url: path,
+          });
+          this.setData({
+            ["sld" + page]: '',
+          })
         }
-        wx.switchTab({
-          url: path,
-        });
       }, 250);
     },
     switch (e) {
@@ -163,6 +176,10 @@ Component({
       } else {
         console.log('静止')
       }
+    },
+    send(data) {
+      // console.log("clicked");
+      getApp().setChangedData(data);
     },
   }
 })

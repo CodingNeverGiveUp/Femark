@@ -51,10 +51,10 @@ Page({
   },
 
   //跨页面异步传递
-  send() {
-    console.log("clicked");
-    app.setChangedData("2")
-  },
+  // send() {
+  //   console.log("clicked");
+  //   app.setChangedData("2")
+  // },
 
   /**
    * 生命周期函数--监听页面加载
@@ -83,6 +83,9 @@ Page({
       btn2: `color:${this.data.primaryColor}`,
       ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
       ["sld" + app.globalData.formerPage]: '',
+      sld1: '',
+      sld2: '',
+      sld4: '',
       slide: false,
       sidebarStyle: "left:-250px",
     })
