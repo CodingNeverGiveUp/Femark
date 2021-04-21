@@ -65,7 +65,7 @@ Component({
       setTimeout(() => {
         getApp().globalData.currentPage = page;
         getApp().globalData.formerPage = formerPage;
-        if((formerPage == 1 && page == 2) || (formerPage == 2  && page == 1)){
+        if ((formerPage == 1 && page == 2) || (formerPage == 2 && page == 1)) {
           this.setData({
             slide: false,
             sidebarStyle: "left:-250px",
@@ -73,16 +73,28 @@ Component({
           pages[0].setData({
             currentPage: page,
           })
+          if (page == 1) {
+            pages[0].setData({
+              sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+              sel2: "",
+            })
+          }
+          if (page == 2) {
+            pages[0].setData({
+              sel1: "",
+              sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+            })
+          }
           // this.send(page);
           wx.switchTab({
             url: path,
           });
-        }else if(page == formerPage){
+        } else if (page == formerPage) {
           this.setData({
             slide: false,
             sidebarStyle: "left:-250px",
           })
-        }else{
+        } else {
           this.setData({
             ["sld" + page]: '',
           })
@@ -148,7 +160,7 @@ Component({
       } else {
         //测试
         let cpage = getCurrentPages();
-        console.log("aaa",cpage);
+        console.log("aaa", cpage);
       }
     },
     touchStart: function (e) {

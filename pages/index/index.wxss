@@ -45,6 +45,7 @@
 .container{
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 }
 
 .note{
@@ -130,13 +131,13 @@
 .head_1{
     font-size: 1.4rem;
     margin-bottom: 20rpx;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
 }
 
 .head_2{
     font-size: 0.8rem;
     color: #cccccc;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
 }
 
 .divide{
