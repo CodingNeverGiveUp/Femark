@@ -1,10 +1,6 @@
 /**index.wxss**/
 @import "/source/icon.wxss";
 
-page{
-  background-color: #f1f1f1;
-}
-
 .hover{
   background: var(--rgbaprimaryColor--);
 }
@@ -46,11 +42,33 @@ page{
   margin: 0 0 0 50rpx
 }
 
+.container{
+  display: flex;
+  flex-direction: column;
+}
 
-/* 笔记 */
 .note{
   padding:50rpx 30rpx 0 30rpx;
+  background: greenyellow;
 }
+.todo{
+  background: pink;
+}
+
+@media only screen and (min-width: 600px){
+  .container{
+    display: flex;
+    flex-direction: row;
+  }
+  .note{
+    width: 50%;
+  }
+  .todo{
+    width: 50%;
+  }
+}
+
+/* 笔记 */
 .category_title{
   font-size: 1.2rem;
   display: flex;
@@ -181,9 +199,6 @@ page{
 
 
 @media (prefers-color-scheme: dark) {
-  page{
-    background-color: #222426;
-  }
   .hover{
     background: var(--rgbaprimaryColor--);
   }

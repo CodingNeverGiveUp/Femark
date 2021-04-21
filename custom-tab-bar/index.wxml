@@ -2,17 +2,17 @@
 <view class="main {{isPad?'h_main':useSidebar?'h_main':''}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
   bindtouchend='touchEnd' style="{{mainStyle}};">
   <view class="items">
-    <view class="item" data-path="/pages/index/index" bindtap="switch" hover-class="hover"
+    <view class="item" data-path="/pages/index/index" data-page="1" bindtap="switch" hover-class="hover"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{btn1}};">
       <view class="material-icons"><text>mode</text></view>
       <view>记事</view>
     </view>
-    <view class="item" data-path="/pages/category/category" bindtap="switch" hover-class="hover"
+    <view class="item" data-path="/pages/category/category" data-page="3" bindtap="switch" hover-class="hover"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{btn2}};">
       <view class="material-icons"><text>archive</text></view>
       <view>分类</view>
     </view>
-    <view class="item" data-path="/pages/account/account" bindtap="switch" hover-class="hover"
+    <view class="item" data-path="/pages/account/account" data-page="4" bindtap="switch" hover-class="hover"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{btn3}};">
       <view class="material-icons"><text>account_circle</text></view>
       <view>我的</view>

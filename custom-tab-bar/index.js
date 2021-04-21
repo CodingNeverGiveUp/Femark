@@ -54,6 +54,7 @@ Component({
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
       const page = Number(e.currentTarget.dataset.page);
+      const pages = getCurrentPages();
       let formerPage = getApp().globalData.currentPage;
       // console.log(formerPage, typeof(formerPage))
       // console.log(page, typeof(page))
@@ -69,7 +70,10 @@ Component({
             slide: false,
             sidebarStyle: "left:-250px",
           })
-          this.send(page);
+          pages[0].setData({
+            currentPage: page,
+          })
+          // this.send(page);
           wx.switchTab({
             url: path,
           });
@@ -90,12 +94,16 @@ Component({
     },
     switch (e) {
       const path = e.currentTarget.dataset.path;
+      const page = Number(e.currentTarget.dataset.page);
+      let formerPage = getApp().globalData.currentPage;
       this.setData({
         mainStyle: "",
         floatStyle: "",
         slide: false,
       })
       setTimeout(() => {
+        getApp().globalData.currentPage = page;
+        getApp().globalData.formerPage = formerPage;
         wx.switchTab({
           url: path,
         });
@@ -137,7 +145,11 @@ Component({
           slide: false,
         })
         this.hideDialog();
-      } else {}
+      } else {
+        //测试
+        let cpage = getCurrentPages();
+        console.log("aaa",cpage);
+      }
     },
     touchStart: function (e) {
       // console.log(e.touches[0].pageX)
@@ -177,9 +189,9 @@ Component({
         console.log('静止')
       }
     },
-    send(data) {
-      // console.log("clicked");
-      getApp().setChangedData(data);
-    },
+    // send(data) {
+    //   // console.log("clicked");
+    //   getApp().setChangedData(data);
+    // },
   }
 })

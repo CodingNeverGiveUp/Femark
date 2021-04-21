@@ -78,9 +78,9 @@ Page({
 
     //跨页面异步传递
     app.addListener((changedData) => {
-      this.setData({
-        currentPage: changedData,
-      })
+      // this.setData({
+      //   currentPage: changedData,
+      // })
     })
   },
 
@@ -191,13 +191,21 @@ Page({
   },
 
   sel1() {
+    let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 2) {
       this.setData({
         sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         sel2: "",
         currentPage: 1
       })
+      tabbar.setData({
+        sld1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+        sld2: "",
+        sld3: "",
+        sld4: "",
+      })
       app.globalData.currentPage = 1;
+      app.globalData.formerPage = 2;
     }
     setTimeout(() => {
       this.setData({
@@ -206,13 +214,21 @@ Page({
     }, 300)
   },
   sel2() {
+    let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 1) {
       this.setData({
         sel1: "",
         sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         currentPage: 2
       })
+      tabbar.setData({
+        sld1: "",
+        sld2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+        sld3: "",
+        sld4: "",
+      })
       app.globalData.currentPage = 2;
+      app.globalData.formerPage = 1;
     }
     setTimeout(() => {
       this.setData({
