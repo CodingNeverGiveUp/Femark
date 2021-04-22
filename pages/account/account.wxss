@@ -77,7 +77,7 @@
 
 .footer{
   position: relative;
-  top: 900rpx;
+  top: 920rpx;
   width: 100%;
 }
 
