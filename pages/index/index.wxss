@@ -54,7 +54,7 @@
   padding:50rpx 30rpx 0 30rpx;
 }
 .note{
-  padding:80rpx 30rpx 0 30rpx;
+  padding:80rpx 40rpx 0 40rpx;
 }
 /* .todo{
   background: pink;
@@ -197,9 +197,9 @@
     align-items:center;
 }
 .DBbox{
-  margin: 20rpx 40rpx;
+  margin: 20rpx 65rpx;
   border-radius: 1.0ch;
-  padding: 25rpx 30rpx 25rpx 30rpx;
+  padding: 30rpx 30rpx 30rpx 30rpx;
   display: flex;
   flex-direction: row;
   align-items:center;
@@ -302,7 +302,7 @@
     background: #222426;
   }
   .note{
-    padding:80rpx 30rpx 0 30rpx;
+    padding:80rpx 40rpx 0 40rpx;
     background: #222426;
   }
   .todo{
@@ -443,9 +443,9 @@
       align-items:center;
   }
   .DBbox{
-    margin: 20rpx 40rpx;
+    margin: 20rpx 65rpx;
     border-radius: 1.0ch;
-    padding: 25rpx 30rpx 25rpx 30rpx;
+    padding: 30rpx 30rpx 30rpx 30rpx;
     display: flex;
     flex-direction: row;
     align-items:center;

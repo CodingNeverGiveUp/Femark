@@ -7,20 +7,37 @@ page {
 
 .category_Container2 {
   flex-direction: column;
-  padding: 65rpx 80rpx 100rpx 65rpx;
+  padding: 80rpx 65rpx 0 65rpx;
 }
 
 .category_title {
+  font-size: 1.4rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 1.2rem;
+  margin: 20rpx 0 10rpx 50rpx;
+  letter-spacing: 2px;
+}
+
+.category_title_pad {
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20rpx 0 10rpx 50rpx;
+  letter-spacing: 2px;
+  justify-content: center;
 }
 
 .category_small_title {
-  color: ffffff;
   font-size: 0.8rem;
-  margin-bottom: 180rpx;
+  margin: 0 0 60rpx 50rpx;
+}
+
+.category_small_title_pad {
+  font-size: 0.8rem;
+  margin: 0 0 60rpx 50rpx;
+  justify-content: center;
 }
 
 .category_Card {
@@ -28,10 +45,12 @@ page {
   overflow: hidden;
   transition: height .5s ease-in-out;
   display: flex;
-  border-radius: 13rpx;
+  border-radius: 10rpx;
   flex-direction: column;
-  margin: 0 0 30rpx 0;
-
+  margin: 0 0 20rpx 0;
+  color: #fff;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
 }
 
 .card_Category1 {
@@ -41,7 +60,7 @@ page {
   align-items: center;
   height: 150rpx;
   flex-shrink: 0;
-  padding: 0rpx 30rpx 0 50rpx;
+  padding: 0rpx 50rpx 0 50rpx;
 }
 
 .card_Content1 {
