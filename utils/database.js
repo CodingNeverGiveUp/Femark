@@ -38,7 +38,24 @@ const addTask = (taskDate, taskContent, taskTitle, taskType) => {
 
 //删除待办数据 //pull方法不懂，没做出来
 const deleteTask = () => {
-  console.log("content")
+  const _ = wx.cloud.database().command
+  wx.cloud.database().collection('note').where({
+      _openid: "oxY3r5W1q6qmHTczqCMHbpYc6TCk"
+    }).get()
+    .then(res => {
+      let id = res.data[0]
+      let timesearch = res.data[0].task[1].time
+      console.log(id)
+      console.log(timesearch)
+      
+      wx.cloud.database().collection('note').doc(id).update({
+        data: {
+          'task': _.pull({
+            'time':timesearch,
+          }),
+        }
+      })
+    })
 }
 
 //修改待办数据
