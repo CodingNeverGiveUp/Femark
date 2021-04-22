@@ -149,6 +149,7 @@ Page({
       currentPage: app.globalData.currentPage,
     })
     tabbar.setData({
+      currentPage: app.globalData.currentPage,
       btn1: `color:${this.data.primaryColor}`,
       slide: false,
       sidebarStyle: "left:-250px",

@@ -80,6 +80,7 @@ Page({
   onShow: function () {
     let tabbar = this.getTabBar()
     tabbar.setData({
+      currentPage: 3,
       btn2: `color:${this.data.primaryColor}`,
       ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);transition:none;`,
       ["sld" + app.globalData.formerPage]: 'transition:none;',

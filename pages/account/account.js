@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    hitokoto: false,
+    bing: true,
   },
 
   /**
@@ -24,7 +25,8 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.getImage();
+    this.getMoto();
   },
 
   /**
@@ -33,6 +35,7 @@ Page({
   onShow: function () {
     let tabbar = this.getTabBar()
     tabbar.setData({
+      currentPage: 4,
       btn3: `color:${this.data.primaryColor}`,
       ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);transition:none;`,
       ["sld" + app.globalData.formerPage]: 'transition:none;',
@@ -52,6 +55,97 @@ Page({
         sld3: '',
       })
     }, 250)
+  },
+
+  getImage: function () {
+    if (app.globalData.bing) {
+      wx.request({
+        url: 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1',
+        method: 'GET',
+        dataType: 'json',
+        success: res => {
+          let url = 'https://s.cn.bing.net/' + res.data.images[0].url;
+          this.setData({
+            imgUrl: url
+          })
+        }
+      })
+    } else {
+      return;
+      wx.cloud.getTempFileURL({
+        fileList: ["cloud://holotask-1gb3a2qhe28a3262.686f-holotask-1gb3a2qhe28a3262-1304966310/image/account/sajad-nori-i4lvriR96Ek-unsplash.jpg"],
+        success: res => {
+          this.setData({
+            imgUrl: res.fileList[0].tempFileURL
+          })
+        },
+        fail: res => {
+          console.log("Failed to request img.")
+        }
+      })
+    }
+  },
+
+  getMoto: function () {
+    if (app.globalData.hitokoto) {
+      wx.request({
+        url: 'https://v1.hitokoto.cn/?c=a&c=b&c=c&c=d&c=i&encode=json&max_length=30',
+        method: 'GET',
+        dataType: 'json',
+        success: res => {
+          this.setData({
+            motto: res.data.hitokoto,
+            motto_from: res.data.from
+          })
+          // console.log(res.data);
+        }
+      })
+    }
+  },
+
+  animation: function () {
+    this.animate('#motto_container', [{
+      opacity: 1.0,
+      offset: 0
+    }, {
+      opacity: 0.0,
+      offset: 1
+    }, ], 2000, {
+      scrollSource: '#scroller',
+      timeRange: 2000,
+      startScrollOffset: 50,
+      endScrollOffset: 280
+    })
+
+    this.animate('#header', [{
+      height: '100%',
+    }, {
+      height: '120%',
+    }, ], 2000, {
+      scrollSource: '#scroller',
+      timeRange: 2000,
+      startScrollOffset: 0,
+      endScrollOffset: 280
+    })
+
+    this.animate('#motto_setting', [{
+      opacity: 1.0,
+      transform: 'rotate(0deg)',
+      offset: 0
+    }, {
+      opacity: 1.0,
+      transform: 'rotate(32deg)',
+      offset: .18
+    }, {
+      opacity: 0.0,
+      transform: 'rotate(180deg)',
+      offset: 1
+    }, ], 2000, {
+      scrollSource: '#scroller',
+      timeRange: 2000,
+      startScrollOffset: 0,
+      endScrollOffset: 280
+    })
   },
 
   /**
