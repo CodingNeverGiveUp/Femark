@@ -258,6 +258,11 @@ Page({
       hasUserInfo: true
     })
   },
+
+  addArray() {
+    database.addArray()
+  },
+
   addNote() {
     database.addNote(20204851, '学校', '学校', '学校')
   },
@@ -265,4 +270,12 @@ Page({
   addTask() {
     database.addTask(20204851, '学校', '学校', '学校')
   },
+
+  deleteTask(){
+    database.deleteTask();
+  },
+
+  getTask(){
+    database.getTask();
+  }
 })

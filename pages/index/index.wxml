@@ -54,8 +54,11 @@
       </view>
     </view>
     <button bindtap="showSelector">切换</button>
+    <button bindtap="addArray">点击添加用户</button>
     <button bindtap="addNote">点击添加note</button>
     <button bindtap="addTask">点击添加task</button>
+    <button bindtap="deleteTask">点击删除task</button>
+    <button bindtap="getTask">点击获得task</button>
   </view>
 
 
