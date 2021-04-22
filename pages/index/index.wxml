@@ -60,6 +60,8 @@
     <button bindtap="addTask">点击添加task</button>
     <button bindtap="deleteTask">点击删除task</button>
     <button bindtap="getTask">点击获得task</button>
+    <button bindtap="requestSubscribeMessage">点击获取订阅消息</button>
+    <button bindtap="sendOne">点击发送消息给单个用户</button>
   </view>
 
 

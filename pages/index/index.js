@@ -259,6 +259,38 @@ Page({
       hasUserInfo: true
     })
   },
+  //请求用户订阅授权
+  requestSubscribeMessage(){
+    wx.requestSubscribeMessage({
+      tmplIds: ['n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI'],
+      success (res) {
+        console.log('授权成功',res)
+      },
+      fail(res){
+        console.log('授权失败',res)
+      }
+    })
+  },
+  
+  //发送消息给单个用户
+  sendOne(){//title,time,urgency,content,reminderStatus
+    wx.cloud.callFunction({
+      name: "sendOne",
+      data:{
+        openid:this.data.openid,
+        title:"腾讯会议",//事项主题
+        time:"2019年11月30日 21:00:00",//事项时间
+        urgency:"紧急且重要",//紧急度
+        content:"会议内容为制作小程序",//事项描述
+        reminderStatus:"待确认"//提醒状态
+      }
+    }).then(res => {
+      console.log("发送单条成功",res);
+    })
+    .catch(res => {
+      console.log("发送单条失败",res)
+    })
+  },
 
   addArray() {
     database.addArray()
