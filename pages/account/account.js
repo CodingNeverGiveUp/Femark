@@ -111,25 +111,25 @@ Page({
   },
 
   animation: function () {
-    this.animate('#motto_container', [{
+    this.animate('.motto_container', [{
       opacity: 1.0,
       offset: 0
     }, {
       opacity: 0.0,
       offset: 1
     }, ], 2000, {
-      scrollSource: '#scroller',
+      scrollSource: '.scroller',
       timeRange: 2000,
       startScrollOffset: 50,
       endScrollOffset: 280
     })
 
-    this.animate('#header', [{
+    this.animate('.header', [{
       height: '100%',
     }, {
       height: '120%',
     }, ], 2000, {
-      scrollSource: '#scroller',
+      scrollSource: '.scroller',
       timeRange: 2000,
       startScrollOffset: 0,
       endScrollOffset: 280
