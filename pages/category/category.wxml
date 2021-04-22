@@ -1,7 +1,7 @@
 <!--pages/category/category.wxml-->
 <view class="category_Container2">
   <view>
-    <view class="category_title"><text class="material-icons">grade</text><text class="">分类</text></view>
+    <view class="category_title"><text >分类</text></view>
     <view class="category_small_title">{{test_Lenth}}个分类</view>
   </view>
 

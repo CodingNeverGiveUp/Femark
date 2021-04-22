@@ -17,6 +17,28 @@ App({
         console.log("failed")
       })
 
+    // // 获取用户信息
+    // wx.getSetting({
+    //   success: res => {
+    //     console.log(res);
+    //     if (res.authSetting['scope.userInfo']) {
+    //       // 已经授权，可以直接调用 getUserProfile 获取头像昵称，不会弹框
+    //       wx.getUserProfile({
+    //         desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+    //         success: (res) => {
+    //           console.log(res)
+    //           // this.setData({
+    //           //   userInfo: res.userInfo,
+    //           //   hasUserInfo: true
+    //           // })
+    //           this.globalData.userInfo = res.userInfo;
+    //           this.globalData.hasUserInfo = true;
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
+
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -66,6 +88,44 @@ App({
       return sColor
     }
   },
+
+  // 获取随机颜色
+  getRandomColor() {
+    if (app.globalData.pureTheme) {
+      return "";
+    } else {
+      let num = Math.round(Math.random());
+      if (num >= 0 && num < 0.2) {
+        return "#ae6060";
+      } else if (num >= 0.2 && num < 0.4) {
+        return "#20a674";
+      } else if (num >= 0.4 && num < 0.6) {
+        return "#176095";
+      } else if (num >= 0.6 && num < 0.8) {
+        return "#ffbc66";
+      } else {
+        return "#97756b";
+      }
+    }
+  },
+
+  //获取用户信息
+  getUserProfile() {
+    wx.getUserProfile({
+      desc: '完善个人资料',
+      success: function(res) {
+        var userInfo = res.userInfo
+        // console.log('userInfo==>', userInfo)
+        wx.setStorageSync('storage_info', 1);//本地标记
+        //下面将userInfo存入服务器中的用户个人资料
+        //...
+      },
+      fail() {
+        console.log("用户拒绝授权")
+      }
+    })
+  },
+
   //跨页面异步传递
   addListener(callback) {
     this.callback = callback;
@@ -80,6 +140,7 @@ App({
 
   globalData: {
     userInfo: null,
+    hasUserInfo: false,
     primaryColor: "#4285f4",
     openid: null,
     currentPage: 1,
@@ -87,5 +148,8 @@ App({
     systemInfo: null,
     isPad: false,
     useSidebar: true,
+    hitokoto: false,
+    bing: true,
+    pureTheme: false,
   }
 })

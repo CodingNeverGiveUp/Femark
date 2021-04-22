@@ -10,13 +10,13 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
+    pureTheme: app.globalData.pureTheme,
     isPad: app.globalData.isPad,
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
     currentPage: app.globalData.currentPage,
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
-
 
     h1: '',
     h2: '',
@@ -78,9 +78,9 @@ Page({
 
     //跨页面异步传递
     app.addListener((changedData) => {
-      this.setData({
-        currentPage: changedData,
-      })
+      // this.setData({
+      //   currentPage: changedData,
+      // })
     })
   },
 
@@ -149,14 +149,23 @@ Page({
       currentPage: app.globalData.currentPage,
     })
     tabbar.setData({
+      currentPage: app.globalData.currentPage,
       btn1: `color:${this.data.primaryColor}`,
       slide: false,
       sidebarStyle: "left:-250px",
-      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
-      ["sld" + app.globalData.formerPage]: '',
-      sld3: '',
-      sld4: '',
+      ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);transition:none;`,
+      ["sld" + app.globalData.formerPage]: 'transition:none;',
+      sld3: 'transition:none;',
+      sld4: 'transition:none;',
     })
+    setTimeout(() => {
+      tabbar.setData({
+        ["sld" + app.globalData.currentPage]: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
+        ["sld" + app.globalData.formerPage]: '',
+        sld3: '',
+        sld4: '',
+      })
+    }, 250)
     // if(app.globalData.currentPage == 1){
     //   tabbar.setData({
     //     sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
@@ -183,13 +192,21 @@ Page({
   },
 
   sel1() {
+    let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 2) {
       this.setData({
         sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         sel2: "",
         currentPage: 1
       })
+      tabbar.setData({
+        sld1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+        sld2: "",
+        sld3: "",
+        sld4: "",
+      })
       app.globalData.currentPage = 1;
+      app.globalData.formerPage = 2;
     }
     setTimeout(() => {
       this.setData({
@@ -198,19 +215,37 @@ Page({
     }, 300)
   },
   sel2() {
+    let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 1) {
       this.setData({
         sel1: "",
         sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         currentPage: 2
       })
+      tabbar.setData({
+        sld1: "",
+        sld2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+        sld3: "",
+        sld4: "",
+      })
       app.globalData.currentPage = 2;
+      app.globalData.formerPage = 1;
     }
     setTimeout(() => {
       this.setData({
         selectorStyle: "",
       })
     }, 300)
+  },
+
+  getUserProfileTap (e) {
+    //如果未授权，就提示授权，如果授权了，就执行正常的业务逻辑
+    if (!wx.getStorageSync('storage_info')) {
+      app.getUserProfile()
+      return
+    }
+    //下面是正常业务逻辑
+    //...
   },
 
   getUserProfile(e) {
@@ -223,6 +258,8 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
+        app.globalData.userInfo = res.userInfo;
+        app.globalData.hasUserInfo = true;
       }
     })
   },
@@ -234,6 +271,43 @@ Page({
       hasUserInfo: true
     })
   },
+  //请求用户订阅授权
+  requestSubscribeMessage(){
+    wx.requestSubscribeMessage({
+      tmplIds: ['n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI'],
+      success (res) {
+        console.log('授权成功',res)
+      },
+      fail(res){
+        console.log('授权失败',res)
+      }
+    })
+  },
+  
+  //发送消息给单个用户
+  sendOne(){//title,time,urgency,content,reminderStatus
+    wx.cloud.callFunction({
+      name: "sendOne",
+      data:{
+        openid:this.data.openid,
+        title:"腾讯会议",//事项主题
+        time:"2019年11月30日 21:00:00",//事项时间
+        urgency:"紧急且重要",//紧急度
+        content:"会议内容为制作小程序",//事项描述
+        reminderStatus:"待确认"//提醒状态
+      }
+    }).then(res => {
+      console.log("发送单条成功",res);
+    })
+    .catch(res => {
+      console.log("发送单条失败",res)
+    })
+  },
+
+  addArray() {
+    database.addArray()
+  },
+
   addNote() {
     database.addNote(20204851, '学校', '学校', '学校')
   },
@@ -241,4 +315,12 @@ Page({
   addTask() {
     database.addTask(20204851, '学校', '学校', '学校')
   },
+
+  deleteTask() {
+    database.deleteTask();
+  },
+
+  getTask() {
+    database.getTask();
+  }
 })

@@ -3,6 +3,7 @@ Component({
   data: {
     touchS: [0, 0],
     touchE: [0, 0],
+    currentPage: getApp().globalData.currentPage,
     primaryColor: getApp().globalData.primaryColor,
     rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
     useSidebar: getApp().globalData.useSidebar,
@@ -54,6 +55,7 @@ Component({
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
       const page = Number(e.currentTarget.dataset.page);
+      const pages = getCurrentPages();
       let formerPage = getApp().globalData.currentPage;
       // console.log(formerPage, typeof(formerPage))
       // console.log(page, typeof(page))
@@ -64,38 +66,57 @@ Component({
       setTimeout(() => {
         getApp().globalData.currentPage = page;
         getApp().globalData.formerPage = formerPage;
-        if((formerPage == 1 && page == 2) || (formerPage == 2  && page == 1)){
+        if ((formerPage == 1 && page == 2) || (formerPage == 2 && page == 1)) {
           this.setData({
             slide: false,
             sidebarStyle: "left:-250px",
           })
-          this.send(page);
+          pages[0].setData({
+            currentPage: page,
+          })
+          if (page == 1) {
+            pages[0].setData({
+              sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+              sel2: "",
+            })
+          }
+          if (page == 2) {
+            pages[0].setData({
+              sel1: "",
+              sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
+            })
+          }
+          // this.send(page);
           wx.switchTab({
             url: path,
           });
-        }else if(page == formerPage){
+        } else if (page == formerPage) {
           this.setData({
             slide: false,
             sidebarStyle: "left:-250px",
           })
-        }else{
-          wx.switchTab({
-            url: path,
-          });
+        } else {
           this.setData({
             ["sld" + page]: '',
           })
+          wx.switchTab({
+            url: path,
+          });
         }
       }, 250);
     },
     switch (e) {
       const path = e.currentTarget.dataset.path;
+      const page = Number(e.currentTarget.dataset.page);
+      let formerPage = getApp().globalData.currentPage;
       this.setData({
         mainStyle: "",
         floatStyle: "",
         slide: false,
       })
       setTimeout(() => {
+        getApp().globalData.currentPage = page;
+        getApp().globalData.formerPage = formerPage;
         wx.switchTab({
           url: path,
         });
@@ -137,7 +158,11 @@ Component({
           slide: false,
         })
         this.hideDialog();
-      } else {}
+      } else {
+        //测试
+        let cpage = getCurrentPages();
+        console.log("aaa", cpage);
+      }
     },
     touchStart: function (e) {
       // console.log(e.touches[0].pageX)
@@ -177,9 +202,9 @@ Component({
         console.log('静止')
       }
     },
-    send(data) {
-      // console.log("clicked");
-      getApp().setChangedData(data);
-    },
+    // send(data) {
+    //   // console.log("clicked");
+    //   getApp().setChangedData(data);
+    // },
   }
 })

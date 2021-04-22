@@ -2,17 +2,17 @@
 <view class="main {{isPad?'h_main':useSidebar?'h_main':''}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
   bindtouchend='touchEnd' style="{{mainStyle}};">
   <view class="items">
-    <view class="item" data-path="/pages/index/index" bindtap="switch" hover-class="hover"
+    <view class="item" data-path="/pages/index/index" data-page="1" bindtap="switch" hover-class="hover"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{btn1}};">
       <view class="material-icons"><text>mode</text></view>
       <view>记事</view>
     </view>
-    <view class="item" data-path="/pages/category/category" bindtap="switch" hover-class="hover"
+    <view class="item" data-path="/pages/category/category" data-page="3" bindtap="switch" hover-class="hover"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{btn2}};">
       <view class="material-icons"><text>archive</text></view>
       <view>分类</view>
     </view>
-    <view class="item" data-path="/pages/account/account" bindtap="switch" hover-class="hover"
+    <view class="item" data-path="/pages/account/account" data-page="4" bindtap="switch" hover-class="hover"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{btn3}};">
       <view class="material-icons"><text>account_circle</text></view>
       <view>我的</view>
@@ -21,7 +21,7 @@
 </view>
 <view class="sidebar" style="{{sidebarStyle}};{{useSidebar?'':isPad?'':'display:none;'}}">
   <view class="head">
-    <view class="material-icons menu_icon" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover"
+    <view class="material-icons menu_icon" style="{{currentPage==4?'color:#fff;':''}}--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover"
       bindtap="menuTap"><text>menu</text></view>
     <view class="head_bar">
       <text style="font-size:1.2rem;">Femark</text>
@@ -62,9 +62,10 @@
   </view>
 </view>
 <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view>
-<view wx:if="{{currentPage==4?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}"
-  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}" hover-class="t_hover" bindtap="floatTap"
+<view wx:if="{{currentPage==4?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}" style="{{floatStyle}}" bindtap="floatTap"
   bindlongpress="record">
-  <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="t_hover">
+    <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+  </view>
 </view>
 <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view>
