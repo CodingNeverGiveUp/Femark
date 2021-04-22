@@ -66,6 +66,27 @@ App({
       return sColor
     }
   },
+
+  // 获取随机颜色
+  getRandomColor() {
+    if (app.globalData.pureTheme) {
+      return "";
+    } else {
+      let num = Math.round(Math.random());
+      if (num >= 0 && num < 0.2) {
+        return "#ae6060";
+      } else if (num >= 0.2 && num < 0.4) {
+        return "#20a674";
+      } else if (num >= 0.4 && num < 0.6) {
+        return "#176095";
+      } else if (num >= 0.6 && num < 0.8) {
+        return "#ffbc66";
+      } else {
+        return "#97756b";
+      }
+    }
+  },
+
   //跨页面异步传递
   addListener(callback) {
     this.callback = callback;
@@ -87,5 +108,8 @@ App({
     systemInfo: null,
     isPad: false,
     useSidebar: true,
+    hitokoto: false,
+    bing: true,
+    pureTheme: false,
   }
 })

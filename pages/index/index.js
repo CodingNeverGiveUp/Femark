@@ -149,6 +149,7 @@ Page({
       currentPage: app.globalData.currentPage,
     })
     tabbar.setData({
+      currentPage: app.globalData.currentPage,
       btn1: `color:${this.data.primaryColor}`,
       slide: false,
       sidebarStyle: "left:-250px",
@@ -258,6 +259,11 @@ Page({
       hasUserInfo: true
     })
   },
+
+  addArray() {
+    database.addArray()
+  },
+
   addNote() {
     database.addNote(20204851, '学校', '学校', '学校')
   },
@@ -265,4 +271,12 @@ Page({
   addTask() {
     database.addTask(20204851, '学校', '学校', '学校')
   },
+
+  deleteTask(){
+    database.deleteTask();
+  },
+
+  getTask(){
+    database.getTask();
+  }
 })

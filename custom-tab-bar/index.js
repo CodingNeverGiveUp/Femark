@@ -3,6 +3,7 @@ Component({
   data: {
     touchS: [0, 0],
     touchE: [0, 0],
+    currentPage: getApp().globalData.currentPage,
     primaryColor: getApp().globalData.primaryColor,
     rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
     useSidebar: getApp().globalData.useSidebar,

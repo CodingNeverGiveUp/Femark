@@ -1,2 +1,86 @@
 <!--pages/account/account.wxml-->
-<text>pages/account/account.wxml</text>
+<view class="fixed">
+  <view class="header" style="background-image: url({{imgUrl}})">
+    <view class="head">
+      <view class="motto_container" style="{{isPad?'margin: 70px 0 0 0;':useSidebar?'margin: 70px 0 0 0;':''}}">
+        <text class="motto">{{motto}}</text>
+        <text class="motto_subtitle">--{{motto_from}}</text>
+      </view>
+      <!-- <image class="icon" class="motto_setting" bindtap="setting" src="/source/icon/account/settings-white-24dp.svg"></image> -->
+    </view>
+    <view class="user">
+      <image src="{{avatarUrl}}"></image>
+      <view>
+        <text class="name">{{nickName}}</text>
+        <text class="description">{{description}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+<scroll-view class="scroller" scroll-y="true" enable-flex="true">
+  <view class="settings" bindtap="accountsettings"></view>
+  <view class="footer">
+    <view class="bar">
+      <view></view>
+    </view>
+    <view class="content">
+      <scroll-view scroll-x="true" enable-flex="true" enhanced="true" show-scrollbar="false" class="scroll">
+        <view class="scroll_item">
+          <view class="scroll_card" bindtap="joinGroup" hover-class="h_scroll_card">
+            <!-- <image class="icon" src="/source/icon/account/group_add-{{theme=='light'?'gray':'white'}}-24dp.svg"></image> -->
+            <text>加入群组</text>
+          </view>
+        </view>
+        <view class="scroll_item">
+          <view class="scroll_card" bindtap="addTask" hover-class="h_scroll_card">
+            <!-- <image class="icon" src="/source/icon/account/add_task-{{theme=='light'?'gray':'white'}}-24dp.svg"></image> -->
+            <text>任务发布</text>
+          </view>
+        </view>
+        <view class="scroll_item">
+          <view class="scroll_card" bindtap="manageGroup" hover-class="h_scroll_card">
+            <!-- <image class="icon" src="/source/icon/account/manage_accounts-{{theme=='light'?'gray':'white'}}-24dp.svg"></image> -->
+            <text>群组管理</text>
+          </view>
+        </view>
+        <view class="scroll_item">
+          <view class="scroll_card" bindtap="statistics" hover-class="h_scroll_card">
+            <!-- <image class="icon" src="/source/icon/account/poll-{{theme=='light'?'gray':'white'}}-24dp.svg"></image> -->
+            <text>统计数据</text>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="setting_container">
+        <text class="heading">设置</text>
+        <view class="setting_box" bindtap="settings" hover-class="h_scroll_card">
+          <!-- <image class="icon" src="/source/icon/account/settings-gray-24dp.svg"></image> -->
+          <view class="text">
+            <text class="title">偏好</text>
+            <text class="subtitle">功能选项设置</text>
+          </view>
+        </view>
+        <button class="feedback" open-type="share" hover-class="h_scroll_card">
+          <!-- <image class="icon" src="/source/icon/account/share-gray-24dp.svg"></image> -->
+          <view class="text">
+            <text class="title">分享</text>
+            <text class="subtitle">推广小程序</text>
+          </view>
+        </button>
+        <button class="feedback" open-type="feedback" hover-class="h_scroll_card">
+          <!-- <image class="icon" src="/source/icon/account/bug_report-gray-24dp.svg"></image> -->
+          <view class="text">
+            <text class="title">反馈</text>
+            <text class="subtitle">Bug或功能建议</text>
+          </view>
+        </button>
+        <view class="setting_box" bindtap="about" hover-class="h_scroll_card">
+          <!-- <image class="icon" src="/source/icon/account/grade-gray-24dp.svg"></image> -->
+          <view class="text">
+            <text class="title">关于</text>
+            <text class="subtitle">Femark信息</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
