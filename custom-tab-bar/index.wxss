@@ -184,11 +184,6 @@
 
 .hover {
   background: var(--rgbaprimaryColor--);
-  transition: none;
-}
-
-.t_hover {
-  background: var(--rgbaprimaryColor--);
 }
 
 

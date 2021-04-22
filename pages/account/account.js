@@ -15,6 +15,9 @@ Page({
     currentPage: app.globalData.currentPage,
     motto: "From small beginnings comes great things.",
     motto_from: "Winston Churchill",
+    avatarUrl: "/source/img/avatar.png",
+    nickName: "微信用户",
+    description: "欢迎使用 Femark",
   },
 
   /**

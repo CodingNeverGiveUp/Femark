@@ -46,46 +46,52 @@
           </view>
         </view>
       </scroll-view> -->
-      <view class="setting_container">
-        <view class="user_nfo">
+      <view class="user_info">
+        <view class="user_card">
           <image src="{{avatarUrl}}"></image>
           <view>
             <text class="user_name">{{nickName}}</text>
             <text class="user_description">{{description}}</text>
           </view>
         </view>
-        <text class="heading">设置</text>
-        <view class="setting_box" bindtap="settings" hover-class="h_scroll_card">
+      </view>
+
+      <view class="setting_container">
+        <view class="setting_box" bindtap="settings" hover-class="hover"
+          style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
           <view class="material-icons"><text>palette</text></view>
           <view class="text">
             <text class="title">主题</text>
             <text class="subtitle">界面选项设置</text>
           </view>
         </view>
-        <view class="setting_box" bindtap="settings" hover-class="h_scroll_card">
+        <view class="setting_box" bindtap="settings" hover-class="hover"
+          style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
           <view class="material-icons"><text>settings</text></view>
           <view class="text">
             <text class="title">行为</text>
             <text class="subtitle">功能选项设置</text>
           </view>
         </view>
-        <button id="feedback" open-type="share" hover-class="h_scroll_card">
-          <!-- <image class="icon" src="/source/icon/account/share-gray-24dp.svg"></image> -->
-          <view class="material-icons"><text>share</text></view>
-          <view class="text">
-            <text class="title">分享</text>
-            <text class="subtitle">推广小程序</text>
-          </view>
-        </button>
-        <button id="feedback" open-type="feedback" hover-class="h_scroll_card">
-          <!-- <image class="icon" src="/source/icon/account/bug_report-gray-24dp.svg"></image> -->
-          <view class="material-icons"><text>bug_report</text></view>
-          <view class="text">
-            <text class="title">反馈</text>
-            <text class="subtitle">Bug或功能建议</text>
-          </view>
-        </button>
-        <view class="setting_box" bindtap="about" hover-class="h_scroll_card">
+        <view class="setting_box" hover-class="hover" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+          <button id="feedback" open-type="share">
+            <view class="material-icons"><text>share</text></view>
+            <view class="text">
+              <text class="title">分享</text>
+              <text class="subtitle">推广小程序</text>
+            </view>
+          </button>
+        </view>
+        <view class="setting_box" hover-class="hover" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+          <button id="feedback" open-type="feedback">
+            <view class="material-icons"><text>bug_report</text></view>
+            <view class="text">
+              <text class="title">反馈</text>
+              <text class="subtitle">Bug或功能建议</text>
+            </view>
+          </button>
+        </view>
+        <view class="setting_box" bindtap="about" hover-class="hover" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
           <!-- <image class="icon" src="/source/icon/account/grade-gray-24dp.svg"></image> -->
           <view class="material-icons"><text>grade</text></view>
           <view class="text">

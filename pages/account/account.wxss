@@ -13,6 +13,15 @@
   display: block;
 } */
 
+.hover {
+  background: var(--rgbaprimaryColor--);
+  transition: none;
+}
+
+.t_hover {
+  background: var(--rgbaprimaryColor--);
+}
+
 .fixed{
   position: fixed;
   width: 100%;
@@ -118,7 +127,6 @@
   align-items: center;
   background: #fff;
   border-radius: 0.8rem;
-  
   font-size: 0.8rem;
 }
 
@@ -131,35 +139,40 @@
 }
 
 .setting_container{
-  margin: 0 20rpx;
-  padding: 30rpx 0 0 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.user_info{
+.user_card{
   display: flex;
   flex-direction: row;
   align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  height: 100px;
+  /* box-shadow: 0 0rpx 10rpx #bbb; */
+  transition: background .2s ease-in-out;
 }
 
-.user_info image{
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50rpx 50rpx 50rpx 50rpx;
+.user_card image{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  margin: 0 0 0 50rpx;
 }
 
-.user_info > view{
-  margin: 0 0 0 20rpx;
+.user_card > view{
+  margin: 0 0 0 50rpx;
   display: flex;
   flex-direction: column;
-  color: white;
 }
 
-.user_name{
+/* .user_name{
   font-size: 1.2rem;
-}
+} */
 
 .user_description{
-  color: #ddd;
+  color: #666;
   font-size: 0.8rem;
 }
 
@@ -167,24 +180,37 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 50rpx 0 0 0;
+  margin: 10px 0 0 0;
+  padding: 0 20rpx;
+  height: 60px;
+  border-radius: 10px;
+  transition: background .2s ease-in-out;
 }
 
 #feedback{
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 50rpx 0 0 0;
-  width: auto;
-  height: auto;
+  margin: 0;
+  width: 100%;
+  height: 100%;
   font-weight: normal;
   font-size: 1rem;
   padding: 0;
   background: rgba(0,0,0,0);
+  transition: background .2s ease-in-out;
+}
+
+#feedback text{
+  color: #000!important;
+}
+
+#feedback .subtitle{
+  color: #666!important;
 }
 
 .text{
-  margin: 0 0 0 50rpx;
+  margin: 0 0 0 25px;
   width: 300rpx;
   display: flex;
   flex-direction: column;
@@ -199,11 +225,49 @@
 
 /* 一般情况下的样式 end */
 
+@media only screen and (min-width: 600px){
+  .content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .user_info{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user_card{
+    width: 180rpx;
+    height: 250rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user_card image{
+    margin: 20rpx 0;
+  }
+
+  .user_card > view{
+    margin: 0;
+    text-align: center;
+  }
+
+  .setting_container{
+    width: 50%;
+    align-self: center;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   /* DarkMode 下的样式 start */
 
   .bar{
-    background: #1d1f25;
+    background: #303638;
   }
 
   .bar > view{
@@ -211,25 +275,35 @@
   }
 
   .content{
-    background: #1d1f25;
+    background: #303638;
+  }
+
+  .user_card{
+    background: #222426;
+  }
+
+  .user_description{
+    color: #ccc;
+  }
+
+  .setting_box text{
+    color: #fff;
+  }
+
+  #feedback text{
+    color: #fff!important;
+  }
+  
+  #feedback .subtitle{
+    color: #ccc!important;
+  }
+
+  .subtitle{
+    color: #ccc!important;
   }
 
   .scroll_card{
     background: #444;
-    box-shadow: 0rpx 0rpx 0rpx #000;
-    color: white;
-  }
-
-  .heading{
-    color: white;
-  }
-
-  .setting_box{
-    color: white;
-  }
-
-  .subtitle{
-    color: #ccc;
   }
 
   /* DarkMode 下的样式 end */
