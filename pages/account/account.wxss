@@ -7,20 +7,19 @@
   margin: 0 50rpx;
 } */
 
-.icon{
+/* .icon{
   width: 50rpx;
   height: 50rpx;
   display: block;
-  /* margin: 50rpx; */
-}
+} */
 
-#fixed{
+.fixed{
   position: fixed;
   width: 100%;
   height: 820rpx;
 }
 
-#header{
+.header{
   height: 100%;
   padding: 50rpx 50rpx 80rpx 50rpx;
   display: flex;
@@ -31,63 +30,63 @@
   background-repeat: no-repeat;
 }
 
-#head{
+.head{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-#motto_container{
+.motto_container{
   width: 400rpx;
   display: flex;
   flex-direction: column;
   color: white;
 }
 
-#motto{
+.motto{
   font-size: 1.2rem;
   margin: 0 0 30rpx 0;
 }
 
-#motto_subtitle{
+.motto_subtitle{
   color: #ddd;
   font-size: 0.8rem;
 }
 
-#user{
+.user{
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-#user image{
+.user image{
   width: 100rpx;
   height: 100rpx;
   border-radius: 50rpx 50rpx 50rpx 50rpx;
 }
 
-#user > view{
+.user > view{
   margin: 0 0 0 20rpx;
   display: flex;
   flex-direction: column;
   color: white;
 }
 
-#name{
+.name{
   font-size: 1.2rem;
 }
 
-#description{
+.description{
   color: #ddd;
   font-size: 0.8rem;
 }
 
-#scroller{
+.scroller{
   height: 100%;
   position: absolute;
 }
 
-#settings{
+.settings{
   position: fixed;
   width: 100rpx;
   height: 100rpx;
@@ -95,13 +94,13 @@
   top: 25rpx;
 }
 
-#footer{
+.footer{
   position: relative;
   top: 900rpx;
   width: 100%;
 }
 
-#bar{
+.bar{
   height: 70rpx;
   border-radius: 1rem 1rem 0 0;
   background: #f1f1f1;
@@ -111,19 +110,19 @@
   align-items: center;
 }
 
-#bar > view{
-  width: 80rpx;
-  height: 8rpx;
-  border-radius: 4rpx;
+.bar > view{
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
   background: #999;
 }
 
-#content{
+.content{
   padding: 0 30rpx 50rpx 30rpx;
   background: #f1f1f1;
 }
 
-#scroll{
+.scroll{
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -159,7 +158,7 @@
   font-size: 1.4rem;
 }
 
-#setting_container{
+.setting_container{
   margin: 0 20rpx;
   padding: 30rpx 0 0 0;
 }
@@ -171,7 +170,7 @@
   margin: 50rpx 0 0 0;
 }
 
-#feedback{
+.feedback{
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -203,15 +202,15 @@
 @media (prefers-color-scheme: dark) {
   /* DarkMode 下的样式 start */
 
-  #bar{
+  .bar{
     background: #1d1f25;
   }
 
-  #bar > view{
+  .bar > view{
     background: #ccc;
   }
 
-  #content{
+  .content{
     background: #1d1f25;
   }
 

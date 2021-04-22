@@ -1,30 +1,30 @@
 <!--pages/account/account.wxml-->
-<view id="fixed">
-  <view id="header" style="background-image: url({{imgUrl}})">
-    <view id="head">
-      <view id="motto_container">
-        <text id="motto">{{motto}}</text>
-        <text id="motto_subtitle">--{{motto_from}}</text>
+<view class="fixed">
+  <view class="header" style="background-image: url({{imgUrl}})">
+    <view class="head">
+      <view class="motto_container" style="{{isPad?'margin: 70px 0 0 0;':useSidebar?'margin: 70px 0 0 0;':''}}">
+        <text class="motto">{{motto}}</text>
+        <text class="motto_subtitle">--{{motto_from}}</text>
       </view>
-      <!-- <image class="icon" id="motto_setting" bindtap="setting" src="/source/icon/account/settings-white-24dp.svg"></image> -->
+      <!-- <image class="icon" class="motto_setting" bindtap="setting" src="/source/icon/account/settings-white-24dp.svg"></image> -->
     </view>
-    <view id="user">
+    <view class="user">
       <image src="{{avatarUrl}}"></image>
       <view>
-        <text id="name">{{nickName}}</text>
-        <text id="description">{{description}}</text>
+        <text class="name">{{nickName}}</text>
+        <text class="description">{{description}}</text>
       </view>
     </view>
   </view>
 </view>
-<scroll-view id="scroller" scroll-y="true" enable-flex="true">
-  <view id="settings" bindtap="accountsettings"></view>
-  <view id="footer">
-    <view id="bar">
+<scroll-view class="scroller" scroll-y="true" enable-flex="true">
+  <view class="settings" bindtap="accountsettings"></view>
+  <view class="footer">
+    <view class="bar">
       <view></view>
     </view>
-    <view id="content">
-      <scroll-view scroll-x="true" enable-flex="true" enhanced="true" show-scrollbar="false" id="scroll">
+    <view class="content">
+      <scroll-view scroll-x="true" enable-flex="true" enhanced="true" show-scrollbar="false" class="scroll">
         <view class="scroll_item">
           <view class="scroll_card" bindtap="joinGroup" hover-class="h_scroll_card">
             <!-- <image class="icon" src="/source/icon/account/group_add-{{theme=='light'?'gray':'white'}}-24dp.svg"></image> -->
@@ -50,7 +50,7 @@
           </view>
         </view>
       </scroll-view>
-      <view id="setting_container">
+      <view class="setting_container">
         <text class="heading">设置</text>
         <view class="setting_box" bindtap="settings" hover-class="h_scroll_card">
           <!-- <image class="icon" src="/source/icon/account/settings-gray-24dp.svg"></image> -->
@@ -59,14 +59,14 @@
             <text class="subtitle">功能选项设置</text>
           </view>
         </view>
-        <button id="feedback" open-type="share" hover-class="h_scroll_card">
+        <button class="feedback" open-type="share" hover-class="h_scroll_card">
           <!-- <image class="icon" src="/source/icon/account/share-gray-24dp.svg"></image> -->
           <view class="text">
             <text class="title">分享</text>
             <text class="subtitle">推广小程序</text>
           </view>
         </button>
-        <button id="feedback" open-type="feedback" hover-class="h_scroll_card">
+        <button class="feedback" open-type="feedback" hover-class="h_scroll_card">
           <!-- <image class="icon" src="/source/icon/account/bug_report-gray-24dp.svg"></image> -->
           <view class="text">
             <text class="title">反馈</text>

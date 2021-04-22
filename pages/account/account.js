@@ -8,6 +8,13 @@ Page({
   data: {
     hitokoto: false,
     bing: true,
+    isPad: app.globalData.isPad,
+    useSidebar: app.globalData.useSidebar,
+    primaryColor: app.globalData.primaryColor,
+    rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
+    currentPage: app.globalData.currentPage,
+    motto: "From small beginnings comes great things.",
+    motto_from: "Winston Churchill",
   },
 
   /**

@@ -87,7 +87,7 @@ App({
     systemInfo: null,
     isPad: false,
     useSidebar: true,
-    hitokoto: true,
+    hitokoto: false,
     bing: true,
   }
 })

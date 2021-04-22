@@ -21,7 +21,7 @@
 </view>
 <view class="sidebar" style="{{sidebarStyle}};{{useSidebar?'':isPad?'':'display:none;'}}">
   <view class="head">
-    <view class="material-icons menu_icon" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover"
+    <view class="material-icons menu_icon" style="{{currentPage==4?'color:#fff;':''}}--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover"
       bindtap="menuTap"><text>menu</text></view>
     <view class="head_bar">
       <text style="font-size:1.2rem;">Femark</text>
