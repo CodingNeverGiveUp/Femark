@@ -34,6 +34,7 @@ Page({
   onReady: function () {
     this.getImage();
     this.getMoto();
+    this.animation();
   },
 
   /**
@@ -121,7 +122,7 @@ Page({
       scrollSource: '.scroller',
       timeRange: 2000,
       startScrollOffset: 50,
-      endScrollOffset: 280
+      endScrollOffset: 150
     })
 
     this.animate('.header', [{
@@ -132,27 +133,27 @@ Page({
       scrollSource: '.scroller',
       timeRange: 2000,
       startScrollOffset: 0,
-      endScrollOffset: 280
+      endScrollOffset: 150
     })
 
-    this.animate('#motto_setting', [{
-      opacity: 1.0,
-      transform: 'rotate(0deg)',
-      offset: 0
-    }, {
-      opacity: 1.0,
-      transform: 'rotate(32deg)',
-      offset: .18
-    }, {
-      opacity: 0.0,
-      transform: 'rotate(180deg)',
-      offset: 1
-    }, ], 2000, {
-      scrollSource: '#scroller',
-      timeRange: 2000,
-      startScrollOffset: 0,
-      endScrollOffset: 280
-    })
+    // this.animate('#motto_setting', [{
+    //   opacity: 1.0,
+    //   transform: 'rotate(0deg)',
+    //   offset: 0
+    // }, {
+    //   opacity: 1.0,
+    //   transform: 'rotate(32deg)',
+    //   offset: .18
+    // }, {
+    //   opacity: 0.0,
+    //   transform: 'rotate(180deg)',
+    //   offset: 1
+    // }, ], 2000, {
+    //   scrollSource: '#scroller',
+    //   timeRange: 2000,
+    //   startScrollOffset: 0,
+    //   endScrollOffset: 280
+    // })
   },
 
   /**

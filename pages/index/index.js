@@ -10,13 +10,13 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
+    pureTheme: app.globalData.pureTheme,
     isPad: app.globalData.isPad,
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
     currentPage: app.globalData.currentPage,
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
-
 
     h1: '',
     h2: '',
@@ -238,6 +238,16 @@ Page({
     }, 300)
   },
 
+  getUserProfileTap (e) {
+    //如果未授权，就提示授权，如果授权了，就执行正常的业务逻辑
+    if (!wx.getStorageSync('storage_info')) {
+      app.getUserProfile()
+      return
+    }
+    //下面是正常业务逻辑
+    //...
+  },
+
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
@@ -248,6 +258,8 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
+        app.globalData.userInfo = res.userInfo;
+        app.globalData.hasUserInfo = true;
       }
     })
   },
@@ -304,11 +316,11 @@ Page({
     database.addTask(20204851, '学校', '学校', '学校')
   },
 
-  deleteTask(){
+  deleteTask() {
     database.deleteTask();
   },
 
-  getTask(){
+  getTask() {
     database.getTask();
   }
 })

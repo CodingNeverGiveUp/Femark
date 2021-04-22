@@ -53,34 +53,6 @@
   font-size: 0.8rem;
 }
 
-.user{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.user image{
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50rpx 50rpx 50rpx 50rpx;
-}
-
-.user > view{
-  margin: 0 0 0 20rpx;
-  display: flex;
-  flex-direction: column;
-  color: white;
-}
-
-.name{
-  font-size: 1.2rem;
-}
-
-.description{
-  color: #ddd;
-  font-size: 0.8rem;
-}
-
 .scroller{
   height: 100%;
   position: absolute;
@@ -102,7 +74,7 @@
 
 .bar{
   height: 70rpx;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 10px 10px 0 0;
   background: #f1f1f1;
   /* box-shadow: 0 -5rpx 20rpx #666; */
   display: flex;
@@ -163,6 +135,34 @@
   padding: 30rpx 0 0 0;
 }
 
+.user_info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user_info image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx 50rpx 50rpx 50rpx;
+}
+
+.user_info > view{
+  margin: 0 0 0 20rpx;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.user_name{
+  font-size: 1.2rem;
+}
+
+.user_description{
+  color: #ddd;
+  font-size: 0.8rem;
+}
+
 .setting_box{
   display: flex;
   flex-direction: row;
@@ -170,7 +170,7 @@
   margin: 50rpx 0 0 0;
 }
 
-.feedback{
+#feedback{
   display: flex;
   flex-direction: row;
   align-items: center;
