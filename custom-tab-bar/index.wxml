@@ -62,9 +62,9 @@
   </view>
 </view>
 <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view>
-<view wx:if="{{currentPage==4?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}" bindtap="floatTap"
+<view wx:if="{{currentPage==4?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}" style="{{floatStyle}}" bindtap="floatTap"
   bindlongpress="record">
-  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}" hover-class="t_hover">
+  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="t_hover">
     <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
   </view>
 </view>
