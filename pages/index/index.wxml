@@ -15,16 +15,17 @@
 </view>
 
 
+
 <view class="container">
   <!-- 笔记 -->
-  <view class="note" wx:if="{{isPad == true || currentPage == 1}}">
-    <view class="category_title"><text class="material-icons">grade</text><text>笔记</text></view>
-    <view class="category_small_title">{{test_Lenth}}个笔记</view>
+  <view class="{{isPad?'note_pad':'note'}}" wx:if="{{isPad == true || currentPage == 1}}">
+    <view class="{{isPad?'category_title_pad':'category_title'}}"><text>笔记</text></view>
+    <view class="{{isPad?'category_small_title_pad':'category_small_title'}}">{{test_Lenth}}个笔记</view>
     <view class="hengpai">
       <view class="account_box_1" style="width:50%;">
         <view id="b1">
           <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array01}}">
-            <view wx:if="{{0}}" class="picture" style=" background:url({{picture_path}}); background-size: 100% 100%;">
+            <view wx:if="{{1}}" class="picture" style=" background:url({{picture_path}}); background-size: 100% 100%;">
               <!--如果没有图片就不显示-->
               <view class="word_Tips">共{{}}张图片</view>
             </view>
@@ -61,24 +62,24 @@
 
   <!-- 待办 -->
   <view class="todo" wx:if="{{isPad == true || currentPage == 2}}">
-    <view class="head">
-      <view class="head_1">
+    <view class="{{isPad?'head_pad':'head'}}">
+      <view class="{{isPad?'head_1_pad':'head_1'}}">
         <text>待办</text>
         <!-- <text class="material-icons icon">view_headline</text> -->
       </view>
-      <view class="head_2"><text>{{text_lenth}}个待办</text></view>
+      <view class="{{isPad?'head_2_pad':'head_2'}}"><text>{{text_lenth}}个待办</text></view>
     </view>
     <view class="divide"></view>
     <view class="main">
       <view wx:for="{{text.list}}" wx:key="id">
-        <view class="DBbox" style="background-color:{{item.color}};">
+        <view class="{{isPad?'DBbox_pad':'DBbox'}}" style="background-color:{{item.color}};">
           <view class="box_left">
             <view class="month">{{item.month}}</view>
             <view class="day">{{item.day}}</view>
           </view>
           <view class="box_right">
             <view class="topic">{{item.topic}}</view>
-            <view class="ddl">{{item.ddl}}<text class="material-icons alarm">alarm</text></view>
+            <view class="ddl">DDL  {{item.ddl}}</view>
           </view>
         </view>
       </view>
