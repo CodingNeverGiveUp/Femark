@@ -27,6 +27,12 @@
         {
           "name": "pages/guide/guide",
           "pathName": "pages/guide/guide",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
           "scene": null
         }
       ]

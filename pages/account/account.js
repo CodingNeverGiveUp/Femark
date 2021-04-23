@@ -125,7 +125,7 @@ Page({
       scrollSource: '.scroller',
       timeRange: 2000,
       startScrollOffset: 50,
-      endScrollOffset: 150
+      endScrollOffset: 120
     })
 
     this.animate('.header', [{
