@@ -32,11 +32,11 @@ Page({
         }
       ],
       test_Array02: [{
-        real: '今年第哦啊八八七八丢丢八二ui'
+        real: '今年第哦啊八八七八丢丢八二ui',
       }, {
-        real: '就拿看就看弄你而安琪儿哦i'
+        real: '就拿看就看弄你而安琪儿哦i',
       }, {
-        real: ' 就爱看就看哦额弄Enel发你的那几位'
+        real: ' 就爱看就看哦额弄Enel发你的那几位',
       }]
     },
 
@@ -114,7 +114,8 @@ Page({
         currentPage: 1,
       })
     }, 500)
-    //拉取强调色
+    //拉取强调色  
+    //以下是比较两边高度
     var hw1, hw2;
     setTimeout(() => {
       var query = wx.createSelectorQuery()
