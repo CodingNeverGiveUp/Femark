@@ -29,7 +29,7 @@
               <!--如果没有图片就不显示-->
               <view class="word_Tips">共{{}}张图片</view>
             </view>
-            <view class="_box_1_nei">
+            <view class="_box_1_nei" style="background-color:{{item.color}}">
               {{item.real}}
             </view>
           </view>
@@ -46,7 +46,7 @@
               <!--如果没有图片就不显示-->
               <view class="word_Tips">共{{}}张图片</view>
             </view>
-            <view class="_box_2_nei">
+            <view class="_box_2_nei" style="background-color:{{item.color}}">
               {{item.real}}
             </view>
           </view>

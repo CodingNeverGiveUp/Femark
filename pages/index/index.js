@@ -23,20 +23,26 @@ Page({
     picture_path: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=218852904,1106228157&fm=26&gp=0.jpgs',
     test: {
       test_Array01: [{
-          real: '看fJ#$%392888939hfg872g872'
+          real: '看fJ#$%392888939hfg872g872',
+          color:''
         },
         {
-          real: '发i啊呵呵中'
+          real: '发i啊呵呵中',
+          color:''
         }, {
-          real: '发觉这世界奥哦啊不带u阿飞波尔u'
+          real: '发觉这世界奥哦啊不带u阿飞波尔u',
+          color:''
         }
       ],
       test_Array02: [{
         real: '今年第哦啊八八七八丢丢八二ui',
+        color:''
       }, {
         real: '就拿看就看弄你而安琪儿哦i',
+        color:''
       }, {
         real: ' 就爱看就看哦额弄Enel发你的那几位',
+        color:''
       }]
     },
 
@@ -115,6 +121,24 @@ Page({
       })
     }, 500)
     //拉取强调色  
+    let test_Array01_lenth = this.data.test.test_Array01.length
+    let test_Array02_lenth = this.data.test.test_Array02.length
+     let color_number1 = 0
+     let color_number2 = 0
+     for(;color_number1<test_Array01_lenth;color_number1++){
+       let color1 = getApp().getRandomColor()
+       let str1 = 'test'+'.test_Array01'+'['+color_number1+ ']'+'.color'
+       this.setData({
+        [str1]:color1    
+       })
+     }
+     for(;color_number2<test_Array02_lenth;color_number2++){
+      let color2 = getApp().getRandomColor()
+      let str2 = 'test'+'.test_Array02'+'['+color_number2+']'+'.color'
+      this.setData({
+        [str2]:color2
+      })
+     }
     //以下是比较两边高度
     var hw1, hw2;
     setTimeout(() => {

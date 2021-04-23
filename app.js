@@ -93,7 +93,7 @@ App({
 
   // 获取随机颜色
   getRandomColor() {
-    if (app.globalData.pureTheme) {
+    if (this.globalData.pureTheme) {
       return "";
     } else {
       let num = Math.round(Math.random());
