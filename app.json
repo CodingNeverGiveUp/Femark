@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/category/category",
-    "pages/account/account"
+    "pages/account/account",
+    "pages/logincheck/logincheck",
+    "pages/guide/guide"
   ],
   "window": {
     "backgroundColor": "@bgColor",
