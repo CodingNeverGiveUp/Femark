@@ -17,14 +17,13 @@
 }
 
 .text{
-  position: absolute;
-  bottom: 50rpx;
-  left: 50rpx;
+  width: 750rpx;
+  padding: 50rpx;
 }
 
 .scroll{
   /* background: pink; */
-  width: 100vm;
+  width: 750rpx;
   height: 100vh;
 }
 
@@ -38,8 +37,11 @@
 }
 
 .full_view{
-  width: 200vm;
+  width: 1500rpx;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
 }
 
 .float {

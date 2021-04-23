@@ -1,10 +1,14 @@
 <!--pages/guide/guide.wxml-->
+<image class="icon" src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_light.png'}}"></image>
 <scroll-view class="scroll" scroll-x="true" enhanced="true" showScrollbar="false">
   <view class="full_view">
-    <image class="icon" src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_light.png'}}"></image>
     <view class="text">
       <text class="title">欢迎使用 Femark\n</text>
       <text class="subtitle">测试文本测试文本测试文本测试\n文本测试文本测试文本</text>
+    </view>
+    <view class="text">
+      <text class="title">权限请求\n</text>
+      <text class="subtitle">用户名与头像将被缓存\n点击按钮以授权应用获取用户信息</text>
     </view>
   </view>
 </scroll-view>

@@ -11,13 +11,30 @@ Page({
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     isPad: app.globalData.isPad,
+    windowWidth: app.globalData.systemInfo.windowWidth
+  },
+
+  animation() {
+    this.animate('.icon', [{
+      transform: 'rotate(0deg)',
+      offset: 0.0
+    }, {
+      transform: 'rotate(360deg)',
+      offset: 1.0
+    }], 1000, {
+      scrollSource: '.scroll',
+      orientation: 'horizontal',
+      timeRange: 1000,
+      startScrollOffset: 0,
+      endScrollOffset: this.data.windowWidth,
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.animation();
   },
 
   /**
