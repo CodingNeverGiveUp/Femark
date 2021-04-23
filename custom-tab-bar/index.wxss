@@ -186,6 +186,10 @@
   background: var(--rgbaprimaryColor--);
 }
 
+.t_hover {
+  background: var(--rgbaprimaryColor--);
+}
+
 
 /* @media (max-width: 600px) {
   .sidebar{
@@ -210,12 +214,13 @@
 @media (prefers-color-scheme: dark) {
   .main {
     background: #303638;
-    box-shadow: 0 0 0 #444;
+    box-shadow: 0 0 10rpx #222;
+    /* box-shadow: 0 0rpx 10rpx #bbb; */
   }
 
   .float {
     background: #303638;
-    box-shadow: 0 0 0 #444;
+    box-shadow: 0 0 10rpx #222;
   }
 
   .t_hover {
@@ -224,7 +229,7 @@
 
   .sidebar {
     background: #303638;
-    box-shadow: 0 0 0 #444;
+    box-shadow: 0 0 10rpx #222;
     color: white;
   }
 
