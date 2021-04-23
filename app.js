@@ -59,7 +59,9 @@ App({
     }
   },
 
-  onThemeChange() {},
+  onThemeChange(e) {
+    this.globalData.systemInfo.theme = e;
+  },
 
   colorRgba(sHex, alpha) {
     var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{4}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8})$/

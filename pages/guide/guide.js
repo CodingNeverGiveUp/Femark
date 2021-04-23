@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    theme: null,
+    theme: app.globalData.systemInfo.theme,
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     isPad: app.globalData.isPad,
