@@ -27,7 +27,6 @@
       <text style="color:{{primaryColor}};">主题</text>
     </view>
     <view class="themes">
-
       <view class="theme">
         <view class="theme_color" hover-class="hover" style="{{themeColorful}}" bindtap="themeColorful">
           <text>缤纷</text>
@@ -92,7 +91,7 @@
       <text style="color:{{primaryColor}};">行为</text>
     </view>
     <view class="switch">
-      <md-switch bind:switch="switch">
+      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
         <text slot="title">强制启用侧栏</text>
         <text slot="subtitle">忽略媒体查询，在所有设备上启用侧栏，禁用底栏</text>
       </md-switch>

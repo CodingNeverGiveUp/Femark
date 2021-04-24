@@ -142,7 +142,7 @@
   left: 10px;
   width: 15px;
   height: 5px;
-  background: #ddd;
+  background: #bbb;
 }
 
 .s .a {
@@ -216,9 +216,9 @@
   border-radius: 100%;
 }
 
-.switch {
+/* .switch {
   margin: 0 50rpx;
-}
+} */
 
 .block_title {
   font-size: .8rem;
@@ -265,6 +265,10 @@
     background: #222426;
   }
 
+  .theme_color>text {
+    color: #ccc;
+  }
+
   .colors {
     background: #222426;
   }
@@ -274,7 +278,7 @@
   }
 
   .s .t {
-    color: #222;
+    background: #444;
   }
 
   .s .a {

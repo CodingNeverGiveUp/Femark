@@ -1,8 +1,14 @@
 /* utils/components/switch/switch.wxss */
+.hover {
+  background: var(--rgbaprimaryColor--);
+}
+
 .component {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 50rpx;
+  transition: .2s ease-in-out;
 }
 
 .text {

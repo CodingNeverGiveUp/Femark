@@ -85,7 +85,7 @@ Page({
   },
 
   switch (e) {
-    console.log(e);
+    // console.log(e);
     this.setData({
       ['profile.useSidebar']: e.detail.value,
     })
@@ -114,6 +114,17 @@ Page({
       primaryColor: color,
       rgbaPrimaryColor: app.colorRgba(color, .2)
     })
+    if (this.data.profile.pureTheme) {
+      this.setData({
+        themePure: `border:${color} solid 2px;`,
+        themeColorful: ''
+      })
+    } else {
+      this.setData({
+        themePure: '',
+        themeColorful: `border:${color} solid 2px;`,
+      })
+    }
   },
 
   /**

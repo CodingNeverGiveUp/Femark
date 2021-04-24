@@ -1,5 +1,5 @@
 <!--utils/components/switch/switch.wxml-->
-<view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindtap="_onTap">
+<view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindtap="_onTap" hover-class="hover">
   <view class="text">
     <view class="title">
       <slot name="title"></slot>
@@ -10,6 +10,6 @@
   </view>
   <view class="switch">
     <view class="bar" style="{{bar}}"></view>
-    <view class="dot theme_color" style="{{dot}}"></view>
+    <view class="dot" style="{{dot}}"></view>
   </view>
 </view>

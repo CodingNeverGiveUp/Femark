@@ -1,6 +1,6 @@
 // utils/components/switch/switch.js
 Component({
-  externalClasses: ['theme_color'],
+  externalClasses: [],
   options: {
     multipleSlots: true,
   },
@@ -8,7 +8,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    primaryColor: {
+      type: String,
+      value: getApp().globalData.primaryColor,
+    },
+    rgbaPrimaryColor:{
+      type: String,
+      value: getApp().colorRgba(getApp().globalData.primaryColor, .2)
+    },
   },
 
   /**
@@ -16,8 +23,6 @@ Component({
    */
   data: {
     selected: false,
-    primaryColor: getApp().globalData.primaryColor,
-    rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
   },
 
   /**
@@ -44,5 +49,10 @@ Component({
       var option = {};
       this.triggerEvent('switch', detail, option);
     },
-  }
+  },
+
+  // 生命周期函数
+  lifetimes: {},
+  // 数据监听器
+  observers: {},
 })
