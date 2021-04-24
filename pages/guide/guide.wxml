@@ -17,7 +17,7 @@
   </view>
 </scroll-view>
 
-<view class="settings">
+<view class="settings" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
   <view class="text">
     <text class="title">个性化\n</text>
     <text class="subtitle">使应用行为贴合偏好</text>
@@ -55,40 +55,51 @@
     </view>
     <view class="picker">
       <view class="colors">
-        <view class="color" style="top:10px;left:10px">
+        <view class="color" style="top:15px;left:25px">
           <view class="color_c" style="background:#4285f4"></view>
         </view>
-        <view class="color" style="top:10px;left:70px">
+        <view class="color" style="top:15px;left:75px">
           <view class="color_c" style="background:#ff5252"></view>
         </view>
-        <view class="color" style="top:10px;left:130px">
+        <view class="color" style="top:15px;left:125px">
           <view class="color_c" style="background:#ffab40"></view>
         </view>
-        <view class="color" style="top:10px;left:190px">
+        <view class="color" style="top:15px;left:175px">
           <view class="color_c" style="background:#ffff00"></view>
         </view>
-        <view class="color" style="top:70px;left:10px">
+        <view class="color" style="top:65px;left:25px">
           <view class="color_c" style="background:#b2ff59"></view>
         </view>
-        <view class="color" style="top:70px;left:70px">
+        <view class="color" style="top:65px;left:75px">
           <view class="color_c" style="background:#18ffff"></view>
         </view>
-        <view class="color" style="top:70px;left:130px">
+        <view class="color" style="top:65px;left:125px">
           <view class="color_c" style="background:#7c4dff"></view>
         </view>
-        <view class="color" style="top:70px;left:190px">
+        <view class="color" style="top:65px;left:175px">
           <view class="color_c" style="background:#ff6e40"></view>
         </view>
       </view>
     </view>
   </view>
   <view class="block">
-    <text class="block_title" style="color:{{primaryColor}};">行为</text>
+    <view class="block_title" >
+      <text style="color:{{primaryColor}};">行为</text>
+    </view>
+    <view class="switch">
+      <md-switch bind:switch="switch">
+        <text slot="title">强制启用侧栏</text>
+        <text slot="subtitle">忽略媒体查询，在所有设备上启用侧栏，禁用底栏</text>
+      </md-switch>
+    </view>
   </view>
+  <!-- <view class="quit_btn" hover-class="hover">
+    <text>暂不设置</text>
+  </view> -->
 </view>
 
 <view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindtap="toLower">
-  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+  <view class="float_color" hover-class="hover">
     <view class="material-icons" style="color:{{primaryColor}};"><text>{{buttonContent}}</text></view>
   </view>
 </view>
