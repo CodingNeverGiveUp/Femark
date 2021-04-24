@@ -32,10 +32,12 @@ Page({
       wx.getUserProfile({
         desc: '完善个人资料',
         success: function (res) {
+          var userInfo = res.userInfo
           that.setData({
             buttonContent: "done",
+            ['profile.nickName']: userInfo.nickName,
+            ['profile.avatarUrl']: userInfo.avatarUrl,
           })
-          var userInfo = res.userInfo
           app.globalData.userInfo = userInfo
           console.log('userInfo==>', userInfo)
           // wx.setStorageSync('storage_info', 1); //本地标记
@@ -49,6 +51,8 @@ Page({
           console.log("用户拒绝授权")
         }
       })
+    } else if(this.data.buttonContent == "done"){
+      console.log("done");
     }
   },
 

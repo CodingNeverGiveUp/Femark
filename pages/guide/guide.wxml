@@ -1,22 +1,4 @@
 <!--pages/guide/guide.wxml-->
-<image class="icon" src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_light.png'}}"></image>
-<scroll-view class="scroll" scroll-x="true" enhanced="true" enable-flex="true" show-scrollbar="false"
-  paging-enabled="true" scroll-into-view="{{scrollTo}}" scroll-with-animation="true" bindscrolltoupper="cancelStatus"
-  bindscrolltolower="setStatus">
-  <view class="page">
-    <view class="text">
-      <text class="title">欢迎使用 Femark\n</text>
-      <text class="subtitle">测试文本测试文本测试文本测试\n左划以开始</text>
-    </view>
-  </view>
-  <view class="page">
-    <view class="text" id="sss">
-      <text class="title">权限请求\n</text>
-      <text class="subtitle">用户名与头像将被缓存\n点击按钮以授权应用获取用户信息</text>
-    </view>
-  </view>
-</scroll-view>
-
 <view class="settings" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
   <view class="text">
     <text class="title">个性化\n</text>
@@ -101,6 +83,26 @@
     <text>暂不设置</text>
   </view> -->
 </view>
+
+<view class="icon_box">
+  <image class="icon" src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_light.png'}}"></image>
+</view>
+<scroll-view class="scroll" scroll-x="true" enhanced="true" enable-flex="true" show-scrollbar="false"
+  paging-enabled="true" scroll-into-view="{{scrollTo}}" scroll-with-animation="true" bindscrolltoupper="cancelStatus"
+  bindscrolltolower="setStatus">
+  <view class="page">
+    <view class="text">
+      <text class="title">欢迎使用 Femark\n</text>
+      <text class="subtitle">测试文本测试文本测试文本测试\n左划以开始</text>
+    </view>
+  </view>
+  <view class="page">
+    <view class="text" id="sss">
+      <text class="title">权限请求\n</text>
+      <text class="subtitle">用户名与头像将被缓存\n点击按钮以授权应用获取用户信息</text>
+    </view>
+  </view>
+</scroll-view>
 
 <view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindtap="toLower">
   <view class="float_color" hover-class="hover">
