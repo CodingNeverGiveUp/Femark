@@ -29,7 +29,7 @@
     <view class="themes">
 
       <view class="theme">
-        <view class="theme_color" hover-class="hover" style="{{themeColorful}}" bindtap="onThemeColorful">
+        <view class="theme_color" hover-class="hover" style="{{themeColorful}}" bindtap="themeColorful">
           <text>缤纷</text>
           <view class='s'>
             <view class="t"></view>
@@ -41,7 +41,7 @@
         </view>
       </view>
       <view class="theme">
-        <view class="theme_color" hover-class="hover" style="{{themePure}}" bindtap="onThemePure">
+        <view class="theme_color" hover-class="hover" style="{{themePure}}" bindtap="themePure">
           <text>纯粹</text>
           <view class='s'>
             <view class="t"></view>
@@ -60,28 +60,28 @@
     </view>
     <view class="picker">
       <view class="colors">
-        <view class="color" style="top:15px;left:25px">
+        <view class="color" style="top:15px;left:25px" hover-class="hover" bindtap="colorSelect" data-color="#4285f4">
           <view class="color_c" style="background:#4285f4"></view>
         </view>
-        <view class="color" style="top:15px;left:75px">
+        <view class="color" style="top:15px;left:75px" hover-class="hover" bindtap="colorSelect" data-color="#ff5252">
           <view class="color_c" style="background:#ff5252"></view>
         </view>
-        <view class="color" style="top:15px;left:125px">
+        <view class="color" style="top:15px;left:125px" hover-class="hover" bindtap="colorSelect" data-color="#ffab40">
           <view class="color_c" style="background:#ffab40"></view>
         </view>
-        <view class="color" style="top:15px;left:175px">
-          <view class="color_c" style="background:#ffff00"></view>
+        <view class="color" style="top:15px;left:175px" hover-class="hover" bindtap="colorSelect" data-color="#ffeb3b">
+          <view class="color_c" style="background:#ffeb3b"></view>
         </view>
-        <view class="color" style="top:65px;left:25px">
-          <view class="color_c" style="background:#b2ff59"></view>
+        <view class="color" style="top:65px;left:25px" hover-class="hover" bindtap="colorSelect" data-color="#795548">
+          <view class="color_c" style="background:#795548"></view>
         </view>
-        <view class="color" style="top:65px;left:75px">
-          <view class="color_c" style="background:#18ffff"></view>
+        <view class="color" style="top:65px;left:75px" hover-class="hover" bindtap="colorSelect" data-color="#009688">
+          <view class="color_c" style="background:#009688"></view>
         </view>
-        <view class="color" style="top:65px;left:125px">
+        <view class="color" style="top:65px;left:125px" hover-class="hover" bindtap="colorSelect" data-color="#7c4dff">
           <view class="color_c" style="background:#7c4dff"></view>
         </view>
-        <view class="color" style="top:65px;left:175px">
+        <view class="color" style="top:65px;left:175px" hover-class="hover" bindtap="colorSelect" data-color="#ff6e40">
           <view class="color_c" style="background:#ff6e40"></view>
         </view>
       </view>

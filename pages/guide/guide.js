@@ -91,18 +91,28 @@ Page({
     })
   },
 
-  onThemeColorful() {
+  themeColorful() {
     this.setData({
       ['profile.pureTheme']: false,
-      themeColorful:  `border:${this.data.primaryColor} solid 2px;`,
+      themeColorful: `border:${this.data.primaryColor} solid 2px;`,
       themePure: ''
     })
   },
-  onThemePure() {
+  themePure() {
     this.setData({
       ['profile.pureTheme']: true,
       themePure: `border:${this.data.primaryColor} solid 2px;`,
       themeColorful: ''
+    })
+  },
+
+  colorSelect(e) {
+    let color = e.currentTarget.dataset.color;
+    // console.log(color);
+    this.setData({
+      ['profile.primaryColor']: color,
+      primaryColor: color,
+      rgbaPrimaryColor: app.colorRgba(color, .2)
     })
   },
 
