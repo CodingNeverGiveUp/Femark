@@ -47,7 +47,7 @@
 }
 
 .text {
-  margin: 50rpx 0 50rpx 50rpx;
+  margin: 80rpx 0 50rpx 50rpx;
 }
 
 .title {

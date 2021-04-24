@@ -49,7 +49,7 @@
 }
 
 .subtitle{
-  font-size: .7rem;
+  font-size: .8rem;
   color: #666;
 }
 
