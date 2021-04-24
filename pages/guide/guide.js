@@ -12,7 +12,14 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     isPad: app.globalData.isPad,
     windowWidth: app.globalData.systemInfo.windowWidth,
-    buttonContent: "chevron_right"
+    buttonContent: "chevron_right",
+    profile: {
+      nickName: null,
+      avatarUrl: null,
+      pureTheme: false,
+      useSidebar: false,
+      primaryColor: "#4285f4",
+    }
   },
 
   toLower() {
@@ -46,7 +53,7 @@ Page({
   },
 
   setStatus() {
-    if(this.data.buttonContent != "done"){
+    if (this.data.buttonContent != "done") {
       this.setData({
         buttonContent: "settings"
       })
@@ -54,7 +61,7 @@ Page({
   },
 
   cancelStatus() {
-    if(this.data.buttonContent != "done"){
+    if (this.data.buttonContent != "done") {
       this.setData({
         buttonContent: "chevron_right"
       })
@@ -77,8 +84,26 @@ Page({
     })
   },
 
-  switch(e){
+  switch (e) {
     console.log(e);
+    this.setData({
+      ['profile.useSidebar']: e.detail.value,
+    })
+  },
+
+  onThemeColorful() {
+    this.setData({
+      ['profile.pureTheme']: false,
+      themeColorful:  `border:${this.data.primaryColor} solid 2px;`,
+      themePure: ''
+    })
+  },
+  onThemePure() {
+    this.setData({
+      ['profile.pureTheme']: true,
+      themePure: `border:${this.data.primaryColor} solid 2px;`,
+      themeColorful: ''
+    })
   },
 
   /**

@@ -27,24 +27,29 @@
       <text style="color:{{primaryColor}};">主题</text>
     </view>
     <view class="themes">
+
       <view class="theme">
-        <text>缤纷</text>
-        <view class='s'>
-          <view class="t"></view>
-          <view class="a" style="background:#97756b;"></view>
-          <view class="b" style="background:#176095;"></view>
-          <view class="c" style="background:#ffbc66;"></view>
-          <view class="d" style="background:#20a674;"></view>
+        <view class="theme_color" hover-class="hover" style="{{themeColorful}}" bindtap="onThemeColorful">
+          <text>缤纷</text>
+          <view class='s'>
+            <view class="t"></view>
+            <view class="a" style="background:#97756b;"></view>
+            <view class="b" style="background:#176095;"></view>
+            <view class="c" style="background:#ffbc66;"></view>
+            <view class="d" style="background:#20a674;"></view>
+          </view>
         </view>
       </view>
       <view class="theme">
-        <text>纯粹</text>
-        <view class='s'>
-          <view class="t"></view>
-          <view class="a"></view>
-          <view class="b"></view>
-          <view class="c"></view>
-          <view class="d"></view>
+        <view class="theme_color" hover-class="hover" style="{{themePure}}" bindtap="onThemePure">
+          <text>纯粹</text>
+          <view class='s'>
+            <view class="t"></view>
+            <view class="a"></view>
+            <view class="b"></view>
+            <view class="c"></view>
+            <view class="d"></view>
+          </view>
         </view>
       </view>
     </view>
@@ -83,7 +88,7 @@
     </view>
   </view>
   <view class="block">
-    <view class="block_title" >
+    <view class="block_title">
       <text style="color:{{primaryColor}};">行为</text>
     </view>
     <view class="switch">
