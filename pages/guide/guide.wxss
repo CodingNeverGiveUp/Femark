@@ -9,12 +9,13 @@
   position: fixed;
   background: #f1f1f1;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
+  width: 750rpx;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: top .7s ease-in;
 }
 
 .icon{
@@ -33,6 +34,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   box-shadow: 0 0 10rpx #bbb;
+  transition: top .7s ease-in;
 }
 
 .page {
@@ -69,7 +71,7 @@
   justify-content: center;
   align-items: center;
   background: #ffffff;
-  transition: background .2s ease-in-out, transform .2s linear;
+  transition: background .2s ease-in-out, transform 1.2s ease-in-out, bottom 1.2s ease-in-out, right 1.2s ease-in-out;
 }
 
 .float_color {
@@ -88,6 +90,7 @@
   width: 750rpx;
   height: 100vh;
   background: #f1f1f1;
+  transition: top .7s ease-in;
 }
 
 .block {
@@ -249,9 +252,26 @@
   color: #666;
 }
 
+.start {
+  position: absolute;
+  top: 0;
+  width: 750rpx;
+  height: 100vh;
+  background: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: top .7s ease-in;
+}
+
 @media (prefers-color-scheme: dark) {
   .subtitle {
     color: #ccc;
+  }
+
+  .icon_box{
+    background: #222426;
   }
 
   .float {
@@ -300,6 +320,10 @@
   }
 
   .s .d {
+    background: #222426;
+  }
+
+  .start{
     background: #222426;
   }
 }

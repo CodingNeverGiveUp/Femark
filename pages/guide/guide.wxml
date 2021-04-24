@@ -1,5 +1,11 @@
 <!--pages/guide/guide.wxml-->
-<view class="settings" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+<view class="start">
+  <image class="icon" src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_light.png'}}"></image>
+  <view class="title">准备就绪</view>
+  <view class="subtitle" style="margin:20px 0 0 0">单击以开始</view>
+</view>
+
+<view class="settings" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{page2}}">
   <view class="text">
     <text class="title">个性化\n</text>
     <text class="subtitle">使应用行为贴合偏好</text>
@@ -84,10 +90,10 @@
   </view> -->
 </view>
 
-<view class="icon_box">
+<view class="icon_box" style="{{page1}}">
   <image class="icon" src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_light.png'}}"></image>
 </view>
-<scroll-view class="scroll" scroll-x="true" enhanced="true" enable-flex="true" show-scrollbar="false"
+<scroll-view class="scroll" style="{{page1}}" scroll-x="true" enhanced="true" enable-flex="true" show-scrollbar="false"
   paging-enabled="true" scroll-into-view="{{scrollTo}}" scroll-with-animation="true" bindscrolltoupper="cancelStatus"
   bindscrolltolower="setStatus">
   <view class="page">
@@ -104,7 +110,7 @@
   </view>
 </scroll-view>
 
-<view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindtap="toLower">
+<view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{float}}" bindtap="toLower">
   <view class="float_color" hover-class="hover">
     <view class="material-icons" style="color:{{primaryColor}};"><text>{{buttonContent}}</text></view>
   </view>

@@ -2,13 +2,20 @@ const exampleFunction = () => {
   console.log("content")
 }
 //添加用户数组
-const addArray = () => {
-  const _ = wx.cloud.database().command
-  wx.cloud.database().collection('note').add({
-    data: {
-      'note': [],
-      'task': [],
-    }
+function addArray(profile) {
+  return new Promise((resolve, reject) => {
+    // const _ = wx.cloud.database().command
+    wx.cloud.database().collection('note').add({
+      data: {
+        'note': [],
+        'task': [],
+        'profile': profile,
+      }
+    }).then(res => {
+      resolve();
+    }).catch(err => {
+      reject();
+    })
   })
 }
 

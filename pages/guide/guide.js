@@ -13,25 +13,30 @@ Page({
     isPad: app.globalData.isPad,
     windowWidth: app.globalData.systemInfo.windowWidth,
     buttonContent: "chevron_right",
+    page: 1,
     profile: {
       nickName: null,
       avatarUrl: null,
       pureTheme: false,
       useSidebar: false,
       primaryColor: "#4285f4",
-    }
+    },
   },
 
   toLower() {
     var that = this;
-    if (this.data.buttonContent == "chevron_right") {
+    if (this.data.page == 1 && this.data.buttonContent == "chevron_right") {
       this.setData({
         scrollTo: 'sss',
       })
-    } else if (this.data.buttonContent == "settings" || this.data.buttonContent == "priority_high") {
+    } else if ((this.data.page == 1 && this.data.buttonContent == "settings") || (this.data.page == 1 && this.data.buttonContent == "priority_high")) {
+      wx.showLoading({
+        title: '准备中',
+      })
       wx.getUserProfile({
         desc: '完善个人资料',
         success: function (res) {
+          wx.hideLoading()
           var userInfo = res.userInfo
           that.setData({
             buttonContent: "done",
@@ -45,14 +50,50 @@ Page({
           //...
         },
         fail() {
+          wx.hideLoading()
           that.setData({
             buttonContent: "priority_high"
           })
           console.log("用户拒绝授权")
         }
       })
-    } else if(this.data.buttonContent == "done"){
+    } else if (this.data.page == 1 && this.data.buttonContent == "done") {
       console.log("done");
+      this.setData({
+        page1: "top:-100vh",
+        page: 2,
+      })
+      setTimeout(() => {
+        this.setData({
+          buttonContent: "chevron_right",
+        })
+      }, 500)
+    } else if (this.data.page == 2 && this.data.buttonContent == "chevron_right") {
+      //上传
+      wx.showLoading({
+        title: '处理中',
+      })
+      database.addArray(this.data.profile)
+      .then(()=>{
+        wx.hideLoading();
+        this.setData({
+          page: 3,
+          page2: "top:-100vh",
+          float: "bottom:20vh;right:50vw;transform:translate(50%,50%)"
+        })
+      })
+      .catch(()=>{
+        wx.hideLoading()
+        wx.showToast({
+          title: '网络错误',
+          icon: 'error'
+        })
+      })
+    } else if (this.data.page == 3 && this.data.buttonContent == "chevron_right") {
+      console.log("b")
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
     }
   },
 
