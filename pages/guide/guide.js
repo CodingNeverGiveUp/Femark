@@ -89,8 +89,11 @@ Page({
           icon: 'error'
         })
       })
+      app.globalData.primaryColor = this.data.profile.primaryColor;
+      app.globalData.pureTheme = this.data.profile.pureTheme;
+      app.globalData.useSidebar = this.data.profile.useSidebar;
+
     } else if (this.data.page == 3 && this.data.buttonContent == "chevron_right") {
-      console.log("b")
       wx.switchTab({
         url: '/pages/index/index',
       })
