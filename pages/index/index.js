@@ -24,25 +24,25 @@ Page({
     test: {
       test_Array01: [{
           real: '看fJ#$%392888939hfg872g872',
-          color:''
+          color: ''
         },
         {
           real: '发i啊呵呵中',
-          color:''
+          color: ''
         }, {
           real: '发觉这世界奥哦啊不带u阿飞波尔u',
-          color:''
+          color: ''
         }
       ],
       test_Array02: [{
         real: '今年第哦啊八八七八丢丢八二ui',
-        color:''
+        color: ''
       }, {
         real: '就拿看就看弄你而安琪儿哦i',
-        color:''
+        color: ''
       }, {
         real: ' 就爱看就看哦额弄Enel发你的那几位',
-        color:''
+        color: ''
       }]
     },
 
@@ -83,11 +83,11 @@ Page({
     }
 
     //跨页面异步传递
-    app.addListener((changedData) => {
-      // this.setData({
-      //   currentPage: changedData,
-      // })
-    })
+    // app.addListener((changedData) => {
+    //   this.setData({
+    //     currentPage: changedData,
+    //   })
+    // })
   },
 
   onReady() {
@@ -123,22 +123,22 @@ Page({
     //拉取强调色  
     let test_Array01_lenth = this.data.test.test_Array01.length
     let test_Array02_lenth = this.data.test.test_Array02.length
-     let color_number1 = 0
-     let color_number2 = 0
-     for(;color_number1<test_Array01_lenth;color_number1++){
-       let color1 = getApp().getRandomColor()
-       let str1 = 'test'+'.test_Array01'+'['+color_number1+ ']'+'.color'
-       this.setData({
-        [str1]:color1    
-       })
-     }
-     for(;color_number2<test_Array02_lenth;color_number2++){
-      let color2 = getApp().getRandomColor()
-      let str2 = 'test'+'.test_Array02'+'['+color_number2+']'+'.color'
+    let color_number1 = 0
+    let color_number2 = 0
+    for (; color_number1 < test_Array01_lenth; color_number1++) {
+      let color1 = getApp().getRandomColor()
+      let str1 = 'test' + '.test_Array01' + '[' + color_number1 + ']' + '.color'
       this.setData({
-        [str2]:color2
+        [str1]: color1
       })
-     }
+    }
+    for (; color_number2 < test_Array02_lenth; color_number2++) {
+      let color2 = getApp().getRandomColor()
+      let str2 = 'test' + '.test_Array02' + '[' + color_number2 + ']' + '.color'
+      this.setData({
+        [str2]: color2
+      })
+    }
     //以下是比较两边高度
     var hw1, hw2;
     setTimeout(() => {
@@ -263,7 +263,7 @@ Page({
     }, 300)
   },
 
-  getUserProfileTap (e) {
+  getUserProfileTap(e) {
     //如果未授权，就提示授权，如果授权了，就执行正常的业务逻辑
     if (!wx.getStorageSync('storage_info')) {
       app.getUserProfile()
@@ -297,36 +297,36 @@ Page({
     })
   },
   //请求用户订阅授权
-  requestSubscribeMessage(){
+  requestSubscribeMessage() {
     wx.requestSubscribeMessage({
       tmplIds: ['n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI'],
-      success (res) {
-        console.log('授权成功',res)
+      success(res) {
+        console.log('授权成功', res)
       },
-      fail(res){
-        console.log('授权失败',res)
+      fail(res) {
+        console.log('授权失败', res)
       }
     })
   },
-  
+
   //发送消息给单个用户
-  sendOne(){//title,time,urgency,content,reminderStatus
+  sendOne() { //title,time,urgency,content,reminderStatus
     wx.cloud.callFunction({
-      name: "sendOne",
-      data:{
-        openid:this.data.openid,
-        title:"腾讯会议",//事项主题
-        time:"2019年11月30日 21:00:00",//事项时间
-        urgency:"紧急且重要",//紧急度
-        content:"会议内容为制作小程序",//事项描述
-        reminderStatus:"待确认"//提醒状态
-      }
-    }).then(res => {
-      console.log("发送单条成功",res);
-    })
-    .catch(res => {
-      console.log("发送单条失败",res)
-    })
+        name: "sendOne",
+        data: {
+          openid: this.data.openid,
+          title: "腾讯会议", //事项主题
+          time: "2019年11月30日 21:00:00", //事项时间
+          urgency: "紧急且重要", //紧急度
+          content: "会议内容为制作小程序", //事项描述
+          reminderStatus: "待确认" //提醒状态
+        }
+      }).then(res => {
+        console.log("发送单条成功", res);
+      })
+      .catch(res => {
+        console.log("发送单条失败", res)
+      })
   },
 
   addArray() {

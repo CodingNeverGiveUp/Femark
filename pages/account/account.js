@@ -24,9 +24,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.primaryColor) {
+    if(app.globalData.userInfo.avatarUrl){
       this.setData({
-        primaryColor: app.globalData.primaryColor
+        avatarUrl: app.globalData.userInfo.avatarUrl
+      })
+    }
+    if(app.globalData.userInfo.nickName){
+      this.setData({
+        nickName: app.globalData.userInfo.nickName
+      })
+    }
+    if(app.globalData.avatarUrl){
+      this.setData({
+        avatarUrl: app.globalData.avatarUrl
       })
     }
   },

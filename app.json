@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/guide/guide",
+    "pages/logincheck/logincheck",
     "pages/index/index",
     "pages/category/category",
     "pages/account/account",
-    "pages/logincheck/logincheck"
+    "pages/guide/guide"
   ],
   "window": {
     "backgroundColor": "@bgColor",
