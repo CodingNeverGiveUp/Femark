@@ -60,11 +60,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.primaryColor) {
-      this.setData({
-        primaryColor: app.globalData.primaryColor
-      })
-    }
+    //重新拉取侧栏
+    let tabbar = this.getTabBar();
+    tabbar.setData({
+      useSidebar: app.globalData.useSidebar,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
+    //重新拉取配置
+    this.setData({
+      pureTheme: app.globalData.pureTheme,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
   },
 
   /**

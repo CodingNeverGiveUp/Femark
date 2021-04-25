@@ -30,7 +30,7 @@
 
 .float {
   position: fixed;
-  bottom: 50rpx;
+  bottom: -110px;
   right: 50rpx;
   width: 55px;
   height: 55px;
@@ -40,7 +40,7 @@
   justify-content: center;
   align-items: center;
   background: #ffffff;
-  transition: background .2s ease-in-out, bottom 1.2s ease-in-out;
+  transition: background .2s ease-in-out, bottom .5s ease-in-out;
 }
 
 .float_color {

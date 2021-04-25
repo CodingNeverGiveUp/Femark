@@ -13,7 +13,7 @@ Page({
     pureTheme: app.globalData.pureTheme,
     isPad: app.globalData.isPad,
     primaryColor: app.globalData.primaryColor,
-    rgbaPrimaryColor: app.colorRgba(getApp().globalData.primaryColor, .2),
+    rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     currentPage: app.globalData.currentPage,
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
@@ -76,11 +76,25 @@ Page({
   },
   // 事件处理函数
   onLoad() {
+    //重新拉取侧栏
+    let tabbar = this.getTabBar();
+    tabbar.setData({
+      useSidebar: app.globalData.useSidebar,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true,
       })
     }
+    //重新拉取配置
+    this.setData({
+      pureTheme: app.globalData.pureTheme,
+      isPad: app.globalData.isPad,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
 
     //跨页面异步传递
     // app.addListener((changedData) => {

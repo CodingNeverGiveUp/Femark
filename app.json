@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/logincheck/logincheck",
+    "pages/account/account",
     "pages/index/index",
     "pages/category/category",
-    "pages/account/account",
     "pages/guide/guide"
   ],
   "window": {

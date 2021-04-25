@@ -24,21 +24,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(app.globalData.userInfo.avatarUrl){
-      this.setData({
-        avatarUrl: app.globalData.userInfo.avatarUrl
-      })
-    }
-    if(app.globalData.userInfo.nickName){
-      this.setData({
-        nickName: app.globalData.userInfo.nickName
-      })
-    }
-    if(app.globalData.avatarUrl){
-      this.setData({
-        avatarUrl: app.globalData.avatarUrl
-      })
-    }
+    //重新拉取侧栏
+    let tabbar = this.getTabBar();
+    tabbar.setData({
+      useSidebar: app.globalData.useSidebar,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
+    //重新拉取配置
+    this.setData({
+      avatarUrl: app.globalData.userInfo.avatarUrl,
+      nickName: app.globalData.userInfo.nickName,
+      pureTheme: app.globalData.pureTheme,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
   },
 
   /**

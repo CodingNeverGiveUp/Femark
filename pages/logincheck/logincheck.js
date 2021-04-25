@@ -9,9 +9,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    theme: app.globalData.systemInfo.theme,
     content: "准备中",
     primaryColor: "#4285f4",
     rgbaPrimaryColor: app.colorRgba("#4285f4", .2),
+  },
+
+  refresh(){
+    app.initialize();
   },
 
   /**
@@ -30,6 +35,7 @@ Page({
       } else if (data == 'error') {
         this.setData({
           content: "网络错误",
+          float: "bottom:50rpx;"
         })
       } else {
         this.setData({

@@ -1,6 +1,3 @@
-const {
-  emit
-} = require("./utils/event");
 // app.js
 const event = require("/utils/event.js")
 App({
@@ -11,45 +8,7 @@ App({
     })
 
     //初始化
-    event.emit('LoginCheck', '检查用户信息');
-    //获取openid
-    wx.cloud.callFunction({
-        name: "getOpenid"
-      }).then(res => {
-        console.log("step1")
-        // console.log(res);
-        let openid = res.result.openid;
-        this.globalData.openid = openid;
-        //获取用户配置
-        event.emit('LoginCheck', '获取用户配置');
-        wx.cloud.database().collection('note').where({
-            _openid: openid
-          }).get()
-          .then(res => {
-            if (res.data.length == 0) {
-              event.emit('LoginCheck', 'register');
-            } else {
-              console.log("step2")
-              // console.log(res)
-              this.globalData.useSidebar = res.data[0].profile.useSidebar;
-              this.globalData.pureTheme = res.data[0].profile.pureTheme;
-              this.globalData.userInfo.nickName = res.data[0].profile.nickName;
-              this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
-              this.globalData.primaryColor = res.data[0].primaryColor;
-              //提前拉取笔记待办数据
-              this.globalData.note = res.data[0].note;
-              this.globalData.task = res.data[0].task;
-              event.emit('LoginCheck', 'finished');
-            }
-          })
-          .catch(err => {
-            event.emit('LoginCheck', 'error');
-          })
-      })
-      .catch(err => {
-        // console.log("failed")
-        event.emit('LoginCheck', 'error');
-      })
+    this.initialize();
 
     // // 获取用户信息
     // wx.getSetting({
@@ -91,6 +50,52 @@ App({
     if (systemInfo.windowWidth > 600) {
       this.globalData.isPad = true;
     }
+  },
+
+  //初始化
+  initialize() {
+    event.emit('LoginCheck', '检查用户信息');
+    //获取openid
+    wx.cloud.callFunction({
+        name: "getOpenid"
+      }).then(res => {
+        // console.log("step1")
+        // console.log(res);
+        let openid = res.result.openid;
+        this.globalData.openid = openid;
+        //获取用户配置
+        event.emit('LoginCheck', '获取用户配置');
+        wx.cloud.database().collection('note').where({
+            _openid: openid
+          }).get()
+          .then(res => {
+            if (res.data.length == 0) {
+              event.emit('LoginCheck', 'register');
+            } else {
+              // console.log("step2")
+              // console.log(res)
+              this.globalData.useSidebar = res.data[0].profile.useSidebar;
+              this.globalData.pureTheme = res.data[0].profile.pureTheme;
+              this.globalData.userInfo.nickName = res.data[0].profile.nickName;
+              this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
+              this.globalData.primaryColor = res.data[0].profile.primaryColor;
+              //提前拉取笔记待办数据
+              this.globalData.note = res.data[0].note;
+              this.globalData.task = res.data[0].task;
+              //修改
+              setTimeout(()=>{
+                event.emit('LoginCheck', 'finished');
+              },500)
+            }
+          })
+          .catch(err => {
+            event.emit('LoginCheck', 'error');
+          })
+      })
+      .catch(err => {
+        // console.log("failed")
+        event.emit('LoginCheck', 'error');
+      })
   },
 
   onThemeChange(e) {
@@ -185,7 +190,7 @@ App({
     formerPage: null,
     systemInfo: null,
     isPad: false,
-    useSidebar: true,
+    useSidebar: false,
     hitokoto: false,
     bing: true,
     pureTheme: false,
