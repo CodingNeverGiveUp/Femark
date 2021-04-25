@@ -2,13 +2,20 @@ const exampleFunction = () => {
   console.log("content")
 }
 //添加用户数组
-const addArray = () => {
-  const _ = wx.cloud.database().command
-  wx.cloud.database().collection('note').add({
-         data:{     
-          'note': [],
-          'task': [],
-         }
+function addArray(profile) {
+  return new Promise((resolve, reject) => {
+    // const _ = wx.cloud.database().command
+    wx.cloud.database().collection('note').add({
+      data: {
+        'note': [],
+        'task': [],
+        'profile': profile,
+      }
+    }).then(res => {
+      resolve();
+    }).catch(err => {
+      reject();
+    })
   })
 }
 
@@ -47,11 +54,11 @@ const deleteTask = () => {
       let timesearch = res.data[0].task[1].time
       console.log(id)
       console.log(timesearch)
-      
+
       wx.cloud.database().collection('note').doc(id).update({
         data: {
           'task': _.pull({
-            'time':timesearch,
+            'time': timesearch,
           }),
         }
       })
@@ -59,12 +66,10 @@ const deleteTask = () => {
 }
 
 //修改待办数据
-const changeTask = () => {
-}
+const changeTask = () => {}
 
 //查询待办数据
-const getTask = () => {
-}
+const getTask = () => {}
 
 //添加笔记数据
 const addNote = (noteDate, noteContent, noteTitle, noteType) => {

@@ -77,7 +77,7 @@
 
 .footer{
   position: relative;
-  top: 900rpx;
+  top: 920rpx;
   width: 100%;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .content{
-  padding: 0 30rpx 50rpx 30rpx;
+  padding: 0 30rpx 180rpx 30rpx;
   background: #f1f1f1;
 }
 

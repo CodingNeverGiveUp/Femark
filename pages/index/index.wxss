@@ -114,7 +114,6 @@
   height: auto;
 }
 ._box_1_nei{
-  background-color: #20a674;
   margin: 0 0 20rpx 0;
   padding: 20rpx;
   border-radius: 0 0 1.0ch 1.0ch;
@@ -122,10 +121,8 @@
   overflow-y: hidden;
   word-wrap: break-word;
   word-break: break-all;
-  color: #ffffff;
 }
 ._box_2_nei{
-  background-color: #ffbc66;
   margin: 0 0 20rpx 0;
   padding: 20rpx;
   border-radius:0 0 1.0ch 1.0ch;
@@ -133,7 +130,6 @@
   overflow-y: hidden;
   word-wrap: break-word;
   word-break: break-all;
-  color: #ffffff;
 }
 .picture{
   width: 100%;
@@ -363,7 +359,6 @@
     height: auto;
   }
   ._box_1_nei{
-    background-color: #20a674;
     margin: 0 0 25rpx 0;
     padding: 10rpx;
     border-radius: 0 0 1.0ch 1.0ch;
@@ -373,7 +368,6 @@
     word-break: break-all;
   }
   ._box_2_nei{
-    background-color: #ffbc66;
     margin: 0 0 40rpx 0;
     padding: 10rpx;
     border-radius:0 0 1.0ch 1.0ch;

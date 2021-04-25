@@ -1,0 +1,11 @@
+<!--pages/logincheck/logincheck.wxml-->
+<view class="page">
+  <image class="icon" src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_light.png'}}"></image>
+  <view class="subtitle">{{content}}</view>
+</view>
+
+<view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{float}}" bindtap="refresh">
+  <view class="float_color" hover-class="hover">
+    <view class="material-icons" style="color:{{primaryColor}};"><text>refresh</text></view>
+  </view>
+</view>

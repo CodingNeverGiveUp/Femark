@@ -1,13 +1,14 @@
+const app = getApp()
 Component({
   properties: {},
   data: {
     touchS: [0, 0],
     touchE: [0, 0],
-    currentPage: getApp().globalData.currentPage,
-    primaryColor: getApp().globalData.primaryColor,
-    rgbaPrimaryColor: getApp().colorRgba(getApp().globalData.primaryColor, .2),
-    useSidebar: getApp().globalData.useSidebar,
-    isPad: getApp().globalData.isPad,
+    currentPage: app.globalData.currentPage,
+    primaryColor: app.globalData.primaryColor,
+    rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    useSidebar: app.globalData.useSidebar,
+    isPad: app.globalData.isPad,
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
@@ -56,7 +57,7 @@ Component({
       const path = e.currentTarget.dataset.path;
       const page = Number(e.currentTarget.dataset.page);
       const pages = getCurrentPages();
-      let formerPage = getApp().globalData.currentPage;
+      let formerPage = app.globalData.currentPage;
       // console.log(formerPage, typeof(formerPage))
       // console.log(page, typeof(page))
       this.setData({
@@ -64,8 +65,8 @@ Component({
         ["sld" + page]: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
       })
       setTimeout(() => {
-        getApp().globalData.currentPage = page;
-        getApp().globalData.formerPage = formerPage;
+        app.globalData.currentPage = page;
+        app.globalData.formerPage = formerPage;
         if ((formerPage == 1 && page == 2) || (formerPage == 2 && page == 1)) {
           this.setData({
             slide: false,
@@ -108,22 +109,22 @@ Component({
     switch (e) {
       const path = e.currentTarget.dataset.path;
       const page = Number(e.currentTarget.dataset.page);
-      let formerPage = getApp().globalData.currentPage;
+      let formerPage = app.globalData.currentPage;
       this.setData({
         mainStyle: "",
         floatStyle: "",
         slide: false,
       })
       setTimeout(() => {
-        getApp().globalData.currentPage = page;
-        getApp().globalData.formerPage = formerPage;
+        app.globalData.currentPage = page;
+        app.globalData.formerPage = formerPage;
         wx.switchTab({
           url: path,
         });
       }, 250);
     },
     record() {
-      if (getApp().globalData.isPad) {
+      if (app.globalData.isPad) {
         this.setData({
           floatStyle: "transform: rotate(45deg);",
           slide: true,
@@ -160,8 +161,7 @@ Component({
         this.hideDialog();
       } else {
         //测试
-        let cpage = getCurrentPages();
-        console.log("aaa", cpage);
+        console.log(app.globalData.primaryColor)
       }
     },
     touchStart: function (e) {
@@ -189,7 +189,7 @@ Component({
         })
       } else if (start[1] > end[1] + 70) {
         console.log('上滑')
-        if (getApp().globalData.isPad) {
+        if (app.globalData.isPad) {
 
         } else {
           this.setData({
@@ -204,7 +204,7 @@ Component({
     },
     // send(data) {
     //   // console.log("clicked");
-    //   getApp().setChangedData(data);
+    //   app.setChangedData(data);
     // },
   }
 })

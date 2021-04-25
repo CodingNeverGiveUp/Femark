@@ -1,4 +1,5 @@
 // app.js
+const event = require("/utils/event.js")
 App({
   onLaunch() {
     //注册云开发
@@ -6,16 +7,8 @@ App({
       env: "suiyi-5goxhr285fd1f64b",
     })
 
-    //获取openid
-    wx.cloud.callFunction({
-        name: "getOpenid"
-      }).then(res => {
-        console.log(res);
-        this.globalData.openid = res.result.openid;
-      })
-      .catch(res => {
-        console.log("failed")
-      })
+    //初始化
+    this.initialize();
 
     // // 获取用户信息
     // wx.getSetting({
@@ -59,7 +52,55 @@ App({
     }
   },
 
-  onThemeChange() {},
+  //初始化
+  initialize() {
+    event.emit('LoginCheck', '检查用户信息');
+    //获取openid
+    wx.cloud.callFunction({
+        name: "getOpenid"
+      }).then(res => {
+        // console.log("step1")
+        // console.log(res);
+        let openid = res.result.openid;
+        this.globalData.openid = openid;
+        //获取用户配置
+        event.emit('LoginCheck', '获取用户配置');
+        wx.cloud.database().collection('note').where({
+            _openid: openid
+          }).get()
+          .then(res => {
+            if (res.data.length == 0) {
+              event.emit('LoginCheck', 'register');
+            } else {
+              // console.log("step2")
+              // console.log(res)
+              this.globalData.useSidebar = res.data[0].profile.useSidebar;
+              this.globalData.pureTheme = res.data[0].profile.pureTheme;
+              this.globalData.userInfo.nickName = res.data[0].profile.nickName;
+              this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
+              this.globalData.primaryColor = res.data[0].profile.primaryColor;
+              //提前拉取笔记待办数据
+              this.globalData.note = res.data[0].note;
+              this.globalData.task = res.data[0].task;
+              //修改
+              setTimeout(()=>{
+                event.emit('LoginCheck', 'finished');
+              },500)
+            }
+          })
+          .catch(err => {
+            event.emit('LoginCheck', 'error');
+          })
+      })
+      .catch(err => {
+        // console.log("failed")
+        event.emit('LoginCheck', 'error');
+      })
+  },
+
+  onThemeChange(e) {
+    this.globalData.systemInfo.theme = e;
+  },
 
   colorRgba(sHex, alpha) {
     var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{4}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8})$/
@@ -91,7 +132,7 @@ App({
 
   // 获取随机颜色
   getRandomColor() {
-    if (app.globalData.pureTheme) {
+    if (this.globalData.pureTheme) {
       return "";
     } else {
       let num = Math.round(Math.random());
@@ -110,36 +151,38 @@ App({
   },
 
   //获取用户信息
-  getUserProfile() {
-    wx.getUserProfile({
-      desc: '完善个人资料',
-      success: function(res) {
-        var userInfo = res.userInfo
-        // console.log('userInfo==>', userInfo)
-        wx.setStorageSync('storage_info', 1);//本地标记
-        //下面将userInfo存入服务器中的用户个人资料
-        //...
-      },
-      fail() {
-        console.log("用户拒绝授权")
-      }
-    })
-  },
+  // getUserProfile() {
+  //   wx.getUserProfile({
+  //     desc: '完善个人资料',
+  //     success: function(res) {
+  //       var userInfo = res.userInfo
+  //       console.log('userInfo==>', userInfo)
+  //       wx.setStorageSync('storage_info', 1);//本地标记
+  //       //下面将userInfo存入服务器中的用户个人资料
+  //       //...
+  //     },
+  //     fail() {
+  //       console.log("用户拒绝授权")
+  //     }
+  //   })
+  // },
 
   //跨页面异步传递
-  addListener(callback) {
-    this.callback = callback;
-  },
+  // addListener(callback) {
+  //   this.callback = callback;
+  // },
 
-  setChangedData(data) {
-    this.data = data;
-    if (this.callback != null) {
-      this.callback(data)
-    }
-  },
+  // setChangedData(data) {
+  //   this.data = data;
+  //   if (this.callback != null) {
+  //     this.callback(data)
+  //   }
+  // },
 
   globalData: {
-    userInfo: null,
+    userInfo: {},
+    note: {},
+    task: {},
     hasUserInfo: false,
     primaryColor: "#4285f4",
     openid: null,
@@ -147,7 +190,7 @@ App({
     formerPage: null,
     systemInfo: null,
     isPad: false,
-    useSidebar: true,
+    useSidebar: false,
     hitokoto: false,
     bing: true,
     pureTheme: false,

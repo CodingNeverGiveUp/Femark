@@ -27,6 +27,8 @@ page {
   margin: 20rpx 0 10rpx 50rpx;
   letter-spacing: 2px;
   justify-content: center;
+  color: #ffffff;
+  font-size: 1.2rem;
 }
 
 .category_small_title {
@@ -57,6 +59,7 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  color: #ffffff;
   align-items: center;
   height: 150rpx;
   flex-shrink: 0;
@@ -68,6 +71,7 @@ page {
   border-top: black solid 1px;
   display: flex;
   flex-shrink: 0;
+  color: #ffffff;
   align-items: center;
   padding: 0 0 0 50rpx;
 }
