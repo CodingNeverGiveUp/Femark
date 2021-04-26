@@ -1,10 +1,33 @@
 <!--pages/note/note.wxml-->
-<scroll-view class="scroll" scroll-x="true" scroll-left="375rpx" enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true">
-  <view class="photos"></view>
-  <view class="content">
-    <form action="" method="post"></form>
+<scroll-view class="scroll" scroll-x="true" scroll-left="375rpx" enable-flex="true" enhanced="true"
+  showScrollbar="false" paging-enabled="true">
+  <view class="side">
+    <view class="photos"></view>
+    <view class="settings"></view>
   </view>
-  <view class="preview"></view>
+  <view class="main">
+    <form action="" method="post" bindsubmit="submit" bindreset="reset">
+      <view class="title">
+        <input type="text" placeholder="标题" placeholder-class="placeholder" name="title" maxlength="20" focus="true"
+          cursor-spacing="300" confirm-type="next"></input>
+        <view class="num">
+          <text>8/20</text>
+        </view>
+      </view>
+      <view class="content">
+        <textarea name="content" placeholder="内容" placeholder-class="placeholder" maxlength="-1" auto-height="true"
+          cursor-spacing="300" id="" cols="30" rows="10" confirm-type="done"></textarea>
+          <view class="num">
+            <text>8/20</text>
+          </view>
+      </view>
+    </form>
+  </view>
+  <view class="preview">
+    <view class="preview_container">
+      <wemark md="{{md}}" link highlight type="wemark"></wemark>
+    </view>
+  </view>
 </scroll-view>
 <view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
   <view class="icon material-icons">
@@ -26,8 +49,7 @@
   </view>
 </view>
 
-<view class="float"
-  style="{{floatStyle}}" bindtap="floatTap">
+<view class="float" style="{{floatStyle}}" bindtap="floatTap">
   <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
     <view class="material-icons" style="color:{{primaryColor}};"><text>edit</text></view>
   </view>
