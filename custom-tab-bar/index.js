@@ -121,7 +121,7 @@ Component({
         wx.switchTab({
           url: path,
         });
-      }, 250);
+      }, 500);
     },
     record() {
       if (app.globalData.isPad) {

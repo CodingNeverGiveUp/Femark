@@ -1,0 +1,32 @@
+<!--pages/note/note.wxml-->
+<scroll-view class="scroll">
+  <view class="photos"></view>
+  <view class="content"></view>
+  <view class="preview"></view>
+</scroll-view>
+<view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+  <view class="icon material-icons">
+    <text>arrow_back</text>
+  </view>
+</view>
+<view class="bottom_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+  <view class="icon material-icons">
+    <text>add_photo_alternate</text>
+  </view>
+  <view class="icon material-icons">
+    <text>keyboard_voice</text>
+  </view>
+  <view class="icon material-icons">
+    <text>share</text>
+  </view>
+  <view class="icon material-icons">
+    <text>delete</text>
+  </view>
+</view>
+
+<view class="float"
+  style="{{floatStyle}}" bindtap="floatTap">
+  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+    <view class="material-icons" style="color:{{primaryColor}};"><text>edit</text></view>
+  </view>
+</view>
