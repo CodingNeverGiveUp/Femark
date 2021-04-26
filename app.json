@@ -33,6 +33,7 @@
   "resizable": true,
   "usingComponents": {
     "custom-tab-bar": "/custom-tab-bar",
-    "md-switch": "/components/switch/switch"
+    "md-switch": "/components/switch/switch",
+    "md-picker": "/components/picker/picker"
   }
 }

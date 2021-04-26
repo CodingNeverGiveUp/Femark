@@ -1,1 +1,48 @@
 /* components/picker/picker.wxss */
+.hover {
+  background: var(--rgbaprimaryColor--);
+}
+
+.component {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50rpx;
+  transition: .2s ease-in-out;
+}
+
+.text {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.picker{
+  position: relative;
+  width: 15%;
+  height: 100%;
+  /* background: pink; */
+  display: flex;
+  align-items: center;
+}
+
+.title{
+  font-size: 1rem;
+  color: #000;
+}
+
+.subtitle{
+  font-size: .8rem;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .title{
+    color: #fff;
+  }
+
+  .subtitle{
+    color: #ccc;
+  }
+}

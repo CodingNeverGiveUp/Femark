@@ -15,6 +15,10 @@
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>配置项</text>
       </view>
+      <md-picker primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{category}}">
+        <text slot="title">类别</text>
+        <text slot="subtitle">笔记所属类别</text>
+      </md-picker>
       <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
         <text slot="title">加密</text>
         <text slot="subtitle">浏览时验证密码</text>

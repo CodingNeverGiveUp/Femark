@@ -14,6 +14,7 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     headingNum: 0,
     contentNum: 0,
+    category: [3,2,3]
   },
 
   headingFocus() {
