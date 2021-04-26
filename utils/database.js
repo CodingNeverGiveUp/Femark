@@ -19,6 +19,23 @@ function addArray(profile) {
   })
 }
 
+//添加测试待办
+const addTask2 = (tasktitle,tasktime,taskurgency,taskcontent,taskreminderStatus,ifDone) => {
+  const _ = wx.cloud.database().command
+  var currenttime = (new Date()).valueOf();
+  wx.cloud.database().collection('task').add({
+    data: {
+        title:tasktitle,
+        time:tasktime,
+        urgency:taskurgency,
+        content:taskcontent,
+        reminderStatus:taskreminderStatus,
+        remindTime:currenttime,
+        done: ifDone,
+    }
+  })
+}
+
 //添加待办数据
 const addTask = (taskDate, taskContent, taskTitle, taskType) => {
   const _ = wx.cloud.database().command
@@ -117,4 +134,5 @@ module.exports = { //注册函数
   deleteTask: deleteTask,
   addArray: addArray,
   getTask: getTask,
+  addTask2: addTask2,
 }

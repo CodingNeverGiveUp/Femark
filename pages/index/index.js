@@ -329,11 +329,6 @@ Page({
         name: "sendOne",
         data: {
           openid: this.data.openid,
-          title: "腾讯会议", //事项主题
-          time: "2019年11月30日 21:00:00", //事项时间
-          urgency: "紧急且重要", //紧急度
-          content: "会议内容为制作小程序", //事项描述
-          reminderStatus: "待确认" //提醒状态
         }
       }).then(res => {
         console.log("发送单条成功", res);
@@ -345,6 +340,11 @@ Page({
 
   addArray() {
     database.addArray()
+  },
+
+  //添加测试待办
+  addTask2() {
+    database.addTask2('腾讯会议','2019年11月30日 21:00:00','紧急且重要','会议内容为制作小程序','待确认',false)
   },
 
   addNote() {
@@ -361,5 +361,12 @@ Page({
 
   getTask() {
     database.getTask();
+  },
+
+  //获取当前时间
+  getTime() {
+    var currenttime = (new Date()).valueOf();
+    var currentdate = new Date(currenttime);
+    console.log(currentdate.valueOf());
   }
 })
