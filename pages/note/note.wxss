@@ -17,6 +17,7 @@ page {
   justify-content: flex-start;
   align-items: center;
   height: 60px;
+  z-index: 999;
 }
 
 .icon {
@@ -77,20 +78,20 @@ page {
 
 .side {
   flex: 1 0 auto;
-  width: 50vw;
+  width: 425rpx;
   height: 200px;
-  background: green;
+  /* background: green; */
 }
 
 .main {
   flex: 1 0 auto;
   width: 100vw;
-  height: 200px;
-  background: yellowgreen;
+  /* background: yellowgreen; */
 }
 
-.main input{
+.heading input{
   width: 100%;
+  padding: 0 0 .2rem 0;
   border-bottom: #000 solid 2px;
 }
 
@@ -101,18 +102,19 @@ page {
   background: orange;
 }
 
-.title {
+.heading {
   font-size: 1.4rem;
   padding: 0 20px;
-  height: 50px;
+  height: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .num{
-  font-size: .6rem;
+  font-size: .8rem;
   align-self: flex-end;
+  color: #666;
 }
 
 .content {
@@ -124,12 +126,39 @@ page {
   /* background: #000; */
 }
 
+.photos{
+  margin-top: 50rpx;
+}
+
+#empty{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 500rpx;
+}
+
+#empty image{
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+#empty text{
+  font-size: .8rem;
+  color: #666;
+}
+
 .preview_container {
   padding: 0 20px;
 }
 
 .placeholder {
   color: #666;
+}
+
+.subtitle{
+  margin-left: 50rpx;
+  font-size: .8rem;
 }
 
 @media (prefers-color-scheme: dark) {

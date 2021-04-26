@@ -84,6 +84,12 @@
         <text slot="subtitle">忽略媒体查询，在所有设备上启用侧栏，禁用底栏</text>
       </md-switch>
     </view>
+    <view class="switch">
+      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
+        <text slot="title">默认使用 Markdown</text>
+        <text slot="subtitle">Markdown 作为新建笔记默认格式</text>
+      </md-switch>
+    </view>
   </view>
   <!-- <view class="quit_btn" hover-class="hover">
     <text>暂不设置</text>
