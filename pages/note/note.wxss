@@ -15,7 +15,7 @@ page {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  height: 50px;
+  height: 60px;
 }
 
 .icon{
@@ -65,6 +65,34 @@ page {
   display: flex;
   align-items: center;
   box-shadow: 0 0rpx 10rpx #bbb;
+}
+
+.scroll{
+  margin: 80px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+}
+
+.photos{
+  flex: 1 0 auto;
+  width: 50vw;
+  height: 200px;
+  background: green;
+}
+
+.content{
+  flex: 1 0 auto;
+  width: 100vw;
+  height: 200px;
+  background: yellowgreen;
+}
+
+.preview{
+  flex: 1 0 auto;
+  width: 100vw;
+  height: 200px;
+  background: orange;
 }
 
 @media (prefers-color-scheme: dark) {

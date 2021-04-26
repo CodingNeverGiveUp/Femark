@@ -1,7 +1,9 @@
 <!--pages/note/note.wxml-->
-<scroll-view class="scroll">
+<scroll-view class="scroll" scroll-x="true" scroll-left="375rpx" enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true">
   <view class="photos"></view>
-  <view class="content"></view>
+  <view class="content">
+    <form action="" method="post"></form>
+  </view>
   <view class="preview"></view>
 </scroll-view>
 <view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
