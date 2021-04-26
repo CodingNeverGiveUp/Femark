@@ -16,6 +16,10 @@
         <text>配置项</text>
       </view>
       <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
+        <text slot="title">加密</text>
+        <text slot="subtitle">浏览时验证密码</text>
+      </md-switch>
+      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
         <text slot="title">Markdown 模式</text>
         <text slot="subtitle">内容使用 Markdown 渲染</text>
       </md-switch>
@@ -24,10 +28,10 @@
   <view class="main">
     <form action="" method="post" bindsubmit="submit" bindreset="reset">
       <view class="heading">
-        <input type="text" placeholder="标题" placeholder-class="placeholder" name="heading" maxlength="20" focus="true"
-          cursor-spacing="300" confirm-type="next"></input>
+        <input type="text" style="{{headingStyle}}" placeholder="标题" placeholder-class="placeholder" name="heading" maxlength="20" focus="true"
+          cursor-spacing="300" confirm-type="next"  bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
         <view class="num">
-          <text>8/20</text>
+          <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
         </view>
       </view>
       <view class="content">
@@ -47,21 +51,21 @@
 </scroll-view>
 
 <view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
-  <view class="icon material-icons">
+  <view class="icon material-icons" hover-class="hover" bindtap="back">
     <text>arrow_back</text>
   </view>
 </view>
 <view class="bottom_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
-  <view class="icon material-icons">
+  <view class="icon material-icons" hover-class="hover">
     <text>add_photo_alternate</text>
   </view>
-  <view class="icon material-icons">
+  <view class="icon material-icons" hover-class="hover">
     <text>keyboard_voice</text>
   </view>
-  <view class="icon material-icons">
+  <view class="icon material-icons" hover-class="hover">
     <text>share</text>
   </view>
-  <view class="icon material-icons">
+  <view class="icon material-icons" hover-class="hover">
     <text>delete</text>
   </view>
 </view>

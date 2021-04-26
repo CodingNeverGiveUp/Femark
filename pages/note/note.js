@@ -12,6 +12,28 @@ Page({
     primaryColor: app.globalData.primaryColor,
     pureTheme: app.globalData.pureTheme,
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    headingNum: 0,
+  },
+
+  headingFocus() {
+    this.setData({
+      headingStyle: `border-bottom-color:${this.data.primaryColor};`,
+      headingNumStyle: `color:${this.data.primaryColor};`
+    })
+  },
+
+  headingBlur() {
+    this.setData({
+      headingStyle: "",
+      headingNumStyle: "",
+    })
+  },
+
+  headingInput(e){
+    // console.log(e.detail.value.length);
+    this.setData({
+      headingNum: e.detail.value.length,
+    })
   },
 
   /**

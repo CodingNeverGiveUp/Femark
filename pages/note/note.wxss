@@ -5,6 +5,10 @@ page {
   background-color: #f1f1f1;
 }
 
+.hover {
+  background: var(--rgbaprimaryColor--);
+}
+
 .head_bar {
   position: fixed;
   top: 0;
@@ -24,11 +28,12 @@ page {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  background: pink;
+  /* background: pink; */
   display: flex;
   justify-content: center;
   align-items: center;
   transition: background .2s ease-in-out;
+  color: #444;
 }
 
 .float {
@@ -69,6 +74,10 @@ page {
   box-shadow: 0 0rpx 10rpx #bbb;
 }
 
+.bottom_bar .icon{
+  margin-right: 12px;
+}
+
 .scroll {
   margin: 80px 0 0 0;
   display: flex;
@@ -91,14 +100,16 @@ page {
 
 .heading input{
   width: 100%;
-  padding: 0 0 .2rem 0;
+  height: 2rem;
+  /* padding: 0 0 .2rem 0; */
   border-bottom: #000 solid 2px;
+  transition: border .2s ease-in-out;
 }
 
 .preview {
   flex: 1 0 auto;
   width: 100vw;
-  height: 200px;
+  /* height: 200px; */
   background: orange;
 }
 
@@ -115,6 +126,7 @@ page {
   font-size: .8rem;
   align-self: flex-end;
   color: #666;
+  transition: color .2s ease-in-out;
 }
 
 .content {
