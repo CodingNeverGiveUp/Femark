@@ -13,6 +13,7 @@ Page({
     pureTheme: app.globalData.pureTheme,
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     headingNum: 0,
+    contentNum: 0,
   },
 
   headingFocus() {
@@ -33,6 +34,31 @@ Page({
     // console.log(e.detail.value.length);
     this.setData({
       headingNum: e.detail.value.length,
+    })
+  },
+
+  contentTap (e) {
+
+  },
+
+  contentFocus() {
+    this.setData({
+      contentStyle: `border-bottom-color:${this.data.primaryColor};`,
+      contentNumStyle: `color:${this.data.primaryColor};`
+    })
+  },
+
+  contentBlur() {
+    this.setData({
+      contentStyle: "",
+      contentNumStyle: "",
+    })
+  },
+
+  contentInput(e){
+    // console.log(e.detail.value.length);
+    this.setData({
+      contentNum: e.detail.value.length,
     })
   },
 

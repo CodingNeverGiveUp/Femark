@@ -131,11 +131,14 @@ page {
 
 .content {
   padding: 0 20px;
-  min-height: 300rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   /* background: #000; */
+}
+
+.content textarea{
+  min-height: 300rpx;
 }
 
 .photos{

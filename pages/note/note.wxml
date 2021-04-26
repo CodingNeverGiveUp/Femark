@@ -29,16 +29,16 @@
     <form action="" method="post" bindsubmit="submit" bindreset="reset">
       <view class="heading">
         <input type="text" style="{{headingStyle}}" placeholder="标题" placeholder-class="placeholder" name="heading" maxlength="20" focus="true"
-          cursor-spacing="300" confirm-type="next"  bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
+          cursor-spacing="300" confirm-type="next" bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
         <view class="num">
           <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
         </view>
       </view>
-      <view class="content">
+      <view class="content" bindtap="contentTap">
         <textarea name="content" placeholder="内容" placeholder-class="placeholder" maxlength="-1" auto-height="true"
-          cursor-spacing="300" id="" cols="30" rows="10" confirm-type="done"></textarea>
+          cursor-spacing="300" id="" confirm-type="done" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
         <view class="num">
-          <text>8/20</text>
+          <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
         </view>
       </view>
     </form>
