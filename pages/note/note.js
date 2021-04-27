@@ -12,6 +12,7 @@ Page({
     primaryColor: app.globalData.primaryColor,
     pureTheme: app.globalData.pureTheme,
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    theme: app.globalData.systemInfo.theme,
     headingNum: 0,
     contentNum: 0,
     md: "",
@@ -19,7 +20,7 @@ Page({
     markdownPreview: true,
     markdownPreviewDelay: 2,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
-    category: ["哈哈哈", "嘿嘿嘿"]
+    category: ["哈哈哈", "嘿嘿嘿"],
   },
 
   headingFocus() {
@@ -63,8 +64,10 @@ Page({
 
   contentInput(e) {
     // console.log(e.detail.value.length);
+    this.data.temp = e.detail.value;
     this.setData({
       contentNum: e.detail.value.length,
+      btnStyle: "right:0;"
     })
     //预览
     if (this.data.markdownPreview) {
@@ -86,14 +89,43 @@ Page({
     }
   },
 
+  previewRefresh(){
+    if(this.data.temp){
+      this.setData({
+        md: this.data.temp,
+        btnStyle: "right:-300rpx;"
+      })
+    }
+  },
+
   pick(e) {
     console.log(e);
   },
 
   switch (e) {
     console.log(e);
+    if(e.currentTarget.dataset.id == "markdownPreview"){
+      this.setData({
+        markdownPreview: e.detail.value
+      })
+    }
   },
 
+  toUpper() {
+    if (this.data.theme == 'light') {
+      this.setData({
+        headbarStyle: "background:#f1f1f1;box-shadow: none;",
+      })
+    } else if (this.data.theme == 'dark') {
+
+    }
+  },
+
+  scroll() {
+    this.setData({
+      headbarStyle: ""
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -148,5 +180,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  onThemeChange: function () {
+    this.setData({
+      theme: app.globalData.systemInfo.theme
+    })
   }
 })

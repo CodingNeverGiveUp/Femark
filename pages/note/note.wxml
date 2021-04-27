@@ -25,14 +25,15 @@
           <text slot="title">加密</text>
           <text slot="subtitle">浏览时验证密码</text>
         </md-switch>
-        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{markdownPreview}}">
+        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          selected="{{markdownPreview}}">
           <text slot="title">Markdown 模式</text>
           <text slot="subtitle">使用 Markdown 渲染</text>
         </md-switch>
       </view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="main">
       <form action="" method="post" bindsubmit="submit" bindreset="reset">
         <view class="heading">
@@ -54,10 +55,16 @@
       </form>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="preview">
-      <view class="heading">
-        <text>预览</text>
+      <view class="heading" style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+        <view>
+          <text>预览</text>
+        </view>
+        <view class="btn" style="color:{{primaryColor}};{{btnStyle}};" hover-class="btnp" bindtap="previewRefresh">
+          <text class="material-icons">refresh</text>
+          <text>刷新</text>
+        </view>
       </view>
       <view class="preview_container">
         <wemark md="{{md}}" link highlight type="wemark"></wemark>
@@ -65,15 +72,16 @@
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>配置项</text>
       </view>
-      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{markdownPreview}}">
+      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        selected="{{markdownPreview}}" data-id="markdownPreview">
         <text slot="title">同步刷新</text>
         <text slot="subtitle">自动更新 Markdown 预览</text>
       </md-switch>
       <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!markdownPreview}}">
-          <text slot="title">刷新延时</text>
-          <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
-        </md-picker>
+        dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!markdownPreview}}">
+        <text slot="title">刷新延时</text>
+        <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
+      </md-picker>
     </view>
   </scroll-view>
 
@@ -81,7 +89,7 @@
 
 </scroll-view>
 
-<view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+<view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{headbarStyle}}">
   <view class="icon material-icons" hover-class="hover" bindtap="back">
     <text>arrow_back</text>
   </view>
