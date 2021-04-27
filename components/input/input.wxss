@@ -1,0 +1,51 @@
+/* components/input/input.wxss */
+.hover {
+  background: var(--rgbaprimaryColor--);
+}
+
+.component {
+  padding: 10px 50rpx;
+  transition: .2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input{
+  /* background: pink; */
+  display: flex;
+  align-items: center;
+}
+
+/* .selected_disabled{
+  display: flex;
+  align-items: center;
+  color: #666;
+} */
+
+.title{
+  font-size: 1rem;
+  color: #000;
+}
+
+.subtitle{
+  font-size: .8rem;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .title{
+    color: #fff;
+  }
+
+  .subtitle{
+    color: #ccc;
+  }
+}

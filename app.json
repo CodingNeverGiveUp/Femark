@@ -34,6 +34,7 @@
   "usingComponents": {
     "custom-tab-bar": "/custom-tab-bar",
     "md-switch": "/components/switch/switch",
-    "md-picker": "/components/picker/picker"
+    "md-picker": "/components/picker/picker",
+    "md-input": "/components/input/input"
   }
 }

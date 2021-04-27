@@ -126,6 +126,10 @@ Page({
     }
   },
 
+  input(e) {
+    console.log(e)
+  },
+
   toUpper() {
     if (this.data.theme == 'light') {
       this.setData({
