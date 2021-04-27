@@ -15,7 +15,7 @@
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>配置项</text>
       </view>
-      <md-picker primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{category}}">
+      <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{category}}" disabled="">
         <text slot="title">类别</text>
         <text slot="subtitle">笔记所属类别</text>
       </md-picker>

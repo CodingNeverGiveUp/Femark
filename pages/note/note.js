@@ -14,7 +14,7 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     headingNum: 0,
     contentNum: 0,
-    category: [3,2,3]
+    category: ["哈哈哈","嘿嘿嘿"]
   },
 
   headingFocus() {
@@ -61,6 +61,14 @@ Page({
     this.setData({
       contentNum: e.detail.value.length,
     })
+  },
+
+  pick(e){
+    console.log(e);
+  },
+
+  switch(e){
+    console.log(e);
   },
 
   /**
