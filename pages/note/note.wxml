@@ -25,8 +25,8 @@
           <text slot="title">加密</text>
           <text slot="subtitle">浏览时验证密码</text>
         </md-switch>
-        <md-input bind:input="input" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" data-id="password">
-          <text slot="title">密码</text>
+        <md-input bind:input="input" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" value="{{password}}" data-id="password" wx:if="{{encrypt}}">
+          <text slot="title">访问密码</text>
           <text slot="subtitle">点击设置密码</text>
         </md-input>
         <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"

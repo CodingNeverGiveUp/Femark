@@ -19,6 +19,7 @@ Page({
     windowHeight: app.globalData.systemInfo.windowHeight,
     useMarkdown: true,
     encrypt: true,
+    password: "1234",
     markdownPreview: true,
     markdownPreviewDelay: 2,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
@@ -127,7 +128,11 @@ Page({
   },
 
   input(e) {
-    console.log(e)
+    if (e.currentTarget.dataset.id == "password") {
+      this.setData({
+        password: e.detail.value
+      })
+    }
   },
 
   toUpper() {
