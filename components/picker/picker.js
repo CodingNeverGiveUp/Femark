@@ -52,7 +52,7 @@ Component({
     _change(e){
       // console.log(e.detail.value)
       this.setData({
-        resultKey: e.detail.value,
+        resultKey: Number(e.detail.value),
         result: this.data.dataset[e.detail.value],
       })
       var detail = {
@@ -68,8 +68,8 @@ Component({
   lifetimes: {
     attached: function () {
       this.setData({
-        result: this.data.dataset[0],
-        resultKey: 0,
+        result: this.data.dataset[this.data.selected],
+        resultKey: this.data.selected,
       })
       // console.log(getApp().globalData.systemInfo.theme)
       if(this.data.disabled){

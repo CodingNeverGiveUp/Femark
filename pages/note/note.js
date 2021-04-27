@@ -14,8 +14,12 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     headingNum: 0,
     contentNum: 0,
+    md: "",
     windowHeight: app.globalData.systemInfo.windowHeight,
-    category: ["哈哈哈","嘿嘿嘿"]
+    markdownPreview: true,
+    markdownPreviewDelay: 2,
+    markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
+    category: ["哈哈哈", "嘿嘿嘿"]
   },
 
   headingFocus() {
@@ -32,14 +36,14 @@ Page({
     })
   },
 
-  headingInput(e){
+  headingInput(e) {
     // console.log(e.detail.value.length);
     this.setData({
       headingNum: e.detail.value.length,
     })
   },
 
-  contentTap (e) {
+  contentTap(e) {
 
   },
 
@@ -57,18 +61,36 @@ Page({
     })
   },
 
-  contentInput(e){
+  contentInput(e) {
     // console.log(e.detail.value.length);
     this.setData({
       contentNum: e.detail.value.length,
     })
+    //预览
+    if (this.data.markdownPreview) {
+      if (this.data.timer) {
+        clearTimeout(this.data.timer);
+        this.data.timer = setTimeout(() => {
+          this.setData({
+            md: e.detail.value
+          })
+        }, this.data.markdownPreviewDelay * 1000);
+      } else {
+        this.data.timer = setTimeout(() => {
+          this.setData({
+            md: e.detail.value
+          })
+        }, this.data.markdownPreviewDelay * 1000);
+      }
+      // console.log(this.data.markdownPreviewDelay)
+    }
   },
 
-  pick(e){
+  pick(e) {
     console.log(e);
   },
 
-  switch(e){
+  switch (e) {
     console.log(e);
   },
 

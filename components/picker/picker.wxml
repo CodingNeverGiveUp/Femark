@@ -1,5 +1,5 @@
 <!--components/picker/picker.wxml-->
-<picker mode="selector" disabled="{{disabled}}" range="{{dataset}}" class="picker" bindchange="_change">
+<picker mode="selector" disabled="{{disabled}}" range="{{dataset}}" value="{{selected}}" class="picker" bindchange="_change">
 <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindtap="_onTap" hover-class="hover">
     <view class="text">
       <view class="title">

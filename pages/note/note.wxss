@@ -114,7 +114,7 @@ page {
   flex: 1 0 auto;
   width: 100vw;
   /* height: 200px; */
-  background: orange;
+  /* background: orange; */
 }
 
 .heading {
