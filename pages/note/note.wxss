@@ -49,6 +49,7 @@ page {
   align-items: center;
   background: #ffffff;
   transition: background .2s ease-in-out;
+  z-index: 999;
 }
 
 .float_color {
@@ -72,6 +73,7 @@ page {
   display: flex;
   align-items: center;
   box-shadow: 0 0rpx 10rpx #bbb;
+  z-index: 998;
 }
 
 .bottom_bar .icon{
@@ -79,10 +81,12 @@ page {
 }
 
 .scroll {
-  margin: 80px 0 0 0;
+  padding: 80px 0 0 0;
   display: flex;
   flex-direction: row;
   width: 100vw;
+  height: 100vh;
+  /* background: #000; */
 }
 
 .side {
@@ -130,7 +134,7 @@ page {
 }
 
 .content {
-  padding: 0 20px;
+  padding: 0 20px 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -138,7 +142,7 @@ page {
 }
 
 .content textarea{
-  min-height: 300rpx;
+  min-height: 400rpx;
 }
 
 .photos{
@@ -165,6 +169,7 @@ page {
 
 .preview_container {
   padding: 0 20px;
+  min-height: 400rpx;
 }
 
 .placeholder {

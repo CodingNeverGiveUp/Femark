@@ -14,6 +14,7 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     headingNum: 0,
     contentNum: 0,
+    windowHeight: app.globalData.systemInfo.windowHeight,
     category: ["哈哈哈","嘿嘿嘿"]
   },
 

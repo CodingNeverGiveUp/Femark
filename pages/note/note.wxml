@@ -1,57 +1,72 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="425rpx" enable-flex="true" enhanced="true"
   showScrollbar="false" paging-enabled="true">
-  <view class="side">
-    <view class="photos">
-      <view class="subtitle" style="color:{{primaryColor}};">
-        <text>图库</text>
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;">
+    <view class="side">
+      <view class="photos">
+        <view class="subtitle" style="color:{{primaryColor}};">
+          <text>图库</text>
+        </view>
+        <view id="empty" wx:if="{{true}}">
+          <image src="/source/img/empty.png" mode="widthFix"></image>
+          <text>无内容</text>
+        </view>
       </view>
-      <view id="empty" wx:if="{{true}}">
-        <image src="/source/img/empty.png" mode="widthFix"></image>
-        <text>无内容</text>
+      <view class="settings">
+        <view class="subtitle" style="color:{{primaryColor}};">
+          <text>配置项</text>
+        </view>
+        <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          dataset="{{category}}" disabled="">
+          <text slot="title">类别</text>
+          <text slot="subtitle">笔记所属类别</text>
+        </md-picker>
+        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
+          <text slot="title">加密</text>
+          <text slot="subtitle">浏览时验证密码</text>
+        </md-switch>
+        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
+          <text slot="title">Markdown 模式</text>
+          <text slot="subtitle">内容使用 Markdown 渲染</text>
+        </md-switch>
       </view>
     </view>
-    <view class="settings">
-      <view class="subtitle" style="color:{{primaryColor}};">
-        <text>配置项</text>
-      </view>
-      <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{category}}" disabled="">
-        <text slot="title">类别</text>
-        <text slot="subtitle">笔记所属类别</text>
-      </md-picker>
-      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
-        <text slot="title">加密</text>
-        <text slot="subtitle">浏览时验证密码</text>
-      </md-switch>
-      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
-        <text slot="title">Markdown 模式</text>
-        <text slot="subtitle">内容使用 Markdown 渲染</text>
-      </md-switch>
+  </scroll-view>
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;">
+    <view class="main">
+      <form action="" method="post" bindsubmit="submit" bindreset="reset">
+        <view class="heading">
+          <input type="text" style="{{headingStyle}}" placeholder="标题" placeholder-class="placeholder" name="heading"
+            maxlength="20" focus="true" cursor-spacing="300" confirm-type="next" bindfocus="headingFocus"
+            bindblur="headingBlur" bindinput="headingInput"></input>
+          <view class="num">
+            <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
+          </view>
+        </view>
+        <view class="content" bindtap="contentTap">
+          <textarea name="content" placeholder="内容" placeholder-class="placeholder" maxlength="-1" auto-height="true"
+            cursor-spacing="300" id="" confirm-type="done" bindfocus="contentFocus" bindblur="contentBlur"
+            bindinput="contentInput"></textarea>
+          <view class="num">
+            <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
+          </view>
+        </view>
+      </form>
     </view>
-  </view>
-  <view class="main">
-    <form action="" method="post" bindsubmit="submit" bindreset="reset">
+  </scroll-view>
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;">
+    <view class="preview">
       <view class="heading">
-        <input type="text" style="{{headingStyle}}" placeholder="标题" placeholder-class="placeholder" name="heading" maxlength="20" focus="true"
-          cursor-spacing="300" confirm-type="next" bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
-        <view class="num">
-          <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
-        </view>
+        <text>预览</text>
       </view>
-      <view class="content" bindtap="contentTap">
-        <textarea name="content" placeholder="内容" placeholder-class="placeholder" maxlength="-1" auto-height="true"
-          cursor-spacing="300" id="" confirm-type="done" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
-        <view class="num">
-          <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
-        </view>
+      <view class="preview_container">
+        <wemark md="{{md}}" link highlight type="wemark"></wemark>
       </view>
-    </form>
-  </view>
-  <view class="preview">
-    <view class="preview_container">
-      <wemark md="{{md}}" link highlight type="wemark"></wemark>
     </view>
-  </view>
+  </scroll-view>
+
+
+
 </scroll-view>
 
 <view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
