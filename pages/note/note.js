@@ -73,7 +73,7 @@ Page({
       btnStyle: "right:0;"
     })
     //预览
-    if (this.data.markdownPreview) {
+    if (this.data.useMarkdown && this.data.markdownPreview) {
       if (this.data.timer) {
         clearTimeout(this.data.timer);
         this.data.timer = setTimeout(() => {
