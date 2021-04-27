@@ -21,12 +21,12 @@
           <text slot="title">类别</text>
           <text slot="subtitle">笔记所属类别</text>
         </md-picker>
-        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
+        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{encrypt}}" data-id="encrypt">
           <text slot="title">加密</text>
           <text slot="subtitle">浏览时验证密码</text>
         </md-switch>
         <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          selected="{{markdownPreview}}">
+          selected="{{useMarkdown}}" data-id="useMarkdown">
           <text slot="title">Markdown 模式</text>
           <text slot="subtitle">使用 Markdown 渲染</text>
         </md-switch>
@@ -78,7 +78,7 @@
         <text slot="subtitle">自动更新 Markdown 预览</text>
       </md-switch>
       <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!markdownPreview}}">
+        dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!markdownPreview}}" data-id="markdownPreviewDelay">
         <text slot="title">刷新延时</text>
         <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
       </md-picker>

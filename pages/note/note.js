@@ -17,6 +17,8 @@ Page({
     contentNum: 0,
     md: "",
     windowHeight: app.globalData.systemInfo.windowHeight,
+    useMarkdown: true,
+    encrypt: true,
     markdownPreview: true,
     markdownPreviewDelay: 2,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
@@ -89,8 +91,8 @@ Page({
     }
   },
 
-  previewRefresh(){
-    if(this.data.temp){
+  previewRefresh() {
+    if (this.data.temp) {
       this.setData({
         md: this.data.temp,
         btnStyle: "right:-300rpx;"
@@ -100,13 +102,26 @@ Page({
 
   pick(e) {
     console.log(e);
+    if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
+      this.setData({
+        markdownPreviewDelay: e.detail.value
+      })
+    }
   },
 
   switch (e) {
     console.log(e);
-    if(e.currentTarget.dataset.id == "markdownPreview"){
+    if (e.currentTarget.dataset.id == "markdownPreview") {
       this.setData({
         markdownPreview: e.detail.value
+      })
+    } else if (e.currentTarget.dataset.id == "useMarkdown") {
+      this.setData({
+        useMarkdown: e.detail.value
+      })
+    } else if (e.currentTarget.dataset.id == "encrypt") {
+      this.setData({
+        encrypt: e.detail.value
       })
     }
   },
