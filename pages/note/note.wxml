@@ -71,7 +71,7 @@
         <view class="content" bindtap="contentTap">
           <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
             placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
-            confirm-type="next" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
+            confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
           <view class="num" wx:if="{{edit}}">
             <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
           </view>
