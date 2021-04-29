@@ -17,6 +17,13 @@ Page({
     contentNum: 0,
     md: "",
     windowHeight: app.globalData.systemInfo.windowHeight,
+    edit: true,
+    edited: true,
+    gallery: [],
+    tempImgs: [],
+    floatContent: "edit",
+    heading: "测试标题",
+    content: "测试内容",
     useMarkdown: true,
     encrypt: true,
     password: "1234",
@@ -24,6 +31,59 @@ Page({
     markdownPreviewDelay: 2,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
     category: ["哈哈哈", "嘿嘿嘿"],
+  },
+
+  submit() {
+    wx.showModal({
+      title: "注意",
+      content: "是否应用更改",
+      confirmColor: this.data.primaryColor
+    }).then(res => {
+      if (res.confirm) {
+        (async function process() {
+          await database.uploadImg(this.data.tempImgs)
+        })
+      }
+    })
+  },
+
+  addImg() {
+    var that = this
+    if (!this.data.edit) {
+      this.showSnackbar("请先启用编辑")
+    } else {
+      wx.chooseImage({
+        sizeType: ['compressed'],
+        sourceType: ['album', 'camera'],
+        success(res) {
+          console.log(res)
+          // tempFilePath可以作为img标签的src属性显示图片
+          var tempFilePaths = res.tempFilePaths
+          // console.log(tempFilePaths)
+          that.setData({
+            tempImgs: that.data.tempImgs.concat(tempFilePaths)
+          })
+        }
+      })
+    }
+  },
+
+  previewTempImg(e) {
+    console.log(e.currentTarget.dataset.url)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: this.data.tempImgs,
+    })
+  },
+
+  deleteTempImg(e) {
+    // console.log(e.currentTarget.dataset.index)
+    let array = this.data.tempImgs
+    array.splice(e.currentTarget.dataset.index, 1,);
+    // console.log(array.length)
+    this.setData({
+      tempImgs: array
+    })
   },
 
   headingFocus() {
@@ -150,6 +210,38 @@ Page({
       headbarStyle: ""
     })
   },
+
+  floatTap() {
+    if (this.data.edit) {
+      if (this.data.edited) {
+        this.submit();
+      } else {
+        this.setData({
+          edit: false,
+          floatContent: "edit"
+        })
+      }
+    } else {
+      this.setData({
+        edit: true,
+        floatContent: "save"
+      })
+    }
+  },
+
+  showSnackbar(content) {
+    this.setData({
+      snackbarStyle: "bottom:0",
+      snackbarContent: content
+    })
+    setTimeout(() => {
+      this.setData({
+        snackbarStyle: "bottom:-50px",
+      })
+    }, 1500);
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */

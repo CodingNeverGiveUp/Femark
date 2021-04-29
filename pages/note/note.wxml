@@ -1,15 +1,23 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="425rpx" enable-flex="true" enhanced="true"
-  showScrollbar="false" paging-enabled="true">
+  showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;">
     <view class="side">
       <view class="photos">
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>图库</text>
         </view>
-        <view id="empty" wx:if="{{true}}">
+        <view id="empty" wx:if="{{tempImgs.length == 0 && gallery.length == 0}}">
           <image src="/source/img/empty.png" mode="widthFix"></image>
           <text>无内容</text>
+        </view>
+        <view class="tempImgs">
+          <view class="tempImg" wx:for="{{tempImgs}}" wx:key="index">
+            <image mode="aspectFill" src="{{item}}" bindtap="previewTempImg" data-index="{{index}}" data-url="{{item}}"></image>
+            <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteTempImg">
+              <text class="material-icons">clear</text>
+            </view>
+          </view>
         </view>
       </view>
       <view class="settings">
@@ -21,11 +29,13 @@
           <text slot="title">类别</text>
           <text slot="subtitle">笔记所属类别</text>
         </md-picker>
-        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{encrypt}}" data-id="encrypt">
+        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          selected="{{encrypt}}" data-id="encrypt">
           <text slot="title">加密</text>
           <text slot="subtitle">浏览时验证密码</text>
         </md-switch>
-        <md-input bind:input="input" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" value="{{password}}" data-id="password" wx:if="{{encrypt}}">
+        <md-input bind:input="input" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          value="{{password}}" data-id="password" wx:if="{{encrypt}}">
           <text slot="title">访问密码</text>
           <text slot="subtitle">点击设置密码</text>
         </md-input>
@@ -37,31 +47,34 @@
       </view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
+    upper-threshold="20" bindscroll="scroll">
     <view class="main">
       <form action="" method="post" bindsubmit="submit" bindreset="reset">
         <view class="heading">
-          <input type="text" style="{{headingStyle}}" placeholder="标题" placeholder-class="placeholder" name="heading"
-            maxlength="20" focus="true" cursor-spacing="300" confirm-type="next" bindfocus="headingFocus"
-            bindblur="headingBlur" bindinput="headingInput"></input>
-          <view class="num">
+          <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
+            placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
+            bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
+          <view class="num" wx:if="{{edit}}">
             <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
           </view>
         </view>
         <view class="content" bindtap="contentTap">
-          <textarea name="content" placeholder="内容" placeholder-class="placeholder" maxlength="-1" auto-height="true"
-            cursor-spacing="300" id="" confirm-type="done" bindfocus="contentFocus" bindblur="contentBlur"
-            bindinput="contentInput"></textarea>
-          <view class="num">
+          <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
+            placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
+            confirm-type="next" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
+          <view class="num" wx:if="{{edit}}">
             <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
           </view>
         </view>
       </form>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll" wx:if="{{useMarkdown}}">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
+    upper-threshold="20" bindscroll="scroll" wx:if="{{useMarkdown}}">
     <view class="preview">
-      <view class="heading" style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+      <view class="heading"
+        style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
         <view>
           <text>预览</text>
         </view>
@@ -82,7 +95,8 @@
         <text slot="subtitle">自动更新 Markdown 预览</text>
       </md-switch>
       <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!markdownPreview}}" data-id="markdownPreviewDelay">
+        dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!markdownPreview}}"
+        data-id="markdownPreviewDelay">
         <text slot="title">刷新延时</text>
         <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
       </md-picker>
@@ -99,7 +113,7 @@
   </view>
 </view>
 <view class="bottom_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" hover-class="hover" bindtap="addImg">
     <text>add_photo_alternate</text>
   </view>
   <view class="icon material-icons" hover-class="hover">
@@ -115,6 +129,10 @@
 
 <view class="float" style="{{floatStyle}}" bindtap="floatTap">
   <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>edit</text></view>
+    <view class="material-icons" style="color:{{primaryColor}};"><text>{{floatContent}}</text></view>
   </view>
+</view>
+
+<view class="snackbar" style="{{snackbarStyle}}">
+  <text>{{snackbarContent}}</text>
 </view>

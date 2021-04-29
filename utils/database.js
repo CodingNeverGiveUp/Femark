@@ -1,6 +1,4 @@
-const exampleFunction = () => {
-  console.log("content")
-}
+
 //添加用户数组
 function addArray(profile) {
   return new Promise((resolve, reject) => {
@@ -16,6 +14,12 @@ function addArray(profile) {
     }).catch(err => {
       reject();
     })
+  })
+}
+
+function uploadImg(tempImgs){
+  return new Promise((resolve,reject)=>{
+    
   })
 }
 
@@ -128,7 +132,6 @@ const getNote = () => {
 }
 
 module.exports = { //注册函数
-  exampleFunction: exampleFunction,
   addNote: addNote,
   addTask: addTask,
   deleteTask: deleteTask,
