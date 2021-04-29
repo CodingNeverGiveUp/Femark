@@ -173,20 +173,19 @@ page {
   margin-top: 50rpx;
 }
 
-#empty {
+.empty {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 500rpx;
 }
 
-#empty image {
+.empty image {
   width: 80px;
   margin-bottom: 20px;
 }
 
-#empty text {
+.empty text {
   font-size: .8rem;
   color: #666;
 }
@@ -202,7 +201,7 @@ page {
 
 .tempImg image{
   /* margin: 0 50px; */
-  height: 300rpx;
+  height: 250rpx;
   width: 100%;
 }
 

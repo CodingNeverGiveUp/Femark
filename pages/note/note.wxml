@@ -7,17 +7,26 @@
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>图库</text>
         </view>
-        <view id="empty" wx:if="{{tempImgs.length == 0 && gallery.length == 0}}">
+        <view class="empty" style="height: 500rpx;" wx:if="{{tempImgs.length == 0 && gallery.length == 0}}">
           <image src="/source/img/empty.png" mode="widthFix"></image>
           <text>无内容</text>
         </view>
         <view class="tempImgs">
           <view class="tempImg" wx:for="{{tempImgs}}" wx:key="index">
             <image mode="aspectFill" src="{{item}}" bindtap="previewTempImg" data-index="{{index}}" data-url="{{item}}"></image>
-            <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteTempImg">
+            <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteTempImg" wx:if="{{edit}}">
               <text class="material-icons">clear</text>
             </view>
           </view>
+        </view>
+      </view>
+      <view class="radio">
+        <view class="subtitle" style="color:{{primaryColor}};">
+          <text>音频</text>
+        </view>
+        <view class="empty" style="height: 200rpx;" wx:if="{{true}}">
+          <!-- <image src="/source/img/empty.png" mode="widthFix"></image> -->
+          <text>无内容</text>
         </view>
       </view>
       <view class="settings">

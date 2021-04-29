@@ -1,4 +1,4 @@
-
+const app = getApp()
 //添加用户数组
 function addArray(profile) {
   return new Promise((resolve, reject) => {
@@ -17,25 +17,59 @@ function addArray(profile) {
   })
 }
 
-function uploadImg(tempImgs){
-  return new Promise((resolve,reject)=>{
-    
+function uploadImg(imgs) {
+  function upload(filepath, index, array) {
+    return new Promise((resolve, reject) => {
+      wx.showLoading({
+        title: `上传中（${index+1}/${array.length}）`,
+      })
+      let cloudpath = `image/${app.globalData.openid}/${new Date().getTime()}.jpg`;
+      wx.cloud.uploadFile({
+        cloudPath: cloudpath,
+        filePath: filepath
+      }).then(res => {
+        // wx.hideLoading()
+        imgs.IDs.push(res.fileID)
+        resolve()
+      }).catch(err => {
+        reject()
+      })
+    })
+  }
+  return new Promise((resolve, reject) => {
+    async function action() {
+      for (let i = 0; i < imgs.paths.length; i++) {
+        try {
+          await upload(imgs.paths[i], i, imgs.paths)
+        } catch {
+          console.log("upload failed")
+          reject()
+        }
+        if (i == imgs.paths.length - 1) {
+          console.log("upload finished")
+          wx.hideLoading()
+          resolve()
+        }
+      }
+    }
+    action()
+    // imgs.paths.forEach(async (element, index, array) => {})
   })
 }
 
 //添加测试待办
-const addTask2 = (tasktitle,tasktime,taskurgency,taskcontent,taskreminderStatus,ifDone) => {
+const addTask2 = (tasktitle, tasktime, taskurgency, taskcontent, taskreminderStatus, ifDone) => {
   const _ = wx.cloud.database().command
   var currenttime = (new Date()).valueOf();
   wx.cloud.database().collection('task').add({
     data: {
-        title:tasktitle,
-        time:tasktime,
-        urgency:taskurgency,
-        content:taskcontent,
-        reminderStatus:taskreminderStatus,
-        remindTime:currenttime,
-        done: ifDone,
+      title: tasktitle,
+      time: tasktime,
+      urgency: taskurgency,
+      content: taskcontent,
+      reminderStatus: taskreminderStatus,
+      remindTime: currenttime,
+      done: ifDone,
     }
   })
 }
@@ -132,10 +166,11 @@ const getNote = () => {
 }
 
 module.exports = { //注册函数
-  addNote: addNote,
-  addTask: addTask,
-  deleteTask: deleteTask,
-  addArray: addArray,
-  getTask: getTask,
-  addTask2: addTask2,
+  addNote,
+  addTask,
+  deleteTask,
+  addArray,
+  getTask,
+  addTask2,
+  uploadImg
 }

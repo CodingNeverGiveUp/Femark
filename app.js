@@ -60,7 +60,6 @@ App({
         name: "getOpenid"
       }).then(res => {
         // console.log("step1")
-        // console.log(res);
         let openid = res.result.openid;
         this.globalData.openid = openid;
         //获取用户配置

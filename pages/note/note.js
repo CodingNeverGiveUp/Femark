@@ -34,15 +34,32 @@ Page({
   },
 
   submit() {
+    var that = this
     wx.showModal({
       title: "注意",
       content: "是否应用更改",
       confirmColor: this.data.primaryColor
     }).then(res => {
       if (res.confirm) {
-        (async function process() {
-          await database.uploadImg(this.data.tempImgs)
-        })
+        let imgs = {
+          paths: this.data.tempImgs,
+          IDs: new Array
+        }
+        async function process() {
+          try{
+            await database.uploadImg(imgs)
+          }catch{
+            wx.showToast({
+              content: "操作失败"
+            })
+          }
+          //传完清除tempPath
+          that.setData({
+            tempImgs: []
+          })
+          console.log(imgs.IDs)
+        }
+        process()
       }
     })
   },
