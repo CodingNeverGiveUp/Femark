@@ -85,6 +85,13 @@ Page({
     }
   },
 
+  delete(){
+    var that = this
+    if (!this.data.edit) {
+      this.showSnackbar("请先启用编辑")
+    } else {}
+  },
+
   previewTempImg(e) {
     console.log(e.currentTarget.dataset.url)
     wx.previewImage({
@@ -215,17 +222,25 @@ Page({
   toUpper() {
     if (this.data.theme == 'light') {
       this.setData({
-        headbarStyle: "background:#f1f1f1;box-shadow: none;",
+        headbarStyle: "",
       })
     } else if (this.data.theme == 'dark') {
-
+      this.setData({
+        headbarStyle: "",
+      })
     }
   },
 
   scroll() {
-    this.setData({
-      headbarStyle: ""
-    })
+    if (this.data.theme == 'light') {
+      this.setData({
+        headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+      })
+    } else if (this.data.theme == 'dark') {
+      this.setData({
+        headbarStyle: "background:#222426;box-shadow: 0 0rpx 10rpx #222;",
+      })
+    }
   },
 
   floatTap() {
@@ -316,6 +331,7 @@ Page({
   },
 
   onThemeChange: function () {
+    console.log(app.globalData.systemInfo.theme)
     this.setData({
       theme: app.globalData.systemInfo.theme
     })

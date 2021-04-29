@@ -131,7 +131,7 @@
   <view class="icon material-icons" hover-class="hover">
     <text>share</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" hover-class="hover" bindtap="delete">
     <text>delete</text>
   </view>
 </view>
