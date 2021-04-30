@@ -189,49 +189,44 @@
   font-size: 0.8rem;
 } */
 
-.DBbox_pad{
-    margin: 15rpx 40rpx;
-    border-radius: 1.0ch;
-    padding: 20rpx 30rpx 20rpx 30rpx;
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-}
-.DBbox{
-  margin: 20rpx 65rpx;
-  border-radius: 1.0ch;
-  padding: 30rpx 30rpx 30rpx 30rpx;
+.db_box{
+  box-shadow: 0 0 10rpx #bbb;
+  border-radius: 10px;
+  height: 90px;
   display: flex;
   flex-direction: row;
   align-items:center;
+  margin-bottom: 40rpx;
 }
 
 .box_left{
     width: 25%;
-    margin: 0 auto;
-    text-align: center;
-    padding-right: 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }   
 
 .box_right{
     width: 75%;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .month{
     color: #ccc;
-    font-size: 0.8rem;
+    font-size: .8rem;
 }
 
 .day{
-    color: #ffffff;  
-    font-size: 1.2rem;
+    color: #fff;  
+    font-size: 1.5rem;
     padding-top: 2px;
 }
 
 .topic{
-    color: #ffffff;
-    font-size: 1.0rem;
+    color: #fff;
     text-overflow:ellipsis; 
     overflow:hidden;
     white-space:nowrap; 
@@ -239,6 +234,10 @@
 
 .ddl{
     padding-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     color: #ccc;
     font-size: 0.8rem;
 }
@@ -247,248 +246,8 @@
 
 
 
+
 /* 深色模式 */
 @media (prefers-color-scheme: dark) {
-  .hover{
-    background: var(--rgbaprimaryColor--);
-  }
-  
-  .page_selector{
-    position: absolute;
-    top: -150px;
-    margin: 0 50rpx;
-    left: 0;
-    right: 0;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 0rpx 10rpx #bbb;
-    overflow: hidden;
-    transition: top .2s ease-in-out, background .2s ease-in-out;
-  }
-  
-  .page_selector_blank{
-    height: 25px;
-  }
-  
-  .page_selector_item{
-    /* border: hotpink solid 1px; */
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    height: 60px;
-    color: #666;
-    transition: background .2s ease-in-out, color .2s ease-in-out;
-  }
-  
-  .page_selector .icon{
-    margin: 0 0 0 50rpx
-  }
-  
-  .page_selector .text{
-    margin: 0 0 0 50rpx
-  }
-  
-  .container{
-    display: flex;
-    flex-direction: column;
-    margin-top: 20rpx;
-  }
-  
-  .note_pad{
-    padding:50rpx 30rpx 0 30rpx;
-    background: #222426;
-  }
-  .note{
-    padding:80rpx 40rpx 0 40rpx;
-    background: #222426;
-  }
-  .todo{
-    background: #222426;
-  }
-  
-  @media only screen and (min-width: 600px){
-    .container{
-      display: flex;
-      flex-direction: row;
-    }
-    .note{
-      width: 50%;
-    }
-    .todo{
-      width: 50%;
-    }
-  }
-  
-  /* 笔记 */
-  
-  .category_title_pad{
-    font-size: 1.4rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 0 0 10rpx 0;
-    justify-content: center;
-    letter-spacing: 2px;
-  }
-  .category_title{
-    font-size: 1.4rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 0 0 10rpx 100rpx;
-    letter-spacing: 2px;
-  }
-  .category_small_title_pad{
-    font-size: 0.8rem;
-    margin: 0 0 45rpx 0;
-    text-align: center;
-  }
-  .category_small_title{
-    font-size: 0.8rem;
-    margin: 0 0 60rpx 100rpx;
-  }
-  .hengpai{
-    display: flex;
-    flex-direction: row;
-  }
-  .account_box_1{
-    margin: 0 8rpx 0 0;
-   height: auto;
-  }
-  .account_box_2{
-    margin: 0 0 0 8rpx;
-    height: auto;
-  }
-  ._box_1_nei{
-    margin: 0 0 25rpx 0;
-    padding: 10rpx;
-    border-radius: 0 0 1.0ch 1.0ch;
-    max-height: 200px;
-    overflow-y: hidden;
-    word-wrap: break-word;
-    word-break: break-all;
-  }
-  ._box_2_nei{
-    margin: 0 0 40rpx 0;
-    padding: 10rpx;
-    border-radius:0 0 1.0ch 1.0ch;
-    max-height: 200px;
-    overflow-y: hidden;
-    word-wrap: break-word;
-    word-break: break-all;
-  }
-  .picture{
-    width: 100%;
-    height: 100px;
-    border-radius: 1.0ch 1.0ch 0 0;
-  }
-  .word_Tips{
-    position: relative;
-    color: #666;
-    font-size: 0.7rem;
-    top:85%;
-    opacity: 0.5;
-  }
-  
-  /* 代办 */
-  .head_pad{
-      margin: 50rpx 60rpx 0 60rpx;
-      /* width: 100%; */
-  }
-  .head{
-    margin: 80rpx 60rpx 0 110rpx;
-    /* width: 100%; */
-  }
-  
-  .head_1_pad{
-      font-size: 1.4rem;
-      margin-bottom: 10rpx;
-      text-align: center;
-      letter-spacing: 2px;
-  }
-  .head_1{
-    font-size: 1.4rem;
-    margin-bottom: 10rpx;
-    letter-spacing: 2px;
-  }
-  
-  .head_2_pad{
-      font-size: 0.8rem;
-      text-align: center;
-      /* color: #cccccc; */
-      /* letter-spacing: 2px; */
-  }
-  .head_2{
-    font-size: 0.8rem;
-    /* color: #cccccc; */
-    /* letter-spacing: 2px; */
-  }
-  
-  .divide{
-      width: 100%;
-      height: 30rpx;
-  }
-  
-  .DBbox_pad{
-      margin: 15rpx 40rpx;
-      border-radius: 1.0ch;
-      padding: 20rpx 30rpx 20rpx 30rpx;
-      display: flex;
-      flex-direction: row;
-      align-items:center;
-  }
-  .DBbox{
-    margin: 20rpx 65rpx;
-    border-radius: 1.0ch;
-    padding: 30rpx 30rpx 30rpx 30rpx;
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-  }
-  
-  .box_left{
-      width: 25%;
-      margin: 0 auto;
-      text-align: center;
-      padding-right: 30rpx;
-  }   
-  
-  .box_right{
-      width: 75%;
-      margin: 0 auto;
-  }
-  
-  .month{
-      color: #cccccc;
-      font-size: 0.8rem;
-  }
-  
-  .day{
-      font-size: 1.2rem;
-      padding-top: 2px;
-  }
-  
-  .topic{
-      font-size: 1.0rem;
-      text-overflow:ellipsis; 
-      overflow:hidden;
-      white-space:nowrap; 
-  }
-  
-  .ddl{
-      padding-top: 5px;
-      color: #cccccc;
-      font-size: 0.8rem;
-  }
-  
-  .alarm{
-      font-size: 35rpx;
-      margin-left: 10rpx;
-      vertical-align:text-top;
-  }
-  
+  .page{}
 }
