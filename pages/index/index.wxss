@@ -47,18 +47,33 @@
 .container{
   display: flex;
   flex-direction: column;
-  margin-top: 20rpx;
 }
 
-.note_pad{
-  padding:50rpx 30rpx 0 30rpx;
-}
 .note{
-  padding:80rpx 40rpx 0 40rpx;
+  padding:40px 40rpx 0 40rpx;
 }
-/* .todo{
-  background: pink;
-} */
+.todo{
+  padding:40px 40rpx 0 40rpx;
+}
+
+.head{
+  height: 300rpx;
+  /* background: #000; */
+  display: flex;
+  flex-direction: column;
+}
+
+.head_title{
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.head_subtitle{
+  font-size: .8rem;
+  color: #666;
+}
 
 @media only screen and (min-width: 600px){
   .container{
@@ -73,9 +88,10 @@
   }
 }
 
+
 /* 笔记 */
 
-.category_title_pad{
+/* .category_title_pad{
   font-size: 1.4rem;
   display: flex;
   flex-direction: row;
@@ -100,7 +116,7 @@
 .category_small_title{
   font-size: 0.8rem;
   margin: 0 0 60rpx 100rpx;
-}
+} */
 .hengpai{
   display: flex;
   flex-direction: row;
@@ -146,43 +162,32 @@
 }
 
 /* 代办 */
-.head_pad{
+/* .head_pad{
     margin: 50rpx 60rpx 0 60rpx;
-    /* width: 100%; */
-}
-.head{
+} */
+/* .head{
   margin: 80rpx 60rpx 0 110rpx;
-  /* width: 100%; */
-}
+} */
 
-.head_1_pad{
+/* .head_1_pad{
     font-size: 1.4rem;
     margin-bottom: 10rpx;
     text-align: center;
     letter-spacing: 2px;
-}
-.head_1{
+} */
+/* .head_1{
   font-size: 1.4rem;
   margin-bottom: 10rpx;
   letter-spacing: 2px;
-}
+} */
 
-.head_2_pad{
+/* .head_2_pad{
     font-size: 0.8rem;
     text-align: center;
-    /* color: #cccccc; */
-    /* letter-spacing: 2px; */
-}
-.head_2{
+} */
+/* .head_2{
   font-size: 0.8rem;
-  /* color: #cccccc; */
-  /* letter-spacing: 2px; */
-}
-
-.divide{
-    width: 100%;
-    height: 30rpx;
-}
+} */
 
 .DBbox_pad{
     margin: 15rpx 40rpx;

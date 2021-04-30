@@ -12,6 +12,7 @@ Page({
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
     pureTheme: app.globalData.pureTheme,
     isPad: app.globalData.isPad,
+    useSidebar: app.globalData.useSidebar,
     primaryColor: app.globalData.primaryColor,
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     currentPage: app.globalData.currentPage,
@@ -90,6 +91,7 @@ Page({
     }
     //重新拉取配置
     this.setData({
+      useSidebar: app.globalData.useSidebar,
       pureTheme: app.globalData.pureTheme,
       isPad: app.globalData.isPad,
       primaryColor: app.globalData.primaryColor,

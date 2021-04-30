@@ -18,9 +18,14 @@
 
 <view class="container">
   <!-- 笔记 -->
-  <view class="{{isPad?'note_pad':'note'}}" wx:if="{{isPad == true || currentPage == 1}}">
-    <view class="{{isPad?'category_title_pad':'category_title'}}"><text>笔记</text></view>
-    <view class="{{isPad?'category_small_title_pad':'category_small_title'}}">{{test_Lenth}}个笔记</view>
+  <view class="note" wx:if="{{isPad == true || currentPage == 1}}">
+    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}" bindtap="showSelector">
+      <view class="head_title">
+        <text>笔记</text>
+        <text class="material-icons">expand_more</text>
+      </view>
+      <text class="head_subtitle">共{{10}}条数据</text>
+    </view>
     <view class="hengpai">
       <view class="account_box_1" style="width:50%;">
         <view id="b1">
@@ -36,8 +41,8 @@
         </view>
         <!--ss-->
       </view>
-      <!--这是右边栏-->
 
+      <!--这是右边栏-->
       <view class="account_box_2" style="width:50%;">
         <view id="b2">
           <!--这里加一个空view的目的是防止最外层的盒子会两边自动相等，如果不加的话会判定为两边高度相等-->
@@ -54,30 +59,19 @@
         <!--ss-->
       </view>
     </view>
-    <button bindtap="showSelector">切换</button>
-    <button bindtap="addArray">点击添加用户</button>
-    <button bindtap="addNote">点击添加note</button>
-    <button bindtap="addTask">点击添加task</button>
-    <button bindtap="addTask2">点击添加task2</button>
-    <button bindtap="deleteTask">点击删除task</button>
-    <button bindtap="getTask">点击获得task</button>
-    <button bindtap="requestSubscribeMessage">点击获取订阅消息</button>
-    <button bindtap="sendOne">点击发送消息给单个用户</button>
-    <button bindtap="getTime">点击获取当前时间</button>
-    <button bindtap="sendOne">点击发送消息给单个用户</button>
+    <!-- <button bindtap="showSelector">切换</button> -->
   </view>
 
 
   <!-- 待办 -->
   <view class="todo" wx:if="{{isPad == true || currentPage == 2}}">
-    <view class="{{isPad?'head_pad':'head'}}">
-      <view class="{{isPad?'head_1_pad':'head_1'}}">
+    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}" bindtap="showSelector">
+      <view class="head_title">
         <text>待办</text>
-        <!-- <text class="material-icons icon">view_headline</text> -->
+        <text class="material-icons">expand_more</text>
       </view>
-      <view class="{{isPad?'head_2_pad':'head_2'}}"><text>{{text_lenth}}个待办</text></view>
+      <text class="head_subtitle">共{{10}}条数据</text>
     </view>
-    <view class="divide"></view>
     <view class="main">
       <view wx:for="{{text.list}}" wx:key="id">
         <view class="{{isPad?'DBbox_pad':'DBbox'}}" style="background-color:{{item.color}};">
@@ -87,7 +81,7 @@
           </view>
           <view class="box_right">
             <view class="topic">{{item.topic}}</view>
-            <view class="ddl">DDL  {{item.ddl}}</view>
+            <view class="ddl">DDL {{item.ddl}}</view>
           </view>
         </view>
       </view>

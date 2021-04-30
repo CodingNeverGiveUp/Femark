@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/note/note",
     "pages/logincheck/logincheck",
-    "pages/account/account",
     "pages/index/index",
     "pages/category/category",
+    "pages/account/account",
+    "pages/note/note",
     "pages/guide/guide"
   ],
   "window": {

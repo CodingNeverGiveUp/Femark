@@ -74,6 +74,7 @@ App({
               // console.log("step2")
               // console.log(res)
               this.globalData.useSidebar = res.data[0].profile.useSidebar;
+              console.log(this.globalData.useSidebar)
               this.globalData.pureTheme = res.data[0].profile.pureTheme;
               this.globalData.userInfo.nickName = res.data[0].profile.nickName;
               this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
