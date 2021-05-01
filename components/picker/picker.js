@@ -28,6 +28,10 @@ Component({
       type: Number,
       value: 0,
     },
+    mode: {
+      type: String,
+      value: "selector"
+    },
   },
 
   /**

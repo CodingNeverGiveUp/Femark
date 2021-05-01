@@ -16,6 +16,9 @@ Page({
     edit: false,
     list: true,
     notification: true,
+    autoDelete: true,
+    autoDeleteDelay: 5,
+    autoDeleteDelayData: [1,2,3,4,5,6,7],
     floatContent: "edit",
   },
 
@@ -121,6 +124,10 @@ Page({
     if (e.currentTarget.dataset.id == "notification") {
       this.setData({
         notification: e.detail.value
+      })
+    }else if(e.currentTarget.dataset.id == "autoDelete"){
+      this.setData({
+        autoDelete: e.detail.value
       })
     }
   },

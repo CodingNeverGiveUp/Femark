@@ -31,10 +31,27 @@
         <text slot="subtitle">在指定时间发送通知\n需要获取通知权限</text>
       </md-switch>
       <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!edit}}"
-        data-id="notificationTime">
+        dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}" mode="date"
+        data-id="notificationDate">
+        <text slot="title">提醒日期</text>
+        <text slot="subtitle">发送提醒的精确日期</text>
+      </md-picker>
+      <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}" mode="time"
+        data-id="notificationDate">
         <text slot="title">提醒时间</text>
-        <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
+        <text slot="subtitle">发送提醒的精确时间</text>
+      </md-picker>
+      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        selected="{{autoDelete}}" data-id="autoDelete"  disabled="{{!edit}}">
+        <text slot="title">自清理</text>
+        <text slot="subtitle">过期一段时间后自动删除</text>
+      </md-switch>
+      <md-picker class="picker" wx:if="{{autoDelete}}" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        dataset="{{autoDeleteDelayData}}" selected='4' disabled="{{!edit}}"
+        data-id="autoDeleteDelayData">
+        <text slot="title">自清理执行时间</text>
+        <text slot="subtitle">清理延后时间（天）</text>
       </md-picker>
       </form>
     </view>
