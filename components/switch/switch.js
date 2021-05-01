@@ -59,6 +59,33 @@ Component({
         this.triggerEvent('switch', detail, option);
       }
     },
+    refreshStatus(){
+      if (this.data.disabled) {
+        if (this.data.selected) {
+          this.setData({
+            bar: "background:#e0e0e0;",
+            dot: "right:0;background:#bdbdbd;"
+          })
+        } else {
+          this.setData({
+            bar: "background:#e0e0e0;",
+            dot: "right:17px;background:#bdbdbd;"
+          })
+        }
+      } else {
+        if(this.data.selected){
+          this.setData({
+            bar: `background:${this.data.rgbaPrimaryColor};`,
+            dot: `right:0;background:${this.data.primaryColor};`
+          })
+        }else{
+          this.setData({
+            bar: "background:#9e9e9e;",
+            dot: `right:17px;background:#fff;`
+          })
+        }
+      }
+    },
   },
 
   // 生命周期函数
@@ -92,5 +119,7 @@ Component({
     },
   },
   // 数据监听器
-  observers: {},
+  observers: {
+
+  },
 })

@@ -1,6 +1,6 @@
 <!--pages/category/category.wxml-->
 <view class="category_Container2">
-  <view class="head" style="{{useSidebar?'margin-left:45px;':''}}" bindtap="showSelector">
+  <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
     <view class="head_title">
       <text>分类</text>
     </view>

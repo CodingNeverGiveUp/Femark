@@ -5,6 +5,7 @@
     "pages/category/category",
     "pages/account/account",
     "pages/note/note",
+    "pages/todo/todo",
     "pages/guide/guide"
   ],
   "window": {

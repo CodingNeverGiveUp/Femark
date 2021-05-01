@@ -49,7 +49,7 @@ Component({
       // var option = {};
       // this.triggerEvent('pick', detail, option);
     },
-    _change(e){
+    _change(e) {
       // console.log(e.detail.value)
       this.setData({
         resultKey: Number(e.detail.value),
@@ -61,7 +61,24 @@ Component({
       };
       var option = {};
       this.triggerEvent('pick', detail, option);
-    }
+    },
+    refreshStatus() {
+      if (this.data.disabled) {
+        if (getApp().globalData.systemInfo.theme == "dark") {
+          this.setData({
+            selectedStyle: "color:#ccc;"
+          })
+        } else if (getApp().globalData.systemInfo.theme == "light") {
+          this.setData({
+            selectedStyle: "color:#666;"
+          })
+        }
+      } else {
+        this.setData({
+          selectedStyle: "",
+        })
+      }
+    },
   },
 
   // 生命周期函数
@@ -72,16 +89,20 @@ Component({
         resultKey: this.data.selected,
       })
       // console.log(getApp().globalData.systemInfo.theme)
-      if(this.data.disabled){
-        if(getApp().globalData.systemInfo.theme == "dark"){
+      if (this.data.disabled) {
+        if (getApp().globalData.systemInfo.theme == "dark") {
           this.setData({
             selectedStyle: "color:#ccc;"
           })
-        }else if(getApp().globalData.systemInfo.theme == "light"){
+        } else if (getApp().globalData.systemInfo.theme == "light") {
           this.setData({
             selectedStyle: "color:#666;"
           })
         }
+      } else {
+        this.setData({
+          selectedStyle: ""
+        })
       }
     },
   }

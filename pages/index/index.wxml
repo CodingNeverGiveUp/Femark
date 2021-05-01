@@ -19,8 +19,8 @@
 <view class="container">
   <!-- 笔记 -->
   <view class="note" wx:if="{{isPad == true || currentPage == 1}}">
-    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}" bindtap="showSelector">
-      <view class="head_title">
+    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+      <view class="head_title" bindtap="showSelector">
         <text>笔记</text>
         <text class="material-icons">expand_more</text>
       </view>
@@ -65,8 +65,8 @@
 
   <!-- 待办 -->
   <view class="todo" wx:if="{{isPad == true || currentPage == 2}}">
-    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}" bindtap="showSelector">
-      <view class="head_title">
+    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+      <view class="head_title" bindtap="showSelector">
         <text>待办</text>
         <text class="material-icons">expand_more</text>
       </view>
@@ -81,8 +81,10 @@
           </view>
           <view class="box_right">
             <view class="topic">{{item.topic}}</view>
-            <view class="ddl"><class class="material-icons"
-                style="font-size:.8rem">notifications_active</class><text>{{item.ddl}}</text></view>
+            <view class="ddl">
+              <class class="material-icons" style="font-size:.8rem">notifications_active</class>
+              <text>{{item.ddl}}</text>
+            </view>
           </view>
         </view>
       </view>
