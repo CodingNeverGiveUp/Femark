@@ -41,24 +41,24 @@
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>配置项</text>
         </view>
+        <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
+          mode="date" data-id="notificationDate">
+          <text slot="title">目标日期</text>
+          <text slot="subtitle">预期完成日期</text>
+        </md-picker>
+        <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
+          mode="time" data-id="notificationDate">
+          <text slot="title">目标时间</text>
+          <text slot="subtitle">预期完成时间</text>
+        </md-picker>
         <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{notification}}" data-id="notification"
           disabled="{{!edit}}">
           <text slot="title">提醒</text>
-          <text slot="subtitle">在指定时间发送通知\n需要获取通知权限</text>
+          <text slot="subtitle">于目标时间发送通知\n需要获取通知权限</text>
         </md-switch>
-        <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}"
-          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
-          mode="date" data-id="notificationDate">
-          <text slot="title">提醒日期</text>
-          <text slot="subtitle">发送提醒的精确日期</text>
-        </md-picker>
-        <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}"
-          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
-          mode="time" data-id="notificationDate">
-          <text slot="title">提醒时间</text>
-          <text slot="subtitle">发送提醒的精确时间</text>
-        </md-picker>
         <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{autoDelete}}" data-id="autoDelete" disabled="{{!edit}}">
           <text slot="title">自清理</text>

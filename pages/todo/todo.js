@@ -18,21 +18,6 @@ Page({
     listData: [{
       content: "测试文本1",
       top: 0,
-      finished: false,
-      dragging: false,
-    }, {
-      content: "测试文本2",
-      top: 0,
-      finished: true,
-      dragging: false,
-    }, {
-      content: "测试文本3",
-      top: 0,
-      finished: true,
-      dragging: false,
-    }, {
-      content: "测试文本4",
-      top: 0,
       finished: true,
       dragging: false,
     }],
@@ -42,7 +27,7 @@ Page({
     listDragging: false,
     listTarget: null,
     notification: false,
-    autoDelete: true,
+    autoDelete: false,
     autoDeleteDelay: 5,
     autoDeleteDelayData: [1, 2, 3, 4, 5, 6, 7],
     floatContent: "edit",
