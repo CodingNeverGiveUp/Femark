@@ -15,6 +15,15 @@ Page({
     contentNum: 0,
     edit: false,
     list: true,
+    listData: [{
+      content: "测试文本1",
+      top: null,
+      finished: false,
+    }, {
+      content: "测试文本2",
+      top: null,
+      finished: true,
+    }],
     notification: false,
     autoDelete: true,
     autoDeleteDelay: 5,
@@ -108,6 +117,46 @@ Page({
         list: this.data.list ? false : true,
       })
     }
+  },
+
+  listInput(e) {
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    this.setData({
+      [`listData[${index}].content`]: e.detail.value
+    })
+  },
+
+  listSwitch(e) {
+    if (!this.data.edit) {
+      this.showSnackbar("请先启用编辑")
+    } else {
+      let index = e.currentTarget.dataset.index
+      this.setData({
+        [`listData[${index}].finished`]: this.data.listData[index].finished ? false : true,
+      })
+    }
+  },
+
+  listAddItem() {
+    let array = this.data.listData
+    array.push({
+      content: "",
+      top: null,
+      finished: false,
+    })
+    this.setData({
+      listData: array
+    })
+  },
+
+  listDeleteItem(e) {
+    let index = e.currentTarget.dataset.index
+    let array = this.data.listData
+    array.splice(index, 1, )
+    this.setData({
+      listData: array
+    })
   },
 
   pick(e) {

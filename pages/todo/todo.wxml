@@ -4,7 +4,7 @@
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
     upper-threshold="20" bindscroll="scroll">
     <view class="main">
-      <form action="" method="post" bindsubmit="submit" bindreset="reset">
+      <!-- <form action="" method="post" bindsubmit="submit" bindreset="reset"> -->
         <view class="heading">
           <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
             placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
@@ -21,39 +21,57 @@
             <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
           </view>
         </view>
-        <view class="list" wx:if="{{list}}"></view>
+        <view class="list" wx:if="{{list}}">
+          <view class="list_item" wx:for="{{listData}}" wx:key="index">
+            <view class="list_item_left">
+              <view class="icon material-icons" hover-class="hover" bindtap="" data-index="{{index}}"><text>drag_indicator</text></view>
+              <view class="icon material-icons" hover-class="hover" bindtap="listSwitch" data-index="{{index}}">
+                <text>{{item.finished?'check_box':'check_box_outline_blank'}}</text></view>
+              <input type="text" value="{{item.content}}" maxlength="20" bindinput="listInput" focus="true" data-index="{{index}}" disabled="{{!edit}}"></input>
+            </view>
+            <view wx:if="{{edit}}" class="list_item_right">
+              <view class="icon material-icons" hover-class="hover" bindtap="listDeleteItem" data-index="{{index}}"><text>close</text></view>
+            </view>
+          </view>
+          <view wx:if="{{edit}}" class="list_add_item" hover-class="hover" bindtap="listAddItem">
+            <view class="icon material-icons" hover-class="hover"><text>add</text></view>
+            <text>新增清单项</text>
+          </view>
+        </view>
         <view class="subtitle" style="color:{{primaryColor}};">
-        <text>配置项</text>
-      </view>
-      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        selected="{{notification}}" data-id="notification"  disabled="{{!edit}}">
-        <text slot="title">提醒</text>
-        <text slot="subtitle">在指定时间发送通知\n需要获取通知权限</text>
-      </md-switch>
-      <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}" mode="date"
-        data-id="notificationDate">
-        <text slot="title">提醒日期</text>
-        <text slot="subtitle">发送提醒的精确日期</text>
-      </md-picker>
-      <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}" mode="time"
-        data-id="notificationDate">
-        <text slot="title">提醒时间</text>
-        <text slot="subtitle">发送提醒的精确时间</text>
-      </md-picker>
-      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        selected="{{autoDelete}}" data-id="autoDelete"  disabled="{{!edit}}">
-        <text slot="title">自清理</text>
-        <text slot="subtitle">过期一段时间后自动删除</text>
-      </md-switch>
-      <md-picker class="picker" wx:if="{{autoDelete}}" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{autoDeleteDelayData}}" selected='4' disabled="{{!edit}}"
-        data-id="autoDeleteDelayData">
-        <text slot="title">自清理执行时间</text>
-        <text slot="subtitle">清理延后时间（天）</text>
-      </md-picker>
-      </form>
+          <text>配置项</text>
+        </view>
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{notification}}" data-id="notification"
+          disabled="{{!edit}}">
+          <text slot="title">提醒</text>
+          <text slot="subtitle">在指定时间发送通知\n需要获取通知权限</text>
+        </md-switch>
+        <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
+          mode="date" data-id="notificationDate">
+          <text slot="title">提醒日期</text>
+          <text slot="subtitle">发送提醒的精确日期</text>
+        </md-picker>
+        <md-picker class="picker" wx:if="{{notification}}" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
+          mode="time" data-id="notificationDate">
+          <text slot="title">提醒时间</text>
+          <text slot="subtitle">发送提醒的精确时间</text>
+        </md-picker>
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{autoDelete}}" data-id="autoDelete" disabled="{{!edit}}">
+          <text slot="title">自清理</text>
+          <text slot="subtitle">过期一段时间后自动删除</text>
+        </md-switch>
+        <md-picker class="picker" wx:if="{{autoDelete}}" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{autoDeleteDelayData}}" selected='4' disabled="{{!edit}}"
+          data-id="autoDeleteDelayData">
+          <text slot="title">自清理执行时间</text>
+          <text slot="subtitle">清理延后时间（天）</text>
+        </md-picker>
+        <view class="blank"></view>
+      <!-- </form> -->
     </view>
   </scroll-view>
 </view>
@@ -65,7 +83,7 @@
 </view>
 <view class="bottom_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
   <view class="icon material-icons" hover-class="hover" bindtap="listTap">
-    <text>list</text>
+    <text>{{list?'notes':'check_box'}}</text>
   </view>
   <view class="icon material-icons" hover-class="hover">
     <text>share</text>
