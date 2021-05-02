@@ -17,13 +17,28 @@ Page({
     list: true,
     listData: [{
       content: "测试文本1",
-      top: null,
+      top: 0,
       finished: false,
+      dragging: false,
     }, {
       content: "测试文本2",
-      top: null,
+      top: 0,
       finished: true,
+      dragging: false,
+    }, {
+      content: "测试文本3",
+      top: 0,
+      finished: true,
+      dragging: false,
+    }, {
+      content: "测试文本4",
+      top: 0,
+      finished: true,
+      dragging: false,
     }],
+    listTop: null,
+    listMin: null,
+    listMax: null,
     notification: false,
     autoDelete: true,
     autoDeleteDelay: 5,
@@ -142,7 +157,7 @@ Page({
     let array = this.data.listData
     array.push({
       content: "",
-      top: null,
+      top: 0,
       finished: false,
     })
     this.setData({
@@ -156,6 +171,42 @@ Page({
     array.splice(index, 1, )
     this.setData({
       listData: array
+    })
+  },
+
+  dragStart(e) {
+    // console.log(e)
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var query = wx.createSelectorQuery()
+    query.select('.list').boundingClientRect(rect => {
+      console.log(index * (-40), (this.data.listData.length - index - 1) * 40)
+      this.setData({
+        listTop: rect.top + index * 40,
+        listMin: index * (-40),
+        listMax: (this.data.listData.length - index - 1) * 40,
+        [`listData.[${index}].dragging`]: true
+      })
+      // console.log(rect.top)
+    }).exec()
+  },
+  dragMove(e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var top = this.data.listTop
+    var res = e.changedTouches[0].clientY - top - 20
+    // console.log(e.changedTouches[0].clientY - top)
+    if (res >= this.data.listMin && res <= this.data.listMax) {
+      this.setData({
+        [`listData[${index}].top`]: res
+      })
+    }
+  },
+  dragEnd(e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    this.setData({
+      [`listData.[${index}].dragging`]: false
     })
   },
 

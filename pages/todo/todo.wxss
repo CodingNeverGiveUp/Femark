@@ -70,11 +70,15 @@
 }
 
 .list_item {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+  height: 40px;
+  transition: box-shadow .2s ease-in-out;
+  background: #f1f1f1;
 }
 
 .list_item_left {

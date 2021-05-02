@@ -20,11 +20,11 @@
           <view class="num" wx:if="{{edit}}">
             <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
           </view>
-        </view>
+        </view> 
         <view class="list" wx:if="{{list}}">
-          <view class="list_item" wx:for="{{listData}}" wx:key="index">
+          <view class="list_item" style="top:{{item.top}}px;{{item.dragging?'box-shadow: 0 0 10rpx #bbb;z-index:999':''}}" wx:for="{{listData}}" wx:key="index" data-index="{{index}}">
             <view class="list_item_left">
-              <view class="icon material-icons" hover-class="hover" bindtap="" data-index="{{index}}"><text>drag_indicator</text></view>
+              <view class="icon material-icons" hover-class="hover" catchtouchstart="dragStart" catchtouchmove="dragMove" catchtouchend="dragEnd" data-index="{{index}}"><text>drag_indicator</text></view>
               <view class="icon material-icons" hover-class="hover" bindtap="listSwitch" data-index="{{index}}">
                 <text>{{item.finished?'check_box':'check_box_outline_blank'}}</text></view>
               <input type="text" value="{{item.content}}" maxlength="20" bindinput="listInput" focus="true" data-index="{{index}}" disabled="{{!edit}}"></input>
