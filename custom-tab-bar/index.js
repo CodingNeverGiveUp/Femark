@@ -133,7 +133,7 @@ Component({
       } else {
         this.setData({
           mainStyle: "height:250px;",
-          floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;") + "transform: rotate(45deg);",
+          floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;"),
           slide: true,
         })
       }
@@ -194,7 +194,7 @@ Component({
         } else {
           this.setData({
             mainStyle: "height:250px;",
-            floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;") + "transform: rotate(45deg);",
+            floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;"),
             slide: true,
           })
         }

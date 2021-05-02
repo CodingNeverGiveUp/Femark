@@ -153,10 +153,14 @@
   margin: 8px 0;
 }
 
-.float {
-  position: fixed;
+.float_container{
+  position: absolute;
   bottom: 90px;
   right: 50rpx;
+  transition: bottom .2s ease-in-out;
+}
+
+.float {
   width: 55px;
   height: 55px;
   box-shadow: 0 0 10rpx #bbb;
@@ -169,6 +173,49 @@
 }
 
 .float_color {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
+}
+
+.float_selection{
+  right: 5px;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.float_selection_text{
+  width: 100px;
+  height: 30px;
+  background: #fff;
+  box-shadow: 0 0 10rpx #bbb;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  color: #666;
+}
+
+.float_selection_bg {
+  width: 45px;
+  height: 45px;
+  box-shadow: 0 0 10rpx #bbb;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
+}
+
+.float_selection_color {
   width: 100%;
   height: 100%;
   border-radius: 100%;

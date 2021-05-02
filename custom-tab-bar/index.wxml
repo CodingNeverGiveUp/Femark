@@ -65,10 +65,34 @@
   </view>
 </view>
 <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view>
-<view wx:if="{{currentPage==4?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}"
-  style="{{floatStyle}}" bindtap="floatTap" bindlongpress="record">
-  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="t_hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+
+<view wx:if="{{currentPage==4?false:true}}" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}"
+  class="float_container {{isPad?'h_float':useSidebar?'h_float':''}}">
+  <view class="float_selection" style="bottom:150px">
+    <view class="float_selection_text">
+      <text>新建待办</text>
+    </view>
+    <view class="float_selection_bg">
+      <view class="float_selection_color">
+        <view class="material-icons" style="color:{{primaryColor}};"><text>add_task</text></view>
+      </view>
+    </view>
+  </view>
+  <view class="float_selection" style="bottom:80px">
+    <view class="float_selection_text">
+      <text>新建笔记</text>
+    </view>
+    <view class="float_selection_bg">
+      <view class="float_selection_color">
+        <view class="material-icons" style="color:{{primaryColor}};"><text>mode</text></view>
+      </view>
+    </view>
+  </view>
+  <view class="float" style="" bindtap="floatTap" bindlongpress="record">
+    <view class="float_color" hover-class="t_hover">
+      <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+    </view>
   </view>
 </view>
+
 <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view>
