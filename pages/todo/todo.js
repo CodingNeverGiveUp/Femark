@@ -39,6 +39,8 @@ Page({
     listTop: null,
     listMin: null,
     listMax: null,
+    listDragging: false,
+    listTarget: null,
     notification: false,
     autoDelete: true,
     autoDeleteDelay: 5,
@@ -180,11 +182,12 @@ Page({
     var index = e.currentTarget.dataset.index;
     var query = wx.createSelectorQuery()
     query.select('.list').boundingClientRect(rect => {
-      console.log(index * (-40), (this.data.listData.length - index - 1) * 40)
+      // console.log(index * (-40), (this.data.listData.length - index - 1) * 40)
       this.setData({
         listTop: rect.top + index * 40,
         listMin: index * (-40),
         listMax: (this.data.listData.length - index - 1) * 40,
+        listDragging: true,
         [`listData.[${index}].dragging`]: true
       })
       // console.log(rect.top)
@@ -201,13 +204,73 @@ Page({
         [`listData[${index}].top`]: res
       })
     }
+    // console.log(res)
+    let a = res / 40
+    if (a > 0) {
+      a = Math.ceil(a)
+    } else if (a < 0) {
+      a = Math.floor(a)
+    }
+    let b = res % 40
+    console.log(res, a, b)
+    if (this.data.listData[index + a] && a != 0) {
+      if (b > 20) {
+        this.setData({
+          [`listData[${index+a}].top`]: -40
+        })
+      } else if (b > 0 && b <= 20) {
+        this.setData({
+          [`listData[${index+a}].top`]: 0
+        })
+      } else if (b >= -20 && b < 0) {
+        this.setData({
+          [`listData[${index+a}].top`]: 0
+        })
+      } else if (b < -20) {
+        this.setData({
+          [`listData[${index+a}].top`]: 40
+        })
+      }
+      this.setData({
+        listTarget: Math.round(res/40),
+      })
+    }
   },
   dragEnd(e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
+    for (let i = 0; i < this.data.listData.length; i++) {
+      this.setData({
+        [`listData.[${i}].top`]: 0
+      })
+    }
     this.setData({
-      [`listData.[${index}].dragging`]: false
+      [`listData.[${index}].dragging`]: false,
+      listDragging: false
     })
+    let data = this.data.listData
+    if(this.data.listTarget > 0){
+      for(let i = index; i < index + this.data.listTarget; i++){
+        let temp = data[i]
+        data[i] = data[i+1]
+        data[i+1] = temp
+      }
+    }else if(this.data.listTarget < 0){
+      for(let i = index; i > index + this.data.listTarget; i--){
+        let temp = data[i]
+        data[i] = data[i-1]
+        data[i-1] = temp
+      }
+    }
+    this.setData({
+      listData: data
+    })
+    // let flist = this.data.listData[index];
+    // let nlist = this.data.listData[index + this.data.listTarget];
+    // this.setData({
+    //   [`listData.[${index}]`]: nlist, 
+    //   [`listData.[${index + this.data.listTarget}]`]: flist, 
+    // })
   },
 
   pick(e) {
