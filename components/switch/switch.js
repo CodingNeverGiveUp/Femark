@@ -30,7 +30,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    
+
   },
 
   /**
@@ -52,14 +52,15 @@ Component({
             dot: `right:0;background:${this.data.primaryColor};`
           })
         }
-        var detail = {
-          value: this.data.selected,
-        };
-        var option = {};
-        this.triggerEvent('switch', detail, option);
       }
+      var detail = {
+        value: this.data.selected,
+        disabled: this.data.disabled
+      };
+      var option = {};
+      this.triggerEvent('switch', detail, option);
     },
-    refreshStatus(){
+    refreshStatus() {
       if (this.data.disabled) {
         if (this.data.selected) {
           this.setData({
@@ -73,12 +74,12 @@ Component({
           })
         }
       } else {
-        if(this.data.selected){
+        if (this.data.selected) {
           this.setData({
             bar: `background:${this.data.rgbaPrimaryColor};`,
             dot: `right:0;background:${this.data.primaryColor};`
           })
-        }else{
+        } else {
           this.setData({
             bar: "background:#9e9e9e;",
             dot: `right:17px;background:#fff;`
@@ -104,12 +105,12 @@ Component({
           })
         }
       } else {
-        if(this.data.selected){
+        if (this.data.selected) {
           this.setData({
             bar: `background:${this.data.rgbaPrimaryColor};`,
             dot: `right:0;background:${this.data.primaryColor};`
           })
-        }else{
+        } else {
           this.setData({
             bar: "background:#9e9e9e;",
             dot: `right:17px;background:#fff;`

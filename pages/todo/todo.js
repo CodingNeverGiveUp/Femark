@@ -15,10 +15,10 @@ Page({
     contentNum: 0,
     edit: false,
     list: true,
-    notification: true,
+    notification: false,
     autoDelete: true,
     autoDeleteDelay: 5,
-    autoDeleteDelayData: [1,2,3,4,5,6,7],
+    autoDeleteDelayData: [1, 2, 3, 4, 5, 6, 7],
     floatContent: "edit",
   },
 
@@ -112,23 +112,31 @@ Page({
 
   pick(e) {
     console.log(e);
-    if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
-      this.setData({
-        markdownPreviewDelay: e.detail.value
-      })
+    if (e.detail.disabled) {
+      this.showSnackbar("请先启用编辑")
+    } else {
+      if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
+        this.setData({
+          markdownPreviewDelay: e.detail.value
+        })
+      }
     }
   },
 
   switch (e) {
     console.log(e);
-    if (e.currentTarget.dataset.id == "notification") {
-      this.setData({
-        notification: e.detail.value
-      })
-    }else if(e.currentTarget.dataset.id == "autoDelete"){
-      this.setData({
-        autoDelete: e.detail.value
-      })
+    if (e.detail.disabled) {
+      this.showSnackbar("请先启用编辑")
+    } else {
+      if (e.currentTarget.dataset.id == "notification") {
+        this.setData({
+          notification: e.detail.value
+        })
+      } else if (e.currentTarget.dataset.id == "autoDelete") {
+        this.setData({
+          autoDelete: e.detail.value
+        })
+      }
     }
   },
 

@@ -47,11 +47,13 @@ Component({
    */
   methods: {
     _onTap() {
-      // var detail = {
-      //   value: this.data.result,
-      // };
-      // var option = {};
-      // this.triggerEvent('pick', detail, option);
+      var detail = {
+        value: this.data.result,
+        valueKey: this.data.resultKey,
+        disabled: this.data.disabled
+      };
+      var option = {};
+      this.triggerEvent('pick', detail, option);
     },
     _change(e) {
       // console.log(e.detail.value)
@@ -62,6 +64,7 @@ Component({
       var detail = {
         value: this.data.result,
         valueKey: this.data.resultKey,
+        disabled: this.data.disabled
       };
       var option = {};
       this.triggerEvent('pick', detail, option);
