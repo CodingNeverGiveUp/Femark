@@ -33,23 +33,23 @@
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>配置项</text>
         </view>
-        <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          dataset="{{category}}" disabled="">
+        <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          dataset="{{categoryData}}" data-id="category" disabled="{{!edit}}">
           <text slot="title">类别</text>
           <text slot="subtitle">笔记所属类别</text>
         </md-picker>
-        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          selected="{{encrypt}}" data-id="encrypt">
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          selected="{{encrypt}}" data-id="encrypt" disabled="{{!edit}}">
           <text slot="title">加密</text>
           <text slot="subtitle">浏览时验证密码</text>
         </md-switch>
-        <md-input bind:input="input" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          value="{{password}}" data-id="password" wx:if="{{encrypt}}">
+        <md-input class="input" bind:input="input" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          value="{{password}}" data-id="password" wx:if="{{encrypt}}" disabled="{{!edit}}">
           <text slot="title">访问密码</text>
           <text slot="subtitle">点击设置密码</text>
         </md-input>
-        <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          selected="{{useMarkdown}}" data-id="useMarkdown">
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+          selected="{{useMarkdown}}" data-id="useMarkdown" disabled="{{!edit}}">
           <text slot="title">Markdown 模式</text>
           <text slot="subtitle">使用 Markdown 渲染\n同时启用预览视窗</text>
         </md-switch>

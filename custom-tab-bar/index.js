@@ -162,14 +162,14 @@ Component({
         })
         this.hideDialog();
       } else {
-        if(!this.data.floatSelect){
+        if (!this.data.floatSelect) {
           this.setData({
             floatAStyle: "transform: rotate(135deg)",
             floatBStyle: "bottom:80px;width:165px;",
             floatCStyle: "bottom:150px;width:165px;",
             floatSelect: true
           })
-        }else{
+        } else {
           this.setData({
             floatAStyle: '',
             floatBStyle: '',
@@ -179,6 +179,55 @@ Component({
         }
       }
     },
+
+    addNote() {
+      var that = this
+      wx.navigateTo({
+        url: '/pages/note/note',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
+        },
+        success(res) {
+          res.eventChannel.emit('addNote', {
+            edit: true,
+          })
+          that.setData({
+            floatAStyle: '',
+            floatBStyle: '',
+            floatCStyle: '',
+            floatSelect: false,
+          })
+        }
+      })
+    },
+
+    addTodo() {
+      var that = this
+      wx.navigateTo({
+        url: '/pages/todo/todo',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
+        },
+        success(res) {
+          res.eventChannel.emit('addNote', {
+            edit: true,
+          })
+          that.setData({
+            floatAStyle: '',
+            floatBStyle: '',
+            floatCStyle: '',
+            floatSelect: false,
+          })
+        }
+      })
+    },
+
     touchStart: function (e) {
       // console.log(e.touches[0].pageX)
       let sx = e.touches[0].pageX

@@ -17,20 +17,22 @@ Page({
     contentNum: 0,
     md: "",
     windowHeight: app.globalData.systemInfo.windowHeight,
-    edit: true,
-    edited: true,
+    edit: null,
+    edited: false,
+    heading: null,
+    content: null,
     gallery: [],
     tempImgs: [],
     floatContent: "edit",
-    heading: "测试标题",
-    content: "测试内容",
+    heading: null,
+    content: null,
     useMarkdown: true,
-    encrypt: true,
-    password: "1234",
+    encrypt: false,
+    password: "",
     markdownPreview: true,
     markdownPreviewDelay: 2,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
-    category: ["哈哈哈", "嘿嘿嘿"],
+    categoryData: app.globalData.categoryData,
   },
 
   submit() {
@@ -46,9 +48,24 @@ Page({
           IDs: new Array
         }
         async function process() {
-          try{
+          try {
             await database.uploadImg(imgs)
-          }catch{
+            let object = {
+              heading: that.data.heading,
+              content: that.data.content,
+              gallery: imgs.IDs,
+              audio: null,
+              category: that.data.category,
+              encrypt: that.data.encrypt,
+              password: that.data.password,
+              useMarkdown: that.data.useMarkdown,
+              timestamp: new Date().getTime(),
+            }
+            await database.addNote(object)
+            wx.showToast({
+              title: '已保存更改',
+            })
+          } catch {
             wx.showToast({
               content: "操作失败"
             })
@@ -57,11 +74,32 @@ Page({
           that.setData({
             tempImgs: []
           })
-          console.log(imgs.IDs)
+          // console.log(imgs.IDs)
         }
         process()
       }
     })
+  },
+
+  back() {
+    if (this.data.edited) {
+      wx.showModal({
+        title: "警告",
+        content: "更改未保存，是否舍弃更改",
+        confirmColor: '#ff5252',
+        confirmText: "仍然退出"
+      }).then(res => {
+        if (res.confirm) {
+          wx.navigateBack({
+            delta: 1,
+          })
+        }
+      })
+    } else {
+      wx.navigateBack({
+        delta: 1,
+      })
+    }
   },
 
   addImg() {
@@ -78,14 +116,15 @@ Page({
           var tempFilePaths = res.tempFilePaths
           // console.log(tempFilePaths)
           that.setData({
-            tempImgs: that.data.tempImgs.concat(tempFilePaths)
+            tempImgs: that.data.tempImgs.concat(tempFilePaths),
+            edited: true
           })
         }
       })
     }
   },
 
-  delete(){
+  delete() {
     var that = this
     if (!this.data.edit) {
       this.showSnackbar("请先启用编辑")
@@ -103,10 +142,11 @@ Page({
   deleteTempImg(e) {
     // console.log(e.currentTarget.dataset.index)
     let array = this.data.tempImgs
-    array.splice(e.currentTarget.dataset.index, 1,);
+    array.splice(e.currentTarget.dataset.index, 1, );
     // console.log(array.length)
     this.setData({
-      tempImgs: array
+      tempImgs: array,
+      edited: true
     })
   },
 
@@ -127,7 +167,9 @@ Page({
   headingInput(e) {
     // console.log(e.detail.value.length);
     this.setData({
+      heading: e.detail.value,
       headingNum: e.detail.value.length,
+      edited: true,
     })
   },
 
@@ -153,8 +195,10 @@ Page({
     // console.log(e.detail.value.length);
     this.data.temp = e.detail.value;
     this.setData({
+      content: e.detail.value,
       contentNum: e.detail.value.length,
-      btnStyle: "right:0;"
+      btnStyle: "right:0;",
+      edited: true
     })
     //预览
     if (this.data.useMarkdown && this.data.markdownPreview) {
@@ -187,35 +231,61 @@ Page({
 
   pick(e) {
     console.log(e);
-    if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
+    if (e.detail.disabled) {
+      this.showSnackbar("请先启用编辑")
+    } else {
       this.setData({
-        markdownPreviewDelay: e.detail.value
+        edited: true,
       })
+      if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
+        this.setData({
+          markdownPreviewDelay: e.detail.value
+        })
+      }
+      if (e.currentTarget.dataset.id == "category") {
+        this.setData({
+          category: e.detail.value
+        })
+      }
     }
   },
 
   switch (e) {
     console.log(e);
-    if (e.currentTarget.dataset.id == "markdownPreview") {
+    if (e.detail.disabled) {
+      this.showSnackbar("请先启用编辑")
+    } else {
       this.setData({
-        markdownPreview: e.detail.value
+        edited: true,
       })
-    } else if (e.currentTarget.dataset.id == "useMarkdown") {
-      this.setData({
-        useMarkdown: e.detail.value
-      })
-    } else if (e.currentTarget.dataset.id == "encrypt") {
-      this.setData({
-        encrypt: e.detail.value
-      })
+      if (e.currentTarget.dataset.id == "markdownPreview") {
+        this.setData({
+          markdownPreview: e.detail.value
+        })
+      } else if (e.currentTarget.dataset.id == "useMarkdown") {
+        this.setData({
+          useMarkdown: e.detail.value
+        })
+      } else if (e.currentTarget.dataset.id == "encrypt") {
+        this.setData({
+          encrypt: e.detail.value
+        })
+      }
     }
   },
 
   input(e) {
-    if (e.currentTarget.dataset.id == "password") {
+    if (e.detail.disabled) {
+      this.showSnackbar("请先启用编辑")
+    } else {
       this.setData({
-        password: e.detail.value
+        edited: true,
       })
+      if (e.currentTarget.dataset.id == "password") {
+        this.setData({
+          password: e.detail.value
+        })
+      }
     }
   },
 
@@ -259,6 +329,15 @@ Page({
         floatContent: "save"
       })
     }
+    this.selectAllComponents('.switch').forEach(element => {
+      element.refreshStatus()
+    })
+    this.selectAllComponents('.picker').forEach(element => {
+      element.refreshStatus()
+    })
+    this.selectAllComponents('.input').forEach(element => {
+      element.refreshStatus()
+    })
   },
 
   showSnackbar(content) {
@@ -278,7 +357,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const eventChannel = this.getOpenerEventChannel();
+    eventChannel.on('addNote', (res) => {
+      // console.log(res.edit)
+      this.setData({
+        edit: res.edit,
+      })
+      this.selectAllComponents('.switch').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.picker').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.input').forEach(element => {
+        element.refreshStatus()
+      })
+    })
   },
 
   /**
@@ -291,9 +385,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏

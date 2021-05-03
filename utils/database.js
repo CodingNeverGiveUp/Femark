@@ -2,6 +2,7 @@ const app = getApp()
 //添加用户数组
 function addArray(profile) {
   return new Promise((resolve, reject) => {
+    profile.timestamp =  new Date().getTime(),
     // const _ = wx.cloud.database().command
     wx.cloud.database().collection('note').add({
       data: {
@@ -54,6 +55,37 @@ function uploadImg(imgs) {
     }
     action()
     // imgs.paths.forEach(async (element, index, array) => {})
+  })
+}
+
+function addNote(object) {
+  return new Promise((resolve, reject) => {
+    wx.showLoading({
+      title: `数据处理中`,
+    })
+    const _ = wx.cloud.database().command
+    wx.cloud.database().collection('note').where({
+        _openid: app.globalData.openid
+      }).get()
+      .then(res => {
+        let id = res.data[0]._id
+        // var timestamp = new Date().getTime();
+        // console.log(res)
+        wx.cloud.database().collection('note').doc(id).update({
+            data: {
+              'note': _.push(object),
+            }
+          })
+          .then(res => {
+            wx.hideLoading()
+            resolve
+          })
+          .catch(err => {
+            reject
+          })
+      }).catch(err => {
+        reject
+      })
   })
 }
 
@@ -126,29 +158,6 @@ const changeTask = () => {}
 //查询待办数据
 const getTask = () => {}
 
-//添加笔记数据
-const addNote = (noteDate, noteContent, noteTitle, noteType) => {
-  const _ = wx.cloud.database().command
-  wx.cloud.database().collection('note').where({
-      _openid: "oxY3r5W1q6qmHTczqCMHbpYc6TCk"
-    }).get()
-    .then(res => {
-      let id = res.data[0]._id
-      var timestamp = new Date().getTime();
-      console.log(res)
-      wx.cloud.database().collection('note').doc(id).update({
-        data: {
-          'note': _.push({
-            "content": noteContent,
-            "date": noteDate,
-            "title": noteTitle,
-            "type": noteType,
-            "time": timestamp,
-          }),
-        }
-      })
-    })
-}
 
 //删除笔记数据
 const deleteNote = () => {

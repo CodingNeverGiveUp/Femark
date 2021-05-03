@@ -72,7 +72,7 @@
     <view class="float_selection_text" style="{{floatTextStyle}}">
       <text>新建待办</text>
     </view>
-    <view class="float_selection_bg">
+    <view class="float_selection_bg" bindtap="addTodo">
       <view class="float_selection_color" hover-class="t_hover">
         <view class="material-icons" style="color:{{primaryColor}};"><text>add_task</text></view>
       </view>
@@ -82,7 +82,7 @@
     <view class="float_selection_text" style="{{floatTextStyle}}">
       <text>新建笔记</text>
     </view>
-    <view class="float_selection_bg">
+    <view class="float_selection_bg" bindtap="addNote">
       <view class="float_selection_color" hover-class="t_hover">
         <view class="material-icons" style="color:{{primaryColor}};"><text>mode</text></view>
       </view>

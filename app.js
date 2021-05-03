@@ -194,5 +194,6 @@ App({
     hitokoto: false,
     bing: true,
     pureTheme: false,
+    categoryData: ["默认", "学习", "工作", "生活"],
   }
 })
