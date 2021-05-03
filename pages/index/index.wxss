@@ -5,6 +5,10 @@
   background: var(--rgbaprimaryColor--);
 }
 
+.c_hover{
+  opacity: .9;
+}
+
 .page_selector {
   position: absolute;
   top: -150px;
@@ -116,6 +120,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10rpx #bbb;
   overflow: hidden;
+  transition: opacity .2s ease-in-out;
 }
 
 .note_image {

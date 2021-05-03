@@ -22,7 +22,7 @@ Page({
     edited: false,
     heading: null,
     content: null,
-    gallery: [],
+    galleryDetail: [],
     tempImgs: [],
     floatContent: "edit",
     heading: null,
@@ -131,6 +131,39 @@ Page({
     if (!this.data.edit) {
       this.showSnackbar("请先启用编辑")
     } else {}
+  },
+
+  previewImg(e) {
+    console.log(e.currentTarget.dataset.url)
+    let urls = []
+    this.data.galleryDetail.forEach(element => {
+      urls.push(element.tempFileURL)
+    })
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: urls,
+    })
+  },
+
+  deleteImg(e) {
+    var that = this
+    wx.showModal({
+      title: "警告",
+      content: "将同时从云端移除图片，该过程不可逆转，是否继续操作",
+      confirmText: "仍然继续",
+      confirmColor: "#ff5252",
+    }).then(res => {
+      if (res.confirm) {
+        //云开发移除，没写
+        let array = this.data.galleryDetail
+        array.splice(e.currentTarget.dataset.index, 1, );
+        // console.log(array.length)
+        this.setData({
+          galleryDetail: array,
+        })
+      }
+    })
+    // console.log(e.currentTarget.dataset.index)
   },
 
   previewTempImg(e) {
@@ -246,7 +279,7 @@ Page({
       }
       if (e.currentTarget.dataset.id == "category") {
         this.setData({
-          category: e.detail.value
+          category: e.detail.valueKey
         })
       }
     }
@@ -371,6 +404,30 @@ Page({
       // console.log(res.edit)
       this.setData({
         edit: res.edit,
+      })
+      this.selectAllComponents('.switch').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.picker').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.input').forEach(element => {
+        element.refreshStatus()
+      })
+    })
+    eventChannel.on('toNote', (res) => {
+      // console.log(res.edit)
+      this.setData({
+        edit: res.edit,
+        heading: res.data.heading,
+        content: res.data.content,
+        galleryDetail: res.data.galleryDetail,
+        encrypt: res.data.encrypt,
+        password: res.data.password,
+        useMarkdown: res.data.useMarkdown,
+        category: res.data.category,
+        headingNum: res.data.heading.length,
+        contentNum: res.data.content.length
       })
       this.selectAllComponents('.switch').forEach(element => {
         element.refreshStatus()

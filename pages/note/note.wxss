@@ -192,16 +192,16 @@ page {
   color: #666;
 }
 
-.tempImgs{
+.Imgs{
   margin: 30px 50rpx;
 }
 
-.tempImg{
+.Img{
   position: relative;
   width: 100%;
 }
 
-.tempImg image{
+.Img image{
   /* margin: 0 50px; */
   height: 250rpx;
   width: 100%;

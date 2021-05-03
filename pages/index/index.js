@@ -130,9 +130,9 @@ Page({
             hw2 = Math.round(res.height)
             // console.log(hw2)
           }).exec();
-          setTimeout(()=>{
+          setTimeout(() => {
             resolve()
-          },100)
+          }, 100)
         })
       }
       var hw1, hw2;
@@ -289,6 +289,27 @@ Page({
       hasUserInfo: true
     })
   },
+
+  note(e) {
+    console.log(e)
+    var that = this
+    wx.navigateTo({
+      url: '/pages/note/note',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        acceptDataFromOpenedPage: function (data) {
+          console.log(data)
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toNote', {
+          edit: false,
+          data: e.currentTarget.dataset.data
+        })
+      }
+    })
+  },
+
   //请求用户订阅授权
   requestSubscribeMessage() {
     wx.requestSubscribeMessage({
@@ -316,36 +337,4 @@ Page({
         console.log("发送单条失败", res)
       })
   },
-
-  addArray() {
-    database.addArray()
-  },
-
-  //添加测试待办
-  addTask2() {
-    database.addTask2('腾讯会议', '2019年11月30日 21:00:00', '紧急且重要', '会议内容为制作小程序', '待确认', false)
-  },
-
-  addNote() {
-    database.addNote(20204851, '学校', '学校', '学校')
-  },
-
-  addTask() {
-    database.addTask(20204851, '学校', '学校', '学校')
-  },
-
-  deleteTask() {
-    database.deleteTask();
-  },
-
-  getTask() {
-    database.getTask();
-  },
-
-  //获取当前时间
-  getTime() {
-    var currenttime = (new Date()).valueOf();
-    var currentdate = new Date(currenttime);
-    console.log(currentdate.valueOf());
-  }
 })
