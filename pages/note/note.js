@@ -17,6 +17,7 @@ Page({
     contentNum: 0,
     md: "",
     windowHeight: app.globalData.systemInfo.windowHeight,
+    isPad: app.globalData.isPad,
     edit: null,
     edited: false,
     heading: null,
@@ -72,7 +73,8 @@ Page({
           }
           //传完清除tempPath
           that.setData({
-            tempImgs: []
+            tempImgs: [],
+            edited: false
           })
           // console.log(imgs.IDs)
         }
@@ -357,6 +359,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //重新拉取配置
+    this.setData({
+      pureTheme: app.globalData.pureTheme,
+      isPad: app.globalData.isPad,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
     const eventChannel = this.getOpenerEventChannel();
     eventChannel.on('addNote', (res) => {
       // console.log(res.edit)

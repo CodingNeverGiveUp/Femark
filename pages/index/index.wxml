@@ -24,42 +24,36 @@
         <text>笔记</text>
         <text class="material-icons">expand_more</text>
       </view>
-      <text class="head_subtitle">共{{10}}条数据</text>
+      <text class="head_subtitle">共{{note.length}}条数据</text>
     </view>
-    <view class="hengpai">
-      <view class="account_box_1" style="width:50%;">
-        <view id="b1">
-          <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array01}}">
-            <view wx:if="{{1}}" class="picture" style=" background:url({{picture_path}}); background-size: 100% 100%;">
-              <!--如果没有图片就不显示-->
-              <view class="word_Tips">共{{}}张图片</view>
-            </view>
-            <view class="_box_1_nei" style="background-color:{{item.color}}">
-              {{item.real}}
+    <view class="note_content">
+      <view id="note_left">
+        <view class="note_block" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};">
+          <view class="note_image" style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+            <view class="note_image_tip">
+              <text>共{{item.gallery.length}}张图片</text>
             </view>
           </view>
-        </view>
-        <!--ss-->
-      </view>
-
-      <!--这是右边栏-->
-      <view class="account_box_2" style="width:50%;">
-        <view id="b2">
-          <!--这里加一个空view的目的是防止最外层的盒子会两边自动相等，如果不加的话会判定为两边高度相等-->
-          <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array02}}" class="account_box_2">
-            <view wx:if="{{1}}" class="picture" style=" background:url({{}}); background-size: 100% 100%;">
-              <!--如果没有图片就不显示-->
-              <view class="word_Tips">共{{}}张图片</view>
-            </view>
-            <view class="_box_2_nei" style="background-color:{{item.color}}">
-              {{item.real}}
-            </view>
+          <view class="note_text">
+            <view wx:if="{{item.heading!=''}}" class="note_title">{{item.heading}}</view>
+            <view class="note_sub">{{item.content}}</view>
           </view>
         </view>
-        <!--ss-->
+      </view>
+      <view id="note_right">
+        <view class="note_block" wx:for="{{noteRight}}" wx:key="index" style="background:{{item.color}};">
+          <view class="note_image" style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+            <view class="note_image_tip">
+              <text>共{{item.gallery.length}}张图片</text>
+            </view>
+          </view>
+          <view class="note_text">
+            <view wx:if="{{item.heading!=''}}" class="note_title">{{item.heading}}</view>
+            <view class="note_sub">{{item.content}}</view>
+          </view>
+        </view>
       </view>
     </view>
-    <!-- <button bindtap="showSelector">切换</button> -->
   </view>
 
 

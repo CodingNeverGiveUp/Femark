@@ -6,6 +6,8 @@ const database = require("../../utils/database.js")
 Page({
   data: {
     userInfo: {},
+    note: [],
+    task: [],
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
@@ -19,35 +21,8 @@ Page({
     selectorStyle: "",
     sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
 
-    h1: '',
-    h2: '',
-    picture_path: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=218852904,1106228157&fm=26&gp=0.jpgs',
-    test: {
-      test_Array01: [{
-          real: '看fJ#$%392888939hfg872g872',
-          color: ''
-        },
-        {
-          real: '发i啊呵呵中',
-          color: ''
-        }, {
-          real: '发觉这世界奥哦啊不带u阿飞波尔u',
-          color: ''
-        }
-      ],
-      test_Array02: [{
-        real: '今年第哦啊八八七八丢丢八二ui',
-        color: ''
-      }, {
-        real: '就拿看就看弄你而安琪儿哦i',
-        color: ''
-      }, {
-        real: ' 就爱看就看哦额弄Enel发你的那几位',
-        color: ''
-      }]
-    },
-
-    text_lenth: '',
+    noteLeft: [],
+    noteRight: [],
     text: {
       list: [{
           color: "#20a674",
@@ -75,6 +50,7 @@ Page({
       ]
     }
   },
+
   // 事件处理函数
   onLoad() {
     //重新拉取侧栏
@@ -97,19 +73,12 @@ Page({
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     })
-
-    //跨页面异步传递
-    // app.addListener((changedData) => {
-    //   this.setData({
-    //     currentPage: changedData,
-    //   })
-    // })
-  },
-
-  onReady() {
+    //数据拉取
+    this.setData({
+      note: app.globalData.note,
+      task: app.globalData.task
+    })
     //拉取openid
-    console.log(app.globalData.openid)
-    console.log(app.globalData.systemInfo)
     if (app.globalData.openid) {
       this.setData({
         openid: app.globalData.openid,
@@ -127,60 +96,68 @@ Page({
           console.log("failed")
         })
     };
-    //拉取状态
-    setTimeout(() => {
-      let tabbar = this.getTabBar()
-      tabbar.setData({
-        btn1: `color:${this.data.primaryColor}`,
-        sidebarStyle: "left:-250px",
-        currentPage: 1,
-      })
-    }, 500)
-    //拉取强调色  
-    let test_Array01_lenth = this.data.test.test_Array01.length
-    let test_Array02_lenth = this.data.test.test_Array02.length
-    let color_number1 = 0
-    let color_number2 = 0
-    for (; color_number1 < test_Array01_lenth; color_number1++) {
-      let color1 = getApp().getRandomColor()
-      let str1 = 'test' + '.test_Array01' + '[' + color_number1 + ']' + '.color'
-      this.setData({
-        [str1]: color1
-      })
-    }
-    for (; color_number2 < test_Array02_lenth; color_number2++) {
-      let color2 = getApp().getRandomColor()
-      let str2 = 'test' + '.test_Array02' + '[' + color_number2 + ']' + '.color'
-      this.setData({
-        [str2]: color2
-      })
-    }
+  },
+
+  onReady() {
+    // let test_Array01_lenth = this.data.test.test_Array01.length
+    // let test_Array02_lenth = this.data.test.test_Array02.length
+    // let color_number1 = 0
+    // let color_number2 = 0
+    // for (; color_number1 < test_Array01_lenth; color_number1++) {
+    //   let color1 = getApp().getRandomColor()
+    //   let str1 = 'test' + '.test_Array01' + '[' + color_number1 + ']' + '.color'
+    //   this.setData({
+    //     [str1]: color1
+    //   })
+    // }
+    // for (; color_number2 < test_Array02_lenth; color_number2++) {
+    //   let color2 = getApp().getRandomColor()
+    //   let str2 = 'test' + '.test_Array02' + '[' + color_number2 + ']' + '.color'
+    //   this.setData({
+    //     [str2]: color2
+    //   })
+    // }
     //以下是比较两边高度
-    var hw1, hw2;
-    setTimeout(() => {
-      var query = wx.createSelectorQuery()
-      query.select('#b1').boundingClientRect(function (res) {
-        // that.setData({
-        // h1:res.height
-        // })
-        hw1 = parseInt(res.height)
-      }).exec();
-      query.select('#b2').boundingClientRect(function (res) {
-        hw2 = parseInt(res.height)
-
-      }).exec();
-    }, 300)
-    if (hw1 >= hw2) {
-      console.log('box1')
-    } else {
-      console.log('box2')
+    async function heightComparison() {
+      function getHeight() {
+        return new Promise((resolve, reject) => {
+          var query = wx.createSelectorQuery()
+          query.select('#note_left').boundingClientRect(function (res) {
+            hw1 = Math.round(res.height)
+            // console.log(hw1)
+          }).exec()
+          query.select('#note_right').boundingClientRect(function (res) {
+            hw2 = Math.round(res.height)
+            // console.log(hw2)
+          }).exec();
+          setTimeout(()=>{
+            resolve()
+          },100)
+        })
+      }
+      var hw1, hw2;
+      await getHeight()
+      // console.log(hw1, hw2)
+      if (hw1 <= hw2) {
+        return true
+      } else {
+        return false
+      }
     }
 
-
-    //别改我的
-    let n = this.data.text.list.length
-    this.setData({
-      text_lenth: n
+    //分栏
+    var noteLeft = [];
+    var noteRight = [];
+    this.data.note.forEach((element, index, array) => {
+      if (heightComparison()) {
+        noteLeft.push(element)
+      } else {
+        noteRight.push(element)
+      }
+      this.setData({
+        noteLeft,
+        noteRight
+      })
     })
   },
 
@@ -346,7 +323,7 @@ Page({
 
   //添加测试待办
   addTask2() {
-    database.addTask2('腾讯会议','2019年11月30日 21:00:00','紧急且重要','会议内容为制作小程序','待确认',false)
+    database.addTask2('腾讯会议', '2019年11月30日 21:00:00', '紧急且重要', '会议内容为制作小程序', '待确认', false)
   },
 
   addNote() {

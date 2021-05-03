@@ -74,12 +74,24 @@ App({
               // console.log("step2")
               // console.log(res)
               this.globalData.useSidebar = res.data[0].profile.useSidebar;
+              this.globalData.markdownByDefault = res.data[0].profile.markdownByDefault;
               console.log(this.globalData.useSidebar)
               this.globalData.pureTheme = res.data[0].profile.pureTheme;
               this.globalData.userInfo.nickName = res.data[0].profile.nickName;
               this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
               this.globalData.primaryColor = res.data[0].profile.primaryColor;
-              //提前拉取笔记待办数据
+              //提前拉取及预处理笔记待办数据
+              res.data[0].note.forEach((element)=>{
+                element.color = this.getRandomColor()
+                wx.cloud.getTempFileURL({
+                  fileList: element.gallery,
+                }).then(res =>{
+                  element.galleryDetail = res.fileList
+                })
+              })
+              res.data[0].task.forEach((element)=>{
+                element.color = this.getRandomColor()
+              })
               this.globalData.note = res.data[0].note;
               this.globalData.task = res.data[0].task;
               //修改
@@ -181,8 +193,8 @@ App({
 
   globalData: {
     userInfo: {},
-    note: {},
-    task: {},
+    note: [],
+    task: [],
     hasUserInfo: false,
     primaryColor: "#4285f4",
     openid: null,
@@ -191,6 +203,7 @@ App({
     systemInfo: null,
     isPad: false,
     useSidebar: false,
+    markdownByDefault: true,
     hitokoto: false,
     bing: true,
     pureTheme: false,

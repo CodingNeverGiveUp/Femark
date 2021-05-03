@@ -199,6 +199,7 @@
 }
 
 .float_selection_text{
+  font-size: .9rem;
   flex: 1 0 auto;
   width: 100px;
   height: 30px;

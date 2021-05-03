@@ -217,7 +217,7 @@ Page({
         })
       }
       this.setData({
-        listTarget: Math.round(res/40),
+        listTarget: Math.round(res / 40),
       })
     }
   },
@@ -234,17 +234,17 @@ Page({
       listDragging: false
     })
     let data = this.data.listData
-    if(this.data.listTarget > 0){
-      for(let i = index; i < index + this.data.listTarget; i++){
+    if (this.data.listTarget > 0) {
+      for (let i = index; i < index + this.data.listTarget; i++) {
         let temp = data[i]
-        data[i] = data[i+1]
-        data[i+1] = temp
+        data[i] = data[i + 1]
+        data[i + 1] = temp
       }
-    }else if(this.data.listTarget < 0){
-      for(let i = index; i > index + this.data.listTarget; i--){
+    } else if (this.data.listTarget < 0) {
+      for (let i = index; i > index + this.data.listTarget; i--) {
         let temp = data[i]
-        data[i] = data[i-1]
-        data[i-1] = temp
+        data[i] = data[i - 1]
+        data[i - 1] = temp
       }
     }
     this.setData({
@@ -328,7 +328,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    //重新拉取配置
+    this.setData({
+      pureTheme: app.globalData.pureTheme,
+      isPad: app.globalData.isPad,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
   },
 
   /**
