@@ -196,12 +196,13 @@
   bottom: 0;
   transition: bottom .2s ease-in-out, width .2s ease-in-out;
   width: 55px;
+  height: 50px;
 }
 
 .float_selection_text{
   font-size: .9rem;
   flex: 1 0 auto;
-  width: 100px;
+  width: 90px;
   height: 30px;
   background: #fff;
   box-shadow: 0 0 10rpx #bbb;
@@ -210,7 +211,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 20px;
+  margin: 0 20px 0 10px;
   color: #666;
 }
 
