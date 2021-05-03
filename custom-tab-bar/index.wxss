@@ -161,6 +161,9 @@
 }
 
 .float {
+  position: absolute;
+  right: 0;
+  bottom: 0;
   width: 55px;
   height: 55px;
   box-shadow: 0 0 10rpx #bbb;
@@ -187,14 +190,21 @@
   position: absolute;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
+  overflow: hidden;
+  bottom: 0;
+  transition: bottom .2s ease-in-out, width .2s ease-in-out;
+  width: 55px;
 }
 
 .float_selection_text{
+  flex: 1 0 auto;
   width: 100px;
   height: 30px;
   background: #fff;
   box-shadow: 0 0 10rpx #bbb;
+  white-space:nowrap;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -204,6 +214,7 @@
 }
 
 .float_selection_bg {
+  flex: 1 0 auto;
   width: 45px;
   height: 45px;
   box-shadow: 0 0 10rpx #bbb;
@@ -212,7 +223,7 @@
   justify-content: center;
   align-items: center;
   background: #ffffff;
-  transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
+  transition: background .2s ease-in-out;
 }
 
 .float_selection_color {
@@ -222,7 +233,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
+  transition: background .2s ease-in-out;
 }
 
 .h_float {

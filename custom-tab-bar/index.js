@@ -126,7 +126,7 @@ Component({
     record() {
       if (app.globalData.isPad) {
         this.setData({
-          floatStyle: "transform: rotate(45deg);",
+          floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
         this.showDialog();
@@ -134,6 +134,7 @@ Component({
         this.setData({
           mainStyle: "height:250px;",
           floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;"),
+          floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
       }
@@ -156,12 +157,26 @@ Component({
         this.setData({
           mainStyle: "",
           floatStyle: "",
+          floatAStyle: '',
           slide: false,
         })
         this.hideDialog();
       } else {
-        //测试
-        console.log(app.globalData.primaryColor)
+        if(!this.data.floatSelect){
+          this.setData({
+            floatAStyle: "transform: rotate(135deg)",
+            floatBStyle: "bottom:80px;width:165px;",
+            floatCStyle: "bottom:150px;width:165px;",
+            floatSelect: true
+          })
+        }else{
+          this.setData({
+            floatAStyle: '',
+            floatBStyle: '',
+            floatCStyle: '',
+            floatSelect: false,
+          })
+        }
       }
     },
     touchStart: function (e) {
