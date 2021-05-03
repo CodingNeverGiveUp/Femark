@@ -147,7 +147,7 @@ App({
     if (this.globalData.pureTheme) {
       return "";
     } else {
-      let num = Math.round(Math.random());
+      let num = Math.random();
       if (num >= 0 && num < 0.2) {
         return "#ae6060";
       } else if (num >= 0.2 && num < 0.4) {
