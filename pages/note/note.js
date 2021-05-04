@@ -98,19 +98,19 @@ Page({
                 await database.uploadImg(imgs)
                 await wx.cloud.database().collection('note').doc(app.globalData.id).update({
                   data: {
-                    [`note[${that.data.id}].gallery`]: _push(imgs.IDs)
+                    [`note.${that.data.id}.gallery`]: _.push(imgs.IDs)
                   }
                 })
               }
               await wx.cloud.database().collection('note').doc(app.globalData.id).update({
                 data: {
-                  [`note[${that.data.id}].heading`]: that.data.heading,
-                  [`note[${that.data.id}].content`]: that.data.content,
-                  [`note[${that.data.id}].category`]: that.data.category,
-                  [`note[${that.data.id}].encrypt`]: that.data.encrypt,
-                  [`note[${that.data.id}].password`]: that.data.password,
-                  [`note[${that.data.id}].useMarkdown`]: that.data.useMarkdown,
-                  [`note[${that.data.id}].timestamp`]: new Date().getTime(),
+                  [`note.${that.data.id}.heading`]: that.data.heading,
+                  [`note.${that.data.id}.content`]: that.data.content,
+                  [`note.${that.data.id}.category`]: that.data.category,
+                  [`note.${that.data.id}.encrypt`]: that.data.encrypt,
+                  [`note.${that.data.id}.password`]: that.data.password,
+                  [`note.${that.data.id}.useMarkdown`]: that.data.useMarkdown,
+                  [`note.${that.data.id}.timestamp`]: new Date().getTime(),
                 }
               })
               wx.showToast({

@@ -62,7 +62,6 @@ App({
         // console.log("step1")
         let openid = res.result.openid;
         this.globalData.openid = openid;
-        this.globalData.id = res.result._id;
         //获取用户配置
         event.emit('LoginCheck', '获取用户配置');
         wx.cloud.database().collection('note').where({
@@ -74,6 +73,7 @@ App({
             } else {
               // console.log("step2")
               // console.log(res)
+              this.globalData.id = res.data[0]._id;
               this.globalData.useSidebar = res.data[0].profile.useSidebar;
               this.globalData.markdownByDefault = res.data[0].profile.markdownByDefault;
               // console.log(this.globalData.useSidebar)
