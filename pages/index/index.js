@@ -99,6 +99,7 @@ Page({
   },
 
   onReady() {
+    var that = this
     // let test_Array01_lenth = this.data.test.test_Array01.length
     // let test_Array02_lenth = this.data.test.test_Array02.length
     // let color_number1 = 0
@@ -118,47 +119,67 @@ Page({
     //   })
     // }
     //以下是比较两边高度
-    async function heightComparison() {
-      function getHeight() {
-        return new Promise((resolve, reject) => {
-          var query = wx.createSelectorQuery()
-          query.select('#note_left').boundingClientRect(function (res) {
-            hw1 = Math.round(res.height)
-            // console.log(hw1)
-          }).exec()
-          query.select('#note_right').boundingClientRect(function (res) {
-            hw2 = Math.round(res.height)
-            // console.log(hw2)
-          }).exec();
-          setTimeout(() => {
-            resolve()
-          }, 100)
+    // async function heightComparison() {
+    //   function getHeight() {
+    //     return new Promise((resolve, reject) => {
+    //       var query = wx.createSelectorQuery()
+    //       query.select('#note_left').boundingClientRect(function (res) {
+    //         hw1 = Math.round(res.height)
+    //       }).exec()
+    //       query.select('#note_right').boundingClientRect(function (res) {
+    //         hw2 = Math.round(res.height)
+    //       }).exec();
+    //       setTimeout(() => {
+    //         resolve()
+    //       }, 100)
+    //     })
+    //   }
+    //   var hw1, hw2;
+    //   await getHeight()
+    //   console.log(hw1, hw2)
+    //   if (hw1 <= hw2) {
+    //     return true
+    //   } else {
+    //     return false
+    //   }
+    // }
+
+    //定时器
+    function timeOut(time){
+      return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+          resolve()
+        }, time)
+      })
+    };
+    //分栏
+    async function sort(){
+      var noteLeft = [];
+      var noteRight = [];
+      var query = wx.createSelectorQuery()
+      for (let i = 0; i < that.data.note.length; i++) {
+        var hw1, hw2;
+        query.select('#note_left').boundingClientRect(function (res) {
+          hw1 = Math.round(res.height)
+          // console.log(hw1)
+        }).exec()
+        query.select('#note_right').boundingClientRect(function (res) {
+          hw2 = Math.round(res.height)
+          // console.log(hw2)
+        }).exec();
+        await timeOut(100);
+        if (hw1 <= hw2) {
+          noteLeft.push(that.data.note[i])
+        } else {
+          noteRight.push(that.data.note[i])
+        }
+        that.setData({
+          noteLeft,
+          noteRight
         })
       }
-      var hw1, hw2;
-      await getHeight()
-      // console.log(hw1, hw2)
-      if (hw1 <= hw2) {
-        return true
-      } else {
-        return false
-      }
     }
-
-    //分栏
-    var noteLeft = [];
-    var noteRight = [];
-    this.data.note.forEach((element, index, array) => {
-      if (heightComparison()) {
-        noteLeft.push(element)
-      } else {
-        noteRight.push(element)
-      }
-      this.setData({
-        noteLeft,
-        noteRight
-      })
-    })
+    sort()
   },
 
   onShow() {

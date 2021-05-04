@@ -13,7 +13,7 @@
         </view>
         <view class="Imgs">
           <view class="Img" wx:for="{{galleryDetail}}" wx:key="index">
-            <image mode="aspectFill" src="{{item.tempFileURL}}" bindtap="previewImg" data-index="{{index}}" data-url="{{item}}"></image>
+            <image mode="aspectFill" src="{{item.tempFileURL}}" bindtap="previewImg" data-index="{{index}}" data-url="{{item.tempFileURL}}"></image>
             <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteImg" wx:if="{{edit}}">
               <text class="material-icons">clear</text>
             </view>
@@ -146,7 +146,7 @@
 
 <view class="float" style="{{floatStyle}}" bindtap="floatTap">
   <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>{{floatContent}}</text></view>
+    <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text></view>
   </view>
 </view>
 

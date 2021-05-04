@@ -78,13 +78,13 @@ function addNote(object) {
           })
           .then(res => {
             wx.hideLoading()
-            resolve
+            resolve()
           })
           .catch(err => {
-            reject
+            reject()
           })
       }).catch(err => {
-        reject
+        reject()
       })
   })
 }

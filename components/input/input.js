@@ -42,6 +42,7 @@ Component({
         wx.showModal({
           editable: true,
           title: "设置密码",
+          content: this.data.value,
           confirmColor: this.data.primaryColor
         }).then(res => {
           if (res.confirm) {
@@ -49,6 +50,12 @@ Component({
               this.setData({
                 result: res.content
               })
+              var detail = {
+                disabled: this.data.disabled,
+                value: this.data.result,
+              };
+              var option = {};
+              this.triggerEvent('input', detail, option);
             } else {
               wx.showModal({
                 title: "密码过长，仅允许8位密码",
@@ -63,12 +70,6 @@ Component({
           }
         })
       }
-      var detail = {
-        disabled: this.data.disabled,
-        value: this.data.result,
-      };
-      var option = {};
-      this.triggerEvent('input', detail, option);
     },
     refreshStatus() {
       if (this.data.disabled) {

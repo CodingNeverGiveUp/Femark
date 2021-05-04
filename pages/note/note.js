@@ -3,6 +3,7 @@
 const app = getApp()
 const database = require("../../utils/database.js")
 const event = require("../../utils/event.js")
+const _ = wx.cloud.database().command
 Page({
 
   /**
@@ -24,7 +25,6 @@ Page({
     content: null,
     galleryDetail: [],
     tempImgs: [],
-    floatContent: "edit",
     heading: null,
     content: null,
     useMarkdown: true,
@@ -40,45 +40,90 @@ Page({
     var that = this
     wx.showModal({
       title: "注意",
-      content: "是否应用更改",
+      content: "是否保存更改",
       confirmColor: this.data.primaryColor
     }).then(res => {
       if (res.confirm) {
-        let imgs = {
-          paths: this.data.tempImgs,
-          IDs: new Array
-        }
-        async function process() {
-          try {
-            await database.uploadImg(imgs)
-            let object = {
-              heading: that.data.heading,
-              content: that.data.content,
-              gallery: imgs.IDs,
-              audio: null,
-              category: that.data.category,
-              encrypt: that.data.encrypt,
-              password: that.data.password,
-              useMarkdown: that.data.useMarkdown,
-              timestamp: new Date().getTime(),
-            }
-            await database.addNote(object)
-            wx.showToast({
-              title: '已保存更改',
-            })
-          } catch {
-            wx.showToast({
-              content: "操作失败"
-            })
+        if (this.data.id == null) {
+          console.log("new")
+          //新建
+          let imgs = {
+            paths: this.data.tempImgs,
+            IDs: new Array
           }
-          //传完清除tempPath
-          that.setData({
-            tempImgs: [],
-            edited: false
-          })
-          // console.log(imgs.IDs)
+          async function process() {
+            try {
+              if (imgs.paths.length != 0) {
+                await database.uploadImg(imgs)
+              }
+              let object = {
+                heading: that.data.heading,
+                content: that.data.content,
+                gallery: imgs.IDs,
+                audio: null,
+                category: that.data.category,
+                encrypt: that.data.encrypt,
+                password: that.data.password,
+                useMarkdown: that.data.useMarkdown,
+                timestamp: new Date().getTime(),
+              }
+              await database.addNote(object)
+              wx.showToast({
+                title: '已保存更改',
+              })
+            } catch {
+              wx.showToast({
+                content: "操作失败"
+              })
+            }
+            //传完清除tempPath
+            that.setData({
+              tempImgs: [],
+            })
+            // console.log(imgs.IDs)
+          }
+          process()
+        } else {
+          //修改
+          console.log("edit")
+          let imgs = {
+            paths: this.data.tempImgs,
+            IDs: new Array
+          }
+          async function process() {
+            try {
+              if (imgs.paths.length != 0) {
+                await database.uploadImg(imgs)
+                await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+                  data: {
+                    [`note[${that.data.id}].gallery`]: _push(imgs.IDs)
+                  }
+                })
+              }
+              await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+                data: {
+                  [`note[${that.data.id}].heading`]: that.data.heading,
+                  [`note[${that.data.id}].content`]: that.data.content,
+                  [`note[${that.data.id}].category`]: that.data.category,
+                  [`note[${that.data.id}].encrypt`]: that.data.encrypt,
+                  [`note[${that.data.id}].password`]: that.data.password,
+                  [`note[${that.data.id}].useMarkdown`]: that.data.useMarkdown,
+                  [`note[${that.data.id}].timestamp`]: new Date().getTime(),
+                }
+              })
+              wx.showToast({
+                title: '已保存更改',
+              })
+            } catch {
+              wx.showToast({
+                content: "操作失败"
+              })
+            }
+          }
         }
-        process()
+        this.setData({
+          edited: false
+        })
       }
     })
   },
@@ -355,13 +400,11 @@ Page({
       } else {
         this.setData({
           edit: false,
-          floatContent: "edit"
         })
       }
     } else {
       this.setData({
         edit: true,
-        floatContent: "save"
       })
     }
     this.selectAllComponents('.switch').forEach(element => {
@@ -419,6 +462,7 @@ Page({
       // console.log(res.edit)
       this.setData({
         edit: res.edit,
+        id: res.data.id,
         heading: res.data.heading,
         content: res.data.content,
         galleryDetail: res.data.galleryDetail,
@@ -426,8 +470,9 @@ Page({
         password: res.data.password,
         useMarkdown: res.data.useMarkdown,
         category: res.data.category,
-        headingNum: res.data.heading.length,
-        contentNum: res.data.content.length
+        headingNum: res.data.heading == null ? 0 : res.data.heading.length,
+        contentNum: res.data.content == null ? 0 : res.data.content.length,
+        md: res.data.content,
       })
       this.selectAllComponents('.switch').forEach(element => {
         element.refreshStatus()

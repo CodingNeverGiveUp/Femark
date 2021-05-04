@@ -108,12 +108,13 @@
 #note_left {
   width: 47%;
   min-height: .1px;
+  height: fit-content;
 }
 
 #note_right {
   width: 47%;
   min-height: .1px;
-
+  height: fit-content;
 }
 
 .note_block {
@@ -121,6 +122,7 @@
   box-shadow: 0 0 10rpx #bbb;
   overflow: hidden;
   transition: opacity .2s ease-in-out;
+  margin: 0 0 20px 0;
 }
 
 .note_image {
@@ -139,6 +141,7 @@
   opacity: .6;
   width: 100%;
   color: #fff;
+  padding: 2px 10px;
 }
 
 .note_text {

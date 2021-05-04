@@ -55,13 +55,14 @@ App({
   //初始化
   initialize() {
     event.emit('LoginCheck', '检查用户信息');
-    //获取openid
+    //获取openid及_id
     wx.cloud.callFunction({
         name: "getOpenid"
       }).then(res => {
         // console.log("step1")
         let openid = res.result.openid;
         this.globalData.openid = openid;
+        this.globalData.id = res.result._id;
         //获取用户配置
         event.emit('LoginCheck', '获取用户配置');
         wx.cloud.database().collection('note').where({
@@ -75,14 +76,15 @@ App({
               // console.log(res)
               this.globalData.useSidebar = res.data[0].profile.useSidebar;
               this.globalData.markdownByDefault = res.data[0].profile.markdownByDefault;
-              console.log(this.globalData.useSidebar)
+              // console.log(this.globalData.useSidebar)
               this.globalData.pureTheme = res.data[0].profile.pureTheme;
               this.globalData.userInfo.nickName = res.data[0].profile.nickName;
               this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
               this.globalData.primaryColor = res.data[0].profile.primaryColor;
               //提前拉取及预处理笔记待办数据
-              res.data[0].note.forEach((element)=>{
+              res.data[0].note.forEach((element, index)=>{
                 element.color = this.getRandomColor()
+                element.id = index
                 wx.cloud.getTempFileURL({
                   fileList: element.gallery,
                 }).then(res =>{
@@ -106,6 +108,7 @@ App({
       })
       .catch(err => {
         // console.log("failed")
+        console.log(err)
         event.emit('LoginCheck', 'error');
       })
   },
@@ -198,6 +201,7 @@ App({
     hasUserInfo: false,
     primaryColor: "#4285f4",
     openid: null,
+    id: null,
     currentPage: 1,
     formerPage: null,
     systemInfo: null,
