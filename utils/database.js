@@ -48,7 +48,7 @@ function uploadImg(imgs) {
         }
         if (i == imgs.paths.length - 1) {
           console.log("upload finished")
-          wx.hideLoading()
+          // wx.hideLoading()
           resolve()
         }
       }
@@ -77,7 +77,7 @@ function addNote(object) {
             }
           })
           .then(res => {
-            wx.hideLoading()
+            // wx.hideLoading()
             resolve()
           })
           .catch(err => {

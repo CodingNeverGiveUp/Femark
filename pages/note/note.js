@@ -178,9 +178,44 @@ Page({
 
   delete() {
     var that = this
+    var _ = wx.cloud.database().command
     if (!this.data.edit) {
       this.showSnackbar("请先启用编辑")
-    } else {}
+    } else {
+      wx.showModal({
+        title: "警告",
+        content: "将永久删除该笔记，该过程不可逆转，是否继续操作",
+        confirmText: "仍然继续",
+        confirmColor: "#ff5252",
+      }).then(res=>{
+        if(res.confirm){
+          wx.showLoading({
+            title: '正在删除',
+          })
+          wx.cloud.database().collection('note').doc(app.globalData.id).update({
+            data: {
+              note: _.pull({
+                timestamp: that.data.timestamp
+              })
+            }
+          }).then(res=>{
+            wx.showToast({
+              title: '已删除',
+            })
+            setTimeout(()=>{
+              wx.navigateBack({
+                delta: 1,
+              })
+            },1500)
+          }).catch(err=>{
+            wx.showToast({
+              title: '网络错误',
+              icon: 'error'
+            })
+          })
+        }
+      })
+    }
   },
 
   previewImg(e) {
@@ -507,6 +542,7 @@ Page({
         password: res.data.password,
         useMarkdown: res.data.useMarkdown,
         category: res.data.category,
+        timestamp: res.data.timestamp,
         headingNum: res.data.heading == null ? 0 : res.data.heading.length,
         contentNum: res.data.content == null ? 0 : res.data.content.length,
         md: res.data.content,
