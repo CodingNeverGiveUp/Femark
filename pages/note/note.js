@@ -71,9 +71,11 @@ Page({
               wx.showToast({
                 title: '已保存更改',
               })
-            } catch {
+            } catch(e) {
+              console.log(e)
               wx.showToast({
-                content: "操作失败"
+                icon: "error",
+                title: "操作失败"
               })
             }
             //传完清除tempPath
@@ -112,14 +114,17 @@ Page({
                 }
               })
               wx.showToast({
-                title: '已保存更改',
+                title: "已保存更改",
               })
-            } catch {
+            } catch(e) {
+              console.log(e)
               wx.showToast({
-                content: "操作失败"
+                icon: "error",
+                title: "操作失败"
               })
             }
           }
+          process()
         }
         this.setData({
           edited: false

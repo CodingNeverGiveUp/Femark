@@ -167,7 +167,7 @@ Page({
           hw2 = Math.round(res.height)
           // console.log(hw2)
         }).exec();
-        await timeOut(100);
+        await timeOut(300);
         if (hw1 <= hw2) {
           noteLeft.push(that.data.note[i])
         } else {
