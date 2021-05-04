@@ -27,6 +27,7 @@ Page({
     tempImgs: [],
     heading: null,
     content: null,
+    category: 0,
     useMarkdown: true,
     encrypt: false,
     password: "",
