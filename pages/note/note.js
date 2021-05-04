@@ -71,7 +71,7 @@ Page({
               wx.showToast({
                 title: '已保存更改',
               })
-            } catch(e) {
+            } catch (e) {
               console.log(e)
               wx.showToast({
                 icon: "error",
@@ -116,7 +116,7 @@ Page({
               wx.showToast({
                 title: "已保存更改",
               })
-            } catch(e) {
+            } catch (e) {
               console.log(e)
               wx.showToast({
                 icon: "error",
@@ -197,6 +197,7 @@ Page({
 
   deleteImg(e) {
     var that = this
+    const _ = wx.cloud.database().command
     wx.showModal({
       title: "警告",
       content: "将同时从云端移除图片，该过程不可逆转，是否继续操作",
@@ -204,13 +205,44 @@ Page({
       confirmColor: "#ff5252",
     }).then(res => {
       if (res.confirm) {
-        //云开发移除，没写
-        let array = this.data.galleryDetail
-        array.splice(e.currentTarget.dataset.index, 1, );
-        // console.log(array.length)
-        this.setData({
-          galleryDetail: array,
-        })
+        //云存储移除
+        async function process() {
+          try {
+            var fileID = that.data.galleryDetail[e.currentTarget.dataset.index].fileID;
+            wx.showLoading({
+              title: '正在删除文件',
+            })
+            await wx.cloud.deleteFile({
+              fileList: [fileID]
+            })
+            //数据库移除
+            wx.showLoading({
+              title: '正在修改数据',
+            })
+            await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+              data: {
+                [`note.${that.data.id}.gallery`]: _.pull(fileID)
+              }
+            })
+            //前端移除
+            let array = that.data.galleryDetail
+            array.splice(e.currentTarget.dataset.index, 1, );
+            // console.log(array.length)
+            that.setData({
+              galleryDetail: array,
+            })
+            wx.showToast({
+              title: "操作成功",
+            })
+          } catch(e) {
+            console.log(e)
+            wx.showToast({
+              icon: "error",
+              title: "操作失败"
+            })
+          }
+        }
+        process()
       }
     })
     // console.log(e.currentTarget.dataset.index)
