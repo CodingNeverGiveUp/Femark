@@ -287,10 +287,12 @@
   flex-direction: row;
   align-items: center;
   margin-bottom: 40rpx;
+  overflow: hidden;
 }
 
 .box_left {
   width: 25%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -299,6 +301,7 @@
 
 .box_right {
   width: 70%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -328,8 +331,13 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  font-size: .8rem;
+  color: #fff;
+}
+
+.ddl text{
   color: #ccc;
-  font-size: 0.8rem;
+  margin-left: 5px;
 }
 
 

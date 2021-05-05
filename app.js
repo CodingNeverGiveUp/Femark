@@ -1,5 +1,6 @@
 // app.js
 const event = require("/utils/event.js")
+const time = require("/utils/util.js")
 App({
   onLaunch() {
     //注册云开发
@@ -94,6 +95,55 @@ App({
               res.data[0].task.forEach((element,index)=>{
                 element.color = this.getRandomColor()
                 element.id = index
+                if(element.heading == ''){
+                  element.heading = element.content
+                }
+                let monthNum = new Date(element.notificationTimestamp).getMonth()+1
+                var monthStr
+                switch(monthNum){
+                  case 1:
+                    monthStr = "Jan"
+                    break;
+                  case 2:
+                    monthStr = "Feb"
+                    break;
+                  case 3:
+                    monthStr = "Mar"
+                    break;
+                  case 4:
+                    monthStr = "Apr"
+                    break;
+                  case 5:
+                    monthStr = "May"
+                    break;
+                  case 6:
+                    monthStr = "Jun"
+                    break;
+                  case 7:
+                    monthStr = "Jul"
+                    break;
+                  case 8:
+                    monthStr = "Aug"
+                    break;
+                  case 9:
+                    monthStr = "Sep"
+                    break;
+                  case 10:
+                    monthStr = "Oct"
+                    break;
+                  case 11:
+                    monthStr = "Nov"
+                    break;
+                  case 12:
+                    monthStr = "Dec"
+                    break;
+                  default:
+                    monthStr = "NaN"
+                    break;
+                }
+                element.month = monthStr
+                element.date = new Date(element.notificationTimestamp).getDate()
+                element.time = `${monthStr} ${element.date}, ${time.formatNumber(new Date(element.notificationTimestamp).getHours())}:${time.formatNumber(new Date(element.notificationTimestamp).getMinutes())}`
               })
               this.globalData.note = res.data[0].note;
               this.globalData.task = res.data[0].task;

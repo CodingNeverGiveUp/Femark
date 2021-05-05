@@ -21,12 +21,7 @@ Page({
     heading: null,
     content: null,
     list: true,
-    listData: [{
-      content: "测试文本1",
-      top: 0,
-      finished: true,
-      dragging: false,
-    }],
+    listData: [],
     listTop: null,
     listMin: null,
     listMax: null,
@@ -51,12 +46,14 @@ Page({
           //新建
           async function process() {
             try {
+              let tempTime = that.data.notificationDate + " " + that.data.notificationTime
               let object = {
                 heading: that.data.heading,
                 content: that.data.content,
                 list: that.data.list,
                 listData: that.data.listData,
                 notification: that.data.notification,
+                notificationTimestamp: Date.parse(tempTime.replace(/-/g, '/')),
                 autoDelete: that.data.autoDelete,
                 autoDeleteDelay: that.data.autoDeleteDelay,
                 timestamp: new Date().getTime(),
@@ -246,16 +243,20 @@ Page({
   },
 
   listAddItem() {
-    let array = this.data.listData
-    array.push({
-      content: "",
-      top: 0,
-      finished: false,
-    })
-    this.setData({
-      listData: array,
-      edited: true,
-    })
+    if (!this.data.edit) {
+      this.showSnackbar("请先启用编辑")
+    } else {
+      let array = this.data.listData
+      array.push({
+        content: "",
+        top: 0,
+        finished: false,
+      })
+      this.setData({
+        listData: array,
+        edited: true,
+      })
+    }
   },
 
   listDeleteItem(e) {

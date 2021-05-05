@@ -64,20 +64,20 @@
         <text>待办</text>
         <text class="material-icons">expand_more</text>
       </view>
-      <text class="head_subtitle">共{{10}}条数据</text>
+      <text class="head_subtitle">共{{task.length}}条数据</text>
     </view>
     <view class="main">
-      <view wx:for="{{text.list}}" wx:key="index">
+      <view wx:for="{{task}}" wx:key="index">
         <view class="db_box" style="background-color:{{item.color}};">
           <view class="box_left">
             <view class="month">{{item.month}}</view>
-            <view class="day">{{item.day}}</view>
+            <view class="day">{{item.date}}</view>
           </view>
           <view class="box_right">
-            <view class="topic">{{item.topic}}</view>
+            <view class="topic">{{item.heading}}</view>
             <view class="ddl">
-              <class class="material-icons" style="font-size:.8rem">notifications_active</class>
-              <text>{{item.ddl}}</text>
+              <view wx:if="{{item.notification}}" class="material-icons" style="font-size:.8rem">notifications_active</view>
+              <text>{{item.time}}</text>
             </view>
           </view>
         </view>

@@ -33,7 +33,7 @@
               <view class="icon material-icons" hover-class="hover" bindtap="listDeleteItem" data-index="{{index}}"><text>close</text></view>
             </view>
           </view>
-          <view wx:if="{{edit}}" class="list_add_item" hover-class="hover" bindtap="listAddItem">
+          <view class="list_add_item" hover-class="hover" bindtap="listAddItem">
             <view class="icon material-icons" hover-class="hover"><text>add</text></view>
             <text>新增清单项</text>
           </view>
