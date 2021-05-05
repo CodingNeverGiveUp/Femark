@@ -91,8 +91,9 @@ App({
                   element.galleryDetail = res.fileList
                 })
               })
-              res.data[0].task.forEach((element)=>{
+              res.data[0].task.forEach((element,index)=>{
                 element.color = this.getRandomColor()
+                element.id = index
               })
               this.globalData.note = res.data[0].note;
               this.globalData.task = res.data[0].task;

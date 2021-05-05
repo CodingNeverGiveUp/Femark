@@ -89,6 +89,38 @@ function addNote(object) {
   })
 }
 
+
+function addTask(object) {
+  return new Promise((resolve, reject) => {
+    wx.showLoading({
+      title: `数据处理中`,
+    })
+    const _ = wx.cloud.database().command
+    wx.cloud.database().collection('note').where({
+        _openid: app.globalData.openid
+      }).get()
+      .then(res => {
+        let id = res.data[0]._id
+        // var timestamp = new Date().getTime();
+        // console.log(res)
+        wx.cloud.database().collection('note').doc(id).update({
+            data: {
+              'task': _.push(object),
+            }
+          })
+          .then(res => {
+            // wx.hideLoading()
+            resolve()
+          })
+          .catch(err => {
+            reject()
+          })
+      }).catch(err => {
+        reject()
+      })
+  })
+}
+
 //添加测试待办
 const addTask2 = (tasktitle, tasktime, taskurgency, taskcontent, taskreminderStatus, ifDone) => {
   const _ = wx.cloud.database().command
@@ -107,28 +139,28 @@ const addTask2 = (tasktitle, tasktime, taskurgency, taskcontent, taskreminderSta
 }
 
 //添加待办数据
-const addTask = (taskDate, taskContent, taskTitle, taskType) => {
-  const _ = wx.cloud.database().command
-  wx.cloud.database().collection('note').where({
-      _openid: "oxY3r5W1q6qmHTczqCMHbpYc6TCk"
-    }).get()
-    .then(res => {
-      let id = res.data[0]._id
-      var timestamp = new Date().getTime();
-      console.log(res)
-      wx.cloud.database().collection('note').doc(id).update({
-        data: {
-          'task': _.push({
-            "content": taskContent,
-            "date": taskDate,
-            "title": taskTitle,
-            "type": taskType,
-            "time": timestamp,
-          }),
-        }
-      })
-    })
-}
+// const addTask = (taskDate, taskContent, taskTitle, taskType) => {
+//   const _ = wx.cloud.database().command
+//   wx.cloud.database().collection('note').where({
+//       _openid: "oxY3r5W1q6qmHTczqCMHbpYc6TCk"
+//     }).get()
+//     .then(res => {
+//       let id = res.data[0]._id
+//       var timestamp = new Date().getTime();
+//       console.log(res)
+//       wx.cloud.database().collection('note').doc(id).update({
+//         data: {
+//           'task': _.push({
+//             "content": taskContent,
+//             "date": taskDate,
+//             "title": taskTitle,
+//             "type": taskType,
+//             "time": timestamp,
+//           }),
+//         }
+//       })
+//     })
+// }
 
 //删除待办数据 //pull方法不懂，没做出来
 const deleteTask = () => {

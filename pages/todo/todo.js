@@ -16,7 +16,10 @@ Page({
     contentNum: 0,
     notificationDate: `${new Date().getFullYear()}-${time.formatNumber(new Date().getMonth()+1)}-${time.formatNumber(new Date().getDate())}`,
     notificationTime: `${time.formatNumber(new Date().getHours())}:${time.formatNumber(new Date().getMinutes())}`,
-    edit: false,
+    edit: null,
+    edited: false,
+    heading: null,
+    content: null,
     list: true,
     listData: [{
       content: "测试文本1",
@@ -33,6 +36,100 @@ Page({
     autoDelete: false,
     autoDeleteDelay: 5,
     autoDeleteDelayData: [1, 2, 3, 4, 5, 6, 7],
+  },
+
+  submit() {
+    var that = this
+    wx.showModal({
+      title: "注意",
+      content: "是否保存更改",
+      confirmColor: this.data.primaryColor
+    }).then(res => {
+      if (res.confirm) {
+        if (this.data.id == null) {
+          console.log("new")
+          //新建
+          async function process() {
+            try {
+              let object = {
+                heading: that.data.heading,
+                content: that.data.content,
+                list: that.data.list,
+                listData: that.data.listData,
+                notification: that.data.notification,
+                autoDelete: that.data.autoDelete,
+                autoDeleteDelay: that.data.autoDeleteDelay,
+                timestamp: new Date().getTime(),
+              }
+              await database.addTask(object)
+              wx.showToast({
+                title: '已保存更改',
+              })
+            } catch (e) {
+              console.log(e)
+              wx.showToast({
+                icon: "error",
+                title: "操作失败"
+              })
+            }
+          }
+          process()
+        } else {
+          //修改
+          console.log("edit")
+          async function process() {
+            try {
+              await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+                data: {
+                  [`task.${that.data.id}.heading`]: that.data.heading,
+                  [`task.${that.data.id}.content`]: that.data.content,
+                  [`task.${that.data.id}.list`]: that.data.list,
+                  [`task.${that.data.id}.listData`]: that.data.listData,
+                  [`task.${that.data.id}.notification`]: that.data.notification,
+                  [`task.${that.data.id}.autoDelete`]: that.data.autoDelete,
+                  [`task.${that.data.id}.autoDeleteDelay`]: that.data.autoDeleteDelay,
+                  [`task.${that.data.id}.timestamp`]: new Date().getTime(),
+                }
+              })
+              wx.showToast({
+                title: "已保存更改",
+              })
+            } catch (e) {
+              console.log(e)
+              wx.showToast({
+                icon: "error",
+                title: "操作失败"
+              })
+            }
+          }
+          process()
+        }
+        this.setData({
+          edited: false
+        })
+      }
+    })
+  },
+
+  back() {
+    if (this.data.edited) {
+      wx.showModal({
+        title: "警告",
+        content: "更改未保存，是否舍弃更改",
+        confirmColor: '#ff5252',
+        confirmText: "仍然退出"
+      }).then(res => {
+        if (res.confirm) {
+          wx.navigateBack({
+            delta: 1,
+          })
+        }
+      })
+    } else {
+      wx.navigateBack({
+        delta: 1,
+      })
+    }
   },
 
   delete() {
@@ -84,6 +181,8 @@ Page({
     // console.log(e.detail.value.length);
     this.setData({
       headingNum: e.detail.value.length,
+      heading: e.detail.value,
+      edited: true,
     })
   },
 
@@ -108,7 +207,8 @@ Page({
     // this.data.temp = e.detail.value;
     this.setData({
       contentNum: e.detail.value.length,
-      btnStyle: "right:0;"
+      content: e.detail.value,
+      edited: true,
     })
   },
 
@@ -119,6 +219,7 @@ Page({
     } else {
       this.setData({
         list: this.data.list ? false : true,
+        edited: true,
       })
     }
   },
@@ -127,7 +228,8 @@ Page({
     console.log(e)
     let index = e.currentTarget.dataset.index
     this.setData({
-      [`listData[${index}].content`]: e.detail.value
+      [`listData[${index}].content`]: e.detail.value,
+      edited: true,
     })
   },
 
@@ -138,6 +240,7 @@ Page({
       let index = e.currentTarget.dataset.index
       this.setData({
         [`listData[${index}].finished`]: this.data.listData[index].finished ? false : true,
+        edited: true,
       })
     }
   },
@@ -150,7 +253,8 @@ Page({
       finished: false,
     })
     this.setData({
-      listData: array
+      listData: array,
+      edited: true,
     })
   },
 
@@ -159,7 +263,8 @@ Page({
     let array = this.data.listData
     array.splice(index, 1, )
     this.setData({
-      listData: array
+      listData: array,
+      edited: true,
     })
   },
 
@@ -250,7 +355,8 @@ Page({
       }
     }
     this.setData({
-      listData: data
+      listData: data,
+      edited: true,
     })
     // let flist = this.data.listData[index];
     // let nlist = this.data.listData[index + this.data.listTarget];
@@ -265,6 +371,9 @@ Page({
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
+      this.setData({
+        edited: true,
+      })
       if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
         this.setData({
           markdownPreviewDelay: e.detail.value
@@ -286,6 +395,9 @@ Page({
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
+      this.setData({
+        edited: true,
+      })
       if (e.currentTarget.dataset.id == "notification") {
         this.setData({
           notification: e.detail.value
@@ -305,13 +417,11 @@ Page({
       } else {
         this.setData({
           edit: false,
-          floatContent: "edit"
         })
       }
     } else {
       this.setData({
         edit: true,
-        floatContent: "save"
       })
     }
     this.selectAllComponents('.switch').forEach(element => {
