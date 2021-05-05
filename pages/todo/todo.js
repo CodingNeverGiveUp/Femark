@@ -1,6 +1,7 @@
 // pages/todo/todo.js
 const app = getApp()
 const database = require("../../utils/database.js")
+const time = require("../../utils/util.js")
 Page({
 
   /**
@@ -13,6 +14,8 @@ Page({
     theme: app.globalData.systemInfo.theme,
     headingNum: 0,
     contentNum: 0,
+    notificationDate: `${new Date().getFullYear()}-${time.formatNumber(new Date().getMonth()+1)}-${time.formatNumber(new Date().getDate())}`,
+    notificationTime: `${time.formatNumber(new Date().getHours())}:${time.formatNumber(new Date().getMinutes())}`,
     edit: false,
     list: true,
     listData: [{
@@ -265,6 +268,14 @@ Page({
       if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
         this.setData({
           markdownPreviewDelay: e.detail.value
+        })
+      }else if(e.currentTarget.dataset.id == "notificationDate"){
+        this.setData({
+          notificationDate: e.detail.value
+        })
+      }else if(e.currentTarget.dataset.id == "notificationTime"){
+        this.setData({
+          notificationTime: e.detail.value
         })
       }
     }

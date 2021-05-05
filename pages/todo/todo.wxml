@@ -49,7 +49,7 @@
         </md-picker>
         <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" disabled="{{!edit}}"
-          mode="time" data-id="notificationDate">
+          mode="time" data-id="notificationTime">
           <text slot="title">目标时间</text>
           <text slot="subtitle">预期完成时间</text>
         </md-picker>
