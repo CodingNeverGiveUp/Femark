@@ -56,6 +56,14 @@ Page({
             try {
               if (imgs.paths.length != 0) {
                 await database.uploadImg(imgs)
+                wx.cloud.getTempFileURL({
+                  fileList: imgs.IDs,
+                }).then(res =>{
+                  let newGalleryDetail= that.data.galleryDetail.concat(res.fileList)
+                  that.setData({
+                    galleryDetail: newGalleryDetail,
+                  })
+                })
               }
               let object = {
                 heading: that.data.heading,
@@ -102,6 +110,14 @@ Page({
                     [`note.${that.data.id}.gallery`]: _.push(imgs.IDs)
                   }
                 })
+                wx.cloud.getTempFileURL({
+                  fileList: imgs.IDs,
+                }).then(res =>{
+                  let newGalleryDetail= that.data.galleryDetail.concat(res.fileList)
+                  that.setData({
+                    galleryDetail: newGalleryDetail,
+                  })
+                })
               }
               await wx.cloud.database().collection('note').doc(app.globalData.id).update({
                 data: {
@@ -124,6 +140,10 @@ Page({
                 title: "操作失败"
               })
             }
+            //传完清除tempPath
+            that.setData({
+              tempImgs: [],
+            })
           }
           process()
         }
