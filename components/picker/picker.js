@@ -57,10 +57,16 @@ Component({
     },
     _change(e) {
       // console.log(e.detail.value)
-      this.setData({
-        resultKey: Number(e.detail.value),
-        result: this.data.dataset[e.detail.value],
-      })
+      if(this.data.mode == 'selector'){
+        this.setData({
+          resultKey: Number(e.detail.value),
+          result: this.data.dataset[e.detail.value],
+        })
+      }else if(this.data.mode == 'date' || this.data.mode == 'time'){
+        this.setData({
+          result: e.detail.value
+        })
+      }
       var detail = {
         value: this.data.result,
         valueKey: this.data.resultKey,
@@ -91,10 +97,27 @@ Component({
   // 生命周期函数
   lifetimes: {
     attached: function () {
-      this.setData({
-        result: this.data.dataset[this.data.selected],
-        resultKey: this.data.selected,
-      })
+      const time = require("../../utils/util.js")
+      if(this.data.mode == 'selector'){
+        this.setData({
+          result: this.data.dataset[this.data.selected],
+          resultKey: this.data.selected,
+        })
+      }else if(this.data.mode == 'date'){
+        let str = `${new Date().getFullYear()}-${time.formatNumber(new Date().getMonth()+1)}-${time.formatNumber(new Date().getDate())}`
+        // console.log(str)
+        this.setData({
+          // selected: str,
+          result: str
+        })
+      }else if(this.data.mode == 'time'){
+        let str = `${time.formatNumber(new Date().getHours())}:${time.formatNumber(new Date().getMinutes())}`
+        // console.log(str)
+        this.setData({
+          // selected: str,
+          result: str
+        })
+      }
       // console.log(getApp().globalData.systemInfo.theme)
       if (this.data.disabled) {
         if (getApp().globalData.systemInfo.theme == "dark") {

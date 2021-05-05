@@ -19,7 +19,7 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     currentPage: app.globalData.currentPage,
     selectorStyle: "",
-    sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
+    sel1: '',
 
     noteLeft: [],
     noteRight: [],
@@ -72,6 +72,7 @@ Page({
       isPad: app.globalData.isPad,
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
     })
     //数据拉取
     this.setData({

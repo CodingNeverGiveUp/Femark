@@ -42,13 +42,13 @@
           <text>配置项</text>
         </view>
         <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
-          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" disabled="{{!edit}}"
           mode="date" data-id="notificationDate">
           <text slot="title">目标日期</text>
           <text slot="subtitle">预期完成日期</text>
         </md-picker>
         <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
-          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{notificationDate}}" selected='1' disabled="{{!edit}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" disabled="{{!edit}}"
           mode="time" data-id="notificationDate">
           <text slot="title">目标时间</text>
           <text slot="subtitle">预期完成时间</text>
@@ -94,7 +94,7 @@
 </view>
 <view class="float" style="{{floatStyle}}" bindtap="floatTap">
   <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>{{floatContent}}</text></view>
+    <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text></view>
   </view>
 </view>
 <view class="snackbar" style="{{snackbarStyle}}">
