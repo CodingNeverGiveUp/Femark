@@ -12,12 +12,15 @@ Component({
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
-    maskVisible: "display:none;",
-    maskStyle: "",
-    dialogVisible: "display:none;",
-    dialogStyle: "",
+    // maskVisible: "display:none;",
+    // maskStyle: "",
+    // dialogVisible: "display:none;",
+    // dialogStyle: "",
     slide: false,
-    masked: true,
+    // masked: true,
+    password: '',
+    correctPassword: '',
+    popupPassword: false,
   },
   methods: {
     showDialog() {
@@ -132,8 +135,8 @@ Component({
         // this.showDialog();
       } else {
         this.setData({
-          mainStyle: "height:250px;",
-          floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;"),
+          // mainStyle: "height:300px;",
+          floatStyle: (this.data.isPad ? "bottom:260px;" : this.data.useSidebar ? "bottom:260px;" : "bottom:325px;"),
           floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
@@ -155,7 +158,7 @@ Component({
     floatTap() {
       if (this.data.slide) {
         this.setData({
-          mainStyle: "",
+          // mainStyle: "",
           floatStyle: "",
           floatAStyle: '',
           slide: false,
@@ -226,6 +229,47 @@ Component({
           })
         }
       })
+    },
+
+    popupPassword(e){
+      this.setData({
+        correctPassword: e,
+        popupPassword: true,
+      })
+    },
+
+    passwordFocus() {
+      this.setData({
+        contentInputStyle: `border: 1px solid ${this.data.primaryColor};`,
+        contentPlaceholderStyle: `top: -10px;transform: scale(.8);color:${this.data.primaryColor};`
+      })
+    },
+
+    passwordInput(e) {
+      // console.log(e)
+      this.setData({
+        password: e.detail.value
+      })
+    },
+
+    passwordBlur() {
+      if (this.data.password != "") {
+        this.setData({
+          contentInputStyle: '',
+          contentPlaceholderStyle: `top: -10px;transform: scale(.8);`
+        })
+      } else {
+        this.setData({
+          contentInputStyle: '',
+          contentPlaceholderStyle: '',
+        })
+      }
+    },
+
+    passwordConfirm(){
+      if(this.data.password == this.data.correctPassword){
+        
+      }
     },
 
     touchStart: function (e) {

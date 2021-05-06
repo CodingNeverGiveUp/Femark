@@ -17,6 +17,16 @@
       <view>我的</view>
     </view>
   </view>
+  <!-- <view class="content">
+    <view class="content_title">需要身份验证</view>
+    <view class="content_subtitle">输入密码以继续访问</view>
+    <view class="content_input">
+      <input type="password" name="" id="password" bindfocus="passwordFocus" bindinput="passwordInput" bindblur="passwordBlur"></input>
+      <view class="content_placeholder">密码</view>
+    </view>
+    <view class="content_btn">使用指纹</view>
+    <view class="content_btn">确认</view>
+  </view> -->
 </view>
 
 <view class="sidebar" style="{{sidebarStyle}};{{useSidebar?'':isPad?'':'display:none;'}}">
@@ -95,3 +105,16 @@
 </view>
 
 <!-- <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view> -->
+
+<page-container show="{{popupPassword}}" overlay="false" position="bottom" round="true" close-on-slideDown="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+  <view class="content">
+    <view class="content_title">需要身份验证</view>
+    <view class="content_subtitle">输入密码以继续访问</view>
+    <view class="content_input" style="{{contentInputStyle}}">
+      <input type="password" name="" id="password" bindfocus="passwordFocus" bindinput="passwordInput" bindblur="passwordBlur"></input>
+      <view class="content_placeholder" style="{{contentPlaceholderStyle}}">密码</view>
+    </view>
+    <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover">使用指纹</view>
+    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};">确认</view>
+  </view>
+</page-container>
