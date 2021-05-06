@@ -65,8 +65,8 @@
           <text slot="subtitle">过期一段时间后自动删除</text>
         </md-switch>
         <md-picker class="picker" wx:if="{{autoDelete}}" bind:pick="pick" primaryColor="{{primaryColor}}"
-          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{autoDeleteDelayData}}" selected='4' disabled="{{!edit}}"
-          data-id="autoDeleteDelayData">
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{autoDeleteDelayData}}" selected='{{autoDeleteDelay - 1}}' disabled="{{!edit}}"
+          data-id="autoDeleteDelay">
           <text slot="title">自清理执行时间</text>
           <text slot="subtitle">清理延后时间（天）</text>
         </md-picker>

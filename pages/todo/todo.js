@@ -29,7 +29,7 @@ Page({
     listTarget: null,
     notification: false,
     autoDelete: false,
-    autoDeleteDelay: 5,
+    autoDeleteDelay: 4,
     autoDeleteDelayData: [1, 2, 3, 4, 5, 6, 7],
   },
 
@@ -75,6 +75,7 @@ Page({
           //修改
           console.log("edit")
           async function process() {
+            let tempTime = that.data.notificationDate + " " + that.data.notificationTime
             try {
               await wx.cloud.database().collection('note').doc(app.globalData.id).update({
                 data: {
@@ -85,6 +86,7 @@ Page({
                   [`task.${that.data.id}.notification`]: that.data.notification,
                   [`task.${that.data.id}.autoDelete`]: that.data.autoDelete,
                   [`task.${that.data.id}.autoDeleteDelay`]: that.data.autoDeleteDelay,
+                  [`task.${that.data.id}.notificationTimestamp`]: Date.parse(tempTime.replace(/-/g, '/')),
                   [`task.${that.data.id}.timestamp`]: new Date().getTime(),
                 }
               })
@@ -386,6 +388,10 @@ Page({
       }else if(e.currentTarget.dataset.id == "notificationTime"){
         this.setData({
           notificationTime: e.detail.value
+        })
+      }else if(e.currentTarget.dataset.id == "autoDeleteDelay"){
+        this.setData({
+          autoDeleteDelay: Number(e.detail.value)
         })
       }
     }
