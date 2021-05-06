@@ -353,7 +353,7 @@
 }
 
 .ddl view{
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .ddl text{

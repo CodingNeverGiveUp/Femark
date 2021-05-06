@@ -75,6 +75,7 @@ Page({
 
   onReady() {
     var that = this
+    this.column()
     // let test_Array01_lenth = this.data.test.test_Array01.length
     // let test_Array02_lenth = this.data.test.test_Array02.length
     // let color_number1 = 0
@@ -118,43 +119,6 @@ Page({
     //     return false
     //   }
     // }
-
-    //定时器
-    function timeOut(time){
-      return new Promise((resolve, reject)=>{
-        setTimeout(()=>{
-          resolve()
-        }, time)
-      })
-    };
-    //分栏
-    async function sort(){
-      var noteLeft = [];
-      var noteRight = [];
-      var query = wx.createSelectorQuery()
-      for (let i = 0; i < that.data.note.length; i++) {
-        var hw1, hw2;
-        query.select('#note_left').boundingClientRect(function (res) {
-          hw1 = Math.round(res.height)
-          // console.log(hw1)
-        }).exec()
-        query.select('#note_right').boundingClientRect(function (res) {
-          hw2 = Math.round(res.height)
-          // console.log(hw2)
-        }).exec();
-        await timeOut(300);
-        if (hw1 <= hw2) {
-          noteLeft.push(that.data.note[i])
-        } else {
-          noteRight.push(that.data.note[i])
-        }
-        that.setData({
-          noteLeft,
-          noteRight
-        })
-      }
-    }
-    sort()
   },
 
   onShow() {
@@ -195,8 +159,89 @@ Page({
 
   },
 
+  onPullDownRefresh() {
+    app.refresh().then(res => {
+      //重新拉取侧栏
+      let tabbar = this.getTabBar();
+      tabbar.setData({
+        useSidebar: app.globalData.useSidebar,
+        primaryColor: app.globalData.primaryColor,
+        rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      })
+      if (wx.getUserProfile) {
+        this.setData({
+          canIUseGetUserProfile: true,
+        })
+      }
+      //重新拉取配置
+      this.setData({
+        useSidebar: app.globalData.useSidebar,
+        pureTheme: app.globalData.pureTheme,
+        primaryColor: app.globalData.primaryColor,
+        rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      })
+      //数据拉取
+      this.setData({
+        note: app.globalData.note,
+        task: app.globalData.task
+      })
+      this.column()
+      wx.stopPullDownRefresh()
+      wx.showToast({
+        title: '数据已更新',
+      })
+    }).catch(err => {
+      wx.stopPullDownRefresh()
+      wx.showToast({
+        title: '网络错误',
+        icon: "error"
+      })
+    })
+  },
+
   onTabItemTap(e) {
     console.log("aaaaa");
+  },
+
+  //分栏
+  column() {
+    var that = this
+    //定时器
+    function timeOut(time) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve()
+        }, time)
+      })
+    };
+    //分栏
+    async function sort() {
+      var noteLeft = [];
+      var noteRight = [];
+      var query = wx.createSelectorQuery()
+      for (let i = 0; i < that.data.note.length; i++) {
+        var hw1, hw2;
+        query.select('#note_left').boundingClientRect(function (res) {
+          hw1 = Math.round(res.height)
+          // console.log(hw1)
+        }).exec()
+        query.select('#note_right').boundingClientRect(function (res) {
+          hw2 = Math.round(res.height)
+          // console.log(hw2)
+        }).exec();
+        await timeOut(300);
+        if (hw1 <= hw2) {
+          noteLeft.push(that.data.note[i])
+        } else {
+          noteRight.push(that.data.note[i])
+        }
+        that.setData({
+          noteLeft,
+          noteRight
+        })
+      }
+    }
+    sort()
   },
 
   showSelector() {
