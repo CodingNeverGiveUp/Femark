@@ -70,7 +70,7 @@
           <text slot="title">自清理执行时间</text>
           <text slot="subtitle">清理延后时间（天）</text>
         </md-picker>
-        <view class="blank"></view>
+        <!-- <view class="blank"></view> -->
       <!-- </form> -->
     </view>
   </scroll-view>

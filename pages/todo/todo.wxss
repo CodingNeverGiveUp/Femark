@@ -13,6 +13,7 @@
 .main {
   flex: 1 0 auto;
   width: 100vw;
+  margin-bottom: 300px;
   /* background: yellowgreen; */
 }
 

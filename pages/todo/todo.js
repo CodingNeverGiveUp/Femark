@@ -41,6 +41,9 @@ Page({
       confirmColor: this.data.primaryColor
     }).then(res => {
       if (res.confirm) {
+        wx.showLoading({
+          title: '操作进行中',
+        })
         if (this.data.id == null) {
           console.log("new")
           //新建
@@ -414,6 +417,30 @@ Page({
           autoDelete: e.detail.value
         })
       }
+    }
+  },
+
+  toUpper() {
+    if (this.data.theme == 'light') {
+      this.setData({
+        headbarStyle: "",
+      })
+    } else if (this.data.theme == 'dark') {
+      this.setData({
+        headbarStyle: "",
+      })
+    }
+  },
+
+  scroll() {
+    if (this.data.theme == 'light') {
+      this.setData({
+        headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+      })
+    } else if (this.data.theme == 'dark') {
+      this.setData({
+        headbarStyle: "background:#222426;box-shadow: 0 0rpx 10rpx #222;",
+      })
     }
   },
 
