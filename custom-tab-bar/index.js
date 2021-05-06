@@ -129,7 +129,7 @@ Component({
           floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
-        this.showDialog();
+        // this.showDialog();
       } else {
         this.setData({
           mainStyle: "height:250px;",

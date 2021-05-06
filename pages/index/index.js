@@ -332,23 +332,27 @@ Page({
   },
 
   note(e) {
-    console.log(e)
     var that = this
-    wx.navigateTo({
-      url: '/pages/note/note',
-      events: {
-        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-        acceptDataFromOpenedPage: function (data) {
-          console.log(data)
+    console.log(e)
+    if (!e.currentTarget.dataset.data.encrypt) {
+      wx.navigateTo({
+        url: '/pages/note/note',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
         },
-      },
-      success(res) {
-        res.eventChannel.emit('toNote', {
-          edit: false,
-          data: e.currentTarget.dataset.data
-        })
-      }
-    })
+        success(res) {
+          res.eventChannel.emit('toNote', {
+            edit: false,
+            data: e.currentTarget.dataset.data
+          })
+        }
+      })
+    } else {
+
+    }
   },
 
   todo(e) {

@@ -1,6 +1,5 @@
 <!-- <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view> -->
-<view class="main {{isPad?'h_main':useSidebar?'h_main':''}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
-  bindtouchend='touchEnd' style="{{mainStyle}};">
+<view class="main {{isPad?'h_main':useSidebar?'h_main':''}}" style="{{mainStyle}};">
   <view class="items">
     <view class="item" data-path="/pages/index/index" data-page="1" bindtap="switch" hover-class="hover"
       style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{btn1}};">
@@ -64,7 +63,7 @@
     <view class="sec_name"><text>我的</text></view>
   </view>
 </view>
-<view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view>
+<!-- <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view> -->
 
 <view wx:if="{{currentPage==4?false:true}}" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}"
   class="float_container {{isPad?'h_float':useSidebar?'h_float':''}}">
@@ -95,4 +94,4 @@
   </view>
 </view>
 
-<view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view>
+<!-- <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view> -->
