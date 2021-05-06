@@ -32,6 +32,10 @@ Component({
       type: String,
       value: "selector"
     },
+    result: {
+      type: String,
+      value: ""
+    }
   },
 
   /**
@@ -104,19 +108,23 @@ Component({
           resultKey: this.data.selected,
         })
       }else if(this.data.mode == 'date'){
-        let str = `${new Date().getFullYear()}-${time.formatNumber(new Date().getMonth()+1)}-${time.formatNumber(new Date().getDate())}`
-        // console.log(str)
-        this.setData({
-          // selected: str,
-          result: str
-        })
+        if(this.data.result == ""){
+          let str = `${new Date().getFullYear()}-${time.formatNumber(new Date().getMonth()+1)}-${time.formatNumber(new Date().getDate())}`
+          // console.log(str)
+          this.setData({
+            // selected: str,
+            result: str
+          })
+        }
       }else if(this.data.mode == 'time'){
-        let str = `${time.formatNumber(new Date().getHours())}:${time.formatNumber(new Date().getMinutes())}`
-        // console.log(str)
-        this.setData({
-          // selected: str,
-          result: str
-        })
+        if(this.data.result == ""){
+          let str = `${time.formatNumber(new Date().getHours())}:${time.formatNumber(new Date().getMinutes())}`
+          // console.log(str)
+          this.setData({
+            // selected: str,
+            result: str
+          })
+        }
       }
       // console.log(getApp().globalData.systemInfo.theme)
       if (this.data.disabled) {

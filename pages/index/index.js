@@ -306,6 +306,26 @@ Page({
     })
   },
 
+  todo(e) {
+    console.log(e)
+    var that = this
+    wx.navigateTo({
+      url: '/pages/todo/todo',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        acceptDataFromOpenedPage: function (data) {
+          console.log(data)
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toTodo', {
+          edit: false,
+          data: e.currentTarget.dataset.data
+        })
+      }
+    })
+  },
+
   //请求用户订阅授权
   requestSubscribeMessage() {
     wx.requestSubscribeMessage({

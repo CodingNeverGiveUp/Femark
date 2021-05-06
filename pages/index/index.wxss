@@ -300,11 +300,28 @@
 }
 
 .box_right {
-  width: 70%;
+  width: 75%;
   height: 100%;
+  position: relative;
+}
+
+.box_right_bg{
+  position: absolute;
+  filter: brightness(80%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.box_right_text{
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 25px;
 }
 
 .month {

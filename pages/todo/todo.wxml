@@ -43,13 +43,13 @@
         </view>
         <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" disabled="{{!edit}}"
-          mode="date" data-id="notificationDate">
+          mode="date" data-id="notificationDate" result="{{notificationDate}}">
           <text slot="title">目标日期</text>
           <text slot="subtitle">预期完成日期</text>
         </md-picker>
         <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" disabled="{{!edit}}"
-          mode="time" data-id="notificationTime">
+          mode="time" data-id="notificationTime" result="{{notificationTime}}">
           <text slot="title">目标时间</text>
           <text slot="subtitle">预期完成时间</text>
         </md-picker>

@@ -67,17 +67,20 @@
       <text class="head_subtitle">共{{task.length}}条数据</text>
     </view>
     <view class="main">
-      <view wx:for="{{task}}" wx:key="index">
-        <view class="db_box" style="background-color:{{item.color}};">
-          <view class="box_left">
+      <view wx:for="{{task}}" wx:key="index" bindtap="todo" hover-class="c_hover" data-data="{{item}}">
+        <view class="db_box">
+          <view class="box_left" style="background-color:{{item.color}};">
             <view class="month">{{item.month}}</view>
             <view class="day">{{item.date}}</view>
           </view>
           <view class="box_right">
-            <view class="topic">{{item.heading}}</view>
-            <view class="ddl">
-              <view wx:if="{{item.notification}}" class="material-icons" style="font-size:.8rem">notifications_active</view>
-              <text>{{item.time}}</text>
+            <view class="box_right_bg" style="background-color:{{item.color}};"></view>
+            <view class="box_right_text">
+              <view class="topic">{{item.heading}}</view>
+              <view class="ddl">
+                <view wx:if="{{item.notification}}" class="material-icons" style="font-size:.8rem">notifications_active</view>
+                <text>{{item.time}}</text>
+              </view>
             </view>
           </view>
         </view>

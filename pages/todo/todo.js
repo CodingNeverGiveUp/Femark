@@ -456,6 +456,51 @@ Page({
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     })
+    const eventChannel = this.getOpenerEventChannel();
+    eventChannel.on('addTodo', (res) => {
+      // console.log(res.edit)
+      this.setData({
+        edit: res.edit,
+      })
+      this.selectAllComponents('.switch').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.picker').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.input').forEach(element => {
+        element.refreshStatus()
+      })
+    })
+    eventChannel.on('toTodo', (res) => {
+      // console.log(res.edit)
+      this.setData({
+        edit: res.edit,
+        id: res.data.id,
+        heading: res.data.heading,
+        content: res.data.content,
+        list: res.data.list,
+        listData: res.data.listData,
+        notification: res.data.notification,
+        notificationTimestamp: res.data.notificationTimestamp,
+        autoDelete: res.data.autoDelete,
+        autoDeleteDelay: res.data.autoDeleteDelay,
+        timestamp: res.data.timestamp,
+        notificationDate: `${new Date(res.data.notificationTimestamp).getFullYear()}-${time.formatNumber(new Date(res.data.notificationTimestamp).getMonth()+1)}-${time.formatNumber(new Date(res.data.notificationTimestamp).getDate())}`,
+        notificationTime: `${time.formatNumber(new Date(res.data.notificationTimestamp).getHours())}:${time.formatNumber(new Date(res.data.notificationTimestamp).getMinutes())}`,
+        headingNum: res.data.heading == null ? 0 : res.data.heading.length,
+        contentNum: res.data.content == null ? 0 : res.data.content.length,
+      })
+      this.selectAllComponents('.switch').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.picker').forEach(element => {
+        element.refreshStatus()
+      })
+      this.selectAllComponents('.input').forEach(element => {
+        element.refreshStatus()
+      })
+    })
   },
 
   /**
