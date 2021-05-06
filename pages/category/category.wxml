@@ -1,10 +1,11 @@
 <!--pages/category/category.wxml-->
 <view class="category_Container2">
-  <view>
-    <view class="category_title"><text >分类</text></view>
-    <view class="category_small_title">{{test_Lenth}}个分类</view>
+  <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+    <view class="head_title">
+      <text>分类</text>
+    </view>
+    <text class="head_subtitle">共{{10}}条数据</text>
   </view>
-
   <view wx:key="id" wx:for="{{test01.list01}}" data-xushu="{{index}}"
     style="background-color:{{test01.test_Color2}} ;height:{{height_Array[index].height}};" class="category_Card"
     bindtap="zhankai">

@@ -1,9 +1,11 @@
 {
   "pages": [
     "pages/logincheck/logincheck",
-    "pages/account/account",
     "pages/index/index",
     "pages/category/category",
+    "pages/account/account",
+    "pages/note/note",
+    "pages/todo/todo",
     "pages/guide/guide"
   ],
   "window": {
@@ -32,6 +34,8 @@
   "resizable": true,
   "usingComponents": {
     "custom-tab-bar": "/custom-tab-bar",
-    "md-switch": "/components/switch/switch"
+    "md-switch": "/components/switch/switch",
+    "md-picker": "/components/picker/picker",
+    "md-input": "/components/input/input"
   }
 }

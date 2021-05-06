@@ -69,6 +69,7 @@ Page({
     })
     //重新拉取配置
     this.setData({
+      useSidebar: app.globalData.useSidebar,
       pureTheme: app.globalData.pureTheme,
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),

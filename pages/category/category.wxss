@@ -7,7 +7,26 @@ page {
 
 .category_Container2 {
   flex-direction: column;
-  padding: 80rpx 65rpx 0 65rpx;
+  padding:40px 40rpx 0 40rpx;
+}
+
+.head{
+  height: 300rpx;
+  /* background: #000; */
+  display: flex;
+  flex-direction: column;
+}
+
+.head_title{
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.head_subtitle{
+  font-size: .8rem;
+  color: #666;
 }
 
 .category_title {

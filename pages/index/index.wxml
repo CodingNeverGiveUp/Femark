@@ -1,13 +1,13 @@
 <!--index.wxml-->
 <!-- 切换顶条 -->
-<view wx:if="{{!isPad}}" style="{{selectorStyle}}" class="page_selector">
+<view wx:if="{{!isPad}}" style="{{selectorStyle}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};" class="page_selector">
   <view class="page_selector_blank"></view>
-  <view class="page_selector_item" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sel1}};" bindtap="sel1"
+  <view class="page_selector_item" style="{{sel1}};" bindtap="sel1"
     hover-class="hover">
     <text class="material-icons icon">mode</text>
     <text class="text">笔记</text>
   </view>
-  <view class="page_selector_item" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sel2}};" bindtap="sel2"
+  <view class="page_selector_item" style="{{sel2}};" bindtap="sel2"
     hover-class="hover">
     <text class="material-icons icon">add_task</text>
     <text class="text">待办</text>
@@ -18,78 +18,74 @@
 
 <view class="container">
   <!-- 笔记 -->
-  <view class="{{isPad?'note_pad':'note'}}" wx:if="{{isPad == true || currentPage == 1}}">
-    <view class="{{isPad?'category_title_pad':'category_title'}}"><text>笔记</text></view>
-    <view class="{{isPad?'category_small_title_pad':'category_small_title'}}">{{test_Lenth}}个笔记</view>
-    <view class="hengpai">
-      <view class="account_box_1" style="width:50%;">
-        <view id="b1">
-          <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array01}}">
-            <view wx:if="{{1}}" class="picture" style=" background:url({{picture_path}}); background-size: 100% 100%;">
-              <!--如果没有图片就不显示-->
-              <view class="word_Tips">共{{}}张图片</view>
-            </view>
-            <view class="_box_1_nei" style="background-color:{{item.color}}">
-              {{item.real}}
-            </view>
-          </view>
-        </view>
-        <!--ss-->
+  <view class="note" wx:if="{{isPad == true || currentPage == 1}}">
+    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+      <view class="head_title" bindtap="showSelector">
+        <text>笔记</text>
+        <text class="material-icons">expand_more</text>
       </view>
-      <!--这是右边栏-->
-
-      <view class="account_box_2" style="width:50%;">
-        <view id="b2">
-          <!--这里加一个空view的目的是防止最外层的盒子会两边自动相等，如果不加的话会判定为两边高度相等-->
-          <view bindtap="switch_page" wx:key="id" wx:for="{{test.test_Array02}}" class="account_box_2">
-            <view wx:if="{{1}}" class="picture" style=" background:url({{}}); background-size: 100% 100%;">
-              <!--如果没有图片就不显示-->
-              <view class="word_Tips">共{{}}张图片</view>
-            </view>
-            <view class="_box_2_nei" style="background-color:{{item.color}}">
-              {{item.real}}
+      <text class="head_subtitle">共{{note.length}}条数据</text>
+    </view>
+    <view class="note_content">
+      <view id="note_left">
+        <view class="note_block" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};" hover-class="c_hover" bindtap="note" data-data="{{item}}">
+          <view wx:if="{{item.gallery.length != 0}}" class="note_image" style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+            <view class="note_image_tip">
+              <text>共{{item.gallery.length}}张图片</text>
             </view>
           </view>
+          <view class="note_text">
+            <view wx:if="{{item.heading!=null}}" class="note_title">{{item.heading}}</view>
+            <view class="note_sub">{{item.content}}</view>
+          </view>
         </view>
-        <!--ss-->
+      </view>
+      <view id="note_right">
+        <view class="note_block" wx:for="{{noteRight}}" wx:key="index" style="background:{{item.color}};" hover-class="c_hover" bindtap="note" data-data="{{item}}">
+          <view wx:if="{{item.gallery.length != 0}}" class="note_image" style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+            <view class="note_image_tip">
+              <text>共{{item.gallery.length}}张图片</text>
+            </view>
+          </view>
+          <view class="note_text">
+            <view wx:if="{{item.heading!=null}}" class="note_title">{{item.heading}}</view>
+            <view class="note_sub">{{item.content}}</view>
+          </view>
+        </view>
       </view>
     </view>
-    <button bindtap="showSelector">切换</button>
-    <button bindtap="addArray">点击添加用户</button>
-    <button bindtap="addNote">点击添加note</button>
-    <button bindtap="addTask">点击添加task</button>
-    <button bindtap="deleteTask">点击删除task</button>
-    <button bindtap="getTask">点击获得task</button>
-    <button bindtap="requestSubscribeMessage">点击获取订阅消息</button>
-    <button bindtap="sendOne">点击发送消息给单个用户</button>
   </view>
 
 
   <!-- 待办 -->
   <view class="todo" wx:if="{{isPad == true || currentPage == 2}}">
-    <view class="{{isPad?'head_pad':'head'}}">
-      <view class="{{isPad?'head_1_pad':'head_1'}}">
+    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+      <view class="head_title" bindtap="showSelector">
         <text>待办</text>
-        <!-- <text class="material-icons icon">view_headline</text> -->
+        <text class="material-icons">expand_more</text>
       </view>
-      <view class="{{isPad?'head_2_pad':'head_2'}}"><text>{{text_lenth}}个待办</text></view>
+      <text class="head_subtitle">共{{task.length}}条数据</text>
     </view>
-    <view class="divide"></view>
     <view class="main">
-      <view wx:for="{{text.list}}" wx:key="id">
-        <view class="{{isPad?'DBbox_pad':'DBbox'}}" style="background-color:{{item.color}};">
-          <view class="box_left">
+      <view wx:for="{{task}}" wx:key="index" bindtap="todo" hover-class="c_hover" data-data="{{item}}">
+        <view class="db_box">
+          <view class="box_left" style="background-color:{{item.color}};">
             <view class="month">{{item.month}}</view>
-            <view class="day">{{item.day}}</view>
+            <view class="day">{{item.date}}</view>
           </view>
           <view class="box_right">
-            <view class="topic">{{item.topic}}</view>
-            <view class="ddl">DDL  {{item.ddl}}</view>
+            <view class="box_right_bg" style="background-color:{{item.color}};"></view>
+            <view class="box_right_text">
+              <view class="topic">{{item.heading}}</view>
+              <view class="ddl">
+                <view wx:if="{{item.notification}}" class="material-icons" style="font-size:.8rem">notifications_active</view>
+                <text>{{item.time}}</text>
+              </view>
+            </view>
           </view>
         </view>
       </view>
     </view>
-    <button bindtap="showSelector">切换</button>
   </view>
 </view>
 

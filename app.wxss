@@ -1,6 +1,7 @@
 /**app.wxss**/
 page {
   background-color: #f1f1f1;
+  transition: background .2s ease-in-out;
 }
 
 .hover{

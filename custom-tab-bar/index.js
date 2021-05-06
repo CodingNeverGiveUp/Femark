@@ -121,19 +121,20 @@ Component({
         wx.switchTab({
           url: path,
         });
-      }, 250);
+      }, 500);
     },
     record() {
       if (app.globalData.isPad) {
         this.setData({
-          floatStyle: "transform: rotate(45deg);",
+          floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
         this.showDialog();
       } else {
         this.setData({
           mainStyle: "height:250px;",
-          floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;") + "transform: rotate(45deg);",
+          floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;"),
+          floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
       }
@@ -156,14 +157,77 @@ Component({
         this.setData({
           mainStyle: "",
           floatStyle: "",
+          floatAStyle: '',
           slide: false,
         })
         this.hideDialog();
       } else {
-        //测试
-        console.log(app.globalData.primaryColor)
+        if (!this.data.floatSelect) {
+          this.setData({
+            floatAStyle: "transform: rotate(135deg)",
+            floatBStyle: "bottom:80px;width:165px;",
+            floatCStyle: "bottom:150px;width:165px;",
+            floatSelect: true
+          })
+        } else {
+          this.setData({
+            floatAStyle: '',
+            floatBStyle: '',
+            floatCStyle: '',
+            floatSelect: false,
+          })
+        }
       }
     },
+
+    addNote() {
+      var that = this
+      wx.navigateTo({
+        url: '/pages/note/note',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
+        },
+        success(res) {
+          res.eventChannel.emit('addNote', {
+            edit: true,
+          })
+          that.setData({
+            floatAStyle: '',
+            floatBStyle: '',
+            floatCStyle: '',
+            floatSelect: false,
+          })
+        }
+      })
+    },
+
+    addTodo() {
+      var that = this
+      wx.navigateTo({
+        url: '/pages/todo/todo',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
+        },
+        success(res) {
+          res.eventChannel.emit('addNote', {
+            edit: true,
+          })
+          that.setData({
+            floatAStyle: '',
+            floatBStyle: '',
+            floatCStyle: '',
+            floatSelect: false,
+          })
+        }
+      })
+    },
+
     touchStart: function (e) {
       // console.log(e.touches[0].pageX)
       let sx = e.touches[0].pageX
@@ -194,7 +258,7 @@ Component({
         } else {
           this.setData({
             mainStyle: "height:250px;",
-            floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;") + "transform: rotate(45deg);",
+            floatStyle: (this.data.isPad ? "bottom:210px;" : this.data.useSidebar ? "bottom:210px;" : "bottom:275px;"),
             slide: true,
           })
         }

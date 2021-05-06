@@ -35,6 +35,11 @@
           "pathName": "pages/index/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/todo/todo",
+          "pathName": "pages/todo/todo",
+          "scene": null
         }
       ]
     }

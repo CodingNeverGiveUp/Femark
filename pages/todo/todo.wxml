@@ -1,0 +1,102 @@
+<!--pages/todo/todo.wxml-->
+
+<view class="scroll" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
+    upper-threshold="20" bindscroll="scroll">
+    <view class="main">
+      <!-- <form action="" method="post" bindsubmit="submit" bindreset="reset"> -->
+        <view class="heading">
+          <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
+            placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
+            bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
+          <view class="num" wx:if="{{edit}}">
+            <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
+          </view>
+        </view>
+        <view class="content" wx:if="{{!list}}" bindtap="contentTap">
+          <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
+            placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
+            confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
+          <view class="num" wx:if="{{edit}}">
+            <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
+          </view>
+        </view> 
+        <view class="list" wx:if="{{list}}">
+          <view class="list_item" style="top:{{item.top}}px;{{item.dragging?'box-shadow: 0 0 10rpx #bbb;z-index:999;':''}}{{listDragging&&!item.dragging?'transition:top .2s ease,box-shadow .2s ease-in-out;':''}}" wx:for="{{listData}}" wx:key="index" data-index="{{index}}">
+            <view class="list_item_left">
+              <view wx:if="{{edit}}" class="icon material-icons" hover-class="hover" catchtouchstart="dragStart" catchtouchmove="dragMove" catchtouchend="dragEnd" data-index="{{index}}"><text>drag_indicator</text></view>
+              <view class="icon material-icons" hover-class="hover" bindtap="listSwitch" data-index="{{index}}">
+                <text>{{item.finished?'check_box':'check_box_outline_blank'}}</text></view>
+              <input type="text" value="{{item.content}}" maxlength="20" bindinput="listInput" focus="true" data-index="{{index}}" disabled="{{!edit}}"></input>
+            </view>
+            <view wx:if="{{edit}}" class="list_item_right">
+              <view class="icon material-icons" hover-class="hover" bindtap="listDeleteItem" data-index="{{index}}"><text>close</text></view>
+            </view>
+          </view>
+          <view class="list_add_item" hover-class="hover" bindtap="listAddItem">
+            <view class="icon material-icons" hover-class="hover"><text>add</text></view>
+            <text>新增清单项</text>
+          </view>
+        </view>
+        <view class="subtitle" style="color:{{primaryColor}};">
+          <text>配置项</text>
+        </view>
+        <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" disabled="{{!edit}}"
+          mode="date" data-id="notificationDate" result="{{notificationDate}}">
+          <text slot="title">目标日期</text>
+          <text slot="subtitle">预期完成日期</text>
+        </md-picker>
+        <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" disabled="{{!edit}}"
+          mode="time" data-id="notificationTime" result="{{notificationTime}}">
+          <text slot="title">目标时间</text>
+          <text slot="subtitle">预期完成时间</text>
+        </md-picker>
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{notification}}" data-id="notification"
+          disabled="{{!edit}}">
+          <text slot="title">提醒</text>
+          <text slot="subtitle">于目标时间发送通知\n需要获取通知权限</text>
+        </md-switch>
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{autoDelete}}" data-id="autoDelete" disabled="{{!edit}}">
+          <text slot="title">自清理</text>
+          <text slot="subtitle">过期一段时间后自动删除</text>
+        </md-switch>
+        <md-picker class="picker" wx:if="{{autoDelete}}" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{autoDeleteDelayData}}" selected='{{autoDeleteDelay - 1}}' disabled="{{!edit}}"
+          data-id="autoDeleteDelay">
+          <text slot="title">自清理执行时间</text>
+          <text slot="subtitle">清理延后时间（天）</text>
+        </md-picker>
+        <!-- <view class="blank"></view> -->
+      <!-- </form> -->
+    </view>
+  </scroll-view>
+</view>
+
+<view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{headbarStyle}}">
+  <view class="icon material-icons" hover-class="hover" bindtap="back">
+    <text>arrow_back</text>
+  </view>
+</view>
+<view class="bottom_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+  <view class="icon material-icons" hover-class="hover" bindtap="listTap">
+    <text>{{list?'notes':'check_box'}}</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>share</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover" bindtap="delete">
+    <text>delete</text>
+  </view>
+</view>
+<view class="float" style="{{floatStyle}}" bindtap="floatTap">
+  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+    <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text></view>
+  </view>
+</view>
+<view class="snackbar" style="{{snackbarStyle}}">
+  <text>{{snackbarContent}}</text>
+</view>

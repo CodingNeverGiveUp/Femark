@@ -1,0 +1,14 @@
+<!--components/input/input.wxml-->
+<view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindtap="_onTap" hover-class="hover">
+    <view class="text">
+      <view class="title">
+        <slot name="title"></slot>
+      </view>
+      <view class="subtitle">
+        <slot name="subtitle"></slot>
+      </view>
+    </view>
+    <view class="input" style="{{inputStyle}}">
+      <text>{{result}}</text>
+    </view>
+  </view>

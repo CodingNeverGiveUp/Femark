@@ -19,9 +19,11 @@
     </view>
   </view>
 </view>
+
 <view class="sidebar" style="{{sidebarStyle}};{{useSidebar?'':isPad?'':'display:none;'}}">
   <view class="head">
-    <view class="material-icons menu_icon" style="{{currentPage==4?'color:#fff;':''}}--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover"
+    <view class="material-icons menu_icon"
+      style="{{currentPage==4?'color:#fff;':''}}--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="t_hover"
       bindtap="menuTap"><text>menu</text></view>
     <view class="head_bar">
       <text style="font-size:1.2rem;">Femark</text>
@@ -44,8 +46,9 @@
     <view class="sec_blank"></view>
   </view>
   <view wx:if="{{isPad}}">
-    <view class="sec" data-path="/pages/index/index" data-page="1" bindtap="sideSwitch" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld1}}" data-path="/pages/index/index"
-      bindtap="sideSwitch" hover-class="t_hover">
+    <view class="sec" data-path="/pages/index/index" data-page="1" bindtap="sideSwitch"
+      style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{sld1}}" data-path="/pages/index/index" bindtap="sideSwitch"
+      hover-class="t_hover">
       <view class="sec_icon material-icons"><text>mode</text></view>
       <view class="sec_name"><text>记事</text></view>
     </view>
@@ -62,10 +65,34 @@
   </view>
 </view>
 <view style="{{maskVisible}}{{maskStyle}}" class="mask" bindtap="back"></view>
-<view wx:if="{{currentPage==4?false:true}}" class="float {{isPad?'h_float':useSidebar?'h_float':''}}" style="{{floatStyle}}" bindtap="floatTap"
-  bindlongpress="record">
-  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="t_hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+
+<view wx:if="{{currentPage==4?false:true}}" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}"
+  class="float_container {{isPad?'h_float':useSidebar?'h_float':''}}">
+  <view class="float_selection" style="{{floatCStyle}}">
+    <view class="float_selection_text" style="{{floatTextStyle}}">
+      <text>新建待办</text>
+    </view>
+    <view class="float_selection_bg" bindtap="addTodo">
+      <view class="float_selection_color" hover-class="t_hover">
+        <view class="material-icons" style="color:{{primaryColor}};"><text>add_task</text></view>
+      </view>
+    </view>
+  </view>
+  <view class="float_selection" style="{{floatBStyle}}">
+    <view class="float_selection_text" style="{{floatTextStyle}}">
+      <text>新建笔记</text>
+    </view>
+    <view class="float_selection_bg" bindtap="addNote">
+      <view class="float_selection_color" hover-class="t_hover">
+        <view class="material-icons" style="color:{{primaryColor}};"><text>mode</text></view>
+      </view>
+    </view>
+  </view>
+  <view class="float" style="{{floatAStyle}}" bindtap="floatTap" bindlongpress="record">
+    <view class="float_color" hover-class="t_hover">
+      <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+    </view>
   </view>
 </view>
+
 <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view>

@@ -6,7 +6,7 @@
     {
       "name": "sendMessagerTimer",
       "type": "timer",
-      "config": "*/1 * * * * * *"
+      "config": "0 * * * * * *"
     }
   ]
 }

@@ -74,23 +74,26 @@ Page({
         title: '处理中',
       })
       database.addArray(this.data.profile)
-      .then(()=>{
-        wx.hideLoading();
-        this.setData({
-          page: 3,
-          page2: "top:-100vh",
-          float: "bottom:20vh;right:50vw;transform:translate(50%,50%)"
+        .then(() => {
+          wx.hideLoading();
+          this.setData({
+            page: 3,
+            page2: "top:-100vh",
+            float: "bottom:20vh;right:50vw;transform:translate(50%,50%)"
+          })
         })
-      })
-      .catch(()=>{
-        wx.hideLoading()
-        wx.showToast({
-          title: '网络错误',
-          icon: 'error'
+        .catch(() => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '网络错误',
+            icon: 'error'
+          })
         })
-      })
+      app.globalData.primaryColor = this.data.profile.primaryColor;
+      app.globalData.pureTheme = this.data.profile.pureTheme;
+      app.globalData.useSidebar = this.data.profile.useSidebar;
+
     } else if (this.data.page == 3 && this.data.buttonContent == "chevron_right") {
-      console.log("b")
       wx.switchTab({
         url: '/pages/index/index',
       })
@@ -131,9 +134,15 @@ Page({
 
   switch (e) {
     // console.log(e);
-    this.setData({
-      ['profile.useSidebar']: e.detail.value,
-    })
+    if (e.currentTarget.dataset.id == 'markdownByDefault') {
+      this.setData({
+        ['profile.markdownByDefault']: e.detail.value,
+      })
+    } else if (e.currentTarget.dataset.id == 'useSidebar') {
+      this.setData({
+        ['profile.useSidebar']: e.detail.value,
+      })
+    }
   },
 
   themeColorful() {

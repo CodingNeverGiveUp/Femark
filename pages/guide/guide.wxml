@@ -79,9 +79,15 @@
       <text style="color:{{primaryColor}};">行为</text>
     </view>
     <view class="switch">
-      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}">
+      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" data-id="useSidebar">
         <text slot="title">强制启用侧栏</text>
         <text slot="subtitle">忽略媒体查询，在所有设备上启用侧栏，禁用底栏</text>
+      </md-switch>
+    </view>
+    <view class="switch">
+      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="true" data-id="markdownByDefault">
+        <text slot="title">默认使用 Markdown</text>
+        <text slot="subtitle">Markdown 作为新建笔记默认格式</text>
       </md-switch>
     </view>
   </view>
