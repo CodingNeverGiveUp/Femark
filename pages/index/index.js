@@ -333,6 +333,7 @@ Page({
 
   note(e) {
     var that = this
+    let tabbar = this.getTabBar()
     console.log(e)
     if (!e.currentTarget.dataset.data.encrypt) {
       wx.navigateTo({
@@ -351,7 +352,7 @@ Page({
         }
       })
     } else {
-
+      tabbar.popupPassword(e.currentTarget.dataset.data)
     }
   },
 

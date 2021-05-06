@@ -115,6 +115,6 @@
       <view class="content_placeholder" style="{{contentPlaceholderStyle}}">密码</view>
     </view>
     <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover">使用指纹</view>
-    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};">确认</view>
+    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="passwordConfirm">确认</view>
   </view>
 </page-container>

@@ -233,7 +233,7 @@ Component({
 
     popupPassword(e){
       this.setData({
-        correctPassword: e,
+        data: e,
         popupPassword: true,
       })
     },
@@ -267,8 +267,27 @@ Component({
     },
 
     passwordConfirm(){
-      if(this.data.password == this.data.correctPassword){
-        
+      var that = this
+      if(this.data.password == this.data.data.password){
+        wx.navigateTo({
+          url: '/pages/note/note',
+          events: {
+            // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+            acceptDataFromOpenedPage: function (data) {
+              console.log(data)
+            },
+          },
+          success(res) {
+            res.eventChannel.emit('toNote', {
+              edit: false,
+              data: that.data.data
+            })
+          }
+        })
+      }else{
+        this.setData({
+          contentInputStyle: `border: 1px solid #ff5252;`
+        })
       }
     },
 
