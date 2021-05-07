@@ -282,6 +282,7 @@ Component({
     },
 
     encryptToNote() {
+      var that = this
       wx.navigateTo({
         url: '/pages/note/note',
         events: {
@@ -308,6 +309,9 @@ Component({
       var that = this
       if (this.data.password == this.data.data.password) {
         this.encryptToNote()
+        this.setData({
+          password: '',
+        })
       } else {
         this.setData({
           contentInputStyle: `border: 1px solid #ff5252;`

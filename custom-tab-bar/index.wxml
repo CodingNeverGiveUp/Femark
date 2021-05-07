@@ -111,7 +111,7 @@
     <view class="content_title">需要身份验证</view>
     <view class="content_subtitle">输入密码以继续访问</view>
     <view class="content_input" style="{{contentInputStyle}}">
-      <input type="password" name="" id="password" bindfocus="passwordFocus" bindinput="passwordInput" bindblur="passwordBlur"></input>
+      <input class="input" type="password" name="" id="password" bindfocus="passwordFocus" bindinput="passwordInput" bindblur="passwordBlur"></input>
       <view class="content_placeholder" style="{{contentPlaceholderStyle}}">密码</view>
     </view>
     <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="passwordSwitch">使用指纹</view>

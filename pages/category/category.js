@@ -155,23 +155,48 @@ Page({
 
   },
 
-  zhankai: function (e) {
-    var n = e.currentTarget.dataset.xushu
-    let tip = this.data.height_Array[n].tips
-    let content_len = this.data.test01.list01[n].real_Content.length
-    let gao = (content_len + 1) * 150
-    let str = 'height_Array' + '[' + n + ']' + '.height'
-    let str2 = 'height_Array' + '[' + n + ']' + '.tips'
-    if (tip > 0) {
-      this.setData({
-        [str]: gao + 'rpx',
-        [str2]: -1
+  // zhankai: function (e) {
+  //   var n = e.currentTarget.dataset.xushu
+  //   let tip = this.data.height_Array[n].tips
+  //   let content_len = this.data.test01.list01[n].real_Content.length
+  //   let gao = (content_len + 1) * 150
+  //   let str = 'height_Array' + '[' + n + ']' + '.height'
+  //   let str2 = 'height_Array' + '[' + n + ']' + '.tips'
+  //   if (tip > 0) {
+  //     this.setData({
+  //       [str]: gao + 'rpx',
+  //       [str2]: -1
+  //     })
+  //   } else {
+  //     this.setData({
+  //       [str]: '150rpx',
+  //       [str2]: 1
+  //     })
+  //   }
+  // },
+
+  note(e) {
+    var that = this
+    let tabbar = this.getTabBar()
+    console.log(e)
+    if (!e.currentTarget.dataset.data.encrypt) {
+      wx.navigateTo({
+        url: '/pages/note/note',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
+        },
+        success(res) {
+          res.eventChannel.emit('toNote', {
+            edit: false,
+            data: e.currentTarget.dataset.data
+          })
+        }
       })
     } else {
-      this.setData({
-        [str]: '150rpx',
-        [str2]: 1
-      })
+      tabbar.popupPassword(e.currentTarget.dataset.data)
     }
   },
 
@@ -193,6 +218,7 @@ Page({
         }
       })
       result.push({
+        color: app.getRandomColor(),
         data: cla,
         name: element,
         height: 150 + 60 * cla.length,

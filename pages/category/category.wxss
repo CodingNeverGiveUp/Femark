@@ -9,6 +9,10 @@ page {
   background: var(--rgbaprimaryColor--)!important;
 }
 
+.c_hover{
+  opacity: .9;
+}
+
 .icon {
   width: 40px;
   height: 40px;
@@ -18,7 +22,7 @@ page {
   justify-content: center;
   align-items: center;
   transition: background .2s ease-in-out;
-  color: #ccc;
+  color: #fff;
 }
 
 .category_Container2 {
@@ -130,7 +134,7 @@ page {
   justify-content: space-between;
   align-items: flex-end;
   padding: 0 40rpx;
-  transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out, opacity .2s ease-in-out;
 }
 
 .category_box_text{
@@ -142,11 +146,12 @@ page {
 .category_box .title{
   font-size: 1.4rem;
   margin-bottom: 10px;
+  color: #fff;
 }
 
 .category_box .subtitle{
   font-size: .8rem;
-  color: #666;
+  color: #fff;
   margin-bottom: 15px;
 }
 
@@ -162,6 +167,8 @@ page {
   padding: 0 50rpx;
   transition: background .2s ease-in-out;
   border-top: #ddd 1px solid;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .category_detail_box .subtitle{

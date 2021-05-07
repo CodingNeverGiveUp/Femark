@@ -95,7 +95,7 @@
   transition: border .2s ease-in-out;
 }
 
-.content_input input{
+.content_input .input{
   position: absolute;
   top: 0;
   height: 100%;
