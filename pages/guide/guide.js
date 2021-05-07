@@ -20,6 +20,7 @@ Page({
       pureTheme: false,
       useSidebar: false,
       primaryColor: "#4285f4",
+      categoryData: ["默认", "学习", "工作", "生活"],
     },
   },
 

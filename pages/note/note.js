@@ -536,6 +536,7 @@ Page({
       pureTheme: app.globalData.pureTheme,
       isPad: app.globalData.isPad,
       primaryColor: app.globalData.primaryColor,
+      categoryData: app.globalData.categoryData,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     })
     const eventChannel = this.getOpenerEventChannel();

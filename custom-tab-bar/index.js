@@ -25,39 +25,39 @@ Component({
     fingerprintContent: "请触摸指纹传感器",
   },
   methods: {
-    showDialog() {
-      this.setData({
-        maskVisible: "display:block;",
-        dialogVisible: "display:block;",
-      })
-      setTimeout(() => {
-        this.setData({
-          maskStyle: "opacity:.5;",
-          dialogStyle: "transform:scale(1,1);",
-        })
-      }, 10)
-    },
-    hideDialog() {
-      this.setData({
-        maskStyle: "",
-        dialogStyle: "",
-      })
-      setTimeout(() => {
-        this.setData({
-          maskVisible: "display:none;",
-          dialogVisible: "display:none;",
-        })
-      }, 200)
-    },
-    back() {
-      this.setData({
-        mainStyle: "",
-        floatStyle: "",
-        sidebarStyle: "",
-        slide: false,
-      })
-      this.hideDialog();
-    },
+    // showDialog() {
+    //   this.setData({
+    //     maskVisible: "display:block;",
+    //     dialogVisible: "display:block;",
+    //   })
+    //   setTimeout(() => {
+    //     this.setData({
+    //       maskStyle: "opacity:.5;",
+    //       dialogStyle: "transform:scale(1,1);",
+    //     })
+    //   }, 10)
+    // },
+    // hideDialog() {
+    //   this.setData({
+    //     maskStyle: "",
+    //     dialogStyle: "",
+    //   })
+    //   setTimeout(() => {
+    //     this.setData({
+    //       maskVisible: "display:none;",
+    //       dialogVisible: "display:none;",
+    //     })
+    //   }, 200)
+    // },
+    // back() {
+    //   this.setData({
+    //     mainStyle: "",
+    //     floatStyle: "",
+    //     sidebarStyle: "",
+    //     slide: false,
+    //   })
+    //   this.hideDialog();
+    // },
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
       const page = Number(e.currentTarget.dataset.page);
@@ -138,7 +138,7 @@ Component({
       } else {
         this.setData({
           // mainStyle: "height:300px;",
-          floatStyle: (this.data.isPad ? "bottom:260px;" : this.data.useSidebar ? "bottom:260px;" : "bottom:325px;"),
+          // floatStyle: (this.data.isPad ? "bottom:260px;" : this.data.useSidebar ? "bottom:260px;" : "bottom:325px;"),
           floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
@@ -165,7 +165,7 @@ Component({
           floatAStyle: '',
           slide: false,
         })
-        this.hideDialog();
+        // this.hideDialog();
       } else {
         if (!this.data.floatSelect) {
           this.setData({

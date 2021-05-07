@@ -82,6 +82,7 @@ App({
               this.globalData.userInfo.nickName = res.data[0].profile.nickName;
               this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
               this.globalData.primaryColor = res.data[0].profile.primaryColor;
+              this.globalData.categoryData = res.data[0].profile.categoryData;
               //提前拉取及预处理笔记待办数据
               res.data[0].note.forEach((element, index) => {
                 element.color = this.getRandomColor()
@@ -276,6 +277,7 @@ App({
         that.globalData.userInfo.nickName = db.data.profile.nickName;
         that.globalData.userInfo.avatarUrl = db.data.profile.avatarUrl;
         that.globalData.primaryColor = db.data.profile.primaryColor;
+        that.globalData.categoryData = db.data.profile.categoryData;
         that.globalData.note = db.data.note;
         that.globalData.task = db.data.task;
         resort()
@@ -382,6 +384,6 @@ App({
     hitokoto: false,
     bing: true,
     pureTheme: false,
-    categoryData: ["默认", "学习", "工作", "生活"],
+    categoryData: [],
   }
 })
