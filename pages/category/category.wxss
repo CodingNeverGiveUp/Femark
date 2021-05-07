@@ -25,9 +25,9 @@ page {
   color: #fff;
 }
 
-.category_Container2 {
+.category_container {
   flex-direction: column;
-  padding:40px 40rpx 0 40rpx;
+  padding:40px 40rpx 100px 40rpx;
 }
 
 .head{

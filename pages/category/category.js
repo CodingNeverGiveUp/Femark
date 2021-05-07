@@ -80,8 +80,7 @@ Page({
       task: app.globalData.task,
       categoryData: app.globalData.categoryData,
     })
-
-    //测试
+    //整理
     this.sort()
   },
 
@@ -138,7 +137,40 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    app.refresh().then(res => {
+      //重新拉取侧栏
+      let tabbar = this.getTabBar();
+      tabbar.setData({
+        useSidebar: app.globalData.useSidebar,
+        primaryColor: app.globalData.primaryColor,
+        rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      })
+      //重新拉取配置
+      this.setData({
+        useSidebar: app.globalData.useSidebar,
+        pureTheme: app.globalData.pureTheme,
+        primaryColor: app.globalData.primaryColor,
+        rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      })
+      //数据拉取
+      this.setData({
+        note: app.globalData.note,
+        task: app.globalData.task,
+        categoryData: app.globalData.categoryData,
+      })
+      //整理
+      this.sort()
+      wx.stopPullDownRefresh()
+      wx.showToast({
+        title: '数据已更新',
+      })
+    }).catch(err => {
+      wx.stopPullDownRefresh()
+      wx.showToast({
+        title: '网络错误',
+        icon: "error"
+      })
+    })
   },
 
   /**
