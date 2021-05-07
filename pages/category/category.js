@@ -175,17 +175,29 @@ Page({
     }
   },
 
+  expand(e) {
+    let index = e.currentTarget.dataset.index
+    this.setData({
+      [`collatedData[${index}].triggered`]: this.data.collatedData[index].triggered ? false : true,
+    })
+  },
+
   sort() {
     var that = this
     var result = []
-    this.data.categoryData.forEach((element, index)=>{
+    this.data.categoryData.forEach((element, index) => {
       let cla = []
-      this.data.note.forEach(innerElement=>{
-        if(innerElement.category == index){
+      this.data.note.forEach(innerElement => {
+        if (innerElement.category == index) {
           cla.push(innerElement)
         }
       })
-      result.push(cla)
+      result.push({
+        data: cla,
+        name: element,
+        height: 150 + 60 * cla.length,
+        triggered: false,
+      })
     })
     this.setData({
       collatedData: result

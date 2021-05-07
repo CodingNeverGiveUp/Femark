@@ -4,7 +4,7 @@
     <view class="head_title">
       <text>分类</text>
     </view>
-    <text class="head_subtitle">共{{10}}条数据</text>
+    <text class="head_subtitle">共{{categoryData.length}}个分组</text>
   </view>
 
   <!-- <view wx:key="id" wx:for="{{test01.list01}}" data-xushu="{{index}}"
@@ -20,18 +20,18 @@
   </view>
   <view style="height:200rpx"></view> -->
 
-  <view class="category" wx:for="{{categoryData}}" wx:key="index">
-    <view class="category_box">
+  <view class="category" wx:for="{{collatedData}}" wx:key="index" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{item.triggered?'':'height:150px!important;'}}height:{{item.height}}px;">
+    <view class="category_box" bindtap="expand" data-index="{{index}}" hover-class="hover">
       <view class="category_box_text">
-        <text class="title">{{item}}</text>
-        <text class="subtitle">共{{collatedData[index].length}}条数据</text>
+        <view class="title">{{item.name}}</view>
+        <view class="subtitle">共{{item.data.length}}条数据</view>
       </view>
-      <view class="material-icons">mode</view>
+      <view class="material-icons icon" hover-class="hover">mode</view>
     </view>
     <view class="category_detail">
-      <view class="category_detail_box" wx:for="{{collatedData[index]}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index">
-        <text class="title">{{innerItem.heading}}</text>
-        <text class="subtitle">{{innerItem.content}}</text>
+      <view class="category_detail_box" hover-class="hover" wx:for="{{item.data}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index">
+        <view class="title">{{innerItem.heading}}\n</view>
+        <view class="subtitle">{{innerItem.content}}</view>
       </view>
     </view>
   </view>
