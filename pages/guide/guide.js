@@ -23,6 +23,9 @@ Page({
       categoryData: ["默认", "学习", "工作", "生活"],
       bing: true,
       hitokoto: false,
+      markdownByDefault: true,
+      markdownPreview: true,
+      markdownPreviewDelay: 2,
     },
   },
 
@@ -184,6 +187,9 @@ Page({
         themeColorful: `border:${color} solid 2px;`,
       })
     }
+    this.selectAllComponents('.switch').forEach(element => {
+      element.refreshStatus()
+    })
   },
 
   /**

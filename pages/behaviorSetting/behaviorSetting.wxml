@@ -1,2 +1,38 @@
 <!--pages/behaviorSetting/behaviorSetting.wxml-->
-<text>pages/behaviorSetting/behaviorSetting.wxml</text>
+<scroll-view class="scroll" scroll-y="true" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
+  bindscroll="scroll" enable-flex="true">
+  <view class="main" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>笔记</text>
+    </view>
+    <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+      rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{markdownByDefault}}" data-id="markdownByDefault">
+      <text slot="title">默认使用 Markdown</text>
+      <text slot="subtitle">Markdown 作为新建笔记默认格式</text>
+    </md-switch>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>Markdown</text>
+    </view>
+    <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+      selected="{{markdownPreview}}" data-id="markdownPreview">
+      <text slot="title">同步刷新</text>
+      <text slot="subtitle">自动更新 Markdown 预览</text>
+    </md-switch>
+    <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+      dataset="{{markdownPreviewDelayData}}" selected='{{markdownPreviewDelay}}'
+      data-id="markdownPreviewDelay">
+      <text slot="title">刷新延时</text>
+      <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
+    </md-picker>
+    <!-- <view class="subtitle" style="color:#ff5252;">
+      <text>危险区</text>
+    </view> -->
+  </view>
+</scroll-view>
+
+<view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{headbarStyle}}">
+  <view class="icon material-icons" hover-class="hover" bindtap="back">
+    <text>arrow_back</text>
+  </view>
+  <text style="margin-left:10px;">行为</text>
+</view>

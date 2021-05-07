@@ -29,14 +29,16 @@ Page({
             title: '操作进行中',
           })
           wx.cloud.database().collection('note').doc(app.globalData.id).update({
-            data:{
-              ['profile.primaryColor']: this.data.primaryColor,
-              ['profile.pureTheme']: this.data.pureTheme,
-              ['profile.useSidebar']: this.data.useSidebar,
-              ['profile.bing']: this.data.bing,
-              ['profile.hitokoto']: this.data.hitokoto,
+            data: {
+              profile: {
+                primaryColor: this.data.primaryColor,
+                pureTheme: this.data.pureTheme,
+                useSidebar: this.data.useSidebar,
+                bing: this.data.bing,
+                hitokoto: this.data.hitokoto,
+              }
             }
-          }).then(res=>{
+          }).then(res => {
             app.globalData.primaryColor = this.data.primaryColor;
             app.globalData.pureTheme = this.data.pureTheme;
             app.globalData.useSidebar = this.data.useSidebar;
@@ -46,11 +48,15 @@ Page({
               title: '已保存',
               duration: 1000,
             })
-            setTimeout(()=>{
+            setTimeout(() => {
               wx.navigateBack({
                 delta: 1,
               })
-            },1000)
+            }, 1000)
+          })
+        } else {
+          wx.navigateBack({
+            delta: 1,
           })
         }
       })
@@ -116,6 +122,9 @@ Page({
         themeColorful: `border:${color} solid 2px;`,
       })
     }
+    this.selectAllComponents('.switch').forEach(element => {
+      element.refreshStatus()
+    })
   },
 
   toUpper() {
@@ -169,9 +178,9 @@ Page({
       bing: app.globalData.bing,
       hitokoto: app.globalData.hitokoto,
     })
-    if(this.data.pureTheme){
+    if (this.data.pureTheme) {
       this.themePure()
-    }else{
+    } else {
       this.themeColorful()
     }
     this.selectAllComponents('.switch').forEach(element => {
