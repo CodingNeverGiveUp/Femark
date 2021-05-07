@@ -29,7 +29,8 @@
       <view class="material-icons icon" hover-class="hover">{{item.triggered?'expand_less':'expand_more'}}</view>
     </view>
     <view class="category_detail">
-      <view class="category_detail_box" hover-class="hover" wx:for="{{item.data}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index" bindtap="note" data-data="{{innerItem}}">
+      <view class="category_detail_bg" style="background:{{item.color}};"></view>
+      <view class="category_detail_box" hover-class="c_hover" wx:for="{{item.data}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index" bindtap="note" data-data="{{innerItem}}">
         <view class="title">{{innerItem.encrypt?'受保护的内容':innerItem.heading}}\n</view>
         <view class="subtitle">{{innerItem.encrypt?'访问需要身份验证':innerItem.content}}</view>
       </view>

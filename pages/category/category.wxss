@@ -116,7 +116,6 @@ page {
 }
 
 .category{
-  background: #fff;
   border-radius: 10px;
   box-shadow: 0 0rpx 10rpx #bbb;
   overflow: hidden;
@@ -159,20 +158,40 @@ page {
   margin-bottom: 15px;
 }
 
+.category_detail{
+  position: relative;
+}
+
+.category_detail_bg{
+  position: absolute;
+  filter: brightness(80%);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
 .category_detail_box{
   height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 0 50rpx;
-  transition: background .2s ease-in-out;
-  border-top: #ddd 1px solid;
+  transition: background .2s ease-in-out, opacity ,2s ease-in-out;
+  border-top: #aaa 1px solid;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.category_detail_box .title{
+  color: #fff;
+  overflow: hidden;
+}
+
 .category_detail_box .subtitle{
-  color: #666;
+  color: #fff;
+  overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
