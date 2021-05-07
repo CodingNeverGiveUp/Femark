@@ -74,6 +74,15 @@ Page({
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     })
+    //数据拉取
+    this.setData({
+      note: app.globalData.note,
+      task: app.globalData.task,
+      categoryData: app.globalData.categoryData,
+    })
+
+    //测试
+    this.sort()
   },
 
   /**
@@ -165,4 +174,22 @@ Page({
       })
     }
   },
+
+  sort() {
+    var that = this
+    var result = []
+    this.data.categoryData.forEach((element, index)=>{
+      let cla = []
+      this.data.note.forEach(innerElement=>{
+        if(innerElement.category == index){
+          cla.push(innerElement)
+        }
+      })
+      result.push(cla)
+    })
+    this.setData({
+      collatedData: result
+    })
+  },
+
 })

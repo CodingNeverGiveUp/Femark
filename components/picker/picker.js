@@ -74,7 +74,7 @@ Component({
       var detail = {
         value: this.data.result,
         valueKey: this.data.resultKey,
-        disabled: this.data.disabled
+        disabled: this.data.disabled,
       };
       var option = {};
       this.triggerEvent('pick', detail, option);

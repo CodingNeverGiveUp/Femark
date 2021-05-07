@@ -6,7 +6,8 @@
     </view>
     <text class="head_subtitle">共{{10}}条数据</text>
   </view>
-  <view wx:key="id" wx:for="{{test01.list01}}" data-xushu="{{index}}"
+
+  <!-- <view wx:key="id" wx:for="{{test01.list01}}" data-xushu="{{index}}"
     style="background-color:{{test01.test_Color2}} ;height:{{height_Array[index].height}};" class="category_Card"
     bindtap="zhankai">
     <view class="card_Category1">
@@ -17,5 +18,21 @@
       {{item2.content}}
     </view>
   </view>
-  <view style="height:200rpx"></view>
+  <view style="height:200rpx"></view> -->
+
+  <view class="category" wx:for="{{categoryData}}" wx:key="index">
+    <view class="category_box">
+      <view class="category_box_text">
+        <text class="title">{{item}}</text>
+        <text class="subtitle">共{{collatedData[index].length}}条数据</text>
+      </view>
+      <view class="material-icons">mode</view>
+    </view>
+    <view class="category_detail">
+      <view class="category_detail_box" wx:for="{{collatedData[index]}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index">
+        <text class="title">{{innerItem.heading}}</text>
+        <text class="subtitle">{{innerItem.content}}</text>
+      </view>
+    </view>
+  </view>
 </view>
