@@ -1,0 +1,94 @@
+<!--pages/themeSetting/themeSetting.wxml-->
+<scroll-view class="scroll" scroll-y="true" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
+  bindscroll="scroll" enable-flex="true">
+  <view class="main" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>主题</text>
+    </view>
+    <view class="themes">
+      <view class="theme">
+        <view class="theme_color" hover-class="hover" style="{{themeColorful}}" bindtap="themeColorful">
+          <text>缤纷</text>
+          <view class='s'>
+            <view class="t"></view>
+            <view class="a" style="background:#97756b;"></view>
+            <view class="b" style="background:#176095;"></view>
+            <view class="c" style="background:#ffbc66;"></view>
+            <view class="d" style="background:#20a674;"></view>
+          </view>
+        </view>
+      </view>
+      <view class="theme">
+        <view class="theme_color" hover-class="hover" style="{{themePure}}" bindtap="themePure">
+          <text>纯粹</text>
+          <view class='s'>
+            <view class="t"></view>
+            <view class="a"></view>
+            <view class="b"></view>
+            <view class="c"></view>
+            <view class="d"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>强调色</text>
+    </view>
+    <view class="color_picker">
+      <view class="colors">
+        <view class="color" style="top:15px;left:25px" hover-class="hover" bindtap="colorSelect" data-color="#4285f4">
+          <view class="color_c" style="background:#4285f4"></view>
+        </view>
+        <view class="color" style="top:15px;left:75px" hover-class="hover" bindtap="colorSelect" data-color="#ff5252">
+          <view class="color_c" style="background:#ff5252"></view>
+        </view>
+        <view class="color" style="top:15px;left:125px" hover-class="hover" bindtap="colorSelect" data-color="#ffab40">
+          <view class="color_c" style="background:#ffab40"></view>
+        </view>
+        <view class="color" style="top:15px;left:175px" hover-class="hover" bindtap="colorSelect" data-color="#ffeb3b">
+          <view class="color_c" style="background:#ffeb3b"></view>
+        </view>
+        <view class="color" style="top:65px;left:25px" hover-class="hover" bindtap="colorSelect" data-color="#795548">
+          <view class="color_c" style="background:#795548"></view>
+        </view>
+        <view class="color" style="top:65px;left:75px" hover-class="hover" bindtap="colorSelect" data-color="#009688">
+          <view class="color_c" style="background:#009688"></view>
+        </view>
+        <view class="color" style="top:65px;left:125px" hover-class="hover" bindtap="colorSelect" data-color="#7c4dff">
+          <view class="color_c" style="background:#7c4dff"></view>
+        </view>
+        <view class="color" style="top:65px;left:175px" hover-class="hover" bindtap="colorSelect" data-color="#ff6e40">
+          <view class="color_c" style="background:#ff6e40"></view>
+        </view>
+      </view>
+    </view>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>全局</text>
+    </view>
+    <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+      rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{useSidebar}}" data-id="useSidebar">
+      <text slot="title">强制启用侧栏</text>
+      <text slot="subtitle">忽略媒体查询，在所有设备上启用侧栏，禁用底栏</text>
+    </md-switch>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>账户页</text>
+    </view>
+    <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+      rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{bing}}" data-id="bing">
+      <text slot="title">必应 - 每日一图</text>
+      <text slot="subtitle">自动获取必应每日壁纸作为背景</text>
+    </md-switch>
+    <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+      rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{hitokoto}}" data-id="hitokoto">
+      <text slot="title">Hitokoto - 一言</text>
+      <text slot="subtitle">自动获取 Hitokoto 一言语句</text>
+    </md-switch>
+  </view>
+</scroll-view>
+
+<view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{headbarStyle}}">
+  <view class="icon material-icons" hover-class="hover" bindtap="back">
+    <text>arrow_back</text>
+  </view>
+  <text style="margin-left:10px;">界面</text>
+</view>

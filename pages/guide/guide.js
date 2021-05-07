@@ -21,6 +21,8 @@ Page({
       useSidebar: false,
       primaryColor: "#4285f4",
       categoryData: ["默认", "学习", "工作", "生活"],
+      bing: true,
+      hitokoto: false,
     },
   },
 
@@ -93,6 +95,8 @@ Page({
       app.globalData.primaryColor = this.data.profile.primaryColor;
       app.globalData.pureTheme = this.data.profile.pureTheme;
       app.globalData.useSidebar = this.data.profile.useSidebar;
+      app.globalData.bing = true;
+      app.globalData.hitokoto = false; 
 
     } else if (this.data.page == 3 && this.data.buttonContent == "chevron_right") {
       wx.switchTab({

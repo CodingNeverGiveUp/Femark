@@ -129,20 +129,13 @@ Component({
       }, 500);
     },
     record() {
-      if (app.globalData.isPad) {
+      if(this.data.currentPage != 3){
         this.setData({
-          floatAStyle: "transform: rotate(135deg)",
-          slide: true,
-        })
-        // this.showDialog();
-      } else {
-        this.setData({
-          // mainStyle: "height:300px;",
-          // floatStyle: (this.data.isPad ? "bottom:260px;" : this.data.useSidebar ? "bottom:260px;" : "bottom:325px;"),
           floatAStyle: "transform: rotate(135deg)",
           slide: true,
         })
       }
+      // this.showDialog();
     },
     menuTap() {
       if (this.data.slide) {

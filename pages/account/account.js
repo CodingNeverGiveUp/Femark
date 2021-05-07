@@ -37,6 +37,8 @@ Page({
       nickName: app.globalData.userInfo.nickName,
       pureTheme: app.globalData.pureTheme,
       primaryColor: app.globalData.primaryColor,
+      bing: app.globalData.bing,
+      hitokoto: app.globalData.hitokoto,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     })
   },
@@ -76,6 +78,18 @@ Page({
         sld3: '',
       })
     }, 250)
+  },
+
+  themeSetting(){
+    wx.navigateTo({
+      url: '/pages/themeSetting/themeSetting',
+    })
+  },
+
+  behaviorSetting(){
+    wx.navigateTo({
+      url: '/pages/behaviorSetting/behaviorSetting',
+    })
   },
 
   getImage: function () {

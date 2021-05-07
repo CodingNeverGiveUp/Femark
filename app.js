@@ -83,6 +83,8 @@ App({
               this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
               this.globalData.primaryColor = res.data[0].profile.primaryColor;
               this.globalData.categoryData = res.data[0].profile.categoryData;
+              this.globalData.bing = res.data[0].profile.bing;
+              this.globalData.hitokoto = res.data[0].profile.hitokoto;
               //提前拉取及预处理笔记待办数据
               res.data[0].note.forEach((element, index) => {
                 element.color = this.getRandomColor()
@@ -278,6 +280,8 @@ App({
         that.globalData.userInfo.avatarUrl = db.data.profile.avatarUrl;
         that.globalData.primaryColor = db.data.profile.primaryColor;
         that.globalData.categoryData = db.data.profile.categoryData;
+        that.globalData.bing = db.data.profile.bing;
+        that.globalData.hitokoto = db.data.profile.hitokoto;
         that.globalData.note = db.data.note;
         that.globalData.task = db.data.task;
         resort()

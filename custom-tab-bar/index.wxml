@@ -99,7 +99,7 @@
   </view>
   <view class="float" style="{{floatAStyle}}" bindtap="floatTap" bindlongpress="record">
     <view class="float_color" hover-class="t_hover">
-      <view class="material-icons" style="color:{{primaryColor}};"><text>add</text></view>
+      <view class="material-icons" style="color:{{primaryColor}};"><text>{{currentPage==3?'mode':'add'}}</text></view>
     </view>
   </view>
 </view>
