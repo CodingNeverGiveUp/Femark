@@ -115,6 +115,11 @@
   background: #fff;
 }
 
+.content .material-icons{
+  margin: 50px;
+  font-size: 3rem;
+}
+
 .content_btn_l{
   position: absolute;
   width: 80px;

@@ -21,6 +21,8 @@ Component({
     password: '',
     correctPassword: '',
     popupPassword: false,
+    useFingerprint: false,
+    fingerprintContent: "请触摸指纹传感器",
   },
   methods: {
     showDialog() {
@@ -231,7 +233,7 @@ Component({
       })
     },
 
-    popupPassword(e){
+    popupPassword(e) {
       this.setData({
         data: e,
         popupPassword: true,
@@ -266,29 +268,113 @@ Component({
       }
     },
 
-    passwordConfirm(){
-      var that = this
-      if(this.data.password == this.data.data.password){
-        wx.navigateTo({
-          url: '/pages/note/note',
-          events: {
-            // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-            acceptDataFromOpenedPage: function (data) {
-              console.log(data)
-            },
-          },
-          success(res) {
-            res.eventChannel.emit('toNote', {
-              edit: false,
-              data: that.data.data
-            })
-          }
+    passwordSwitch() {
+      if (this.data.useFingerprint) {
+        this.setData({
+          useFingerprint: false
         })
-      }else{
+      } else {
+        this.startAuth()
+        this.setData({
+          useFingerprint: true
+        })
+      }
+      // this.setData({
+      //   useFingerprint: this.data.useFingerprint ? false : true,
+      // })
+    },
+
+    encryptToNote() {
+      wx.navigateTo({
+        url: '/pages/note/note',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
+        },
+        success(res) {
+          res.eventChannel.emit('toNote', {
+            edit: false,
+            data: that.data.data
+          })
+          that.setData({
+            popupPassword: false,
+            useFingerprint: false,
+            fingerprintContent: "请触摸指纹传感器",
+          })
+        }
+      })
+    },
+
+    passwordConfirm() {
+      var that = this
+      if (this.data.password == this.data.data.password) {
+        this.encryptToNote()
+      } else {
         this.setData({
           contentInputStyle: `border: 1px solid #ff5252;`
         })
       }
+    },
+
+    startAuth(e) {
+      const startSoterAuthentication = () => {
+        wx.startSoterAuthentication({
+          requestAuthModes: ['fingerPrint'],
+          challenge: '',
+          authContent: '请触摸指纹传感器',
+          success: (res) => {
+            this.setData({
+              fingerprintContent: "认证成功"
+            })
+            setTimeout(() => {
+              this.encryptToNote()
+            }, 1000)
+          },
+          fail: (err) => {
+            console.error(err)
+            this.setData({
+              fingerprintContent: "认证失败"
+            })
+          }
+        })
+      }
+
+      const checkIsEnrolled = () => {
+        wx.checkIsSoterEnrolledInDevice({
+          checkAuthMode: 'fingerPrint',
+          success: (res) => {
+            console.log(res)
+            if (parseInt(res.isEnrolled) <= 0) {
+              this.setData({
+                fingerprintContent: "没有找到指纹信息，请录入后重试"
+              })
+              return
+            }
+            startSoterAuthentication();
+          },
+          fail: (err) => {
+            this.setData({
+              fingerprintContent: "你的设备未接入 SOTER 生物认证平台"
+            })
+            console.error(err)
+          }
+        })
+      }
+
+      wx.checkIsSupportSoterAuthentication({
+        success: (res) => {
+          console.log(res)
+          checkIsEnrolled()
+        },
+        fail: (err) => {
+          console.error(err)
+          this.setData({
+            fingerprintContent: "你的设备不支持指纹识别"
+          })
+        }
+      })
     },
 
     touchStart: function (e) {
