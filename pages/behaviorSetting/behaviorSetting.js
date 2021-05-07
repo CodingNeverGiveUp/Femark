@@ -34,13 +34,13 @@ Page({
               profile: {
                 markdownByDefault: this.data.markdownByDefault,
                 markdownPreview: this.data.markdownPreview,
-                markdownPreviewDelay: this.data.markdownPreviewDelay,
+                markdownPreviewDelay: Number(this.data.markdownPreviewDelay),
               }
             }
           }).then(res => {
             app.globalData.markdownByDefault = this.data.markdownByDefault;
             app.globalData.markdownPreview = this.data.markdownPreview;
-            app.globalData.markdownPreviewDelay = this.data.markdownPreviewDelay;
+            app.globalData.markdownPreviewDelay = Number(this.data.markdownPreviewDelay);
             wx.showToast({
               title: '已保存',
               duration: 1000,

@@ -13,13 +13,13 @@
     <view class="subtitle" style="color:{{primaryColor}};">
       <text>Markdown</text>
     </view>
-    <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+    <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
       selected="{{markdownPreview}}" data-id="markdownPreview">
       <text slot="title">同步刷新</text>
       <text slot="subtitle">自动更新 Markdown 预览</text>
     </md-switch>
-    <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-      dataset="{{markdownPreviewDelayData}}" selected='{{markdownPreviewDelay}}'
+    <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+      dataset="{{markdownPreviewDelayData}}" selected='{{markdownPreviewDelay - 1}}'
       data-id="markdownPreviewDelay">
       <text slot="title">刷新延时</text>
       <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>

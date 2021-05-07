@@ -95,6 +95,12 @@ Component({
           selectedStyle: "",
         })
       }
+      if(this.data.mode == 'selector'){
+        this.setData({
+          result: this.data.dataset[this.data.selected],
+          resultKey: this.data.selected,
+        })
+      }
     },
   },
 

@@ -179,9 +179,17 @@ Page({
       hitokoto: app.globalData.hitokoto,
     })
     if (this.data.pureTheme) {
-      this.themePure()
+      this.setData({
+        pureTheme: true,
+        themePure: `border:${this.data.primaryColor} solid 2px;`,
+        themeColorful: '',
+      })
     } else {
-      this.themeColorful()
+      this.setData({
+        pureTheme: false,
+        themeColorful: `border:${this.data.primaryColor} solid 2px;`,
+        themePure: '',
+      })
     }
     this.selectAllComponents('.switch').forEach(element => {
       element.refreshStatus()
