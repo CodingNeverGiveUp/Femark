@@ -161,8 +161,12 @@ Component({
         // this.hideDialog();
       } else {
         if (!this.data.floatSelect) {
+          if(this.data.currentPage != 3){
+            this.setData({
+              floatAStyle: "transform: rotate(135deg)",
+            })
+          }
           this.setData({
-            floatAStyle: "transform: rotate(135deg)",
             floatBStyle: "bottom:80px;width:165px;",
             floatCStyle: "bottom:150px;width:165px;",
             floatSelect: true
