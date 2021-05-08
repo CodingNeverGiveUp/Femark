@@ -58,6 +58,12 @@ Component({
     //   })
     //   this.hideDialog();
     // },
+    setting(){
+      wx.navigateTo({
+        url: '/pages/themeSetting/themeSetting',
+      })
+    },
+
     sideSwitch(e) {
       const path = e.currentTarget.dataset.path;
       const page = Number(e.currentTarget.dataset.page);

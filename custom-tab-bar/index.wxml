@@ -36,7 +36,7 @@
       bindtap="menuTap"><text>menu</text></view>
     <view class="head_bar">
       <text style="font-size:1.2rem;">Femark</text>
-      <view class="icon" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover">
+      <view class="icon" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" hover-class="hover" bindtap="setting">
         <text class="material-icons">settings</text>
       </view>
     </view>

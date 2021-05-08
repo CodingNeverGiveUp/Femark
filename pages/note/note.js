@@ -31,8 +31,8 @@ Page({
     useMarkdown: true,
     encrypt: false,
     password: "",
-    markdownPreview: true,
-    markdownPreviewDelay: 2,
+    markdownPreview: app.globalData.markdownPreview,
+    markdownPreviewDelay: app.globalData.markdownPreviewDelay,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
     categoryData: app.globalData.categoryData,
   },
@@ -538,6 +538,8 @@ Page({
       primaryColor: app.globalData.primaryColor,
       categoryData: app.globalData.categoryData,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      markdownPreview: app.globalData.markdownPreview,
+      markdownPreviewDelay: app.globalData.markdownPreviewDelay,
     })
     const eventChannel = this.getOpenerEventChannel();
     eventChannel.on('addNote', (res) => {

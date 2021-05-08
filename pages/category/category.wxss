@@ -179,7 +179,7 @@ page {
   justify-content: center;
   padding: 0 50rpx;
   transition: background .2s ease-in-out, opacity ,2s ease-in-out;
-  border-top: #aaa 1px solid;
+  border-bottom: #aaa 1px solid;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -190,6 +190,7 @@ page {
 }
 
 .category_detail_box .subtitle{
+  font-size: .8rem;
   color: #fff;
   overflow: hidden;
 }

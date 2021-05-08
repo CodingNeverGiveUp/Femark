@@ -1,7 +1,7 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="425rpx" enable-flex="true" enhanced="true"
   showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
         <view class="subtitle" style="color:{{primaryColor}};">
@@ -87,7 +87,7 @@
       </form>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
+  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
     upper-threshold="20" bindscroll="scroll" wx:if="{{useMarkdown}}">
     <view class="preview">
       <view class="heading"
@@ -106,13 +106,13 @@
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>配置项</text>
       </view>
-      <md-switch bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
         selected="{{markdownPreview}}" data-id="markdownPreview">
         <text slot="title">同步刷新</text>
         <text slot="subtitle">自动更新 Markdown 预览</text>
       </md-switch>
-      <md-picker bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{markdownPreviewDelayData}}" selected='1' disabled="{{!markdownPreview}}"
+      <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        dataset="{{markdownPreviewDelayData}}" selected='{{markdownPreviewDelay - 1}}' disabled="{{!markdownPreview}}"
         data-id="markdownPreviewDelay">
         <text slot="title">刷新延时</text>
         <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
