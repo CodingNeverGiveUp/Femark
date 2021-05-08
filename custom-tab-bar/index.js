@@ -521,7 +521,7 @@ Component({
       const startSoterAuthentication = () => {
         wx.startSoterAuthentication({
           requestAuthModes: ['fingerPrint'],
-          challenge: '',
+          challenge: 'femark',
           authContent: '请触摸指纹传感器',
           success: (res) => {
             this.setData({

@@ -106,7 +106,7 @@
 
 <!-- <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view> -->
 
-<page-container show="{{popCategoryEdit}}" position="bottom" round="true"
+<page-container wx:if="{{popCategoryEdit}}" show="{{popCategoryEdit}}" position="bottom" round="true"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
   customStyle="max-width: 500px;left:0;right:0;margin:auto;">
   <view class="list">
