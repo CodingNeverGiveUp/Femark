@@ -2,13 +2,11 @@
 <!-- 切换顶条 -->
 <view wx:if="{{!isPad}}" style="{{selectorStyle}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};" class="page_selector">
   <view class="page_selector_blank"></view>
-  <view class="page_selector_item" style="{{sel1}};" bindtap="sel1"
-    hover-class="hover">
+  <view class="page_selector_item" style="{{sel1}};" bindtap="sel1" hover-class="hover">
     <text class="material-icons icon">mode</text>
     <text class="text">笔记</text>
   </view>
-  <view class="page_selector_item" style="{{sel2}};" bindtap="sel2"
-    hover-class="hover">
+  <view class="page_selector_item" style="{{sel2}};" bindtap="sel2" hover-class="hover">
     <text class="material-icons icon">add_task</text>
     <text class="text">待办</text>
   </view>
@@ -22,14 +20,20 @@
     <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
       <view class="head_title" bindtap="showSelector">
         <text>笔记</text>
-        <text class="material-icons">expand_more</text>
+        <text wx:if="{{!isPad}}" class="material-icons">expand_more</text>
       </view>
       <text class="head_subtitle">共{{note.length}}条数据</text>
     </view>
-    <view class="note_content">
+    <view class="empty" wx:if="{{note.length == 0}}">
+      <image src="/source/img/empty.png" mode="widthFix"></image>
+      <text>无内容\n尝试下拉刷新</text>
+    </view>
+    <view class="note_content" wx:if="{{note.length != 0}}">
       <view id="note_left">
-        <view class="note_block" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};" hover-class="c_hover" bindtap="note" data-data="{{item}}">
-          <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image" style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+        <view class="note_block" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};"
+          hover-class="c_hover" bindtap="note" data-data="{{item}}">
+          <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image"
+            style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
             <view class="note_image_tip">
               <text>共{{item.gallery.length}}张图片</text>
             </view>
@@ -50,8 +54,10 @@
         </view>
       </view>
       <view id="note_right">
-        <view class="note_block" wx:for="{{noteRight}}" wx:key="index" style="background:{{item.color}};" hover-class="c_hover" bindtap="note" data-data="{{item}}">
-          <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image" style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+        <view class="note_block" wx:for="{{noteRight}}" wx:key="index" style="background:{{item.color}};"
+          hover-class="c_hover" bindtap="note" data-data="{{item}}">
+          <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image"
+            style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
             <view class="note_image_tip">
               <text>共{{item.gallery.length}}张图片</text>
             </view>
@@ -80,11 +86,15 @@
     <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
       <view class="head_title" bindtap="showSelector">
         <text>待办</text>
-        <text class="material-icons">expand_more</text>
+        <text wx:if="{{!isPad}}" class="material-icons">expand_more</text>
       </view>
       <text class="head_subtitle">共{{task.length}}条数据</text>
     </view>
     <view class="main">
+      <view class="empty" wx:if="{{task.length == 0}}">
+        <image src="/source/img/empty.png" mode="widthFix"></image>
+        <text>无内容\n尝试下拉刷新</text>
+      </view>
       <view wx:for="{{task}}" wx:key="index" bindtap="todo" hover-class="c_hover" data-data="{{item}}">
         <view class="db_box">
           <view class="box_left" style="background-color:{{item.color}};">
@@ -96,7 +106,8 @@
             <view class="box_right_text">
               <view class="topic">{{item.heading}}</view>
               <view class="ddl">
-                <view wx:if="{{item.notification}}" class="material-icons" style="font-size:.8rem">notifications_active</view>
+                <view wx:if="{{item.notification}}" class="material-icons" style="font-size:.8rem">notifications_active
+                </view>
                 <text>{{item.time}}</text>
               </view>
             </view>

@@ -80,6 +80,24 @@
   color: #666;
 }
 
+.empty{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty image{
+  width: 120px;
+}
+
+.empty text{
+  text-align: center;
+  font-size: .8rem;
+  margin: 20px 0 0 0;
+  color: #666;
+}
+
 @media only screen and (min-width: 600px) {
   .container {
     display: flex;
