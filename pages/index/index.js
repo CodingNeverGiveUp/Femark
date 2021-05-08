@@ -27,55 +27,30 @@ Page({
 
   // 事件处理函数
   onLoad() {
-    //重新拉取侧栏
-    let tabbar = this.getTabBar();
-    tabbar.setData({
-      useSidebar: app.globalData.useSidebar,
-      primaryColor: app.globalData.primaryColor,
-      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
-    })
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true,
-      })
-    }
-    //重新拉取配置
-    this.setData({
-      useSidebar: app.globalData.useSidebar,
-      pureTheme: app.globalData.pureTheme,
-      isPad: app.globalData.isPad,
-      primaryColor: app.globalData.primaryColor,
-      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
-      sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
-    })
-    //数据拉取
-    this.setData({
-      note: app.globalData.note,
-      task: app.globalData.task
-    })
+    
     //拉取openid
-    if (app.globalData.openid) {
-      this.setData({
-        openid: app.globalData.openid,
-      })
-    } else {
-      console.log("get openid from server")
-      wx.cloud.callFunction({
-          name: "getOpenid"
-        }).then(res => {
-          // console.log(res);
-          this.data.openid = res.result.openid;
-          app.globalData.openid = res.result.openid;
-        })
-        .catch(res => {
-          console.log("failed")
-        })
-    };
+    // if (app.globalData.openid) {
+    //   this.setData({
+    //     openid: app.globalData.openid,
+    //   })
+    // } else {
+    //   console.log("get openid from server")
+    //   wx.cloud.callFunction({
+    //       name: "getOpenid"
+    //     }).then(res => {
+    //       // console.log(res);
+    //       this.data.openid = res.result.openid;
+    //       app.globalData.openid = res.result.openid;
+    //     })
+    //     .catch(res => {
+    //       console.log("failed")
+    //     })
+    // };
   },
 
   onReady() {
     var that = this
-    this.column()
+    this.onPullDownRefresh()
     // let test_Array01_lenth = this.data.test.test_Array01.length
     // let test_Array02_lenth = this.data.test.test_Array02.length
     // let color_number1 = 0
@@ -122,7 +97,33 @@ Page({
   },
 
   onShow() {
-    let tabbar = this.getTabBar()
+    //重新拉取侧栏
+    let tabbar = this.getTabBar();
+    tabbar.setData({
+      useSidebar: app.globalData.useSidebar,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true,
+      })
+    }
+    //重新拉取配置
+    this.setData({
+      useSidebar: app.globalData.useSidebar,
+      pureTheme: app.globalData.pureTheme,
+      isPad: app.globalData.isPad,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
+    })
+    //数据拉取
+    this.setData({
+      note: app.globalData.note,
+      task: app.globalData.task
+    })
+    //侧栏状态
     this.setData({
       currentPage: app.globalData.currentPage,
     })
@@ -144,6 +145,7 @@ Page({
         sld4: '',
       })
     }, 250)
+    console.log("拉取")
     // if(app.globalData.currentPage == 1){
     //   tabbar.setData({
     //     sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
@@ -185,6 +187,7 @@ Page({
         note: app.globalData.note,
         task: app.globalData.task
       })
+      console.log("整理")
       this.column()
       wx.stopPullDownRefresh()
       wx.showToast({

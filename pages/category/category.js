@@ -6,48 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    test_Lenth: '',
-    height_Array: [{
-      height: '150rpx',
-      tips: 1
-    }, {
-      height: '150rpx',
-      tips: 1
-    }, {
-      height: '150rpx',
-      tips: 1
-    }],
-    test01: { //把具体内容嵌套在list01里面
-      test_Color2: '#4285f4',
-      list01: [{
-        title_Name: '学习',
-        real_Content: [{
-          content: '学习一下123Aa222222222222222bsssdrfeeszzzzaaqqqqqqasfghh'
-        }, {
-          content: '学c++898'
-        }, {
-          content: 'uaaohu'
-        }]
-      }, {
-        title_Name: '运动',
-        real_Content: [{
-          content: '学习一下123Aab'
-        }, {
-          content: '学c++898'
-        }, {
-          content: 'uaaohu'
-        }]
-      }, {
-        title_Name: '生活',
-        real_Content: [{
-          content: '学习一下123Aab'
-        }, {
-          content: '学c++898'
-        }, {
-          content: 'uaaohu'
-        }]
-      }]
-    }
+    categoryData: []
   },
 
   //跨页面异步传递
@@ -60,8 +19,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    this.onPullDownRefresh()
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    let tabbar = this.getTabBar()
     //重新拉取侧栏
-    let tabbar = this.getTabBar();
     tabbar.setData({
       useSidebar: app.globalData.useSidebar,
       primaryColor: app.globalData.primaryColor,
@@ -80,22 +53,7 @@ Page({
       task: app.globalData.task,
       categoryData: app.globalData.categoryData,
     })
-    //整理
-    this.sort()
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    let tabbar = this.getTabBar()
+    //侧栏状态
     tabbar.setData({
       currentPage: 3,
       btn2: `color:${this.data.primaryColor}`,

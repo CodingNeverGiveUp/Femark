@@ -178,7 +178,7 @@ page {
   flex-direction: column;
   justify-content: center;
   padding: 0 50rpx;
-  transition: background .2s ease-in-out, opacity ,2s ease-in-out;
+  transition: background .2s ease-in-out, opacity .2s ease-in-out;
   border-bottom: #aaa 1px solid;
   text-overflow: ellipsis;
   white-space: nowrap;
