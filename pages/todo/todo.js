@@ -89,6 +89,7 @@ Page({
                   [`task.${that.data.id}.notification`]: that.data.notification,
                   [`task.${that.data.id}.autoDelete`]: that.data.autoDelete,
                   [`task.${that.data.id}.autoDeleteDelay`]: that.data.autoDeleteDelay,
+                  [`task.${that.data.id}.autoDeleteTimestamp`]: Date.parse(tempTime.replace(/-/g, '/')) + that.data.autoDeleteDelay * 86400000,
                   [`task.${that.data.id}.notificationTimestamp`]: Date.parse(tempTime.replace(/-/g, '/')),
                   [`task.${that.data.id}.timestamp`]: new Date().getTime(),
                 }
@@ -139,9 +140,48 @@ Page({
 
   delete() {
     var that = this
+    var _ = wx.cloud.database().command
     if (!this.data.edit) {
       this.showSnackbar("请先启用编辑")
-    } else {}
+    } else {
+      wx.showModal({
+        title: "警告",
+        content: "将永久删除该待办，该过程不可逆转，是否继续操作",
+        confirmText: "仍然继续",
+        confirmColor: "#ff5252",
+      }).then(res => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '正在删除',
+          })
+          wx.cloud.database().collection('note').doc(app.globalData.id).update({
+            data: {
+              task: _.pull({
+                timestamp: that.data.timestamp
+              })
+            }
+          }).then(res => {
+            wx.showToast({
+              title: '已删除',
+            })
+            const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('toIndex', function (data) {
+
+              })
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 1500)
+          }).catch(err => {
+            wx.showToast({
+              title: '网络错误',
+              icon: 'error'
+            })
+          })
+        }
+      })
+    }
   },
 
   toUpper() {

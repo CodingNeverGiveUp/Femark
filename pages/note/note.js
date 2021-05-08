@@ -234,6 +234,10 @@ Page({
               wx.navigateBack({
                 delta: 1,
               })
+              const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('toIndex', function (data) {
+
+              })
             }, 1500)
           }).catch(err => {
             wx.showToast({
