@@ -67,7 +67,48 @@
   transition: background .2s ease-in-out;
 }
 
-.content{
+.list {
+  padding: 40px 0 0 0 ;
+  max-width: 400px;
+}
+
+.list_item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  height: 40px;
+  /* transition: box-shadow .2s ease-in-out; */
+  /* background: #f1f1f1; */
+}
+
+.list_item_left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.list_item input {
+  margin-left: 10px;
+  width: 70%;
+}
+
+.list_add_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 50px;
+  margin: 0 0 80px 0;
+  transition: background .2s ease-in-out;
+  color: #666;
+}
+
+
+.content {
   width: 100%;
   height: 300px;
   display: flex;
@@ -77,16 +118,16 @@
   position: relative;
 }
 
-.content_title{
+.content_title {
   font-size: 1.2rem;
   margin-bottom: 15px;
 }
 
-.content_subtitle{
+.content_subtitle {
   margin-bottom: 30px;
 }
 
-.content_input{
+.content_input {
   width: 90%;
   height: 50px;
   border-radius: 5px;
@@ -95,7 +136,7 @@
   transition: border .2s ease-in-out;
 }
 
-.content_input .input{
+.content_input .input {
   position: absolute;
   top: 0;
   height: 100%;
@@ -103,7 +144,7 @@
   right: 20px;
 }
 
-.content_input .content_placeholder{
+.content_input .content_placeholder {
   color: #666;
   position: absolute;
   top: 15px;
@@ -115,12 +156,12 @@
   background: #fff;
 }
 
-.content .material-icons{
+.content .material-icons {
   margin: 50px;
   font-size: 3rem;
 }
 
-.content_btn_l{
+.content_btn_l {
   position: absolute;
   width: 80px;
   height: 35px;
@@ -133,7 +174,7 @@
   transition: background .2s ease-in-out;
 }
 
-.content_btn_r{
+.content_btn_r {
   position: absolute;
   width: 80px;
   height: 35px;
@@ -231,7 +272,7 @@
   margin: 8px 0;
 }
 
-.float_container{
+.float_container {
   position: absolute;
   bottom: 90px;
   right: 50rpx;
@@ -263,7 +304,7 @@
   transition: background .2s ease-in-out, bottom .2s ease-in-out, transform .2s linear;
 }
 
-.float_selection{
+.float_selection {
   right: 5px;
   position: absolute;
   display: flex;
@@ -277,14 +318,14 @@
   height: 50px;
 }
 
-.float_selection_text{
+.float_selection_text {
   font-size: .9rem;
   flex: 1 0 auto;
   width: 90px;
   height: 30px;
   background: #fff;
   box-shadow: 0 0 10rpx #bbb;
-  white-space:nowrap;
+  white-space: nowrap;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -321,14 +362,14 @@
 }
 
 .hover {
-  background: var(--rgbaprimaryColor--)!important;
+  background: var(--rgbaprimaryColor--) !important;
 }
 
 .t_hover {
   background: var(--rgbaprimaryColor--);
 }
 
-.c_hover{
+.c_hover {
   opacity: .9;
 }
 

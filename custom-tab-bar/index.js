@@ -21,8 +21,10 @@ Component({
     password: '',
     correctPassword: '',
     popupPassword: false,
+    popCategoryEdit: false,
     useFingerprint: false,
     fingerprintContent: "请触摸指纹传感器",
+    listData: [],
   },
   methods: {
     // showDialog() {
@@ -58,7 +60,196 @@ Component({
     //   })
     //   this.hideDialog();
     // },
-    setting(){
+
+    initializeListData() {
+      let array = app.globalData.categoryData.slice(1,);
+      let result = [];
+      this.setData({
+        defaultContent: app.globalData.categoryData[0]
+      })
+      array.forEach((element, index, array) => {
+        let object = {
+          content: element,
+          top: 0,
+        }
+        result.push(object)
+      })
+      this.setData({
+        listData: result,
+        popCategoryEdit: true
+      })
+    },
+
+    listInput(e) {
+      console.log(e)
+      let index = e.currentTarget.dataset.index
+      this.setData({
+        [`listData[${index}].content`]: e.detail.value,
+      })
+    },
+
+    listAddItem() {
+      let array = this.data.listData
+      array.push({
+        content: "",
+        top: 0,
+      })
+      this.setData({
+        listData: array,
+      })
+    },
+
+    listDeleteItem(e) {
+      let index = e.currentTarget.dataset.index
+      let array = this.data.listData
+      array.splice(index, 1, )
+      this.setData({
+        listData: array,
+      })
+    },
+
+    defaultListInput(e){
+      this.setData({
+        defaultContent: e.detail.value,
+      })
+    },
+
+    listCancel(){
+      this.setData({
+        popCategoryEdit: false
+      })
+    },
+
+    listConfirm(){
+      wx.showLoading({
+        title: '操作中',
+      })
+      let result = [this.data.defaultContent]
+      this.data.listData.forEach((element, index)=>{
+        result.push(element.content)
+      })
+      wx.cloud.database().collection('note').doc(app.globalData.id).update({
+        data: {
+          profile: {
+            categoryData: result
+          }
+        }
+      }).then(res => {
+        app.globalData.categoryData = this.data.listData;
+        this.setData({
+          popCategoryEdit: false,
+        })
+        wx.showToast({
+          title: '已保存',
+        })
+      }).catch(err=>{
+        wx.showToast({
+          title: '网络错误',
+          icon: "error"
+        })
+      })
+    },
+
+    dragStart(e) {
+      // console.log(e)
+      var that = this;
+      var index = e.currentTarget.dataset.index;
+      var query = this.createSelectorQuery()
+      query.select('.list').boundingClientRect(rect => {
+        // console.log(index * (-40), (this.data.listData.length - index - 1) * 40)
+        this.setData({
+          listTop: rect.top + index * 40,
+          listMin: index * (-40),
+          listMax: (this.data.listData.length - index - 1) * 40,
+          listDragging: true,
+          [`listData.[${index}].dragging`]: true
+        })
+        // console.log(rect.top)
+      }).exec()
+    },
+    dragMove(e) {
+      var that = this;
+      var index = e.currentTarget.dataset.index;
+      var top = this.data.listTop
+      // console.log(e.changedTouches)
+      var res = e.changedTouches[0].clientY - top - 100
+      // console.log(e.changedTouches[0].clientY - top)
+      if (res >= this.data.listMin && res <= this.data.listMax) {
+        this.setData({
+          [`listData[${index}].top`]: res
+        })
+      }
+      // console.log(res)
+      let a = res / 40
+      if (a > 0) {
+        a = Math.ceil(a)
+      } else if (a < 0) {
+        a = Math.floor(a)
+      }
+      let b = res % 40
+      console.log(res, a, b)
+      if (this.data.listData[index + a] && a != 0) {
+        if (b > 20) {
+          this.setData({
+            [`listData[${index+a}].top`]: -40
+          })
+        } else if (b > 0 && b <= 20) {
+          this.setData({
+            [`listData[${index+a}].top`]: 0
+          })
+        } else if (b >= -20 && b < 0) {
+          this.setData({
+            [`listData[${index+a}].top`]: 0
+          })
+        } else if (b < -20) {
+          this.setData({
+            [`listData[${index+a}].top`]: 40
+          })
+        }
+        this.setData({
+          listTarget: Math.round(res / 40),
+        })
+      }
+    },
+    dragEnd(e) {
+      var that = this;
+      var index = e.currentTarget.dataset.index;
+      for (let i = 0; i < this.data.listData.length; i++) {
+        this.setData({
+          [`listData.[${i}].top`]: 0
+        })
+      }
+      this.setData({
+        [`listData.[${index}].dragging`]: false,
+        listDragging: false
+      })
+      let data = this.data.listData
+      if (this.data.listTarget > 0) {
+        for (let i = index; i < index + this.data.listTarget; i++) {
+          let temp = data[i]
+          data[i] = data[i + 1]
+          data[i + 1] = temp
+        }
+      } else if (this.data.listTarget < 0) {
+        for (let i = index; i > index + this.data.listTarget; i--) {
+          let temp = data[i]
+          data[i] = data[i - 1]
+          data[i - 1] = temp
+        }
+      }
+      this.setData({
+        listData: data,
+        edited: true,
+      })
+      // let flist = this.data.listData[index];
+      // let nlist = this.data.listData[index + this.data.listTarget];
+      // this.setData({
+      //   [`listData.[${index}]`]: nlist, 
+      //   [`listData.[${index + this.data.listTarget}]`]: flist, 
+      // })
+    },
+
+    setting() {
       wx.navigateTo({
         url: '/pages/themeSetting/themeSetting',
       })
@@ -135,7 +326,7 @@ Component({
       }, 500);
     },
     record() {
-      if(this.data.currentPage != 3){
+      if (this.data.currentPage != 3) {
         this.setData({
           floatAStyle: "transform: rotate(135deg)",
           slide: true,
@@ -167,16 +358,17 @@ Component({
         // this.hideDialog();
       } else {
         if (!this.data.floatSelect) {
-          if(this.data.currentPage != 3){
+          if (this.data.currentPage == 1 || this.data.currentPage == 2) {
             this.setData({
               floatAStyle: "transform: rotate(135deg)",
+              floatBStyle: "bottom:80px;width:165px;",
+              floatCStyle: "bottom:150px;width:165px;",
+              floatSelect: true
             })
+          } else if (this.data.currentPage == 3) {
+            //编辑类别
+            this.initializeListData()
           }
-          this.setData({
-            floatBStyle: "bottom:80px;width:165px;",
-            floatCStyle: "bottom:150px;width:165px;",
-            floatSelect: true
-          })
         } else {
           this.setData({
             floatAStyle: '',

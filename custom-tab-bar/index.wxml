@@ -106,16 +106,57 @@
 
 <!-- <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view> -->
 
-<page-container show="{{popupPassword}}" overlay="false" position="bottom" round="true" close-on-slide-down="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300">
+<page-container show="{{popCategoryEdit}}" position="bottom" round="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;">
+  <view class="list">
+    <view class="list_item">
+      <view class="list_item_left">
+        <view class="icon material-icons"><text></text></view>
+        <input type="text" value="{{defaultContent}}" maxlength="8" bindinput="defaultListInput" focus="true"
+          data-index="-1"></input>
+      </view>
+      <view class="list_item_right">
+      </view>
+    </view>
+    <view class="list_item"
+      style="top:{{item.top}}px;{{item.dragging?'box-shadow: 0 0 10rpx #bbb;z-index:999;':''}}{{listDragging&&!item.dragging?'transition:top .2s ease,box-shadow .2s ease-in-out;':''}}"
+      wx:for="{{listData}}" wx:key="index" data-index="{{index}}">
+      <view class="list_item_left">
+        <view class="icon material-icons" hover-class="hover" catchtouchstart="dragStart" catchtouchmove="dragMove"
+          catchtouchend="dragEnd" data-index="{{index}}"><text>drag_indicator</text></view>
+        <input type="text" value="{{item.content}}" maxlength="8" bindinput="listInput" focus="true"
+          data-index="{{index}}"></input>
+      </view>
+      <view class="list_item_right">
+        <view class="icon material-icons" hover-class="hover" bindtap="listDeleteItem" data-index="{{index}}">
+          <text>close</text></view>
+      </view>
+    </view>
+  </view>
+  <view class="list_add_item" hover-class="hover" bindtap="listAddItem">
+    <view class="icon material-icons" hover-class="hover"><text>add</text></view>
+    <text>新增清单项</text>
+  </view>
+  <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="listCancel">取消</view>
+  <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="listConfirm">保存
+  </view>
+</page-container>
+
+<page-container show="{{popupPassword}}" position="bottom" round="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;">
   <view class="content" wx:if="{{!useFingerprint}}">
     <view class="content_title">需要身份验证</view>
     <view class="content_subtitle">输入密码以继续访问</view>
     <view class="content_input" style="{{contentInputStyle}}">
-      <input class="input" type="password" name="" id="password" bindfocus="passwordFocus" bindinput="passwordInput" bindblur="passwordBlur"></input>
+      <input class="input" type="password" name="" id="password" bindfocus="passwordFocus" bindinput="passwordInput"
+        bindblur="passwordBlur"></input>
       <view class="content_placeholder" style="{{contentPlaceholderStyle}}">密码</view>
     </view>
     <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="passwordSwitch">使用指纹</view>
-    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="passwordConfirm">确认</view>
+    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="passwordConfirm">确认
+    </view>
   </view>
   <view class="content" wx:if="{{useFingerprint}}">
     <view class="material-icons">fingerprint</view>

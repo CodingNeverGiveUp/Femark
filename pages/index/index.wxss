@@ -88,13 +88,13 @@
 }
 
 .empty image{
-  width: 120px;
+  width: 100px;
 }
 
 .empty text{
   text-align: center;
   font-size: .8rem;
-  margin: 20px 0 0 0;
+  margin: 50px 0 0 0;
   color: #666;
 }
 
