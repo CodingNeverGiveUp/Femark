@@ -48,6 +48,10 @@ Page({
               title: '已保存',
               duration: 1000,
             })
+            const eventChannel = this.getOpenerEventChannel()
+            eventChannel.emit('toAccount', function (data) {
+
+            })
             setTimeout(() => {
               wx.navigateBack({
                 delta: 1,

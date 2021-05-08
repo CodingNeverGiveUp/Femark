@@ -1,7 +1,6 @@
 // pages/account/account.js
 const app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -81,14 +80,52 @@ Page({
   },
 
   themeSetting(){
+    var that = this
     wx.navigateTo({
       url: '/pages/themeSetting/themeSetting',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        toAccount: function (data) {
+          that.onPullDownRefresh()
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toThemeSetting', {
+        })
+      }
     })
   },
 
   behaviorSetting(){
+    var that = this
     wx.navigateTo({
       url: '/pages/behaviorSetting/behaviorSetting',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        toAccount: function (data) {
+          that.onPullDownRefresh()
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toBehaviorSetting', {
+        })
+      }
+    })
+  },
+
+  about(){
+    wx.navigateTo({
+      url: '/pages/about/about',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        toAccount: function (data) {
+
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toAbout', {
+        })
+      }
     })
   },
 

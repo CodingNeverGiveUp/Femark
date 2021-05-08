@@ -415,7 +415,7 @@ Component({
           },
         },
         success(res) {
-          res.eventChannel.emit('addNote', {
+          res.eventChannel.emit('addTodo', {
             edit: true,
           })
           that.setData({
@@ -529,7 +529,7 @@ Component({
             })
             setTimeout(() => {
               this.encryptToNote()
-            }, 1000)
+            }, 500)
           },
           fail: (err) => {
             console.error(err)

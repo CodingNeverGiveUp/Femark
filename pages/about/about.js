@@ -1,5 +1,4 @@
-// pages/behaviorSetting/behaviorSetting.js
-// 获取应用实例
+// pages/about/about.js
 const app = getApp()
 const database = require("../../utils/database.js")
 const event = require("../../utils/event.js")
@@ -15,7 +14,6 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     theme: app.globalData.systemInfo.theme,
     edited: false,
-    markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
   },
 
   back() {
@@ -44,10 +42,6 @@ Page({
             wx.showToast({
               title: '已保存',
               duration: 1000,
-            })
-            const eventChannel = this.getOpenerEventChannel()
-            eventChannel.emit('toAccount', function (data) {
-
             })
             setTimeout(() => {
               wx.navigateBack({
@@ -136,21 +130,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      primaryColor: app.globalData.primaryColor,
-      pureTheme: app.globalData.pureTheme,
-      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
-      theme: app.globalData.systemInfo.theme,
-      markdownByDefault: app.globalData.markdownByDefault,
-      markdownPreview: app.globalData.markdownPreview,
-      markdownPreviewDelay: app.globalData.markdownPreviewDelay,
-    })
-    this.selectAllComponents('.switch').forEach(element => {
-      element.refreshStatus()
-    })
-    this.selectAllComponents('.picker').forEach(element => {
-      element.refreshStatus()
-    })
+
   },
 
   /**

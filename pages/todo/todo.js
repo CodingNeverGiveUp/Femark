@@ -96,6 +96,9 @@ Page({
               wx.showToast({
                 title: "已保存更改",
               })
+              const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('toIndex', function (data) {
+              })
             } catch (e) {
               console.log(e)
               wx.showToast({
@@ -384,15 +387,15 @@ Page({
         this.setData({
           markdownPreviewDelay: e.detail.value
         })
-      }else if(e.currentTarget.dataset.id == "notificationDate"){
+      } else if (e.currentTarget.dataset.id == "notificationDate") {
         this.setData({
           notificationDate: e.detail.value
         })
-      }else if(e.currentTarget.dataset.id == "notificationTime"){
+      } else if (e.currentTarget.dataset.id == "notificationTime") {
         this.setData({
           notificationTime: e.detail.value
         })
-      }else if(e.currentTarget.dataset.id == "autoDeleteDelay"){
+      } else if (e.currentTarget.dataset.id == "autoDeleteDelay") {
         this.setData({
           autoDeleteDelay: Number(e.detail.value)
         })
