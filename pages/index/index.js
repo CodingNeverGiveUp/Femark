@@ -207,6 +207,10 @@ Page({
     var currentdate = new Date(currenttime);
     console.log(currenttime, currentdate)
     const db = wx.cloud.database()
+    const formatNumber = n => {
+      n = n.toString()
+      return n[1] ? n : `0${n}`
+    }
     const formatTime = date => {
       const year = date.getFullYear()
       const month = date.getMonth() + 1
@@ -214,8 +218,8 @@ Page({
       const hour = date.getHours()
       const minute = date.getMinutes()
       const second = date.getSeconds()
-    
-      return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
+
+      return `${year}年${month}月${day}日 ${[hour, minute, second].map(formatNumber).join(':')}`
     }
     var messages = []
     db.collection('note').field({
@@ -226,8 +230,8 @@ Page({
       .then(res => {
         console.log(res)
         res.data.forEach((element, index) => {
-          element.task.forEach((innerElement,innerIndex) => {
-            if (innerElement.notification == true && innerElement.done == false && currenttime < innerElement.notificationTimestamp && currenttime + 300000 > innerElement.notificationTimestamp) {
+          element.task.forEach((innerElement, innerIndex) => {
+            if (innerElement.notification == true && innerElement.done == false) {
               let message = {
                 _openid: element._openid,
                 _id: element._id,
@@ -241,6 +245,40 @@ Page({
               messages.push(message)
             }
           })
+        })
+        console.log(messages)
+        messages.forEach(message=>{
+          cloud.openapi.subscribeMessage.send({
+            touser: message._openid, //要推送用户的openid
+            //page:'',
+            data: { //推送的内容
+              thing1: {
+                value: message.heading //'xx会议'
+              },
+              time2: {
+                value: message.time //'2019年11月30日 21:00:00'
+              },
+              phrase9: {
+                value: message.urgency //'紧急且重要'
+              },
+              thing4: {
+                value: message.content //'会议内容为.....'
+              },
+              phrase8: {
+                value: message.reminderStatus //'待确认'
+              }
+            },
+            templateId: 'n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI' //模板id
+          })
+          // wx.cloud.database().collection('note')
+          // .doc(message._id)
+          // .update({
+          //   data: {
+          //     [`task.${message.index}`]: {
+          //       done: true,
+          //     }
+          //   },
+          // })
         })
       })
   },

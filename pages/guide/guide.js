@@ -102,8 +102,24 @@ Page({
       app.globalData.hitokoto = false; 
 
     } else if (this.data.page == 3 && this.data.buttonContent == "chevron_right") {
-      wx.switchTab({
-        url: '/pages/index/index',
+      wx.showLoading({
+        title: '请稍等',
+      })
+      wx.cloud.callFunction({
+        name: "getOpenid"
+      }).then(res => {
+        let openid = res.result.openid;
+        app.globalData.openid = openid;
+        wx.cloud.database().collection('note').where({
+          _openid: openid
+        }).get()
+        .then(res=>{
+          app.globalData.id = res.data[0]._id;
+          wx.hideLoading()
+          wx.switchTab({
+            url: '/pages/index/index',
+          })
+        })
       })
     }
   },

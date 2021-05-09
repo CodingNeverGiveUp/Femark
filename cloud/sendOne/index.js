@@ -3,6 +3,10 @@ const cloud = require('wx-server-sdk');
 exports.main = async (event, context) => {
   cloud.init();
   const db = cloud.database();
+  const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : `0${n}`
+  }
   const formatTime = date => {
     const year = date.getFullYear()
     const month = date.getMonth() + 1
@@ -11,7 +15,7 @@ exports.main = async (event, context) => {
     const minute = date.getMinutes()
     const second = date.getSeconds()
 
-    return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
+    return `${year}年${month}月${day}日 ${[hour, minute, second].map(formatNumber).join(':')}`
   }
   var messages = []
   //获取当前时间戳和时间
@@ -29,14 +33,14 @@ exports.main = async (event, context) => {
         console.log(res)
         res.data.forEach((element, index) => {
           element.task.forEach((innerElement, innerIndex) => {
-            if (innerElement.notification == true && innerElement.done == false && currenttime < innerElement.notificationTimestamp && currenttime + 300000 > innerElement.notificationTimestamp) {
+            if (innerElement.notification == true && innerElement.done == false && currenttime < innerElement.notificationTimestamp && currenttime + 120000 > innerElement.notificationTimestamp) {
               let message = {
                 _openid: element._openid,
                 _id: element._id,
-                heading: innerElement.heading == null ? '' : innerElement.heading,
+                heading: innerElement.heading == null || innerElement.heading == '' ? '空' : innerElement.heading,
                 time: formatTime(new Date(innerElement.notificationTimestamp)),
                 urgency: "紧急且重要",
-                content: innerElement.content == null ? '' : innerElement.content,
+                content: innerElement.content == null || innerElement.content == '' ? '空' : innerElement.content,
                 reminderStatus: "待确认",
                 index: innerIndex,
               }
@@ -78,7 +82,7 @@ exports.main = async (event, context) => {
           .doc(message._id)
           .update({
             data: {
-              [`task.${message._index}`]: {
+              [`task.${message.index}`]: {
                 done: true,
               }
             },
