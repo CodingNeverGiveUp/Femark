@@ -119,3 +119,22 @@
   border-radius: 100%;
   margin-right: 20px;
 }
+
+.snackbar {
+  position: fixed;
+  bottom: -50px;
+  right: 0;
+  left: 0;
+  height: 50px;
+  /* transform: translateX(-50%); */
+  background: #323232;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 50rpx;
+  transition: bottom .3s ease;
+}
+
+.snackbar text{
+  color: #fff;
+}

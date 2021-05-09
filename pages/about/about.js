@@ -112,6 +112,34 @@ Page({
     }
   },
 
+  showSnackbar(content) {
+    this.setData({
+      snackbarStyle: "bottom:0",
+      snackbarContent: content
+    })
+    setTimeout(() => {
+      this.setData({
+        snackbarStyle: "bottom:-50px",
+      })
+    }, 1500);
+  },
+
+  setClipboard(e){
+    let data = e.currentTarget.dataset.data
+    let toast = e.currentTarget.dataset.toast
+    var that = this
+    wx.setClipboardData({
+      data: data,
+      success(res){
+        wx.hideToast({
+          success: (res) => {
+            that.showSnackbar(toast)
+          },
+        })
+      } 
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -19,7 +19,7 @@
         </view>
       </view>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard" data-data="ojhdtmail@gmail.com" data-toast="邮箱已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           发送邮件
@@ -29,7 +29,7 @@
         </view>
       </view>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard" data-data="" data-toast="地址已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           创建分支
@@ -89,7 +89,7 @@
     <view class="subtitle" style="color:{{primaryColor}};">
       <text>开源许可</text>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover" bindtap="setClipboard" data-data="https://github.com/TooBug/wemark" data-toast="地址已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           TooBug - wemark
@@ -102,7 +102,7 @@
         </view>
       </view>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover" bindtap="setClipboard" data-data="https://github.com/dannnney/weapp-event" data-toast="地址已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           dannnney - weapp-event
@@ -123,4 +123,8 @@
     <text>arrow_back</text>
   </view>
   <text style="margin-left:10px;">关于</text>
+</view>
+
+<view class="snackbar" style="{{snackbarStyle}}">
+  <text>{{snackbarContent}}</text>
 </view>
