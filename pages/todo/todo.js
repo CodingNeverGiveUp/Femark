@@ -528,6 +528,7 @@ Page({
 
   //请求用户订阅授权
   requestSubscribeMessage() {
+    var that = this
     wx.requestSubscribeMessage({
       tmplIds: ['n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI'],
       success(res) {
@@ -535,6 +536,12 @@ Page({
       },
       fail(res) {
         console.log('授权失败', res)
+        that.setData({
+          notification: false,
+        })
+        that.selectAllComponents('.switch').forEach(element => {
+          element.refreshStatus()
+        })
       }
     })
   },
