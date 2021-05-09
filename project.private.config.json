@@ -53,6 +53,11 @@
           "pathName": "pages/behaviorSetting/behaviorSetting",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/about/about",
+          "pathName": "pages/about/about",
+          "scene": null
         }
       ]
     }
