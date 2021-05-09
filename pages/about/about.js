@@ -158,7 +158,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      primaryColor: app.globalData.primaryColor,
+      pureTheme: app.globalData.pureTheme,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      theme: app.globalData.systemInfo.theme,
+    })
   },
 
   /**

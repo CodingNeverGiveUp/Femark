@@ -59,7 +59,9 @@ Page({
                 notificationTimestamp: Date.parse(tempTime.replace(/-/g, '/')),
                 autoDelete: that.data.autoDelete,
                 autoDeleteDelay: that.data.autoDeleteDelay,
+                autoDeleteTimestamp:  Date.parse(tempTime.replace(/-/g, '/')) + that.data.autoDeleteDelay * 86400000,
                 timestamp: new Date().getTime(),
+                done: false,
               }
               await database.addTask(object)
               wx.showToast({
@@ -452,6 +454,9 @@ Page({
         edited: true,
       })
       if (e.currentTarget.dataset.id == "notification") {
+        if(this.data.notification == false){
+          this.requestSubscribeMessage()
+        }
         this.setData({
           notification: e.detail.value
         })
@@ -519,6 +524,19 @@ Page({
         snackbarStyle: "bottom:-50px",
       })
     }, 1500);
+  },
+
+  //请求用户订阅授权
+  requestSubscribeMessage() {
+    wx.requestSubscribeMessage({
+      tmplIds: ['n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI'],
+      success(res) {
+        console.log('授权成功', res)
+      },
+      fail(res) {
+        console.log('授权失败', res)
+      }
+    })
   },
 
   /**

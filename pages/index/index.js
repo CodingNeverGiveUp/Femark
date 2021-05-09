@@ -27,7 +27,7 @@ Page({
 
   // 事件处理函数
   onLoad() {
-    
+
     //拉取openid
     // if (app.globalData.openid) {
     //   this.setData({
@@ -202,6 +202,49 @@ Page({
     })
   },
 
+  test() {
+    var currenttime = (new Date()).valueOf();
+    var currentdate = new Date(currenttime);
+    console.log(currenttime, currentdate)
+    const db = wx.cloud.database()
+    const formatTime = date => {
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const day = date.getDate()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+    
+      return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
+    }
+    var messages = []
+    db.collection('note').field({
+        task: true,
+        _openid: true,
+        _id: true,
+      }).get()
+      .then(res => {
+        console.log(res)
+        res.data.forEach((element, index) => {
+          element.task.forEach((innerElement,innerIndex) => {
+            if (innerElement.notification == true && innerElement.done == false && currenttime < innerElement.notificationTimestamp && currenttime + 300000 > innerElement.notificationTimestamp) {
+              let message = {
+                _openid: element._openid,
+                _id: element._id,
+                heading: innerElement.heading == null ? '' : innerElement.heading,
+                time: formatTime(new Date(innerElement.notificationTimestamp)),
+                urgency: "紧急且重要",
+                content: innerElement.content == null ? '' : innerElement.content,
+                reminderStatus: "待确认",
+                index: innerIndex,
+              }
+              messages.push(message)
+            }
+          })
+        })
+      })
+  },
+
   onTabItemTap(e) {
     console.log("aaaaa");
   },
@@ -244,7 +287,7 @@ Page({
         })
       }
     }
-    if(this.data.currentPage == 1){
+    if (this.data.currentPage == 1) {
       sort()
     }
   },
@@ -398,9 +441,6 @@ Page({
   sendOne() { //title,time,urgency,content,reminderStatus
     wx.cloud.callFunction({
         name: "sendOne",
-        data: {
-          openid: this.data.openid,
-        }
       }).then(res => {
         console.log("发送单条成功", res);
       })
