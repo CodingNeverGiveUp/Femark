@@ -106,9 +106,9 @@
 
 <!-- <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view> -->
 
-<page-container wx:if="{{popCategoryEdit}}" show="{{popCategoryEdit}}" position="bottom" round="true"
+<page-container wx:if="{{popCategoryEditIf}}" show="{{popCategoryEdit}}" position="bottom" round="true"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
-  customStyle="max-width: 500px;left:0;right:0;margin:auto;">
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;" bind:afterleave="deleteContainer">
   <view class="list">
     <view class="list_item">
       <view class="list_item_left">
@@ -143,9 +143,9 @@
   </view>
 </page-container>
 
-<page-container wx:if="{{popupPassword}}" show="{{popupPassword}}" position="bottom" round="true"
+<page-container wx:if="{{popupPasswordIf}}" show="{{popupPassword}}" position="bottom" round="true"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
-  customStyle="max-width: 500px;left:0;right:0;margin:auto;">
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;" bind:afterleave="deleteContainer">
   <view class="content" wx:if="{{!useFingerprint}}">
     <view class="content_title">需要身份验证</view>
     <view class="content_subtitle">输入密码以继续访问</view>

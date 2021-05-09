@@ -431,11 +431,19 @@ Page({
         })
       } else if (e.currentTarget.dataset.id == "notificationDate") {
         this.setData({
-          notificationDate: e.detail.value
+          notificationDate: e.detail.value,
+          notification: false,
+        })
+        this.selectAllComponents('.switch').forEach(element => {
+          element.refreshStatus()
         })
       } else if (e.currentTarget.dataset.id == "notificationTime") {
         this.setData({
-          notificationTime: e.detail.value
+          notificationTime: e.detail.value,
+          notification: false,
+        })
+        this.selectAllComponents('.switch').forEach(element => {
+          element.refreshStatus()
         })
       } else if (e.currentTarget.dataset.id == "autoDeleteDelay") {
         this.setData({

@@ -21,7 +21,9 @@ Component({
     password: '',
     correctPassword: '',
     popupPassword: false,
+    popupPasswordIf: false,
     popCategoryEdit: false,
+    popCategoryEditIf: false,
     useFingerprint: false,
     fingerprintContent: "请触摸指纹传感器",
     listData: [],
@@ -62,7 +64,7 @@ Component({
     // },
 
     initializeListData() {
-      let array = app.globalData.categoryData.slice(1,);
+      let array = app.globalData.categoryData.slice(1, );
       let result = [];
       this.setData({
         defaultContent: app.globalData.categoryData[0]
@@ -76,8 +78,13 @@ Component({
       })
       this.setData({
         listData: result,
-        popCategoryEdit: true
+        popCategoryEditIf: true
       })
+      setTimeout(() => {
+        this.setData({
+          popCategoryEdit: true,
+        })
+      }, 100)
     },
 
     listInput(e) {
@@ -108,24 +115,24 @@ Component({
       })
     },
 
-    defaultListInput(e){
+    defaultListInput(e) {
       this.setData({
         defaultContent: e.detail.value,
       })
     },
 
-    listCancel(){
+    listCancel() {
       this.setData({
         popCategoryEdit: false
       })
     },
 
-    listConfirm(){
+    listConfirm() {
       wx.showLoading({
         title: '操作中',
       })
       let result = [this.data.defaultContent]
-      this.data.listData.forEach((element, index)=>{
+      this.data.listData.forEach((element, index) => {
         result.push(element.content)
       })
       wx.cloud.database().collection('note').doc(app.globalData.id).update({
@@ -142,7 +149,7 @@ Component({
         wx.showToast({
           title: '已保存',
         })
-      }).catch(err=>{
+      }).catch(err => {
         wx.showToast({
           title: '网络错误',
           icon: "error"
@@ -430,9 +437,14 @@ Component({
 
     popupPassword(e) {
       this.setData({
-        data: e,
-        popupPassword: true,
+        popupPasswordIf: true,
       })
+      setTimeout(() => {
+        this.setData({
+          data: e,
+          popupPassword: true,
+        })
+      }, 100)
     },
 
     passwordFocus() {
@@ -574,6 +586,15 @@ Component({
           })
         }
       })
+    },
+
+    deleteContainer(){
+      setTimeout(() => {
+        this.setData({
+          popCategoryEditIf: false,
+          popupPasswordIf: false,
+        })
+      }, 100);
     },
 
     touchStart: function (e) {

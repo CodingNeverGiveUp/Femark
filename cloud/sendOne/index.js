@@ -17,12 +17,13 @@ exports.main = async (event, context) => {
 
     return `${year}年${month}月${day}日 ${[hour, minute, second].map(formatNumber).join(':')}`
   }
-  var messages = []
+  var messages = [];
+  var dels = [];
   //获取当前时间戳和时间
   var currenttime = (new Date()).valueOf();
   var currentdate = new Date(currenttime);
   try {
-    // 从云开发数据库中查询等待发送的消息列表
+    // 从云开发数据库中查询等待发送的消息列表及到时删除的消息列表
     await db
       .collection('note').field({
         task: true,
@@ -46,9 +47,34 @@ exports.main = async (event, context) => {
               }
               messages.push(message)
             }
+            if (innerElement.autoDelete == true && currenttime > innerElement.autoDeleteTimestamp) {
+              let del = {
+                _openid: element._openid,
+                _id: element._id,
+                timestamp: element.timestamp,
+              }
+              dels.push(del)
+            }
           })
         })
       })
+
+    //循环删除列表
+
+
+    const delPromises = dels.map(del => {
+      try {
+        return db.collection('note').doc(del._id).update({
+          data: {
+            task: _.pull({
+              timestamp: del.timestamp
+            })
+          }
+        })
+      } catch (e) {
+        return e;
+      }
+    });
 
     // 循环消息列表
     const sendPromises = messages.map(async message => {
@@ -93,7 +119,8 @@ exports.main = async (event, context) => {
       }
     });
 
-    return Promise.all(sendPromises);
+    // return Promise.all(sendPromises);
+    return Promise.all(delPromises);
   } catch (err) {
     console.log(err);
     console.log(err.time);
