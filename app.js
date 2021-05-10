@@ -329,7 +329,11 @@ App({
   // 获取随机颜色
   getRandomColor() {
     if (this.globalData.pureTheme) {
-      return "";
+      if(this.globalData.systemInfo.theme == 'light'){
+        return "#ffffff"
+      }else{
+        return "#303638"
+      }
     } else {
       let num = Math.random();
       if (num >= 0 && num < 0.2) {
