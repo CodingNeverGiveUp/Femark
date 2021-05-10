@@ -352,7 +352,7 @@
 }
 
 .month {
-  color: #ccc;
+  color: #fff;
   font-size: .8rem;
 }
 
