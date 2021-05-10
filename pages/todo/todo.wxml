@@ -57,7 +57,7 @@
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{notification}}" data-id="notification"
           disabled="{{!edit}}">
           <text slot="title">提醒</text>
-          <text slot="subtitle">于目标时间发送通知\n需要获取通知权限</text>
+          <text slot="subtitle">于目标时间发送通知\n需要获取通知权限\n更改目标时间后需重新授权</text>
         </md-switch>
         <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{autoDelete}}" data-id="autoDelete" disabled="{{!edit}}">

@@ -355,7 +355,7 @@ Page({
       a = Math.floor(a)
     }
     let b = res % 40
-    console.log(res, a, b)
+    // console.log(res, a, b)
     if (this.data.listData[index + a] && a != 0) {
       if (b > 20) {
         this.setData({
@@ -418,7 +418,7 @@ Page({
   },
 
   pick(e) {
-    console.log(e);
+    // console.log(e);
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
@@ -454,7 +454,7 @@ Page({
   },
 
   switch (e) {
-    console.log(e);
+    // console.log(e);
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
@@ -662,7 +662,7 @@ Page({
   },
 
   onThemeChange: function () {
-    console.log(app.globalData.systemInfo.theme)
+    // console.log(app.globalData.systemInfo.theme)
     this.setData({
       theme: app.globalData.systemInfo.theme
     })

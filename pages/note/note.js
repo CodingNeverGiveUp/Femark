@@ -497,6 +497,7 @@ Page({
     }
   },
 
+
   floatTap() {
     if (this.data.edit) {
       if (this.data.edited) {

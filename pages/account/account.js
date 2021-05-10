@@ -23,6 +23,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    this.getImage();
+    this.getMoto();
+    this.animation();
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
     //重新拉取侧栏
     let tabbar = this.getTabBar();
     tabbar.setData({
@@ -40,22 +56,6 @@ Page({
       hitokoto: app.globalData.hitokoto,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    this.getImage();
-    this.getMoto();
-    this.animation();
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    let tabbar = this.getTabBar()
     tabbar.setData({
       currentPage: 4,
       btn3: `color:${this.data.primaryColor}`,

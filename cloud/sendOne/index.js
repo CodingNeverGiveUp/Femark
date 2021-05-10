@@ -35,13 +35,22 @@ exports.main = async (event, context) => {
         res.data.forEach((element, index) => {
           element.task.forEach((innerElement, innerIndex) => {
             if (innerElement.notification == true && innerElement.done == false && currenttime < innerElement.notificationTimestamp && currenttime + 120000 > innerElement.notificationTimestamp) {
+              if(innerElement.content == null || innerElement.content){
+                if(innerElement.listData.length != 0){
+                  let content = `${innerElement.listData[0].content} 等${innerElement.listData.length}项`
+                }else{
+                  let content = '空'
+                }
+              }else{
+                let content = innerElement.content
+              }
               let message = {
                 _openid: element._openid,
                 _id: element._id,
-                heading: innerElement.heading == null || innerElement.heading == '' ? '空' : innerElement.heading,
+                heading: innerElement.heading == null || innerElement.heading == '' ? '无' : innerElement.heading,
                 time: formatTime(new Date(innerElement.notificationTimestamp)),
                 urgency: "紧急且重要",
-                content: innerElement.content == null || innerElement.content == '' ? '空' : innerElement.content,
+                content: content,
                 reminderStatus: "待确认",
                 index: innerIndex,
               }

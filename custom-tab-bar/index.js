@@ -194,7 +194,7 @@ Component({
         a = Math.floor(a)
       }
       let b = res % 40
-      console.log(res, a, b)
+      // console.log(res, a, b)
       if (this.data.listData[index + a] && a != 0) {
         if (b > 20) {
           this.setData({
@@ -611,10 +611,10 @@ Component({
     touchEnd: function (e) {
       let start = this.data.touchS
       let end = this.data.touchE
-      console.log(start)
-      console.log(end)
+      // console.log(start)
+      // console.log(end)
       if (start[1] < end[1] - 70) {
-        console.log('下滑')
+        // console.log('下滑')
         this.setData({
           mainStyle: "",
           floatStyle: "",
