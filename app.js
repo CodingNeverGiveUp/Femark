@@ -183,12 +183,12 @@ App({
       async function process() {
         var db
         await wx.cloud.database().collection('note').doc(that.globalData.id).get()
-        .then(res=>{
-          db = res
-        })
+          .then(res => {
+            db = res
+          })
         console.log(db)
         //拉取及预处理笔记待办数据
-        for(let i = 0; i < db.data.note.length; i++){
+        for (let i = 0; i < db.data.note.length; i++) {
           db.data.note[i].color = that.getRandomColor()
           db.data.note[i].id = i
           await wx.cloud.getTempFileURL({
@@ -196,7 +196,7 @@ App({
           }).then(res => {
             console.log("get url * 1")
             db.data.note[i].galleryDetail = res.fileList
-          }).catch(err=>{
+          }).catch(err => {
             reject()
           })
         }
@@ -333,15 +333,40 @@ App({
     } else {
       let num = Math.random();
       if (num >= 0 && num < 0.2) {
-        return "#ae6060";
+        if (this.globalData.lastColor == "#ae6060") {
+          return "#20a674";
+        } else {
+          this.globalData.lastColor = "#ae6060"
+          return "#ae6060";
+        }
       } else if (num >= 0.2 && num < 0.4) {
-        return "#20a674";
+        if (this.globalData.lastColor == "#20a674") {
+          return "#176095";
+        } else {
+          this.globalData.lastColor = "#20a674"
+          return "#20a674";
+        }
       } else if (num >= 0.4 && num < 0.6) {
-        return "#176095";
+        if (this.globalData.lastColor == "#176095") {
+          return "#ffbc66";
+        } else {
+          this.globalData.lastColor = "#176095"
+          return "#176095";
+        }
       } else if (num >= 0.6 && num < 0.8) {
-        return "#ffbc66";
-      } else {
-        return "#97756b";
+        if (this.globalData.lastColor == "#ffbc66") {
+          return "#97756b";
+        } else {
+          this.globalData.lastColor = "#ffbc66"
+          return "#ffbc66";
+        }
+      } else if (num >= 0.8 && num <= 1) {
+        if (this.globalData.lastColor == "#97756b") {
+          return "#ae6060";
+        } else {
+          this.globalData.lastColor = "#97756b"
+          return "#97756b";
+        }
       }
     }
   },
@@ -393,5 +418,6 @@ App({
     bing: true,
     pureTheme: false,
     categoryData: [],
+    lastColor: "#ae6060"
   }
 })
