@@ -143,9 +143,7 @@ Component({
         }
       }).then(res => {
         app.globalData.categoryData = this.data.listData;
-        this.setData({
-          popCategoryEdit: false,
-        })
+        this.deleteContainer()
         wx.showToast({
           title: '已保存',
         })
@@ -507,10 +505,10 @@ Component({
             data: that.data.data
           })
           that.setData({
-            popupPassword: false,
             useFingerprint: false,
             fingerprintContent: "请触摸指纹传感器",
           })
+          that.deleteContainer()
         }
       })
     },
