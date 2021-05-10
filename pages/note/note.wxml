@@ -1,6 +1,6 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="425rpx" enable-flex="true" enhanced="true"
-  showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindscrolltoupper="toUpper">
+  showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindscrolltoupper="scroll">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -42,7 +42,7 @@
           <text>配置项</text>
         </view>
         <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          dataset="{{categoryData}}" data-id="category" disabled="{{!edit}}">
+          dataset="{{categoryData}}" data-id="category" disabled="{{!edit}}" selected="{{category}}">
           <text slot="title">类别</text>
           <text slot="subtitle">笔记所属类别</text>
         </md-picker>

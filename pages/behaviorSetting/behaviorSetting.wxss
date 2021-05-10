@@ -52,3 +52,7 @@
   margin-left: 50rpx;
   font-size: .8rem;
 }
+
+.sub{
+  color: #666
+}

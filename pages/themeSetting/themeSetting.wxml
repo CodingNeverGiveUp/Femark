@@ -83,6 +83,9 @@
       <text slot="title">Hitokoto - 一言</text>
       <text slot="subtitle">自动获取 Hitokoto 一言语句</text>
     </md-switch>
+    <view class="subtitle sub">
+      <text>设置将在点击左上角返回后保存生效</text>
+    </view>
   </view>
 </scroll-view>
 

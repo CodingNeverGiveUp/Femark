@@ -24,6 +24,9 @@
       <text slot="title">刷新延时</text>
       <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
     </md-picker>
+    <view class="subtitle sub">
+      <text>设置将在点击左上角返回后保存生效</text>
+    </view>
     <!-- <view class="subtitle" style="color:#ff5252;">
       <text>危险区</text>
     </view> -->
