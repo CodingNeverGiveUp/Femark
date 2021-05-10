@@ -18,11 +18,15 @@
   <!-- 笔记 -->
   <view class="note" wx:if="{{isPad == true || currentPage == 1}}">
     <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
-      <view class="head_title" bindtap="showSelector">
+      <view class="head_title" wx:if="{{!isPad}}" bindtap="showSelector">
         <text>笔记</text>
-        <text wx:if="{{!isPad}}" class="material-icons">expand_more</text>
+        <text class="material-icons">expand_more</text>
       </view>
-      <text class="head_subtitle">共{{note.length}}条数据</text>
+      <text class="head_subtitle" wx:if="{{!isPad}}">共{{note.length}}条数据</text>
+      <view class="head_title" wx:if="{{isPad}}" bindtap="showSelector">
+        <text>记事</text>
+      </view>
+      <text class="head_subtitle" wx:if="{{isPad}}">共{{note.length}}条笔记/{{task.length}}条待办</text>
     </view>
     <view class="empty" wx:if="{{note.length == 0}}">
       <image src="/source/img/empty.png" mode="widthFix"></image>
@@ -30,7 +34,7 @@
     </view>
     <view class="note_content" wx:if="{{note.length != 0}}">
       <view id="note_left">
-        <view class="note_block note_block_color" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};"
+        <view class="note_block note_color" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};"
           hover-class="c_hover" bindtap="note" data-data="{{item}}">
           <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image"
             style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
@@ -84,11 +88,11 @@
   <!-- 待办 -->
   <view class="todo" wx:if="{{isPad == true || currentPage == 2}}">
     <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
-      <view class="head_title" bindtap="showSelector">
+      <view class="head_title" wx:if="{{!isPad}}" bindtap="showSelector">
         <text>待办</text>
-        <text wx:if="{{!isPad}}" class="material-icons">expand_more</text>
+        <text class="material-icons">expand_more</text>
       </view>
-      <text class="head_subtitle">共{{task.length}}条数据</text>
+      <text wx:if="{{!isPad}}" class="head_subtitle">共{{task.length}}条数据</text>
     </view>
     <view class="main">
       <view class="empty" wx:if="{{task.length == 0}}">
@@ -96,7 +100,7 @@
         <text>无内容\n尝试下拉刷新</text>
       </view>
       <view wx:for="{{task}}" wx:key="index" bindtap="todo" hover-class="c_hover" data-data="{{item}}">
-        <view class="db_box">
+        <view class="db_box db_box_color">
           <view class="box_left" style="background-color:{{item.color}};">
             <view class="month">{{item.month}}</view>
             <view class="day">{{item.date}}</view>

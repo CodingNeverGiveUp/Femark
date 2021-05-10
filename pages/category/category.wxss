@@ -211,6 +211,10 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  .head_subtitle{
+    color: #ccc;
+  }
+
   .category {
     box-shadow: 0 0 10rpx #222;
   }

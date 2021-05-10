@@ -106,10 +106,12 @@
 
   .note {
     width: 50%;
+    padding: 40px 10rpx 0 40rpx;
   }
 
   .todo {
     width: 50%;
+    padding: 40px 40rpx 0 10rpx;
   }
 }
 
@@ -143,7 +145,7 @@
   margin: 0 0 20px 0;
 }
 
-.note_block_color{
+.note_color{
   color: #fff;
 }
 
@@ -318,6 +320,10 @@
   overflow: hidden;
 }
 
+.db_box_color{
+  color: #fff;
+}
+
 .box_left {
   width: 25%;
   height: 100%;
@@ -353,18 +359,15 @@
 }
 
 .month {
-  color: #fff;
   font-size: .8rem;
 }
 
 .day {
-  color: #fff;
   font-size: 1.5rem;
   padding-top: 2px;
 }
 
 .topic {
-  color: #fff;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -377,7 +380,6 @@
   justify-content: flex-start;
   align-items: center;
   font-size: .8rem;
-  color: #fff;
 }
 
 .ddl view{
@@ -416,6 +418,10 @@
   }
 
   .note_block{
+    box-shadow: 0 0 10rpx #222;
+  }
+
+  .db_box{
     box-shadow: 0 0 10rpx #222;
   }
 }
