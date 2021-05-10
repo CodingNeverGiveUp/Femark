@@ -108,7 +108,7 @@
 
 <page-container wx:if="{{popCategoryEditIf}}" show="{{popCategoryEdit}}" position="bottom" round="true"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
-  customStyle="max-width: 500px;left:0;right:0;margin:auto;" bind:afterleave="deleteContainer">
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;" >
   <view class="list">
     <view class="list_item">
       <view class="list_item_left">
@@ -138,7 +138,7 @@
     <view class="icon material-icons" hover-class="hover"><text>add</text></view>
     <text>新增清单项</text>
   </view>
-  <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="deleteContainer">取消</view>
+  <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="listCancel">取消</view>
   <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="listConfirm">保存
   </view>
 </page-container>

@@ -23,7 +23,7 @@
   <view class="category" wx:for="{{collatedData}}" wx:key="index" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{item.triggered?'':'height:150px!important;'}}height:{{item.height}}px;">
     <view class="category_box" bindtap="expand" data-index="{{index}}" hover-class="c_hover" style="background:{{item.color}};">
       <view class="category_box_text">
-        <view class="title">{{item.name == null ? '未命名' : item.name}}</view>
+        <view class="title">{{item.name == null || item.name == '' ? '未命名' : item.name}}</view>
         <view class="subtitle">共{{item.data.length}}条数据</view>
       </view>
       <view class="material-icons icon" hover-class="hover">{{item.triggered?'expand_less':'expand_more'}}</view>

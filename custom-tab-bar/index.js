@@ -143,7 +143,7 @@ Component({
         }
       }).then(res => {
         app.globalData.categoryData = this.data.listData;
-        this.deleteContainer()
+        this.listCancel()
         wx.showToast({
           title: '已保存',
         })
@@ -435,6 +435,7 @@ Component({
 
     popupPassword(e) {
       this.setData({
+        popCategoryEditIf: false,
         popupPasswordIf: true,
       })
       setTimeout(() => {
