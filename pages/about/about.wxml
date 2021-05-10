@@ -1,0 +1,130 @@
+<!--pages/about/about.wxml-->
+<scroll-view class="scroll" scroll-y="true" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
+  bindscroll="scroll" enable-flex="true">
+  <view class="main" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+    <view class="version">
+      <image src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_white.png'}}"></image>
+      <text>Femark 1.4.4_210509_beta</text>
+    </view>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>帮助</text>
+    </view>
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <view class="component_text">
+        <view class="component_title">
+          使用指南
+        </view>
+        <view class="component_subtitle">
+          基本使用指引及疑难解答
+        </view>
+      </view>
+    </view>
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard" data-data="ojhdtmail@gmail.com" data-toast="邮箱已复制到剪贴板">
+      <view class="component_text">
+        <view class="component_title">
+          发送邮件
+        </view>
+        <view class="component_subtitle">
+          联系开发者
+        </view>
+      </view>
+    </view>
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard" data-data="" data-toast="地址已复制到剪贴板">
+      <view class="component_text">
+        <view class="component_title">
+          创建分支
+        </view>
+        <view class="component_subtitle">
+          在 GitHub 查看源码
+        </view>
+      </view>
+    </view>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>开发者</text>
+    </view>
+    <view class="developer" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <image src="/source/img/ojhdt.jpeg" class="developer_avatar" mode="widthFix"></image>
+      <view class="component_text">
+        <view class="component_title">
+          Ojhdt
+        </view>
+        <view class="component_subtitle">
+          开发者 & 设计者
+        </view>
+      </view>
+    </view>
+    <view class="developer" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <image src="/source/img/habc706.jpg" class="developer_avatar" mode="widthFix"></image>
+      <view class="component_text">
+        <view class="component_title">
+          habc706
+        </view>
+        <view class="component_subtitle">
+          开发者
+        </view>
+      </view>
+    </view>
+    <view class="developer" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <image src="/source/img/liusenjun.jpg" class="developer_avatar" mode="widthFix"></image>
+      <view class="component_text">
+        <view class="component_title">
+          liusenjun
+        </view>
+        <view class="component_subtitle">
+          界面开发 & 想法贡献
+        </view>
+      </view>
+    </view>
+    <view class="developer" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <image src="/source/img/tssha.jpg" class="developer_avatar" mode="widthFix"></image>
+      <view class="component_text">
+        <view class="component_title">
+          TSSHA
+        </view>
+        <view class="component_subtitle">
+          云开发
+        </view>
+      </view>
+    </view>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>开源许可</text>
+    </view>
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover" bindtap="setClipboard" data-data="https://github.com/TooBug/wemark" data-toast="地址已复制到剪贴板">
+      <view class="component_text">
+        <view class="component_title">
+          TooBug - wemark
+        </view>
+        <view class="component_subtitle">
+          https://github.com/TooBug/wemark
+        </view>
+        <view class="component_subtitle">
+          MIT License
+        </view>
+      </view>
+    </view>
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover" bindtap="setClipboard" data-data="https://github.com/dannnney/weapp-event" data-toast="地址已复制到剪贴板">
+      <view class="component_text">
+        <view class="component_title">
+          dannnney - weapp-event
+        </view>
+        <view class="component_subtitle">
+          https://github.com/dannnney/weapp-event
+        </view>
+        <view class="component_subtitle">
+          MIT License
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="head_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{headbarStyle}}">
+  <view class="icon material-icons" hover-class="hover" bindtap="back">
+    <text>arrow_back</text>
+  </view>
+  <text style="margin-left:10px;">关于</text>
+</view>
+
+<view class="snackbar" style="{{snackbarStyle}}">
+  <text>{{snackbarContent}}</text>
+</view>

@@ -1,7 +1,6 @@
 // pages/account/account.js
 const app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -24,21 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //重新拉取侧栏
-    let tabbar = this.getTabBar();
-    tabbar.setData({
-      useSidebar: app.globalData.useSidebar,
-      primaryColor: app.globalData.primaryColor,
-      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
-    })
-    //重新拉取配置
-    this.setData({
-      avatarUrl: app.globalData.userInfo.avatarUrl,
-      nickName: app.globalData.userInfo.nickName,
-      pureTheme: app.globalData.pureTheme,
-      primaryColor: app.globalData.primaryColor,
-      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
-    })
+    
   },
 
   /**
@@ -54,7 +39,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let tabbar = this.getTabBar()
+    //重新拉取侧栏
+    let tabbar = this.getTabBar();
+    tabbar.setData({
+      useSidebar: app.globalData.useSidebar,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
+    //重新拉取配置
+    this.setData({
+      avatarUrl: app.globalData.userInfo.avatarUrl,
+      nickName: app.globalData.userInfo.nickName,
+      pureTheme: app.globalData.pureTheme,
+      primaryColor: app.globalData.primaryColor,
+      bing: app.globalData.bing,
+      hitokoto: app.globalData.hitokoto,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
     tabbar.setData({
       currentPage: 4,
       btn3: `color:${this.data.primaryColor}`,
@@ -76,6 +77,56 @@ Page({
         sld3: '',
       })
     }, 250)
+  },
+
+  themeSetting(){
+    var that = this
+    wx.navigateTo({
+      url: '/pages/themeSetting/themeSetting',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        toAccount: function (data) {
+          that.onPullDownRefresh()
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toThemeSetting', {
+        })
+      }
+    })
+  },
+
+  behaviorSetting(){
+    var that = this
+    wx.navigateTo({
+      url: '/pages/behaviorSetting/behaviorSetting',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        toAccount: function (data) {
+          that.onPullDownRefresh()
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toBehaviorSetting', {
+        })
+      }
+    })
+  },
+
+  about(){
+    wx.navigateTo({
+      url: '/pages/about/about',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        toAccount: function (data) {
+
+        },
+      },
+      success(res) {
+        res.eventChannel.emit('toAbout', {
+        })
+      }
+    })
   },
 
   getImage: function () {
@@ -201,6 +252,15 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    return{
+      title: "Femark: 记下身边的故事与风景",
+      path: '/pages/guide/guide'
+    }
+  },
 
+  onShareTimeline(){
+    return{
+      title: "Femark: 记下身边的故事与风景",
+    }
   }
 })

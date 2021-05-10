@@ -112,12 +112,14 @@ page {
   /* background: #000; */
 }
 
+.side_bg{
+  background: #fff;
+}
+
 .side {
   flex: 1 0 auto;
   width: 425rpx;
-  height: 200px;
   max-width: 400px;
-  /* background: green; */
 }
 
 .main {
@@ -140,6 +142,10 @@ page {
   margin: 0 0 500px 0;
   /* height: 200px; */
   /* background: orange; */
+}
+
+.preview_bg{
+  border-left: solid 1px #bbb;
 }
 
 .heading {

@@ -1,12 +1,13 @@
 <!--pages/category/category.wxml-->
-<view class="category_Container2">
+<view class="category_container">
   <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
     <view class="head_title">
       <text>分类</text>
     </view>
-    <text class="head_subtitle">共{{10}}条数据</text>
+    <text class="head_subtitle">共{{categoryData.length}}个分组</text>
   </view>
-  <view wx:key="id" wx:for="{{test01.list01}}" data-xushu="{{index}}"
+
+  <!-- <view wx:key="id" wx:for="{{test01.list01}}" data-xushu="{{index}}"
     style="background-color:{{test01.test_Color2}} ;height:{{height_Array[index].height}};" class="category_Card"
     bindtap="zhankai">
     <view class="card_Category1">
@@ -17,5 +18,22 @@
       {{item2.content}}
     </view>
   </view>
-  <view style="height:200rpx"></view>
+  <view style="height:200rpx"></view> -->
+
+  <view class="category" wx:for="{{collatedData}}" wx:key="index" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{item.triggered?'':'height:150px!important;'}}height:{{item.height}}px;">
+    <view class="category_box" bindtap="expand" data-index="{{index}}" hover-class="c_hover" style="background:{{item.color}};">
+      <view class="category_box_text">
+        <view class="title">{{item.name == null || item.name == '' ? '未命名' : item.name}}</view>
+        <view class="subtitle">共{{item.data.length}}条数据</view>
+      </view>
+      <view class="material-icons icon" hover-class="hover">{{item.triggered?'expand_less':'expand_more'}}</view>
+    </view>
+    <view class="category_detail">
+      <view class="category_detail_bg" style="background:{{item.color}};"></view>
+      <view class="category_detail_box" hover-class="c_hover" wx:for="{{item.data}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index" bindtap="note" data-data="{{innerItem}}">
+        <view class="title">{{innerItem.encrypt?'受保护的内容':innerItem.heading==''||innerItem.heading==null?'无标题':innerItem.heading}}\n</view>
+        <view class="subtitle">{{innerItem.encrypt?'访问需要身份验证':innerItem.content==''||innerItem.content==null?'无内容':innerItem.content}}</view>
+      </view>
+    </view>
+  </view>
 </view>

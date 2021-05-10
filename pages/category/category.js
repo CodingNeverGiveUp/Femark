@@ -6,48 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    test_Lenth: '',
-    height_Array: [{
-      height: '150rpx',
-      tips: 1
-    }, {
-      height: '150rpx',
-      tips: 1
-    }, {
-      height: '150rpx',
-      tips: 1
-    }],
-    test01: { //把具体内容嵌套在list01里面
-      test_Color2: '#4285f4',
-      list01: [{
-        title_Name: '学习',
-        real_Content: [{
-          content: '学习一下123Aa222222222222222bsssdrfeeszzzzaaqqqqqqasfghh'
-        }, {
-          content: '学c++898'
-        }, {
-          content: 'uaaohu'
-        }]
-      }, {
-        title_Name: '运动',
-        real_Content: [{
-          content: '学习一下123Aab'
-        }, {
-          content: '学c++898'
-        }, {
-          content: 'uaaohu'
-        }]
-      }, {
-        title_Name: '生活',
-        real_Content: [{
-          content: '学习一下123Aab'
-        }, {
-          content: '学c++898'
-        }, {
-          content: 'uaaohu'
-        }]
-      }]
-    }
+    categoryData: []
   },
 
   //跨页面异步传递
@@ -60,8 +19,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    this.onPullDownRefresh()
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    let tabbar = this.getTabBar()
     //重新拉取侧栏
-    let tabbar = this.getTabBar();
     tabbar.setData({
       useSidebar: app.globalData.useSidebar,
       primaryColor: app.globalData.primaryColor,
@@ -74,20 +47,13 @@ Page({
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    let tabbar = this.getTabBar()
+    //数据拉取
+    this.setData({
+      note: app.globalData.note,
+      task: app.globalData.task,
+      categoryData: app.globalData.categoryData,
+    })
+    //侧栏状态
     tabbar.setData({
       currentPage: 3,
       btn2: `color:${this.data.primaryColor}`,
@@ -129,7 +95,40 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    app.refresh().then(res => {
+      //重新拉取侧栏
+      let tabbar = this.getTabBar();
+      tabbar.setData({
+        useSidebar: app.globalData.useSidebar,
+        primaryColor: app.globalData.primaryColor,
+        rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      })
+      //重新拉取配置
+      this.setData({
+        useSidebar: app.globalData.useSidebar,
+        pureTheme: app.globalData.pureTheme,
+        primaryColor: app.globalData.primaryColor,
+        rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      })
+      //数据拉取
+      this.setData({
+        note: app.globalData.note,
+        task: app.globalData.task,
+        categoryData: app.globalData.categoryData,
+      })
+      //整理
+      this.sort()
+      wx.stopPullDownRefresh()
+      wx.showToast({
+        title: '数据已更新',
+      })
+    }).catch(err => {
+      wx.stopPullDownRefresh()
+      wx.showToast({
+        title: '网络错误',
+        icon: "error"
+      })
+    })
   },
 
   /**
@@ -146,23 +145,79 @@ Page({
 
   },
 
-  zhankai: function (e) {
-    var n = e.currentTarget.dataset.xushu
-    let tip = this.data.height_Array[n].tips
-    let content_len = this.data.test01.list01[n].real_Content.length
-    let gao = (content_len + 1) * 150
-    let str = 'height_Array' + '[' + n + ']' + '.height'
-    let str2 = 'height_Array' + '[' + n + ']' + '.tips'
-    if (tip > 0) {
-      this.setData({
-        [str]: gao + 'rpx',
-        [str2]: -1
+  // zhankai: function (e) {
+  //   var n = e.currentTarget.dataset.xushu
+  //   let tip = this.data.height_Array[n].tips
+  //   let content_len = this.data.test01.list01[n].real_Content.length
+  //   let gao = (content_len + 1) * 150
+  //   let str = 'height_Array' + '[' + n + ']' + '.height'
+  //   let str2 = 'height_Array' + '[' + n + ']' + '.tips'
+  //   if (tip > 0) {
+  //     this.setData({
+  //       [str]: gao + 'rpx',
+  //       [str2]: -1
+  //     })
+  //   } else {
+  //     this.setData({
+  //       [str]: '150rpx',
+  //       [str2]: 1
+  //     })
+  //   }
+  // },
+
+  note(e) {
+    var that = this
+    let tabbar = this.getTabBar()
+    console.log(e)
+    if (!e.currentTarget.dataset.data.encrypt) {
+      wx.navigateTo({
+        url: '/pages/note/note',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          acceptDataFromOpenedPage: function (data) {
+            console.log(data)
+          },
+        },
+        success(res) {
+          res.eventChannel.emit('toNote', {
+            edit: false,
+            data: e.currentTarget.dataset.data
+          })
+        }
       })
     } else {
-      this.setData({
-        [str]: '150rpx',
-        [str2]: 1
-      })
+      tabbar.popupPassword(e.currentTarget.dataset.data)
     }
   },
+
+  expand(e) {
+    let index = e.currentTarget.dataset.index
+    this.setData({
+      [`collatedData[${index}].triggered`]: this.data.collatedData[index].triggered ? false : true,
+    })
+  },
+
+  sort() {
+    var that = this
+    var result = []
+    this.data.categoryData.forEach((element, index) => {
+      let cla = []
+      this.data.note.forEach(innerElement => {
+        if (innerElement.category == index) {
+          cla.push(innerElement)
+        }
+      })
+      result.push({
+        color: app.getRandomColor(),
+        data: cla,
+        name: element,
+        height: 150 + 60 * cla.length,
+        triggered: false,
+      })
+    })
+    this.setData({
+      collatedData: result
+    })
+  },
+
 })

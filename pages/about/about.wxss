@@ -1,0 +1,140 @@
+/* pages/about/about.wxss */
+@import "/source/icon.wxss";
+.scroll {
+  /* padding: 80px 0 0 0; */
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  /* background: #000; */
+}
+
+.hover {
+  background: var(--rgbaprimaryColor--)!important;
+}
+
+.main{
+  margin-top: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  /* background: pink; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background .2s ease-in-out;
+  color: #444;
+}
+
+.head_bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  height: 60px;
+  /* box-shadow: 0 0rpx 10rpx #bbb; */
+  padding: 20px 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 999;
+  transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+}
+
+.subtitle {
+  margin-left: 50rpx;
+  font-size: .8rem;
+}
+
+.version{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 0rpx 10rpx #bbb;
+  margin-bottom: 20px;
+}
+
+.version image{
+  width: 150px;
+  height: 150px;
+}
+
+.version text{
+  color: #666;
+  font-size: .8rem;
+  margin-bottom: 30px;
+}
+
+
+.component {
+  padding: 10px 50rpx;
+  transition: .2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.component_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* .selected_disabled{
+  display: flex;
+  align-items: center;
+  color: #666;
+} */
+
+.component_title{
+  font-size: 1rem;
+  color: #000;
+}
+
+.component_subtitle{
+  font-size: .8rem;
+  color: #666;
+}
+
+.developer{
+  padding: 10px 50rpx;
+  transition: .2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.developer_avatar{
+  width: 30px;
+  border-radius: 100%;
+  margin-right: 20px;
+}
+
+.snackbar {
+  position: fixed;
+  bottom: -50px;
+  right: 0;
+  left: 0;
+  height: 50px;
+  /* transform: translateX(-50%); */
+  background: #323232;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 50rpx;
+  transition: bottom .3s ease;
+}
+
+.snackbar text{
+  color: #fff;
+}

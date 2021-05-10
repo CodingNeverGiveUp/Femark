@@ -31,8 +31,8 @@ Page({
     useMarkdown: true,
     encrypt: false,
     password: "",
-    markdownPreview: true,
-    markdownPreviewDelay: 2,
+    markdownPreview: app.globalData.markdownPreview,
+    markdownPreviewDelay: app.globalData.markdownPreviewDelay,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
     categoryData: app.globalData.categoryData,
   },
@@ -61,8 +61,8 @@ Page({
                 await database.uploadImg(imgs)
                 wx.cloud.getTempFileURL({
                   fileList: imgs.IDs,
-                }).then(res =>{
-                  let newGalleryDetail= that.data.galleryDetail.concat(res.fileList)
+                }).then(res => {
+                  let newGalleryDetail = that.data.galleryDetail.concat(res.fileList)
                   that.setData({
                     galleryDetail: newGalleryDetail,
                   })
@@ -115,8 +115,8 @@ Page({
                 })
                 wx.cloud.getTempFileURL({
                   fileList: imgs.IDs,
-                }).then(res =>{
-                  let newGalleryDetail= that.data.galleryDetail.concat(res.fileList)
+                }).then(res => {
+                  let newGalleryDetail = that.data.galleryDetail.concat(res.fileList)
                   that.setData({
                     galleryDetail: newGalleryDetail,
                   })
@@ -135,6 +135,10 @@ Page({
               })
               wx.showToast({
                 title: "已保存更改",
+              })
+              const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('toIndex', function (data) {
+
               })
             } catch (e) {
               console.log(e)
@@ -211,8 +215,8 @@ Page({
         content: "将永久删除该笔记，该过程不可逆转，是否继续操作",
         confirmText: "仍然继续",
         confirmColor: "#ff5252",
-      }).then(res=>{
-        if(res.confirm){
+      }).then(res => {
+        if (res.confirm) {
           wx.showLoading({
             title: '正在删除',
           })
@@ -222,16 +226,20 @@ Page({
                 timestamp: that.data.timestamp
               })
             }
-          }).then(res=>{
+          }).then(res => {
             wx.showToast({
               title: '已删除',
             })
-            setTimeout(()=>{
+            setTimeout(() => {
               wx.navigateBack({
                 delta: 1,
               })
-            },1500)
-          }).catch(err=>{
+              const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('toIndex', function (data) {
+
+              })
+            }, 1500)
+          }).catch(err => {
             wx.showToast({
               title: '网络错误',
               icon: 'error'
@@ -293,7 +301,7 @@ Page({
             wx.showToast({
               title: "操作成功",
             })
-          } catch(e) {
+          } catch (e) {
             console.log(e)
             wx.showToast({
               icon: "error",
@@ -489,6 +497,7 @@ Page({
     }
   },
 
+
   floatTap() {
     if (this.data.edit) {
       if (this.data.edited) {
@@ -536,7 +545,10 @@ Page({
       pureTheme: app.globalData.pureTheme,
       isPad: app.globalData.isPad,
       primaryColor: app.globalData.primaryColor,
+      categoryData: app.globalData.categoryData,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      markdownPreview: app.globalData.markdownPreview,
+      markdownPreviewDelay: app.globalData.markdownPreviewDelay,
     })
     const eventChannel = this.getOpenerEventChannel();
     eventChannel.on('addNote', (res) => {

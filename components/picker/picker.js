@@ -74,7 +74,7 @@ Component({
       var detail = {
         value: this.data.result,
         valueKey: this.data.resultKey,
-        disabled: this.data.disabled
+        disabled: this.data.disabled,
       };
       var option = {};
       this.triggerEvent('pick', detail, option);
@@ -93,6 +93,12 @@ Component({
       } else {
         this.setData({
           selectedStyle: "",
+        })
+      }
+      if(this.data.mode == 'selector'){
+        this.setData({
+          result: this.data.dataset[this.data.selected],
+          resultKey: this.data.selected,
         })
       }
     },

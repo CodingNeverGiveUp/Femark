@@ -59,7 +59,9 @@ Page({
                 notificationTimestamp: Date.parse(tempTime.replace(/-/g, '/')),
                 autoDelete: that.data.autoDelete,
                 autoDeleteDelay: that.data.autoDeleteDelay,
+                autoDeleteTimestamp:  Date.parse(tempTime.replace(/-/g, '/')) + that.data.autoDeleteDelay * 86400000,
                 timestamp: new Date().getTime(),
+                done: false,
               }
               await database.addTask(object)
               wx.showToast({
@@ -89,12 +91,16 @@ Page({
                   [`task.${that.data.id}.notification`]: that.data.notification,
                   [`task.${that.data.id}.autoDelete`]: that.data.autoDelete,
                   [`task.${that.data.id}.autoDeleteDelay`]: that.data.autoDeleteDelay,
+                  [`task.${that.data.id}.autoDeleteTimestamp`]: Date.parse(tempTime.replace(/-/g, '/')) + that.data.autoDeleteDelay * 86400000,
                   [`task.${that.data.id}.notificationTimestamp`]: Date.parse(tempTime.replace(/-/g, '/')),
                   [`task.${that.data.id}.timestamp`]: new Date().getTime(),
                 }
               })
               wx.showToast({
                 title: "已保存更改",
+              })
+              const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('toIndex', function (data) {
               })
             } catch (e) {
               console.log(e)
@@ -136,9 +142,48 @@ Page({
 
   delete() {
     var that = this
+    var _ = wx.cloud.database().command
     if (!this.data.edit) {
       this.showSnackbar("请先启用编辑")
-    } else {}
+    } else {
+      wx.showModal({
+        title: "警告",
+        content: "将永久删除该待办，该过程不可逆转，是否继续操作",
+        confirmText: "仍然继续",
+        confirmColor: "#ff5252",
+      }).then(res => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '正在删除',
+          })
+          wx.cloud.database().collection('note').doc(app.globalData.id).update({
+            data: {
+              task: _.pull({
+                timestamp: that.data.timestamp
+              })
+            }
+          }).then(res => {
+            wx.showToast({
+              title: '已删除',
+            })
+            const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('toIndex', function (data) {
+
+              })
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 1500)
+          }).catch(err => {
+            wx.showToast({
+              title: '网络错误',
+              icon: 'error'
+            })
+          })
+        }
+      })
+    }
   },
 
   toUpper() {
@@ -310,7 +355,7 @@ Page({
       a = Math.floor(a)
     }
     let b = res % 40
-    console.log(res, a, b)
+    // console.log(res, a, b)
     if (this.data.listData[index + a] && a != 0) {
       if (b > 20) {
         this.setData({
@@ -373,7 +418,7 @@ Page({
   },
 
   pick(e) {
-    console.log(e);
+    // console.log(e);
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
@@ -384,15 +429,23 @@ Page({
         this.setData({
           markdownPreviewDelay: e.detail.value
         })
-      }else if(e.currentTarget.dataset.id == "notificationDate"){
+      } else if (e.currentTarget.dataset.id == "notificationDate") {
         this.setData({
-          notificationDate: e.detail.value
+          notificationDate: e.detail.value,
+          notification: false,
         })
-      }else if(e.currentTarget.dataset.id == "notificationTime"){
+        this.selectAllComponents('.switch').forEach(element => {
+          element.refreshStatus()
+        })
+      } else if (e.currentTarget.dataset.id == "notificationTime") {
         this.setData({
-          notificationTime: e.detail.value
+          notificationTime: e.detail.value,
+          notification: false,
         })
-      }else if(e.currentTarget.dataset.id == "autoDeleteDelay"){
+        this.selectAllComponents('.switch').forEach(element => {
+          element.refreshStatus()
+        })
+      } else if (e.currentTarget.dataset.id == "autoDeleteDelay") {
         this.setData({
           autoDeleteDelay: Number(e.detail.value)
         })
@@ -401,7 +454,7 @@ Page({
   },
 
   switch (e) {
-    console.log(e);
+    // console.log(e);
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
@@ -409,6 +462,9 @@ Page({
         edited: true,
       })
       if (e.currentTarget.dataset.id == "notification") {
+        if(this.data.notification == false){
+          this.requestSubscribeMessage()
+        }
         this.setData({
           notification: e.detail.value
         })
@@ -476,6 +532,26 @@ Page({
         snackbarStyle: "bottom:-50px",
       })
     }, 1500);
+  },
+
+  //请求用户订阅授权
+  requestSubscribeMessage() {
+    var that = this
+    wx.requestSubscribeMessage({
+      tmplIds: ['n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI'],
+      success(res) {
+        console.log('授权成功', res)
+      },
+      fail(res) {
+        console.log('授权失败', res)
+        that.setData({
+          notification: false,
+        })
+        that.selectAllComponents('.switch').forEach(element => {
+          element.refreshStatus()
+        })
+      }
+    })
   },
 
   /**
@@ -586,7 +662,7 @@ Page({
   },
 
   onThemeChange: function () {
-    console.log(app.globalData.systemInfo.theme)
+    // console.log(app.globalData.systemInfo.theme)
     this.setData({
       theme: app.globalData.systemInfo.theme
     })

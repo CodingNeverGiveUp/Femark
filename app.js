@@ -77,11 +77,16 @@ App({
               this.globalData.id = res.data[0]._id;
               this.globalData.useSidebar = res.data[0].profile.useSidebar;
               this.globalData.markdownByDefault = res.data[0].profile.markdownByDefault;
+              this.globalData.markdownPreview = res.data[0].profile.markdownPreview;
+              this.globalData.markdownPreviewDelay = res.data[0].profile.markdownPreviewDelay;
               // console.log(this.globalData.useSidebar)
               this.globalData.pureTheme = res.data[0].profile.pureTheme;
               this.globalData.userInfo.nickName = res.data[0].profile.nickName;
               this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
               this.globalData.primaryColor = res.data[0].profile.primaryColor;
+              this.globalData.categoryData = res.data[0].profile.categoryData;
+              this.globalData.bing = res.data[0].profile.bing;
+              this.globalData.hitokoto = res.data[0].profile.hitokoto;
               //提前拉取及预处理笔记待办数据
               res.data[0].note.forEach((element, index) => {
                 element.color = this.getRandomColor()
@@ -272,10 +277,15 @@ App({
         //拉取配置
         that.globalData.useSidebar = db.data.profile.useSidebar;
         that.globalData.markdownByDefault = db.data.profile.markdownByDefault;
+        that.globalData.markdownPreview = db.data.profile.markdownPreview;
+        that.globalData.markdownPreviewDelay = db.data.profile.markdownPreviewDelay;
         that.globalData.pureTheme = db.data.profile.pureTheme;
         that.globalData.userInfo.nickName = db.data.profile.nickName;
         that.globalData.userInfo.avatarUrl = db.data.profile.avatarUrl;
         that.globalData.primaryColor = db.data.profile.primaryColor;
+        that.globalData.categoryData = db.data.profile.categoryData;
+        that.globalData.bing = db.data.profile.bing;
+        that.globalData.hitokoto = db.data.profile.hitokoto;
         that.globalData.note = db.data.note;
         that.globalData.task = db.data.task;
         resort()
@@ -382,6 +392,6 @@ App({
     hitokoto: false,
     bing: true,
     pureTheme: false,
-    categoryData: ["默认", "学习", "工作", "生活"],
+    categoryData: [],
   }
 })

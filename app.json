@@ -6,6 +6,9 @@
     "pages/account/account",
     "pages/note/note",
     "pages/todo/todo",
+    "pages/themeSetting/themeSetting",
+    "pages/behaviorSetting/behaviorSetting",
+    "pages/about/about",
     "pages/guide/guide"
   ],
   "window": {

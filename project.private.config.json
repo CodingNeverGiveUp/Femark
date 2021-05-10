@@ -39,6 +39,24 @@
         {
           "name": "pages/todo/todo",
           "pathName": "pages/todo/todo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/themeSetting/themeSetting",
+          "pathName": "pages/themeSetting/themeSetting",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/behaviorSetting/behaviorSetting",
+          "pathName": "pages/behaviorSetting/behaviorSetting",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/about/about",
+          "pathName": "pages/about/about",
           "scene": null
         }
       ]

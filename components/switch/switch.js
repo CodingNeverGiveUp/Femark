@@ -60,6 +60,7 @@ Component({
       var option = {};
       this.triggerEvent('switch', detail, option);
     },
+    
     refreshStatus() {
       if (this.data.disabled) {
         if (this.data.selected) {

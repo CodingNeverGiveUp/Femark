@@ -27,55 +27,30 @@ Page({
 
   // 事件处理函数
   onLoad() {
-    //重新拉取侧栏
-    let tabbar = this.getTabBar();
-    tabbar.setData({
-      useSidebar: app.globalData.useSidebar,
-      primaryColor: app.globalData.primaryColor,
-      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
-    })
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true,
-      })
-    }
-    //重新拉取配置
-    this.setData({
-      useSidebar: app.globalData.useSidebar,
-      pureTheme: app.globalData.pureTheme,
-      isPad: app.globalData.isPad,
-      primaryColor: app.globalData.primaryColor,
-      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
-      sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
-    })
-    //数据拉取
-    this.setData({
-      note: app.globalData.note,
-      task: app.globalData.task
-    })
+
     //拉取openid
-    if (app.globalData.openid) {
-      this.setData({
-        openid: app.globalData.openid,
-      })
-    } else {
-      console.log("get openid from server")
-      wx.cloud.callFunction({
-          name: "getOpenid"
-        }).then(res => {
-          // console.log(res);
-          this.data.openid = res.result.openid;
-          app.globalData.openid = res.result.openid;
-        })
-        .catch(res => {
-          console.log("failed")
-        })
-    };
+    // if (app.globalData.openid) {
+    //   this.setData({
+    //     openid: app.globalData.openid,
+    //   })
+    // } else {
+    //   console.log("get openid from server")
+    //   wx.cloud.callFunction({
+    //       name: "getOpenid"
+    //     }).then(res => {
+    //       // console.log(res);
+    //       this.data.openid = res.result.openid;
+    //       app.globalData.openid = res.result.openid;
+    //     })
+    //     .catch(res => {
+    //       console.log("failed")
+    //     })
+    // };
   },
 
   onReady() {
     var that = this
-    this.column()
+    this.onPullDownRefresh()
     // let test_Array01_lenth = this.data.test.test_Array01.length
     // let test_Array02_lenth = this.data.test.test_Array02.length
     // let color_number1 = 0
@@ -122,7 +97,33 @@ Page({
   },
 
   onShow() {
-    let tabbar = this.getTabBar()
+    //重新拉取侧栏
+    let tabbar = this.getTabBar();
+    tabbar.setData({
+      useSidebar: app.globalData.useSidebar,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true,
+      })
+    }
+    //重新拉取配置
+    this.setData({
+      useSidebar: app.globalData.useSidebar,
+      pureTheme: app.globalData.pureTheme,
+      isPad: app.globalData.isPad,
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      sel1: `color:${app.globalData.primaryColor};background:${app.colorRgba(getApp().globalData.primaryColor, .2)};`,
+    })
+    //数据拉取
+    this.setData({
+      note: app.globalData.note,
+      task: app.globalData.task
+    })
+    //侧栏状态
     this.setData({
       currentPage: app.globalData.currentPage,
     })
@@ -144,6 +145,7 @@ Page({
         sld4: '',
       })
     }, 250)
+    console.log("拉取")
     // if(app.globalData.currentPage == 1){
     //   tabbar.setData({
     //     sld1: `color:${this.data.primaryColor};background:var(--rgbaprimaryColor--);`,
@@ -185,6 +187,7 @@ Page({
         note: app.globalData.note,
         task: app.globalData.task
       })
+      console.log("整理")
       this.column()
       wx.stopPullDownRefresh()
       wx.showToast({
@@ -197,6 +200,87 @@ Page({
         icon: "error"
       })
     })
+  },
+
+  test() {
+    var currenttime = (new Date()).valueOf();
+    var currentdate = new Date(currenttime);
+    console.log(currenttime, currentdate)
+    const db = wx.cloud.database()
+    const formatNumber = n => {
+      n = n.toString()
+      return n[1] ? n : `0${n}`
+    }
+    const formatTime = date => {
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const day = date.getDate()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+
+      return `${year}年${month}月${day}日 ${[hour, minute, second].map(formatNumber).join(':')}`
+    }
+    var messages = []
+    db.collection('note').field({
+        task: true,
+        _openid: true,
+        _id: true,
+      }).get()
+      .then(res => {
+        console.log(res)
+        res.data.forEach((element, index) => {
+          element.task.forEach((innerElement, innerIndex) => {
+            if (innerElement.notification == true && innerElement.done == false) {
+              let message = {
+                _openid: element._openid,
+                _id: element._id,
+                heading: innerElement.heading == null ? '' : innerElement.heading,
+                time: formatTime(new Date(innerElement.notificationTimestamp)),
+                urgency: "紧急且重要",
+                content: innerElement.content == null ? '' : innerElement.content,
+                reminderStatus: "待确认",
+                index: innerIndex,
+              }
+              messages.push(message)
+            }
+          })
+        })
+        console.log(messages)
+        messages.forEach(message=>{
+          cloud.openapi.subscribeMessage.send({
+            touser: message._openid, //要推送用户的openid
+            //page:'',
+            data: { //推送的内容
+              thing1: {
+                value: message.heading //'xx会议'
+              },
+              time2: {
+                value: message.time //'2019年11月30日 21:00:00'
+              },
+              phrase9: {
+                value: message.urgency //'紧急且重要'
+              },
+              thing4: {
+                value: message.content //'会议内容为.....'
+              },
+              phrase8: {
+                value: message.reminderStatus //'待确认'
+              }
+            },
+            templateId: 'n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI' //模板id
+          })
+          // wx.cloud.database().collection('note')
+          // .doc(message._id)
+          // .update({
+          //   data: {
+          //     [`task.${message.index}`]: {
+          //       done: true,
+          //     }
+          //   },
+          // })
+        })
+      })
   },
 
   onTabItemTap(e) {
@@ -241,7 +325,9 @@ Page({
         })
       }
     }
-    sort()
+    if (this.data.currentPage == 1) {
+      sort()
+    }
   },
 
   showSelector() {
@@ -332,23 +418,28 @@ Page({
   },
 
   note(e) {
-    console.log(e)
     var that = this
-    wx.navigateTo({
-      url: '/pages/note/note',
-      events: {
-        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-        acceptDataFromOpenedPage: function (data) {
-          console.log(data)
+    let tabbar = this.getTabBar()
+    console.log(e)
+    if (!e.currentTarget.dataset.data.encrypt) {
+      wx.navigateTo({
+        url: '/pages/note/note',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+          toIndex: function (data) {
+            that.onPullDownRefresh()
+          },
         },
-      },
-      success(res) {
-        res.eventChannel.emit('toNote', {
-          edit: false,
-          data: e.currentTarget.dataset.data
-        })
-      }
-    })
+        success(res) {
+          res.eventChannel.emit('toNote', {
+            edit: false,
+            data: e.currentTarget.dataset.data
+          })
+        }
+      })
+    } else {
+      tabbar.popupPassword(e.currentTarget.dataset.data)
+    }
   },
 
   todo(e) {
@@ -358,8 +449,8 @@ Page({
       url: '/pages/todo/todo',
       events: {
         // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-        acceptDataFromOpenedPage: function (data) {
-          console.log(data)
+        toIndex: function (data) {
+          that.onPullDownRefresh()
         },
       },
       success(res) {
@@ -373,6 +464,7 @@ Page({
 
   //请求用户订阅授权
   requestSubscribeMessage() {
+    var that = this
     wx.requestSubscribeMessage({
       tmplIds: ['n5ZgQ_uHeZFwKecg8S_WjDb3Gfx7a9BUTZbkLPnWTXI'],
       success(res) {
@@ -388,9 +480,6 @@ Page({
   sendOne() { //title,time,urgency,content,reminderStatus
     wx.cloud.callFunction({
         name: "sendOne",
-        data: {
-          openid: this.data.openid,
-        }
       }).then(res => {
         console.log("发送单条成功", res);
       })
