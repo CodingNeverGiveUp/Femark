@@ -107,7 +107,7 @@ Page({
       })
     } else if (this.data.theme == 'dark') {
       this.setData({
-        headbarStyle: "background:#222426;box-shadow: 0 0rpx 10rpx #222;",
+        headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
       })
     }
   },

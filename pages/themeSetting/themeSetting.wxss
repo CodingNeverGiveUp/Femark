@@ -192,7 +192,7 @@
 
   
   .theme {
-    background: #222426;
+    background: #303638;
   }
 
   .theme_color>text {
@@ -200,11 +200,11 @@
   }
 
   .colors {
-    background: #222426;
+    background: #303638;
   }
 
   .s {
-    background: #303638;
+    background: #222426;
   }
 
   .s .t {
@@ -212,23 +212,23 @@
   }
 
   .s .a {
-    background: #222426;
+    background: #303638;
   }
 
   .s .b {
-    background: #222426;
+    background: #303638;
   }
 
   .s .c {
-    background: #222426;
+    background: #303638;
   }
 
   .s .d {
-    background: #222426;
+    background: #303638;
   }
 
   .start{
-    background: #222426;
+    background: #303638;
   }
 
   .sub{

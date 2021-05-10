@@ -32,7 +32,7 @@
   right: 0;
   height: 65px;
   /* background: #4981d7; */
-  box-shadow: 0 0rpx 10rpx #bbb;
+  box-shadow: 0 0 10rpx #bbb;
   border-radius: 10px 10px 0 0;
   flex-direction: column;
   justify-content: flex-end;
@@ -401,6 +401,11 @@
     /* box-shadow: 0 0rpx 10rpx #bbb; */
   }
 
+  .items{
+    background: #222426;
+    color: #ccc;
+  }
+
   .float {
     background: #303638;
     box-shadow: 0 0 10rpx #222;
@@ -411,7 +416,7 @@
   }
 
   .sidebar {
-    background: #303638;
+    background: #222426;
     box-shadow: 0 0 10rpx #222;
     color: white;
   }
@@ -422,11 +427,6 @@
 
   .sec_blank {
     background: #666;
-  }
-
-  .dialog {
-    background: #303638;
-    box-shadow: 0 0 0 #444;
   }
 
 }

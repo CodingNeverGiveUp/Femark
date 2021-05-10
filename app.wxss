@@ -10,6 +10,6 @@ page {
 
 @media (prefers-color-scheme: dark) {
   page {
-    background-color: #303638;
+    background-color: #222426;
   }
 }

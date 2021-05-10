@@ -163,11 +163,11 @@
   }
 
   .head_bar {
-    background: #222426;
+    background: #303638;
   }
 
   .version {
-    background: #222426;
+    background: #303638;
     box-shadow: 0 0rpx 10rpx #222;
   }
 

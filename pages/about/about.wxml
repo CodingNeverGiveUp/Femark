@@ -3,7 +3,7 @@
   bindscroll="scroll" enable-flex="true">
   <view class="main" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
     <view class="version">
-      <image src="{{theme=='dark'?'/source/img/icon_dark.png':'/source/img/icon_white.png'}}"></image>
+      <image src="{{theme=='dark'?'/source/img/icon_gray.png':'/source/img/icon_white.png'}}"></image>
       <text>Femark 1.4.4_210509_beta</text>
     </view>
     <view class="subtitle" style="color:{{primaryColor}};">
