@@ -182,5 +182,56 @@
 }
 
 .sub{
-  color: #666
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon{
+    color: #bbb;
+  }
+
+  
+  .theme {
+    background: #222426;
+  }
+
+  .theme_color>text {
+    color: #ccc;
+  }
+
+  .colors {
+    background: #222426;
+  }
+
+  .s {
+    background: #303638;
+  }
+
+  .s .t {
+    background: #444;
+  }
+
+  .s .a {
+    background: #222426;
+  }
+
+  .s .b {
+    background: #222426;
+  }
+
+  .s .c {
+    background: #222426;
+  }
+
+  .s .d {
+    background: #222426;
+  }
+
+  .start{
+    background: #222426;
+  }
+
+  .sub{
+    color: #ccc;
+  }
 }

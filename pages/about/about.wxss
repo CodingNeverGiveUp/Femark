@@ -138,3 +138,30 @@
 .snackbar text{
   color: #fff;
 }
+
+@media (prefers-color-scheme: dark) {
+  .icon{
+    color: #bbb;
+  }
+
+  .head_bar{
+    background: #222426;
+  }
+
+  .version{
+    background: #222426;
+    box-shadow: 0 0rpx 10rpx #222;
+  }
+
+  .version text{
+    color: #ccc;
+  }
+
+  .component_title{
+    color: #fff;
+  }
+
+  .component_subtitle{
+    color: #ccc;
+  }
+}
