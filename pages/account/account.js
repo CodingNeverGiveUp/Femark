@@ -252,6 +252,15 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    return{
+      title: "Femark: 记下身边的故事与风景",
+      path: '/pages/index/index'
+    }
+  },
 
+  onShareTimeline(){
+    return{
+      title: "Femark: 记下身边的故事与风景",
+    }
   }
 })
