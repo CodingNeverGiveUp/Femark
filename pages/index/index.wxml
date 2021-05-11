@@ -21,7 +21,7 @@
   </view>
   <!-- 笔记 -->
   <view class="note" wx:if="{{isPad == true || currentPage == 1}}">
-    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+    <view class="head" style="{{isPad?'margin-left:45px;':useSidebar?'margin-left:45px;':''}}">
       <view class="head_title" wx:if="{{!isPad}}" bindtap="showSelector">
         <text>笔记</text>
         <text class="material-icons">expand_more</text>
@@ -93,7 +93,7 @@
 
   <!-- 待办 -->
   <view class="todo" wx:if="{{isPad == true || currentPage == 2}}">
-    <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+    <view class="head" style="{{isPad?'margin-left:45px;':useSidebar?'margin-left:45px;':''}}">
       <view class="head_title" wx:if="{{!isPad}}" bindtap="showSelector">
         <text>待办</text>
         <text class="material-icons">expand_more</text>
