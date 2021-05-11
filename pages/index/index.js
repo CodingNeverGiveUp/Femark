@@ -28,16 +28,7 @@ Page({
 
   // 事件处理函数
   onLoad() {
-    //主题event
-    event.on('Theme', this, function (data) {
-      wx.showLoading({
-        title: '应用主题更改',
-      })
-      this.setData({
-        ['systemInfo.theme']: data
-      })
-      this.onPullDownRefresh()
-    })
+    
 
     //拉取openid
     // if (app.globalData.openid) {
@@ -59,7 +50,7 @@ Page({
     // };
   },
 
-  onUnload: function () {
+  onHide: function () {
     event.remove('Theme', this);
   },
 
@@ -112,6 +103,16 @@ Page({
   },
 
   onShow() {
+    //主题event
+    event.on('Theme', this, function (data) {
+      wx.showLoading({
+        title: '应用主题更改',
+      })
+      this.setData({
+        theme: data
+      })
+      this.onPullDownRefresh()
+    })
     //重新拉取侧栏
     let tabbar = this.getTabBar();
     tabbar.setData({

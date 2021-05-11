@@ -122,7 +122,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    event.on('Theme', this, function (data) {
+      this.setData({
+        theme: data
+      })
+    })
   },
 
   /**
@@ -164,7 +168,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    event.remove('Theme', this);
   },
 
   /**

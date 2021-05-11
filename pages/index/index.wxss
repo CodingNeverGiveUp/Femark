@@ -2,7 +2,7 @@
 @import "/source/icon.wxss";
 
 .hover {
-  background: var(--rgbaprimaryColor--);
+  background: var(--rgbaprimaryColor--)!important;
 }
 
 .c_hover{
@@ -141,7 +141,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10rpx #bbb;
   overflow: hidden;
-  transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out, background .2s ease-in-out;
   margin: 0 0 20px 0;
 }
 
@@ -322,6 +322,7 @@
   align-items: center;
   margin-bottom: 40rpx;
   overflow: hidden;
+  transition: opacity .2s ease-in-out, background .2s ease-in-out;
 }
 
 .db_color{

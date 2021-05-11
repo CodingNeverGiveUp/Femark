@@ -297,7 +297,7 @@ App({
   onThemeChange(e) {
     this.refresh()
     this.globalData.systemInfo.theme = e.theme;
-    event.emit('Theme', e.eheme);
+    event.emit('Theme', e.theme);
   },
 
   colorRgba(sHex, alpha) {
