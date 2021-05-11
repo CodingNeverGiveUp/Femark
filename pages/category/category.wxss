@@ -136,12 +136,12 @@
 }
 
 .category_box_color {
-  background: #fff;
+  /* background: #fff; */
   color: #fff;
 }
 
 .category_box_color_p {
-  background: #fff;
+  /* background: #fff; */
   color: #000;
 }
 
@@ -220,12 +220,12 @@
   }
 
   .category_box_color {
-    background: #303638;
+    /* background: #303638; */
     color: #fff;
   }
 
   .category_box_color_p {
-    background: #303638;
+    /* background: #303638; */
     color: #fff;
   }
 

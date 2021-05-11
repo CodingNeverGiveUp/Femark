@@ -204,4 +204,43 @@
   .snackbar {
     background: #5d5d5d;
   }
+
+  .btn {
+    background: #222426;
+    box-shadow: 0 0rpx 10rpx #222;
+  }
+
+  .float {
+    background: #303638;
+    /* box-shadow: 0 0rpx 10rpx #222; */
+  }
+
+  .float_color {
+    box-shadow: 0 0rpx 10rpx #444;
+  }
+
+  .bottom_bar {
+    background: #303639;
+    box-shadow: 0 0rpx 10rpx #222;
+  }
+
+  .num {
+    color: #ccc;
+  }
+
+
+  .placeholder {
+    color: #666;
+  }
+
+  .icon {
+    color: #ccc;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .snackbar{
+    left: 200rpx;
+    right: 200rpx;
+  }
 }

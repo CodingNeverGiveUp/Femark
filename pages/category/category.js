@@ -46,6 +46,7 @@ Page({
       pureTheme: app.globalData.pureTheme,
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      isPad: app.globalData.isPad
     })
     //数据拉取
     this.setData({

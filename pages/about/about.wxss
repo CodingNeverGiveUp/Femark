@@ -182,4 +182,8 @@
   .component_subtitle {
     color: #ccc;
   }
+
+  .snackbar {
+    background: #5d5d5d;
+  }
 }

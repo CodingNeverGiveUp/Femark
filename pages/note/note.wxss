@@ -1,10 +1,6 @@
 /* pages/note/note.wxss */
 @import "/source/icon.wxss";
 
-page {
-  background-color: #f1f1f1;
-}
-
 .hover {
   background: var(--rgbaprimaryColor--);
 }
@@ -112,7 +108,7 @@ page {
   /* background: #000; */
 }
 
-.side_bg{
+.side_bg {
   background: #fff;
 }
 
@@ -144,7 +140,7 @@ page {
   /* background: orange; */
 }
 
-.preview_bg{
+.preview_bg {
   border-left: solid 1px #bbb;
 }
 
@@ -198,22 +194,22 @@ page {
   color: #666;
 }
 
-.Imgs{
+.Imgs {
   margin: 30px 50rpx;
 }
 
-.Img{
+.Img {
   position: relative;
   width: 100%;
 }
 
-.Img image{
+.Img image {
   /* margin: 0 50px; */
   height: 250rpx;
   width: 100%;
 }
 
-.deleteImg{
+.deleteImg {
   position: absolute;
   top: 0;
   right: 0;
@@ -255,40 +251,39 @@ page {
   transition: bottom .3s ease;
 }
 
-.snackbar text{
+.snackbar text {
   color: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
-  page {
-    background-color: #303638;
+  .btn {
+    background: #222426;
+    box-shadow: 0 0rpx 10rpx #222;
   }
 
-  .head_bar{
+  .float {
     background: #303638;
     /* box-shadow: 0 0rpx 10rpx #222; */
   }
 
-  .btn{
-    background: #222426;
-    box-shadow: 0 0rpx 10rpx #222;
-  }
-
-  .float{
-    background: #222426;
-    /* box-shadow: 0 0rpx 10rpx #222; */
-  }
-
-  .float_color{
+  .float_color {
     box-shadow: 0 0rpx 10rpx #444;
   }
 
-  .bottom_bar{
-    background: #222426;
+  .bottom_bar {
+    background: #303639;
     box-shadow: 0 0rpx 10rpx #222;
   }
 
-  .num{
+  .side_bg {
+    background: #303638;
+  }
+
+  .preview_bg {
+    border-left: solid 1px #666;
+  }
+
+  .num {
     color: #ccc;
   }
 
@@ -297,14 +292,22 @@ page {
   }
 
   .placeholder {
+    color: #666;
+  }
+
+  .icon {
     color: #ccc;
   }
 
-  .icon{
-    color: #ccc;
+  .snackbar {
+    background: #5d5d5d;
   }
+}
+
+@media only screen and (min-width: 600px) {
 
   .snackbar{
-    background: #5d5d5d;
+    left: 200rpx;
+    right: 200rpx;
   }
 }

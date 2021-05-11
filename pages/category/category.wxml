@@ -1,6 +1,6 @@
 <!--pages/category/category.wxml-->
 <view class="category_container">
-  <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+  <view class="head" style="{{isPad?'margin-left:45px;':useSidebar?'margin-left:45px;':''}}">
     <view class="head_title">
       <text>分类</text>
     </view>
@@ -28,7 +28,7 @@
       </view>
       <view class="material-icons icon" hover-class="hover">{{item.triggered?'expand_less':'expand_more'}}</view>
     </view>
-    <view class="category_detail">
+    <view class="category_detail {{pureTheme?'category_box_color_p':'category_box_color'}}">
       <view class="category_detail_bg" style="background:{{item.color}};"></view>
       <view class="category_detail_box" hover-class="{{pureTheme?'hover':'c_hover'}}" wx:for="{{item.data}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index" bindtap="note" data-data="{{innerItem}}">
         <view class="title">{{innerItem.encrypt?'受保护的内容':innerItem.heading==''||innerItem.heading==null?'无标题':innerItem.heading}}\n</view>
