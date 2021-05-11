@@ -9,6 +9,7 @@ Component({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     useSidebar: app.globalData.useSidebar,
     isPad: app.globalData.isPad,
+    theme: app.globalData.systemInfo.theme,
     mainStyle: "",
     floatStyle: "",
     sidebarStyle: "",
@@ -448,7 +449,7 @@ Component({
 
     passwordFocus() {
       this.setData({
-        contentInputStyle: `border: 1px solid ${this.data.primaryColor};`,
+        contentInputStyle: `border: 2px solid ${this.data.primaryColor};`,
         contentPlaceholderStyle: `top: -10px;transform: scale(.8);color:${this.data.primaryColor};`
       })
     },
@@ -523,7 +524,7 @@ Component({
         })
       } else {
         this.setData({
-          contentInputStyle: `border: 1px solid #ff5252;`
+          contentInputStyle: `border: 2px solid #ff5252;`
         })
       }
     },

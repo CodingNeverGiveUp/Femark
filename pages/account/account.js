@@ -254,7 +254,7 @@ Page({
   onShareAppMessage: function () {
     return{
       title: "Femark: 记下身边的故事与风景",
-      path: '/pages/guide/guide'
+      path: '/pages/logincheck/logincheck'
     }
   },
 

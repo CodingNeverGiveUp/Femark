@@ -1,6 +1,6 @@
 <!--pages/category/category.wxml-->
 <view class="category_container">
-  <view class="head" style="{{useSidebar?'margin-left:45px;':''}}">
+  <view class="head" style="{{isPad?'margin-left:45px;':useSidebar?'margin-left:45px;':''}}">
     <view class="head_title">
       <text>分类</text>
     </view>
@@ -21,18 +21,18 @@
   <view style="height:200rpx"></view> -->
 
   <view class="category" wx:for="{{collatedData}}" wx:key="index" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{item.triggered?'':'height:150px!important;'}}height:{{item.height}}px;">
-    <view class="category_box" bindtap="expand" data-index="{{index}}" hover-class="c_hover" style="background:{{item.color}};">
+    <view class="category_box {{pureTheme?'category_box_color_p':'category_box_color'}}" bindtap="expand" data-index="{{index}}" hover-class="{{pureTheme?'hover':'c_hover'}}" style="background:{{item.color}};">
       <view class="category_box_text">
         <view class="title">{{item.name == null || item.name == '' ? '未命名' : item.name}}</view>
-        <view class="subtitle">共{{item.data.length}}条数据</view>
+        <view class="subtitle {{pureTheme?'subtitle_color':''}}">共{{item.data.length}}条数据</view>
       </view>
       <view class="material-icons icon" hover-class="hover">{{item.triggered?'expand_less':'expand_more'}}</view>
     </view>
-    <view class="category_detail">
+    <view class="category_detail {{pureTheme?'category_box_color_p':'category_box_color'}}">
       <view class="category_detail_bg" style="background:{{item.color}};"></view>
-      <view class="category_detail_box" hover-class="c_hover" wx:for="{{item.data}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index" bindtap="note" data-data="{{innerItem}}">
+      <view class="category_detail_box" hover-class="{{pureTheme?'hover':'c_hover'}}" wx:for="{{item.data}}" wx:for-item="innerItem" wx:for-index="innerIndex"  wx:key="index" bindtap="note" data-data="{{innerItem}}">
         <view class="title">{{innerItem.encrypt?'受保护的内容':innerItem.heading==''||innerItem.heading==null?'无标题':innerItem.heading}}\n</view>
-        <view class="subtitle">{{innerItem.encrypt?'访问需要身份验证':innerItem.content==''||innerItem.content==null?'无内容':innerItem.content}}</view>
+        <view class="subtitle {{pureTheme?'subtitle_color':''}}">{{innerItem.encrypt?'访问需要身份验证':innerItem.content==''||innerItem.content==null?'无内容':innerItem.content}}</view>
       </view>
     </view>
   </view>

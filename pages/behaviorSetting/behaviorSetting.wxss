@@ -54,5 +54,15 @@
 }
 
 .sub{
-  color: #666
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon{
+    color: #bbb;
+  }
+
+  .sub{
+    color: #ccc;
+  }
 }

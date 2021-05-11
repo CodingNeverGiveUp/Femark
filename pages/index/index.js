@@ -2,6 +2,7 @@
 // 获取应用实例
 const app = getApp()
 const database = require("../../utils/database.js")
+const event = require("../../utils/event.js")
 
 Page({
   data: {
@@ -27,6 +28,7 @@ Page({
 
   // 事件处理函数
   onLoad() {
+    
 
     //拉取openid
     // if (app.globalData.openid) {
@@ -46,6 +48,10 @@ Page({
     //       console.log("failed")
     //     })
     // };
+  },
+
+  onHide: function () {
+    event.remove('Theme', this);
   },
 
   onReady() {
@@ -97,6 +103,16 @@ Page({
   },
 
   onShow() {
+    //主题event
+    event.on('Theme', this, function (data) {
+      wx.showLoading({
+        title: '应用主题更改',
+      })
+      this.setData({
+        theme: data
+      })
+      this.onPullDownRefresh()
+    })
     //重新拉取侧栏
     let tabbar = this.getTabBar();
     tabbar.setData({

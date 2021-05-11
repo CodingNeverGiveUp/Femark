@@ -107,8 +107,8 @@
 <!-- <view class="dialog" style="{{dialogVisible}}{{dialogStyle}}"></view> -->
 
 <page-container wx:if="{{popCategoryEditIf}}" show="{{popCategoryEdit}}" position="bottom" round="true"
-  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
-  customStyle="max-width: 500px;left:0;right:0;margin:auto;" >
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};" duration="300"
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};" >
   <view class="list">
     <view class="list_item">
       <view class="list_item_left">
@@ -120,7 +120,7 @@
       </view>
     </view>
     <view class="list_item"
-      style="top:{{item.top}}px;{{item.dragging?'box-shadow: 0 0 10rpx #bbb;z-index:999;':''}}{{listDragging&&!item.dragging?'transition:top .2s ease,box-shadow .2s ease-in-out;':''}}"
+      style="top:{{item.top}}px;{{item.dragging?theme=='light'?'box-shadow: 0 0 10rpx #bbb;background:#fff;z-index:999;':'box-shadow: 0 0 10rpx #222;background:#303638;z-index:999;':''}}{{listDragging&&!item.dragging?'transition:top .2s ease,box-shadow .2s ease-in-out;':''}}"
       wx:for="{{listData}}" wx:key="index" data-index="{{index}}">
       <view class="list_item_left">
         <view class="icon material-icons" hover-class="hover" catchtouchstart="dragStart" catchtouchmove="dragMove"
@@ -145,7 +145,7 @@
 
 <page-container wx:if="{{popupPasswordIf}}" show="{{popupPassword}}" position="bottom" round="true"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" duration="300"
-  customStyle="max-width: 500px;left:0;right:0;margin:auto;" bind:afterleave="deleteContainer">
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};" bind:afterleave="deleteContainer">
   <view class="content" wx:if="{{!useFingerprint}}">
     <view class="content_title">需要身份验证</view>
     <view class="content_subtitle">输入密码以继续访问</view>
