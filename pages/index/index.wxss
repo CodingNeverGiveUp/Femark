@@ -23,6 +23,7 @@
   box-shadow: 0 0rpx 10rpx #bbb;
   overflow: hidden;
   transition: top .2s ease-in-out, background .2s ease-in-out;
+  z-index: 998;
 }
 
 .page_selector_blank {
@@ -51,6 +52,16 @@
 .container {
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.pad_empty{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 .note {
