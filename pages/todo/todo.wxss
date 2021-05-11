@@ -236,6 +236,10 @@
   .icon {
     color: #ccc;
   }
+
+  .list_item{
+    background: #222426;
+  }
 }
 
 @media only screen and (min-width: 600px) {

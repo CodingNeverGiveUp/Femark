@@ -22,7 +22,7 @@
           </view>
         </view> 
         <view class="list" wx:if="{{list}}">
-          <view class="list_item" style="top:{{item.top}}px;{{item.dragging?'box-shadow: 0 0 10rpx #bbb;z-index:999;':''}}{{listDragging&&!item.dragging?'transition:top .2s ease,box-shadow .2s ease-in-out;':''}}" wx:for="{{listData}}" wx:key="index" data-index="{{index}}">
+          <view class="list_item" style="top:{{item.top}}px;{{item.dragging?theme=='light'?'box-shadow: 0 0 10rpx #bbb;background:#fff;z-index:999;':'box-shadow: 0 0 10rpx #222;background:#222426;z-index:999;':''}}{{listDragging&&!item.dragging?'transition:top .2s ease,box-shadow .2s ease-in-out;':''}}" wx:for="{{listData}}" wx:key="index" data-index="{{index}}">
             <view class="list_item_left">
               <view wx:if="{{edit}}" class="icon material-icons" hover-class="hover" catchtouchstart="dragStart" catchtouchmove="dragMove" catchtouchend="dragEnd" data-index="{{index}}"><text>drag_indicator</text></view>
               <view class="icon material-icons" hover-class="hover" bindtap="listSwitch" data-index="{{index}}">
