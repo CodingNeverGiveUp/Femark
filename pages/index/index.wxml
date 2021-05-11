@@ -34,7 +34,7 @@
     </view>
     <view class="note_content" wx:if="{{note.length != 0}}">
       <view id="note_left">
-        <view class="note_block note_color" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};"
+        <view class="note_block {{pureTheme?'note_color_p':'note_color'}}" wx:for="{{noteLeft}}" wx:key="index" style="background:{{item.color}};"
           hover-class="c_hover" bindtap="note" data-data="{{item}}">
           <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image"
             style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
@@ -44,21 +44,21 @@
           </view>
           <view class="note_text" wx:if="{{!item.encrypt}}">
             <view wx:if="{{item.heading!=null}}" class="note_title">{{item.heading}}</view>
-            <view class="note_sub">{{item.content}}</view>
+            <view class="note_sub {{pureTheme?'note_color_sub_p':''}}">{{item.content}}</view>
           </view>
           <view class="note_encrypt" wx:if="{{item.encrypt}}">
-            <view class="material-icons">
+            <view class="material-icons" style="color:{{pureTheme?primaryColor:''}};">
               <text>lock</text>
             </view>
             <view class="note_encrypt_right">
               <text>受保护的内容\n</text>
-              <text style="font-size:.8rem;">访问需要身份验证</text>
+              <text class="{{pureTheme?'note_color_sub_p':''}}" style="font-size:.8rem;">访问需要身份验证</text>
             </view>
           </view>
         </view>
       </view>
       <view id="note_right">
-        <view class="note_block" wx:for="{{noteRight}}" wx:key="index" style="background:{{item.color}};"
+        <view class="note_block {{pureTheme?'note_color_p':'note_color'}}" wx:for="{{noteRight}}" wx:key="index" style="background:{{item.color}};"
           hover-class="c_hover" bindtap="note" data-data="{{item}}">
           <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image"
             style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
@@ -68,15 +68,15 @@
           </view>
           <view class="note_text" wx:if="{{!item.encrypt}}">
             <view wx:if="{{item.heading!=null}}" class="note_title">{{item.heading}}</view>
-            <view class="note_sub">{{item.content}}</view>
+            <view class="note_sub {{pureTheme?'note_color_sub_p':''}}">{{item.content}}</view>
           </view>
           <view class="note_encrypt" wx:if="{{item.encrypt}}">
-            <view class="material-icons">
+            <view class="material-icons" style="color:{{pureTheme?primaryColor:''}};">
               <text>lock</text>
             </view>
             <view class="note_encrypt_right">
               <text>受保护的内容\n</text>
-              <text style="font-size:.8rem;">访问需要身份验证</text>
+              <text class="{{pureTheme?'note_color_sub_p':''}}" style="font-size:.8rem;">访问需要身份验证</text>
             </view>
           </view>
         </view>
@@ -100,19 +100,19 @@
         <text>无内容\n尝试下拉刷新</text>
       </view>
       <view wx:for="{{task}}" wx:key="index" bindtap="todo" hover-class="c_hover" data-data="{{item}}">
-        <view class="db_box db_box_color">
+        <view class="db_box {{pureTheme?'db_color_p':'db_color'}}">
           <view class="box_left" style="background-color:{{item.color}};">
             <view class="month">{{item.month}}</view>
-            <view class="day">{{item.date}}</view>
+            <view class="day" style="color:{{pureTheme?primaryColor:''}};">{{item.date}}</view>
           </view>
           <view class="box_right">
-            <view class="box_right_bg" style="background-color:{{item.color}};"></view>
+            <view class="{{pureTheme?'box_right_bg_p':'box_right_bg'}}" style="background-color:{{item.color}};"></view>
             <view class="box_right_text">
               <view class="topic">{{item.heading}}</view>
               <view class="ddl">
                 <view wx:if="{{item.notification}}" class="material-icons" style="font-size:.8rem">notifications_active
                 </view>
-                <text>{{item.time}}</text>
+                <text class="{{pureTheme?'db_color_sub_p':'db_color_sub'}}">{{item.time}}</text>
               </view>
             </view>
           </view>

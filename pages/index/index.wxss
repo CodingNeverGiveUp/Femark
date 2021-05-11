@@ -149,6 +149,14 @@
   color: #fff;
 }
 
+.note_color_p{
+  color: #000;
+}
+
+.note_color_sub_p{
+  color: #666;
+}
+
 .note_image {
   height: 130px;
   width: 100%;
@@ -172,10 +180,6 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
-  /* white-space:nowrap; */
-  /* max-height: 160px; */
 }
 
 .note_title {
@@ -320,8 +324,20 @@
   overflow: hidden;
 }
 
-.db_box_color{
+.db_color{
   color: #fff;
+}
+
+.db_color_p{
+  color: #000;
+}
+
+.db_color_sub{
+  color: #ccc;
+}
+
+.db_color_sub_p{
+  color: #666;
 }
 
 .box_left {
@@ -346,6 +362,15 @@
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.box_right_bg_p{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-left: 1px solid #ccc;
 }
 
 .box_right_text{
@@ -386,10 +411,6 @@
   margin-right: 10px;
 }
 
-.ddl text{
-  color: #ccc;
-}
-
 
 
 
@@ -421,7 +442,27 @@
     box-shadow: 0 0 10rpx #222;
   }
 
+  .note_color_p{
+    color: #fff;
+  }
+  
+  .note_color_sub_p{
+    color: #ccc;
+  }
+
   .db_box{
     box-shadow: 0 0 10rpx #222;
+  }
+
+  .box_right_bg_p{
+    border-left: 1px solid #666;
+  }
+
+  .db_color_p{
+    color: #fff;
+  }
+
+  .db_color_sub_p{
+    color: #ccc;
   }
 }

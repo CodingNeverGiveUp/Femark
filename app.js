@@ -296,6 +296,7 @@ App({
 
   onThemeChange(e) {
     this.globalData.systemInfo.theme = e;
+    console.log(e)
   },
 
   colorRgba(sHex, alpha) {
