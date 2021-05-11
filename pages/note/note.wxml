@@ -92,8 +92,8 @@
       </form>
     </view>
   </scroll-view>
-  <scroll-view wx:if="{{!isPad}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
-    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll" wx:if="{{useMarkdown}}">
+  <scroll-view wx:if="{{!isPad && useMarkdown}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
+    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="preview">
       <view class="heading"
         style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
