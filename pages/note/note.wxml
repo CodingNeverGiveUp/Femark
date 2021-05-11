@@ -1,6 +1,7 @@
 <!--pages/note/note.wxml-->
-<scroll-view class="scroll" scroll-x="true" scroll-left="{{useMarkdown?'1175rpx':'425rpx'}}" enable-flex="true" enhanced="true"
-  showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindscrolltoupper="scroll">
+<scroll-view class="scroll" scroll-x="true" scroll-left="{{useMarkdown?'1175rpx':'425rpx'}}" enable-flex="true"
+  enhanced="true" showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}"
+  bindscrolltoupper="scroll">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -13,7 +14,8 @@
         </view>
         <view class="Imgs">
           <view class="Img" wx:for="{{galleryDetail}}" wx:key="index">
-            <image mode="aspectFill" src="{{item.tempFileURL}}" bindtap="previewImg" data-index="{{index}}" data-url="{{item.tempFileURL}}"></image>
+            <image mode="aspectFill" src="{{item.tempFileURL}}" bindtap="previewImg" data-index="{{index}}"
+              data-url="{{item.tempFileURL}}"></image>
             <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteImg" wx:if="{{edit}}">
               <text class="material-icons">clear</text>
             </view>
@@ -21,7 +23,8 @@
         </view>
         <view class="Imgs">
           <view class="Img" wx:for="{{tempImgs}}" wx:key="index">
-            <image mode="aspectFill" src="{{item}}" bindtap="previewTempImg" data-index="{{index}}" data-url="{{item}}"></image>
+            <image mode="aspectFill" src="{{item}}" bindtap="previewTempImg" data-index="{{index}}" data-url="{{item}}">
+            </image>
             <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteTempImg" wx:if="{{edit}}">
               <text class="material-icons">clear</text>
             </view>
@@ -41,31 +44,33 @@
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>配置项</text>
         </view>
-        <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          dataset="{{categoryData}}" data-id="category" disabled="{{!edit}}" selected="{{category}}">
+        <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" dataset="{{categoryData}}" data-id="category" disabled="{{!edit}}"
+          selected="{{category}}">
           <text slot="title">类别</text>
           <text slot="subtitle">笔记所属类别</text>
         </md-picker>
-        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          selected="{{encrypt}}" data-id="encrypt" disabled="{{!edit}}">
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{encrypt}}" data-id="encrypt" disabled="{{!edit}}">
           <text slot="title">加密</text>
           <text slot="subtitle">浏览时验证密码</text>
         </md-switch>
-        <md-input class="input" bind:input="input" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          value="{{password}}" data-id="password" wx:if="{{encrypt}}" disabled="{{!edit}}">
+        <md-input class="input" bind:input="input" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" value="{{password}}" data-id="password" wx:if="{{encrypt}}"
+          disabled="{{!edit}}">
           <text slot="title">访问密码</text>
           <text slot="subtitle">点击设置密码</text>
         </md-input>
-        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-          selected="{{useMarkdown}}" data-id="useMarkdown" disabled="{{!edit}}">
+        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+          rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{useMarkdown}}" data-id="useMarkdown" disabled="{{!edit}}">
           <text slot="title">Markdown 模式</text>
           <text slot="subtitle">使用 Markdown 渲染\n同时启用预览视窗</text>
         </md-switch>
       </view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
-    upper-threshold="20" bindscroll="scroll">
+  <scroll-view wx:if="{{!isPad}}" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
+    bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="main">
       <form action="" method="post" bindsubmit="submit" bindreset="reset">
         <view class="heading">
@@ -87,13 +92,13 @@
       </form>
     </view>
   </scroll-view>
-  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
-    upper-threshold="20" bindscroll="scroll" wx:if="{{useMarkdown}}">
+  <scroll-view wx:if="{{!isPad}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
+    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll" wx:if="{{useMarkdown}}">
     <view class="preview">
       <view class="heading"
         style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
         <view>
-          <text>预览</text>
+          <text>Markdown 预览</text>
         </view>
         <view class="btn" style="color:{{primaryColor}};{{btnStyle}};" hover-class="btnp" bindtap="previewRefresh">
           <text class="material-icons">refresh</text>
@@ -106,8 +111,8 @@
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>配置项</text>
       </view>
-      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        selected="{{markdownPreview}}" data-id="markdownPreview">
+      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+        rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{markdownPreview}}" data-id="markdownPreview">
         <text slot="title">同步刷新</text>
         <text slot="subtitle">自动更新 Markdown 预览</text>
       </md-switch>
@@ -119,8 +124,59 @@
       </md-picker>
     </view>
   </scroll-view>
-
-
+  <!-- 平板上下布局 -->
+  <scroll-view wx:if="{{isPad}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
+    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+    <view class="main">
+      <form action="" method="post" bindsubmit="submit" bindreset="reset">
+        <view class="heading">
+          <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
+            placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
+            bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
+          <view class="num" wx:if="{{edit}}">
+            <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
+          </view>
+        </view>
+        <view class="content" bindtap="contentTap">
+          <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
+            placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
+            confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
+          <view class="num" wx:if="{{edit}}">
+            <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
+          </view>
+        </view>
+      </form>
+    </view>
+    <view class="preview" wx:if="{{useMarkdown}}">
+      <view class="heading"
+        style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+        <view>
+          <text>Markdown 预览</text>
+        </view>
+        <view class="btn" style="color:{{primaryColor}};{{btnStyle}};" hover-class="btnp" bindtap="previewRefresh">
+          <text class="material-icons">refresh</text>
+          <text>刷新</text>
+        </view>
+      </view>
+      <view class="preview_container">
+        <wemark md="{{md}}" link highlight type="wemark"></wemark>
+      </view>
+      <view class="subtitle" style="color:{{primaryColor}};">
+        <text>配置项</text>
+      </view>
+      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+        rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{markdownPreview}}" data-id="markdownPreview">
+        <text slot="title">同步刷新</text>
+        <text slot="subtitle">自动更新 Markdown 预览</text>
+      </md-switch>
+      <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        dataset="{{markdownPreviewDelayData}}" selected='{{markdownPreviewDelay - 1}}' disabled="{{!markdownPreview}}"
+        data-id="markdownPreviewDelay">
+        <text slot="title">刷新延时</text>
+        <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
+      </md-picker>
+    </view>
+  </scroll-view>
 
 </scroll-view>
 
@@ -146,7 +202,8 @@
 
 <view class="float" style="{{floatStyle}}" bindtap="floatTap">
   <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text></view>
+    <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text>
+    </view>
   </view>
 </view>
 
