@@ -1,7 +1,7 @@
 <!--pages/note/note.wxml-->
-<scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}" enable-flex="true"
-  enhanced="true" showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}"
-  bindscrolltoupper="scroll">
+<scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
+  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindscrolltoupper="scroll">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -69,31 +69,39 @@
       </view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
-    bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
+    upper-threshold="20" bindscroll="scroll">
     <view class="main">
-      <form action="" method="post" bindsubmit="submit" bindreset="reset">
-        <view class="heading">
-          <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
-            placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
-            bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
-          <view class="num" wx:if="{{edit}}">
-            <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
-          </view>
+      <view class="heading">
+        <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
+          placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
+          bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
+        <view class="num" wx:if="{{edit}}">
+          <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
         </view>
-        <view class="content" bindtap="contentTap">
-          <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
-            placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
-            confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
-          <view class="num" wx:if="{{edit}}">
-            <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
-          </view>
+      </view>
+      <editor id="editor" class="ql-container" placeholder="请输入内容…" show-img-size="true" show-img-resize="true"
+        show-img-toolbar="true" bindstatuschange="onStatusChange" bindready="onEditorReady">
+      </editor>
+      <!-- <view class="content" bindtap="contentTap">
+        <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
+          placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
+          confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
+        <view class="num" wx:if="{{edit}}">
+          <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
         </view>
-      </form>
+      </view> -->
     </view>
   </scroll-view>
-  <scroll-view wx:if="{{useMarkdown}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
-    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+
+
+
+
+
+
+  <scroll-view wx:if="{{false && useMarkdown}}" class="preview_bg" scroll-y="true"
+    style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
+    bindscroll="scroll">
     <view class="preview">
       <view class="heading"
         style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
@@ -189,6 +197,9 @@
   <view class="icon material-icons" hover-class="hover" bindtap="addImg">
     <text>add_photo_alternate</text>
   </view>
+  <view class="icon material-icons" hover-class="hover" bindtap="">
+    <text>attachment</text>
+  </view>
   <view class="icon material-icons" hover-class="hover">
     <text>keyboard_voice</text>
   </view>
@@ -204,6 +215,37 @@
   <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
     <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text>
     </view>
+  </view>
+</view>
+
+<view class="bottom_bar toolbar" catchtouchend="format" hidden="{{keyboardHeight > 0 ? false : false}}"
+  style="bottom: {{isIOS ? keyboardHeight : 0}}px;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+  <view class="icon material-icons" hover-class="hover">
+    <text>add_photo_alternate</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>format_size</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>format_bold</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>format_italic</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>format_underlined</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>format_align_left</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>check_box</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>format_list_numbered</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover">
+    <text>format_list_bulleted</text>
   </view>
 </view>
 

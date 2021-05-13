@@ -357,52 +357,45 @@ Page({
     })
   },
 
-  contentTap(e) {
+  // contentFocus() {
+  //   this.setData({
+  //     contentStyle: `border-bottom-color:${this.data.primaryColor};`,
+  //     contentNumStyle: `color:${this.data.primaryColor};`
+  //   })
+  // },
 
-  },
+  // contentBlur() {
+  //   this.setData({
+  //     contentStyle: "",
+  //     contentNumStyle: "",
+  //   })
+  // },
 
-  contentFocus() {
-    this.setData({
-      contentStyle: `border-bottom-color:${this.data.primaryColor};`,
-      contentNumStyle: `color:${this.data.primaryColor};`
-    })
-  },
-
-  contentBlur() {
-    this.setData({
-      contentStyle: "",
-      contentNumStyle: "",
-    })
-  },
-
-  contentInput(e) {
-    // console.log(e.detail.value.length);
-    this.data.temp = e.detail.value;
-    this.setData({
-      content: e.detail.value,
-      contentNum: e.detail.value.length,
-      btnStyle: "right:0;",
-      edited: true
-    })
-    //预览
-    if (this.data.useMarkdown && this.data.markdownPreview) {
-      if (this.data.timer) {
-        clearTimeout(this.data.timer);
-        this.data.timer = setTimeout(() => {
-          this.setData({
-            md: e.detail.value
-          })
-        }, this.data.markdownPreviewDelay * 1000);
-      } else {
-        this.data.timer = setTimeout(() => {
-          this.setData({
-            md: e.detail.value
-          })
-        }, this.data.markdownPreviewDelay * 1000);
-      }
-      // console.log(this.data.markdownPreviewDelay)
-    }
-  },
+  // contentInput(e) {
+  //   this.data.temp = e.detail.value;
+  //   this.setData({
+  //     content: e.detail.value,
+  //     contentNum: e.detail.value.length,
+  //     btnStyle: "right:0;",
+  //     edited: true
+  //   })
+  //   if (this.data.useMarkdown && this.data.markdownPreview) {
+  //     if (this.data.timer) {
+  //       clearTimeout(this.data.timer);
+  //       this.data.timer = setTimeout(() => {
+  //         this.setData({
+  //           md: e.detail.value
+  //         })
+  //       }, this.data.markdownPreviewDelay * 1000);
+  //     } else {
+  //       this.data.timer = setTimeout(() => {
+  //         this.setData({
+  //           md: e.detail.value
+  //         })
+  //       }, this.data.markdownPreviewDelay * 1000);
+  //     }
+  //   }
+  // },
 
   previewRefresh() {
     if (this.data.temp) {
