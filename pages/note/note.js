@@ -15,7 +15,7 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     theme: app.globalData.systemInfo.theme,
     headingNum: 0,
-    // contentNum: 0,
+    contentNum: 0,
     md: "",
     windowHeight: app.globalData.systemInfo.windowHeight,
     isPad: app.globalData.isPad,
@@ -23,10 +23,9 @@ Page({
     edited: false,
     heading: null,
     content: null,
+    contentDelta: null,
     galleryDetail: [],
     tempImgs: [],
-    heading: null,
-    content: null,
     category: 0,
     useMarkdown: true,
     encrypt: false,
@@ -364,19 +363,26 @@ Page({
     })
   },
 
-  // contentFocus() {
-  //   this.setData({
-  //     contentStyle: `border-bottom-color:${this.data.primaryColor};`,
-  //     contentNumStyle: `color:${this.data.primaryColor};`
-  //   })
-  // },
+  contentFocus() {
+    this.setData({
+      contentNumStyle: `color:${this.data.primaryColor};`
+    })
+  },
 
-  // contentBlur() {
-  //   this.setData({
-  //     contentStyle: "",
-  //     contentNumStyle: "",
-  //   })
-  // },
+  contentBlur() {
+    this.setData({
+      contentNumStyle: "",
+    })
+  },
+
+  contentInput(e) {
+    console.log(e)
+    this.setData({
+      contentNum: e.detail.text.length - 1,
+      content: e.detail.text,
+      contentDelta: e.detail.delta,
+    })
+  },
 
   // contentInput(e) {
   //   this.data.temp = e.detail.value;
@@ -574,7 +580,7 @@ Page({
     this.editorCtx.format(name, value)
   },
   onStatusChange(e) {
-    console.log(e.detail)
+    // console.log(e.detail)
     const formats = e.detail
     this.setData({
       edited: true,
@@ -628,18 +634,24 @@ Page({
     })
     const that = this
     wx.chooseImage({
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
       count: 1,
       success: function (res) {
         that.editorCtx.insertImage({
           src: res.tempFilePaths[0],
           data: {
-            id: 'abcd',
-            role: 'god'
+            timestamp: new Date().getTime(),
           },
           width: '80%',
           success: function () {
             console.log('insert image success')
           }
+        })
+        var tempFilePaths = res.tempFilePaths
+        that.setData({
+          tempImgs: that.data.tempImgs.concat(tempFilePaths),
+          edited: true
         })
       }
     })

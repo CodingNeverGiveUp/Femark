@@ -96,6 +96,7 @@
 .float_tools .icon{
   width: 35px;
   height: 35px;
+  font-size: 20px;
 }
 
 .float_bg {
@@ -199,6 +200,12 @@
   justify-content: center;
 }
 
+.content{
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
 .num {
   font-size: .8rem;
   align-self: flex-end;
@@ -213,8 +220,7 @@
   font-size: 16px;
   line-height: 1.5;
   overflow: auto;
-  padding: 0 20px;
-  border: 1px solid #ECECEC;
+  /* padding: 0 20px; */
 }
 
 .ql-active {

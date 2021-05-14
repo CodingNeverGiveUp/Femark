@@ -64,7 +64,7 @@
         <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{useMarkdown}}" data-id="useMarkdown" disabled="{{!edit}}">
           <text slot="title">Markdown 模式</text>
-          <text slot="subtitle">使用 Markdown 渲染\n同时启用预览视窗</text>
+          <text slot="subtitle">使用 Markdown 渲染\n将停用富文本编辑器</text>
         </md-switch>
       </view>
     </view>
@@ -80,16 +80,19 @@
           <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
         </view>
       </view>
-      <editor id="editor" class="ql-container" placeholder="请输入内容…" show-img-size="true" show-img-resize="true"
-        show-img-toolbar="true" bindstatuschange="onStatusChange" bindready="onEditorReady">
-      </editor>
+      <view class="content">
+        <editor id="editor" class="ql-container" placeholder="{{edit ? '请输入内容…' : '无内容'}}" show-img-size="true"
+          show-img-resize="true" show-img-toolbar="true" read-only="{{!edit}}" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput" bindstatuschange="onStatusChange"
+          bindready="onEditorReady">
+        </editor>
+        <view class="num" wx:if="{{edit}}">
+          <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
+        </view>
+      </view>
       <!-- <view class="content" bindtap="contentTap">
         <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
           placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
           confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
-        <view class="num" wx:if="{{edit}}">
-          <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
-        </view>
       </view> -->
     </view>
   </scroll-view>
@@ -197,6 +200,9 @@
   <!-- <view class="icon material-icons" hover-class="hover" bindtap="addImg">
     <text>add_photo_alternate</text>
   </view> -->
+  <view class="icon material-icons" hover-class="hover" bindtap="addImg">
+    <text>add_photo_alternate</text>
+  </view>
   <view class="icon material-icons" hover-class="hover" bindtap="">
     <text>attachment</text>
   </view>
@@ -206,7 +212,7 @@
   <view class="icon material-icons" hover-class="hover">
     <text>share</text>
   </view>
-  <view class="icon material-icons" hover-class="hover" bindtap="delete">
+  <view wx:if="{{id}}" class="icon material-icons" hover-class="hover" bindtap="delete">
     <text>delete</text>
   </view>
 </view>
@@ -216,8 +222,9 @@
   <view class="toolbar_section">
     <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
       <view class="description">文字大小</view>
-      <slider min="1" max="6" value="{{formats.header ? formats.header : 4}}" backgroundColor="#666" activeColor="{{primaryColor}}" block-size="12"
-        block-color="{{primaryColor}}" show-value="true" bindchange="formatSize"></slider>
+      <slider min="1" max="6" value="{{formats.header ? formats.header : 4}}" backgroundColor="#666"
+        activeColor="{{primaryColor}}" block-size="12" block-color="{{primaryColor}}" show-value="true"
+        bindchange="formatSize"></slider>
     </view>
 
     <view class="format_color" wx:if="{{toolbarActivated == 'color'}}">
@@ -297,22 +304,26 @@
 
     <view class="format_align" wx:if="{{toolbarActivated == 'align'}}">
       <view class="format_align_section"
-        style="{{!formats.align || formats.align == 'left' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="left">
+        style="{{!formats.align || formats.align == 'left' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="left">
         <text class="material-icons">format_align_left</text>
         <text>靠左对齐</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.align == 'right' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="right">
+        style="{{formats.align == 'right' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="right">
         <text class="material-icons">format_align_right</text>
         <text>靠右对齐</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.align == 'center' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="center">
+        style="{{formats.align == 'center' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="center">
         <text class="material-icons">format_align_center</text>
         <text>居中对齐</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.align == 'justify' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="justify">
+        style="{{formats.align == 'justify' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="justify">
         <text class="material-icons">format_align_justify</text>
         <text>两端对齐</text>
       </view>
@@ -320,17 +331,20 @@
 
     <view class="format_list" wx:if="{{toolbarActivated == 'list'}}">
       <view class="format_align_section"
-        style="{{formats.list == 'bullet' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="list" data-value="bullet">
+        style="{{formats.list == 'bullet' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="list" data-value="bullet">
         <text class="material-icons">format_list_bulleted</text>
         <text>符号列表</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.list == 'ordered' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="list" data-value="ordered">
+        style="{{formats.list == 'ordered' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="list" data-value="ordered">
         <text class="material-icons">format_list_numbered</text>
         <text>编号列表</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.list == 'checked' || formats.list == 'unchecked' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="list" data-value="check">
+        style="{{formats.list == 'checked' || formats.list == 'unchecked' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="list" data-value="check">
         <text class="material-icons">check_box</text>
         <text>复选框列表</text>
       </view>
@@ -350,7 +364,8 @@
     <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="color">
       <text>colorize</text>
     </view>
-    <view class="icon material-icons {{formats.backgroundColor ? 'ql-active' : ''}}" catchtouchend="popupToolbox" hover-class="hover" data-name="paint">
+    <view class="icon material-icons {{formats.backgroundColor ? 'ql-active' : ''}}" catchtouchend="popupToolbox"
+      hover-class="hover" data-name="paint">
       <text>format_paint</text>
     </view>
     <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="align">
@@ -368,14 +383,15 @@
       hover-class="hover" data-name="underline">
       <text>format_underlined</text>
     </view>
-    <view class="icon material-icons {{formats.list ? 'ql-active' : ''}}" catchtouchend="popupToolbox" hover-class="hover" data-name="list">
+    <view class="icon material-icons {{formats.list ? 'ql-active' : ''}}" catchtouchend="popupToolbox"
+      hover-class="hover" data-name="list">
       <text>{{formats.list?formats.list=='checked' || formats.list=='unchecked'?"check_box":formats.list=='ordered'?'format_list_numbered':'format_list_bulleted':'format_list_bulleted'}}</text>
     </view>
   </view>
 </view>
 
 <view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};bottom:{{edit?toolbarActivated?115:65:27}}px;">
-  <view class="float_tools_container" style="{{edited?'width:120px;':'width:0;'}}">
+  <view class="float_tools_container" style="{{edited?'width:110px;':'width:0;'}}">
     <view class="float_tools">
       <view class="icon material-icons" hover-class="hover" catchtouchend="undo">
         <text>undo</text>
