@@ -577,6 +577,7 @@ Page({
     console.log(e.detail)
     const formats = e.detail
     this.setData({
+      edited: true,
       formats
     })
   },
@@ -585,6 +586,9 @@ Page({
       success: function () {
         console.log('insert divider success')
       }
+    })
+    this.setData({
+      edited: true
     })
   },
   clear() {
@@ -660,6 +664,25 @@ Page({
       this.editorCtx.format("header", 4)
     } else {
       this.editorCtx.format("header", value)
+    }
+  },
+
+  formatColor(e) {
+    let value = e.currentTarget.dataset.color;
+    if (value == '#000000') {
+      this.editorCtx.format("color", value);
+      this.editorCtx.format("color", value);
+    } else {
+      this.editorCtx.format("color", value);
+    }
+  },
+  formatPaint(e) {
+    let value = e.currentTarget.dataset.color;
+    if (value == '#ffffff') {
+      this.editorCtx.format("backgroundColor", value);
+      this.editorCtx.format("backgroundColor", value);
+    } else {
+      this.editorCtx.format("backgroundColor", value);
     }
   },
 
