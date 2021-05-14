@@ -37,6 +37,7 @@
   align-items: center;
   transition: background .2s ease-in-out;
   color: #444;
+  flex: 0 0 auto;
 }
 
 .btn {
@@ -81,7 +82,7 @@
 .float_tools {
   position: absolute;
   left: 0;
-  width: 112px;
+  width: 102px;
   height: 40px;
   display: flex;
   flex-direction: row;
@@ -90,6 +91,11 @@
   box-shadow: 0 0 10rpx #bbb;
   border-radius: 20px 0 0 20px;
   padding-left: 8px;
+}
+
+.float_tools .icon{
+  width: 35px;
+  height: 35px;
 }
 
 .float_bg {
@@ -338,7 +344,7 @@
 .toolbar .icon {
   width: 35px;
   height: 35px;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
   margin-right: 0;
 }
 

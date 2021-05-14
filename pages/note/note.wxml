@@ -211,7 +211,7 @@
   </view>
 </view>
 
-<view class="toolbar" hidden="{{keyboardHeight > 0 ? false : true}}"
+<view class="toolbar" hidden="{{keyboardHeight > 0 ? false : false}}"
   style="bottom: {{isIOS ? keyboardHeight : 0}}px;{{toolbarActivated ? 'height:100px':''}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
   <view class="toolbar_section">
     <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
@@ -223,35 +223,35 @@
     <view class="format_color" wx:if="{{toolbarActivated == 'color'}}">
       <view class="description">文字颜色</view>
       <view class="colors">
-        <view class="color_bg" bindtap="formatColor" data-color="#000000"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#000000"
           style="{{!formats.color || formats.color == '#000000' ? 'border-color:#000000' : ''}}">
           <view class="color" style="background:#000;"></view>
         </view>
-        <view class="color_bg" bindtap="formatColor" data-color="#44546a"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#44546a"
           style="{{formats.color == '#44546a' ? 'border-color:#44546a' : ''}}">
           <view class="color" style="background:#44546a;"></view>
         </view>
-        <view class="color_bg" bindtap="formatColor" data-color="#7f7f7f"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#7f7f7f"
           style="{{formats.color == '#7f7f7f' ? 'border-color:#7f7f7f' : ''}}">
           <view class="color" style="background:#7f7f7f;"></view>
         </view>
-        <view class="color_bg" bindtap="formatColor" data-color="#ff0000"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#ff0000"
           style="{{formats.color == '#ff0000' ? 'border-color:#ff0000' : ''}}">
           <view class="color" style="background:#ff0000"></view>
         </view>
-        <view class="color_bg" bindtap="formatColor" data-color="#ffc000"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#ffc000"
           style="{{formats.color == '#ffc000' ? 'border-color:#ffc000' : ''}}">
           <view class="color" style="background:#ffc000"></view>
         </view>
-        <view class="color_bg" bindtap="formatColor" data-color="#00b050"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#00b050"
           style="{{formats.color == '#00b050' ? 'border-color:#00b050' : ''}}">
           <view class="color" style="background:#00b050"></view>
         </view>
-        <view class="color_bg" bindtap="formatColor" data-color="#0070c0"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#0070c0"
           style="{{formats.color == '#0070c0' ? 'border-color:#0070c0' : ''}}">
           <view class="color" style="background:#0070c0"></view>
         </view>
-        <view class="color_bg" bindtap="formatColor" data-color="#7030a0"
+        <view class="color_bg" catchtouchend="formatColor" data-color="#7030a0"
           style="{{formats.color == '#7030a0' ? 'border-color:#7030a0' : ''}}">
           <view class="color" style="background:#7030a0"></view>
         </view>
@@ -261,34 +261,34 @@
     <view class="format_color" wx:if="{{toolbarActivated == 'paint'}}">
       <view class="description">背景颜色</view>
       <view class="colors">
-        <view class="color_bg" bindtap="formatPaint" data-color="#ffffff">
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#ffffff">
           <view class="material-icons" style="font-size:18px">block</view>
         </view>
-        <view class="color_bg" bindtap="formatPaint" data-color="#fff3a7"
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#fff3a7"
           style="{{formats.backgroundColor == '#fff3a7' ? 'border-color:#fff3a7' : ''}}">
           <view class="color" style="background:#fff3a7;"></view>
         </view>
-        <view class="color_bg" bindtap="formatPaint" data-color="#cdf2dc"
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#cdf2dc"
           style="{{formats.backgroundColor == '#cdf2dc' ? 'border-color:#cdf2dc' : ''}}">
           <view class="color" style="background:#cdf2dc;"></view>
         </view>
-        <view class="color_bg" bindtap="formatPaint" data-color="#d7ecfd"
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#d7ecfd"
           style="{{formats.backgroundColor == '#d7ecfd' ? 'border-color:#d7ecfd' : ''}}">
           <view class="color" style="background:#d7ecfd"></view>
         </view>
-        <view class="color_bg" bindtap="formatPaint" data-color="#dddef0"
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#dddef0"
           style="{{formats.backgroundColor == '#dddef0' ? 'border-color:#dddef0' : ''}}">
           <view class="color" style="background:#dddef0"></view>
         </view>
-        <view class="color_bg" bindtap="formatPaint" data-color="#fee0d6"
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#fee0d6"
           style="{{formats.backgroundColor == '#fee0d6' ? 'border-color:#fee0d6' : ''}}">
           <view class="color" style="background:#fee0d6"></view>
         </view>
-        <view class="color_bg" bindtap="formatPaint" data-color="#ffdfc0"
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#ffdfc0"
           style="{{formats.backgroundColor == '#ffdfc0' ? 'border-color:#ffdfc0' : ''}}">
           <view class="color" style="background:#ffdfc0"></view>
         </view>
-        <view class="color_bg" bindtap="formatPaint" data-color="#dadbda"
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#dadbda"
           style="{{formats.backgroundColor == '#dadbda' ? 'border-color:#dadbda' : ''}}">
           <view class="color" style="background:#dadbda"></view>
         </view>
@@ -297,22 +297,22 @@
 
     <view class="format_align" wx:if="{{toolbarActivated == 'align'}}">
       <view class="format_align_section"
-        style="{{!formats.align || formats.align == 'left' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" bindtap="format" data-name="align" data-value="left">
+        style="{{!formats.align || formats.align == 'left' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="left">
         <text class="material-icons">format_align_left</text>
         <text>靠左对齐</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.align == 'right' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" bindtap="format" data-name="align" data-value="right">
+        style="{{formats.align == 'right' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="right">
         <text class="material-icons">format_align_right</text>
         <text>靠右对齐</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.align == 'center' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" bindtap="format" data-name="align" data-value="center">
+        style="{{formats.align == 'center' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="center">
         <text class="material-icons">format_align_center</text>
         <text>居中对齐</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.align == 'justify' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" bindtap="format" data-name="align" data-value="justify">
+        style="{{formats.align == 'justify' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="align" data-value="justify">
         <text class="material-icons">format_align_justify</text>
         <text>两端对齐</text>
       </view>
@@ -320,21 +320,21 @@
 
     <view class="format_list" wx:if="{{toolbarActivated == 'list'}}">
       <view class="format_align_section"
-        style="{{formats.list == 'bullet' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" bindtap="format" data-name="list" data-value="bullet">
+        style="{{formats.list == 'bullet' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="list" data-value="bullet">
         <text class="material-icons">format_list_bulleted</text>
         <text>符号列表</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.list == 'ordered' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" bindtap="format" data-name="list" data-value="ordered">
+        style="{{formats.list == 'ordered' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="list" data-value="ordered">
         <text class="material-icons">format_list_numbered</text>
         <text>编号列表</text>
       </view>
       <view class="format_align_section"
-        style="{{formats.list == 'checked' || formats.list == 'unchecked' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" bindtap="format" data-name="list" data-value="check">
+        style="{{formats.list == 'checked' || formats.list == 'unchecked' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}" catchtouchend="format" data-name="list" data-value="check">
         <text class="material-icons">check_box</text>
         <text>复选框列表</text>
       </view>
-      <view class="format_align_section" hover-class="f_hover" bindtap="insertDivider">
+      <view class="format_align_section" hover-class="f_hover" catchtouchend="insertDivider">
         <text class="material-icons">horizontal_rule</text>
         <text>分割线</text>
       </view>
@@ -377,10 +377,10 @@
 <view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};bottom:{{edit?toolbarActivated?115:65:27}}px;">
   <view class="float_tools_container" style="{{edited?'width:120px;':'width:0;'}}">
     <view class="float_tools">
-      <view class="icon material-icons" hover-class="hover">
+      <view class="icon material-icons" hover-class="hover" catchtouchend="undo">
         <text>undo</text>
       </view>
-      <view class="icon material-icons" hover-class="hover">
+      <view class="icon material-icons" hover-class="hover" catchtouchend="redo">
         <text>redo</text>
       </view>
     </view>
