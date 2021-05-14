@@ -211,43 +211,190 @@
   </view>
 </view>
 
-<view class="float" style="{{floatStyle}}" bindtap="floatTap">
-  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text>
+
+<view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+  <view class="float_tools_container" style="{{edited?'width:120px;':'width:0;'}}">
+    <view class="float_tools">
+      <view class="icon material-icons" hover-class="hover">
+        <text>undo</text>
+      </view>
+      <view class="icon material-icons" hover-class="hover">
+        <text>redo</text>
+      </view>
+    </view>
+  </view>
+  <view class="float_bg" bindtap="floatTap">
+    <view class="float_color" hover-class="hover">
+      <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text>
+      </view>
     </view>
   </view>
 </view>
 
-<view class="bottom_bar toolbar" hidden="{{keyboardHeight > 0 ? false : false}}"
-  style="bottom: {{isIOS ? keyboardHeight : 0}}px;--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
-  <view class="icon material-icons" hover-class="hover">
-    <text>add_photo_alternate</text>
+<view class="toolbar" hidden="{{keyboardHeight > 0 ? false : false}}"
+  style="bottom: {{isIOS ? keyboardHeight : 0}}px;{{toolbarActivated ? 'height:100px':''}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
+  <view class="toolbar_section">
+    <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
+      <view class="description">文字大小</view>
+      <slider min="1" max="6" value="{{formats.header ? formats.header : 4}}" backgroundColor="#666" activeColor="{{primaryColor}}" block-size="12"
+        block-color="{{primaryColor}}" show-value="true" bindchange="formatSize"></slider>
+    </view>
+
+    <view class="format_color" wx:if="{{toolbarActivated == 'color'}}">
+      <view class="description">文字颜色</view>
+      <view class="colors">
+        <view class="color_bg" bindtap="colorPick" data-color="#000"
+          style="{{formats.color == '#000000' ? 'border-color:#000000' : ''}}">
+          <view class="color" style="background:#000;"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#fff"
+          style="{{formats.color == '#44546a' ? 'border-color:#44546a' : ''}}">
+          <view class="color" style="background:#44546a;"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#7f7f7f"
+          style="{{formats.color == '#7f7f7f' ? 'border-color:#7f7f7f' : ''}}">
+          <view class="color" style="background:#7f7f7f;"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#ff0000"
+          style="{{formats.color == '#ff0000' ? 'border-color:#ff0000' : ''}}">
+          <view class="color" style="background:#ff0000"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#ffc000"
+          style="{{formats.color == '#ffc000' ? 'border-color:#ffc000' : ''}}">
+          <view class="color" style="background:#ffc000"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#00b050"
+          style="{{formats.color == '#00b050' ? 'border-color:#00b050' : ''}}">
+          <view class="color" style="background:#00b050"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#0070c0"
+          style="{{formats.color == '#ff0000' ? 'border-color:#ff0000' : ''}}">
+          <view class="color" style="background:#0070c0"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#7030a0"
+          style="{{formats.color == '#7030a0' ? 'border-color:#7030a0' : ''}}">
+          <view class="color" style="background:#7030a0"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="format_color" wx:if="{{toolbarActivated == 'paint'}}">
+      <view class="description">背景颜色</view>
+      <view class="colors">
+        <view class="color_bg" bindtap="colorPick" data-color="#000"
+          style="{{formats.color == '#000000' ? 'border-color:#000000' : ''}}">
+          <view class="color" style="background:#000;"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#fff"
+          style="{{formats.color == '#44546a' ? 'border-color:#44546a' : ''}}">
+          <view class="color" style="background:#44546a;"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#7f7f7f"
+          style="{{formats.color == '#7f7f7f' ? 'border-color:#7f7f7f' : ''}}">
+          <view class="color" style="background:#7f7f7f;"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#ff0000"
+          style="{{formats.color == '#ff0000' ? 'border-color:#ff0000' : ''}}">
+          <view class="color" style="background:#ff0000"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#ffc000"
+          style="{{formats.color == '#ffc000' ? 'border-color:#ffc000' : ''}}">
+          <view class="color" style="background:#ffc000"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#00b050"
+          style="{{formats.color == '#00b050' ? 'border-color:#00b050' : ''}}">
+          <view class="color" style="background:#00b050"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#0070c0"
+          style="{{formats.color == '#ff0000' ? 'border-color:#ff0000' : ''}}">
+          <view class="color" style="background:#0070c0"></view>
+        </view>
+        <view class="color_bg" bindtap="colorPick" data-color="#7030a0"
+          style="{{formats.color == '#7030a0' ? 'border-color:#7030a0' : ''}}">
+          <view class="color" style="background:#7030a0"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="format_align" wx:if="{{toolbarActivated == 'align'}}">
+      <view class="format_align_section"
+        style="{{!formats.align || formats.align == 'left' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}">
+        <text class="material-icons">format_align_left</text>
+        <text>靠左对齐</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.align == 'right' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}">
+        <text class="material-icons">format_align_right</text>
+        <text>靠右对齐</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.align == 'center' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}">
+        <text class="material-icons">format_align_center</text>
+        <text>居中对齐</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.align == 'justify' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}">
+        <text class="material-icons">format_align_justify</text>
+        <text>两端对齐</text>
+      </view>
+    </view>
+
+    <view class="format_list" wx:if="{{toolbarActivated == 'list'}}">
+      <view class="format_align_section"
+        style="{{!formats.list || formats.list == 'bullet' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}">
+        <text class="material-icons">format_list_bulleted</text>
+        <text>符号列表</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.list == 'ordered' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}">
+        <text class="material-icons">format_list_numbered</text>
+        <text>编号列表</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.list == 'check' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}">
+        <text class="material-icons">check_box</text>
+        <text>复选框列表</text>
+      </view>
+      <view class="format_align_section">
+        <text class="material-icons">horizontal_rule</text>
+        <text>分割线</text>
+      </view>
+    </view>
   </view>
-  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}">
-    <text>format_size</text>
-  </view>
-  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.bold ? 'ql-active' : ''}}" data-name="bold">
-    <text>format_bold</text>
-  </view>
-  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.italic ? 'ql-active' : ''}}" data-name="italic">
-    <text>format_italic</text>
-  </view>
-  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.underline ? 'ql-active' : ''}}" data-name="underline">
-    <text>format_underlined</text>
-  </view>
-  <view class="icon material-icons" hover-class="hover">
-    <text>format_align_left</text>
-  </view>
-  <view class="icon material-icons" hover-class="hover">
-    <text>check_box</text>
-  </view>
-  <view class="icon material-icons" hover-class="hover">
-    <text>format_list_numbered</text>
-  </view>
-  <view class="icon material-icons" hover-class="hover">
-    <text>format_list_bulleted</text>
+  <view class="toolbar_main">
+    <view class="icon material-icons" catchtouchend="insertImage" hover-class="hover">
+      <text>add_photo_alternate</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="size">
+      <text>format_size</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="color">
+      <text>colorize</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="paint">
+      <text>format_paint</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="align">
+      <text>format_align_{{formats.align?'formats.align':'left'}}</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.bold ? 'ql-active' : ''}}"
+      data-name="bold">
+      <text>format_bold</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.italic ? 'ql-active' : ''}}"
+      data-name="italic">
+      <text>format_italic</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="format"
+      hover-class="hover {{!formats.underline ? 'ql-active' : ''}}" data-name="underline">
+      <text>format_underlined</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="list">
+      <text>format_list_bulleted</text>
+    </view>
   </view>
 </view>
+
 
 <view class="snackbar" style="{{snackbarStyle}}">
   <text>{{snackbarContent}}</text>

@@ -15,7 +15,7 @@ Page({
     rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
     theme: app.globalData.systemInfo.theme,
     headingNum: 0,
-    contentNum: 0,
+    // contentNum: 0,
     md: "",
     windowHeight: app.globalData.systemInfo.windowHeight,
     isPad: app.globalData.isPad,
@@ -41,6 +41,7 @@ Page({
     keyboardHeight: 0,
     isIOS: false,
     editorCtx: null,
+    toolbarActivated: null,
   },
 
   submit() {
@@ -536,19 +537,27 @@ Page({
 
   updatePosition(keyboardHeight) {
     const toolbarHeight = 50
-    const { windowHeight, platform } = wx.getSystemInfoSync()
+    const {
+      windowHeight,
+      platform
+    } = wx.getSystemInfoSync()
     let editorHeight = keyboardHeight > 0 ? (windowHeight - keyboardHeight - toolbarHeight) : windowHeight
-    this.setData({ editorHeight, keyboardHeight })
+    this.setData({
+      editorHeight,
+      keyboardHeight
+    })
   },
   calNavigationBarAndStatusBar() {
     const systemInfo = wx.getSystemInfoSync()
-    const { statusBarHeight, platform } = systemInfo
+    const {
+      statusBarHeight,
+      platform
+    } = systemInfo
     const isIOS = platform === 'ios'
     const navigationBarHeight = isIOS ? 44 : 48
     return statusBarHeight + navigationBarHeight
   },
   onEditorReady() {
-    console.log("初始化")
     const that = this
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
@@ -556,15 +565,20 @@ Page({
   },
   format(e) {
     console.log(e)
-    let { name, value } = e.currentTarget.dataset
+    let {
+      name,
+      value
+    } = e.currentTarget.dataset
     if (!name) return
     // console.log('format', name, value)
     this.editorCtx.format(name, value)
-
   },
   onStatusChange(e) {
+    console.log(e.detail)
     const formats = e.detail
-    this.setData({ formats })
+    this.setData({
+      formats
+    })
   },
   insertDivider() {
     this.editorCtx.insertDivider({
@@ -605,6 +619,9 @@ Page({
     })
   },
   insertImage() {
+    this.setData({
+      toolbarActivated: null
+    })
     const that = this
     wx.chooseImage({
       count: 1,
@@ -622,6 +639,28 @@ Page({
         })
       }
     })
+  },
+
+  popupToolbox(e) {
+    if (e.currentTarget.dataset.name == this.data.toolbarActivated) {
+      this.setData({
+        toolbarActivated: null,
+      })
+    } else {
+      this.setData({
+        toolbarActivated: e.currentTarget.dataset.name
+      })
+    }
+  },
+
+  formatSize(e) {
+    let value = e.detail.value;
+    if (value == 4) {
+      this.editorCtx.format("header", 4)
+      this.editorCtx.format("header", 4)
+    } else {
+      this.editorCtx.format("header", value)
+    }
   },
 
 
