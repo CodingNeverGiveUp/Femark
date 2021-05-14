@@ -171,6 +171,11 @@
   border: 1px solid #ECECEC;
 }
 
+.ql-active{
+  /* background: var(--rgbaprimaryColor--); */
+  color: var(--primaryColor--);
+}
+
 .toolbar {
   justify-content: space-between;
 }

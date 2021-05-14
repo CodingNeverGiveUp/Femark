@@ -1,7 +1,7 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
   enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
-  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" bindscrolltoupper="scroll">
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscrolltoupper="scroll">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -194,9 +194,9 @@
   </view>
 </view>
 <view class="bottom_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
-  <view class="icon material-icons" hover-class="hover" bindtap="addImg">
+  <!-- <view class="icon material-icons" hover-class="hover" bindtap="addImg">
     <text>add_photo_alternate</text>
-  </view>
+  </view> -->
   <view class="icon material-icons" hover-class="hover" bindtap="">
     <text>attachment</text>
   </view>
@@ -218,21 +218,21 @@
   </view>
 </view>
 
-<view class="bottom_bar toolbar" catchtouchend="format" hidden="{{keyboardHeight > 0 ? false : false}}"
-  style="bottom: {{isIOS ? keyboardHeight : 0}}px;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
+<view class="bottom_bar toolbar" hidden="{{keyboardHeight > 0 ? false : false}}"
+  style="bottom: {{isIOS ? keyboardHeight : 0}}px;--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
   <view class="icon material-icons" hover-class="hover">
     <text>add_photo_alternate</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}">
     <text>format_size</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.bold ? 'ql-active' : ''}}" data-name="bold">
     <text>format_bold</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.italic ? 'ql-active' : ''}}" data-name="italic">
     <text>format_italic</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" catchtouchend="format" hover-class="hover {{!formats.underline ? 'ql-active' : ''}}" data-name="underline">
     <text>format_underlined</text>
   </view>
   <view class="icon material-icons" hover-class="hover">
