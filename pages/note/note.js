@@ -26,6 +26,7 @@ Page({
     contentDelta: null,
     galleryDetail: [],
     tempImgs: [],
+    tempImgTimestamps: [],
     category: 0,
     useMarkdown: true,
     encrypt: false,
@@ -331,7 +332,7 @@ Page({
   previewTempImg(e) {
     console.log(e.currentTarget.dataset.url)
     let urls = []
-    this.data.tempImgs.forEach(element=>{
+    this.data.tempImgs.forEach(element => {
       urls.push(element.src)
     })
     wx.previewImage({
@@ -392,6 +393,34 @@ Page({
       contentNum: e.detail.text.length - 1,
       content: e.detail.text,
       contentDelta: e.detail.delta,
+    })
+    //
+    const pattern = /timestamp=(\d{13})/g;
+    let tempImgTimestamps = []
+    e.detail.delta.ops.forEach(element => {
+      // console.log(element.attributes['data-custom'], pattern.test(element.attributes['data-custom']))
+      if (element.attributes && element.attributes['data-custom']) {
+        let text = element.attributes['data-custom']
+        if (pattern.test(text)) {
+          pattern.lastIndex = 0;//巨坑
+          let matches = pattern.exec(text)
+          pattern.lastIndex = 0;//巨坑
+          tempImgTimestamps.push(matches[1])
+        }else{
+          pattern.lastIndex = 0;//巨坑
+        }
+      }
+    })
+    tempImgTimestamps.sort((a,b)=>{return a-b})
+    if(tempImgTimestamps.length > this.data.tempImgTimestamps.length){
+      console.log("增加")
+    }else if(tempImgTimestamps.length < this.data.tempImgTimestamps.length){
+      console.log("删除")
+    }else{
+
+    }
+    this.setData({
+      tempImgTimestamps,
     })
   },
 

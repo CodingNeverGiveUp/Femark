@@ -82,7 +82,7 @@
       </view>
       <view class="content">
         <editor id="editor" class="ql-container" placeholder="{{edit ? '请输入内容…' : '无内容'}}" show-img-size="true"
-          show-img-resize="true" show-img-toolbar="true" read-only="{{!edit}}" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput" bindstatuschange="onStatusChange"
+          show-img-resize="true" show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput" bindstatuschange="onStatusChange"
           bindready="onEditorReady">
         </editor>
         <view class="num" wx:if="{{edit}}">
