@@ -42,7 +42,7 @@
           style="background:{{item.color}};" hover-class="{{pureTheme?'hover':'c_hover'}}" bindtap="note"
           data-data="{{item}}">
           <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image"
-            style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+            style="background-image: url({{item.preview.tempFileURL}});">
             <view class="note_image_tip">
               <text>共{{item.gallery.length}}张图片</text>
             </view>
@@ -67,7 +67,7 @@
           style="background:{{item.color}};" hover-class="{{pureTheme?'hover':'c_hover'}}" bindtap="note"
           data-data="{{item}}">
           <view wx:if="{{item.gallery.length != 0 && item.encrypt == false}}" class="note_image"
-            style="background-image: url({{item.galleryDetail[0].tempFileURL}});">
+            style="background-image: url({{item.preview.tempFileURL}});">
             <view class="note_image_tip">
               <text>共{{item.gallery.length}}张图片</text>
             </view>

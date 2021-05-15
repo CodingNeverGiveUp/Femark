@@ -35,7 +35,7 @@
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>音频</text>
         </view>
-        <view bindtap="addImg" class="empty" style="height: 200rpx;" wx:if="{{true}}">
+        <view class="empty" style="height: 200rpx;" wx:if="{{true}}">
           <!-- <image src="/source/img/empty.png" mode="widthFix"></image> -->
           <text>无内容</text>
         </view>
@@ -89,6 +89,7 @@
           <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
         </view>
       </view>
+      <view style="height:200px;"></view>
       <!-- <view class="content" bindtap="contentTap">
         <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
           placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
