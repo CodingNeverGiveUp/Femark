@@ -26,7 +26,7 @@ Page({
     contentDelta: null,
     galleryDetail: [],
     tempImgs: [],
-    tempImgTimestamps: [],
+    imgTimestamps: [],
     category: 0,
     useMarkdown: true,
     encrypt: false,
@@ -79,6 +79,7 @@ Page({
                 password: that.data.password,
                 useMarkdown: that.data.useMarkdown,
                 timestamp: new Date().getTime(),
+                imgTimestamps: that.data.imgTimestamps
               }
               await database.addNote(object)
               wx.showToast({
@@ -94,7 +95,6 @@ Page({
             //传完清除tempPath
             that.setData({
               tempImgs: [],
-              tempImgTimestamps: [],
             })
             // console.log(imgs.IDs)
           }
@@ -421,6 +421,46 @@ Page({
     })
   },
 
+  deleteImgByTimestamp(timestamp) {
+    var that = this
+    let array = this.data.galleryDetail
+    array.forEach((element, index, array) => {
+      if (element.timestamp == timestamp) {
+        async function process(){
+          wx.showLoading({
+            title: '操作进行中',
+          })
+          await wx.cloud.deleteFile({
+            fileList: [element.fileID]
+          })
+          if(!that.data.id){
+            await wx.cloud.database().collection('note').doc(app.globalData.id).get()
+            .then(res=>{
+              console.log(res)
+              that.data.id = res.data.note.length - 1
+            })
+          }
+          await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+            data: {
+              [`note.${that.data.id}.gallery`]: _.pull({
+                fileID: element.fileID
+              })
+            }
+          })
+          array.splice(index, 1, )
+          wx.showToast({
+            title: "操作成功",
+          })
+          that.setData({
+            galleryDetail: array,
+            edited: true,
+          })
+        }
+        process()
+      }
+    })
+  },
+
   headingFocus() {
     this.setData({
       headingStyle: `border-bottom-color:${this.data.primaryColor};`,
@@ -465,7 +505,7 @@ Page({
     })
     //
     const pattern = /timestamp=(\d{13})/g;
-    let tempImgTimestamps = []
+    let imgTimestamps = []
     e.detail.delta.ops.forEach(element => {
       // console.log(element.attributes['data-custom'], pattern.test(element.attributes['data-custom']))
       if (element.attributes && element.attributes['data-custom']) {
@@ -474,33 +514,34 @@ Page({
           pattern.lastIndex = 0; //巨坑
           let matches = pattern.exec(text)
           pattern.lastIndex = 0; //巨坑
-          tempImgTimestamps.push(matches[1])
+          imgTimestamps.push(matches[1])
         } else {
           pattern.lastIndex = 0; //巨坑
         }
       }
     })
-    tempImgTimestamps.sort((a, b) => {
+    imgTimestamps.sort((a, b) => {
       return a - b
     })
-    if (tempImgTimestamps.length > this.data.tempImgTimestamps.length) {
+    if (imgTimestamps.length > this.data.imgTimestamps.length) {
       console.log("增加")
-    } else if (tempImgTimestamps.length < this.data.tempImgTimestamps.length) {
+    } else if (imgTimestamps.length < this.data.imgTimestamps.length) {
       console.log("删除")
-      let del = this.data.tempImgTimestamps[this.data.tempImgTimestamps.length - 1]
-      for (let i = 0; i < tempImgTimestamps.length; i++) {
-        if (tempImgTimestamps[i] != this.data.tempImgTimestamps[i]) {
-          del = this.data.tempImgTimestamps[i];
+      let del = this.data.imgTimestamps[this.data.imgTimestamps.length - 1]
+      for (let i = 0; i < imgTimestamps.length; i++) {
+        if (imgTimestamps[i] != this.data.imgTimestamps[i]) {
+          del = this.data.imgTimestamps[i];
           break;
         }
       }
       // console.log(del)
       this.deleteTempImgByTimestamp(del)
+      this.deleteImgByTimestamp(del)
     } else {
 
     }
     this.setData({
-      tempImgTimestamps,
+      imgTimestamps,
     })
   },
 
