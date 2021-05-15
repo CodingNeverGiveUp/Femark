@@ -352,6 +352,19 @@ Page({
     })
   },
 
+  deleteTempImgByTimestamp(timestamp){
+    let array = this.data.tempImgs
+    array.forEach((element,index,array)=>{
+      if(element.timestamp == timestamp){
+        array.splice(index,1,)
+      }
+    })
+    this.setData({
+      tempImgs: array,
+      edited: true,
+    })
+  },
+
   headingFocus() {
     this.setData({
       headingStyle: `border-bottom-color:${this.data.primaryColor};`,
@@ -416,6 +429,15 @@ Page({
       console.log("增加")
     }else if(tempImgTimestamps.length < this.data.tempImgTimestamps.length){
       console.log("删除")
+      let del = this.data.tempImgTimestamps[this.data.tempImgTimestamps.length-1]
+      for(let i = 0;i < tempImgTimestamps.length;i++){
+        if(tempImgTimestamps[i] != this.data.tempImgTimestamps[i]){
+          del = this.data.tempImgTimestamps[i];
+          break;
+        }
+      }
+      // console.log(del)
+      this.deleteTempImgByTimestamp(del)
     }else{
 
     }
