@@ -199,7 +199,14 @@ Page({
         success(res) {
           console.log(res)
           // tempFilePath可以作为img标签的src属性显示图片
-          var tempFilePaths = res.tempFilePaths
+          var tempFilePaths = []
+          res.tempFilePaths.map(element => {
+            tempFilePaths.push({
+              src: element,
+              timestamp: new Date().getTime(),
+              fromContent: false
+            })
+          })
           // console.log(tempFilePaths)
           that.setData({
             tempImgs: that.data.tempImgs.concat(tempFilePaths),
@@ -323,9 +330,13 @@ Page({
 
   previewTempImg(e) {
     console.log(e.currentTarget.dataset.url)
+    let urls = []
+    this.data.tempImgs.forEach(element=>{
+      urls.push(element.src)
+    })
     wx.previewImage({
       current: e.currentTarget.dataset.url,
-      urls: this.data.tempImgs,
+      urls: urls,
     })
   },
 
@@ -638,19 +649,23 @@ Page({
       sourceType: ['album', 'camera'],
       count: 1,
       success: function (res) {
+        let timestamp = new Date().getTime()
         that.editorCtx.insertImage({
           src: res.tempFilePaths[0],
           data: {
-            timestamp: new Date().getTime(),
+            timestamp,
           },
           width: '80%',
           success: function () {
             console.log('insert image success')
           }
         })
-        var tempFilePaths = res.tempFilePaths
         that.setData({
-          tempImgs: that.data.tempImgs.concat(tempFilePaths),
+          tempImgs: that.data.tempImgs.concat([{
+            src: res.tempFilePaths[0],
+            timestamp,
+            fromContent: true
+          }]),
           edited: true
         })
       }
