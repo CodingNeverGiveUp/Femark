@@ -342,9 +342,35 @@ Page({
   },
 
   deleteTempImg(e) {
+    var that = this
     // console.log(e.currentTarget.dataset.index)
+    let index = e.currentTarget.dataset.index
     let array = this.data.tempImgs
-    array.splice(e.currentTarget.dataset.index, 1, );
+    //如果是混排图片
+    if (array[index].fromContent) {
+      let delta = this.data.contentDelta
+      delta.ops.forEach((element, innerIndex) => {
+        if (element.attributes && element.attributes['data-custom']) {
+          const pattern = /timestamp=(\d{13})/g;
+          let text = element.attributes['data-custom']
+          if (pattern.test(text)) {
+            pattern.lastIndex = 0; //巨坑
+            let matches = pattern.exec(text)
+            pattern.lastIndex = 0; //巨坑
+            if (matches[1] == array[index].timestamp) {
+              console.log("删除了" + innerIndex)
+              delta.ops.splice(innerIndex, 1, )
+              that.editorCtx.setContents({
+                delta,
+              })
+            }
+          }else{
+            pattern.lastIndex = 0; //巨坑
+          }
+        }
+      })
+    }
+    array.splice(index, 1, );
     // console.log(array.length)
     this.setData({
       tempImgs: array,
@@ -352,11 +378,11 @@ Page({
     })
   },
 
-  deleteTempImgByTimestamp(timestamp){
+  deleteTempImgByTimestamp(timestamp) {
     let array = this.data.tempImgs
-    array.forEach((element,index,array)=>{
-      if(element.timestamp == timestamp){
-        array.splice(index,1,)
+    array.forEach((element, index, array) => {
+      if (element.timestamp == timestamp) {
+        array.splice(index, 1, )
       }
     })
     this.setData({
@@ -415,30 +441,32 @@ Page({
       if (element.attributes && element.attributes['data-custom']) {
         let text = element.attributes['data-custom']
         if (pattern.test(text)) {
-          pattern.lastIndex = 0;//巨坑
+          pattern.lastIndex = 0; //巨坑
           let matches = pattern.exec(text)
-          pattern.lastIndex = 0;//巨坑
+          pattern.lastIndex = 0; //巨坑
           tempImgTimestamps.push(matches[1])
-        }else{
-          pattern.lastIndex = 0;//巨坑
+        } else {
+          pattern.lastIndex = 0; //巨坑
         }
       }
     })
-    tempImgTimestamps.sort((a,b)=>{return a-b})
-    if(tempImgTimestamps.length > this.data.tempImgTimestamps.length){
+    tempImgTimestamps.sort((a, b) => {
+      return a - b
+    })
+    if (tempImgTimestamps.length > this.data.tempImgTimestamps.length) {
       console.log("增加")
-    }else if(tempImgTimestamps.length < this.data.tempImgTimestamps.length){
+    } else if (tempImgTimestamps.length < this.data.tempImgTimestamps.length) {
       console.log("删除")
-      let del = this.data.tempImgTimestamps[this.data.tempImgTimestamps.length-1]
-      for(let i = 0;i < tempImgTimestamps.length;i++){
-        if(tempImgTimestamps[i] != this.data.tempImgTimestamps[i]){
+      let del = this.data.tempImgTimestamps[this.data.tempImgTimestamps.length - 1]
+      for (let i = 0; i < tempImgTimestamps.length; i++) {
+        if (tempImgTimestamps[i] != this.data.tempImgTimestamps[i]) {
           del = this.data.tempImgTimestamps[i];
           break;
         }
       }
       // console.log(del)
       this.deleteTempImgByTimestamp(del)
-    }else{
+    } else {
 
     }
     this.setData({
