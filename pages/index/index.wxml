@@ -49,7 +49,7 @@
           </view>
           <view class="note_text" wx:if="{{!item.encrypt}}">
             <view wx:if="{{item.heading!=null}}" class="note_title">{{item.heading}}</view>
-            <view class="note_sub {{pureTheme?'note_color_sub_p':''}}">{{item.content}}</view>
+            <view class="note_sub {{pureTheme?'note_color_sub_p':''}}">{{item.content ? item.content : '无内容'}}</view>
           </view>
           <view class="note_encrypt" wx:if="{{item.encrypt}}">
             <view class="material-icons" style="color:{{pureTheme?primaryColor:''}};">

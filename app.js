@@ -210,7 +210,6 @@ App({
             reject()
             event.emit('LoginCheck', 'error');
           })
-        console.log(db)
         //拉取及预处理笔记待办数据
         for (let i = 0; i < db.data[0].note.length; i++) {
           db.data[0].note[i].color = that.getRandomColor()
@@ -220,7 +219,6 @@ App({
               fileList: [db.data[0].note[i].gallery[0].fileID],
             }).then(res=>{
               db.data[0].note[i].preview = res.fileList[0]
-              console.log(db.data[0].note[i].preview)
             }).catch(err=>{
               reject()
               event.emit('LoginCheck', 'error');
@@ -319,7 +317,6 @@ App({
           .then(res => {
             db = res
           })
-        console.log(db)
         //拉取及预处理笔记待办数据
         for (let i = 0; i < db.data.note.length; i++) {
           db.data.note[i].color = that.getRandomColor()
@@ -329,7 +326,6 @@ App({
               fileList: [db.data.note[i].gallery[0].fileID],
             }).then(res=>{
               db.data.note[i].preview = res.fileList[0]
-              console.log(db.data.note[i].preview)
             }).catch(err=>{
               reject()
             })
