@@ -85,7 +85,7 @@
       </md-switch>
     </view>
     <view>
-      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="true" data-id="markdownByDefault">
+      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" data-id="markdownByDefault">
         <text slot="title">默认使用 Markdown</text>
         <text slot="subtitle">Markdown 作为新建笔记默认格式</text>
       </md-switch>

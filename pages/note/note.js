@@ -58,27 +58,21 @@ Page({
         if (this.data.id == null) {
           console.log("new")
           //新建
-          let imgs = {
-            paths: this.data.tempImgs,
-            IDs: new Array
-          }
+          let imgs = this.data.tempImgs
           async function process() {
             try {
-              if (imgs.paths.length != 0) {
+              if (imgs.length != 0) {
                 await database.uploadImg(imgs)
-                wx.cloud.getTempFileURL({
-                  fileList: imgs.IDs,
-                }).then(res => {
-                  let newGalleryDetail = that.data.galleryDetail.concat(res.fileList)
-                  that.setData({
-                    galleryDetail: newGalleryDetail,
-                  })
+                await database.idToUrl(imgs)
+                that.setData({
+                  galleryDetail: that.data.galleryDetail.concat(imgs)
                 })
               }
               let object = {
                 heading: that.data.heading,
                 content: that.data.content,
-                gallery: imgs.IDs,
+                contentDelta: that.data.contentDelta,
+                gallery: imgs,
                 audio: null,
                 category: that.data.category,
                 encrypt: that.data.encrypt,
@@ -100,6 +94,7 @@ Page({
             //传完清除tempPath
             that.setData({
               tempImgs: [],
+              tempImgTimestamps: [],
             })
             // console.log(imgs.IDs)
           }
@@ -300,14 +295,49 @@ Page({
             wx.showLoading({
               title: '正在修改数据',
             })
+            if(!that.data.id){
+              await wx.cloud.database().collection('note').doc(app.globalData.id).get()
+              .then(res=>{
+                console.log(res)
+                that.data.id = res.data.note.length - 1
+              })
+            }
             await wx.cloud.database().collection('note').doc(app.globalData.id).update({
               data: {
-                [`note.${that.data.id}.gallery`]: _.pull(fileID)
+                [`note.${that.data.id}.gallery`]: _.pull({
+                  fileID: fileID
+                })
               }
             })
-            //前端移除
+            
+            //如果是混排图片
             let array = that.data.galleryDetail
-            array.splice(e.currentTarget.dataset.index, 1, );
+            let index = e.currentTarget.dataset.index
+            if (array[index].fromContent) {
+              let delta = that.data.contentDelta
+              delta.ops.forEach((element, innerIndex) => {
+                if (element.attributes && element.attributes['data-custom']) {
+                  const pattern = /timestamp=(\d{13})/g;
+                  let text = element.attributes['data-custom']
+                  if (pattern.test(text)) {
+                    pattern.lastIndex = 0; //巨坑
+                    let matches = pattern.exec(text)
+                    pattern.lastIndex = 0; //巨坑
+                    if (matches[1] == array[index].timestamp) {
+                      console.log("删除了" + innerIndex)
+                      delta.ops.splice(innerIndex, 1, )
+                      that.editorCtx.setContents({
+                        delta,
+                      })
+                    }
+                  } else {
+                    pattern.lastIndex = 0; //巨坑
+                  }
+                }
+              })
+            }
+            //前端移除
+            array.splice(index, 1, );
             // console.log(array.length)
             that.setData({
               galleryDetail: array,
@@ -364,7 +394,7 @@ Page({
                 delta,
               })
             }
-          }else{
+          } else {
             pattern.lastIndex = 0; //巨坑
           }
         }

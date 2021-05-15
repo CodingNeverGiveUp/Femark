@@ -2,24 +2,24 @@ const app = getApp()
 //添加用户数组
 function addArray(profile) {
   return new Promise((resolve, reject) => {
-    profile.timestamp =  new Date().getTime(),
-    // const _ = wx.cloud.database().command
-    wx.cloud.database().collection('note').add({
-      data: {
-        'note': [],
-        'task': [],
-        'profile': profile,
-      }
-    }).then(res => {
-      resolve();
-    }).catch(err => {
-      reject();
-    })
+    profile.timestamp = new Date().getTime(),
+      // const _ = wx.cloud.database().command
+      wx.cloud.database().collection('note').add({
+        data: {
+          'note': [],
+          'task': [],
+          'profile': profile,
+        }
+      }).then(res => {
+        resolve();
+      }).catch(err => {
+        reject();
+      })
   })
 }
 
 function uploadImg(imgs) {
-  function upload(filepath, index, array) {
+  function upload(element, index, array) {
     return new Promise((resolve, reject) => {
       wx.showLoading({
         title: `上传中（${index+1}/${array.length}）`,
@@ -27,10 +27,10 @@ function uploadImg(imgs) {
       let cloudpath = `image/${app.globalData.openid}/${new Date().getTime()}.jpg`;
       wx.cloud.uploadFile({
         cloudPath: cloudpath,
-        filePath: filepath
+        filePath: element.src
       }).then(res => {
         // wx.hideLoading()
-        imgs.IDs.push(res.fileID)
+        element.fileID = res.fileID
         resolve()
       }).catch(err => {
         reject()
@@ -39,14 +39,14 @@ function uploadImg(imgs) {
   }
   return new Promise((resolve, reject) => {
     async function action() {
-      for (let i = 0; i < imgs.paths.length; i++) {
+      for (let i = 0; i < imgs.length; i++) {
         try {
-          await upload(imgs.paths[i], i, imgs.paths)
+          await upload(imgs[i], i, imgs)
         } catch {
           console.log("upload failed")
           reject()
         }
-        if (i == imgs.paths.length - 1) {
+        if (i == imgs.length - 1) {
           console.log("upload finished")
           // wx.hideLoading()
           resolve()
@@ -55,6 +55,25 @@ function uploadImg(imgs) {
     }
     action()
     // imgs.paths.forEach(async (element, index, array) => {})
+  })
+}
+
+function idToUrl(array){
+  return new Promise(async (resort, reject)=>{
+    try{
+      for(let i = 0; i < array.length; i++){
+        await wx.cloud.getTempFileURL({
+          fileList: [array[i].fileID]
+        }).then(res=>{
+          array[i].src = res.fileList[0].tempFileURL
+        })
+      }
+      resort()
+    }catch(e){
+      console.log(e)
+      console.log("错误！！！！！！！")
+      reject()
+    }
   })
 }
 
@@ -213,5 +232,6 @@ module.exports = { //注册函数
   addArray,
   getTask,
   addTask2,
-  uploadImg
+  uploadImg,
+  idToUrl
 }
