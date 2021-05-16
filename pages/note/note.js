@@ -3,6 +3,7 @@
 const app = getApp()
 const database = require("../../utils/database.js")
 const event = require("../../utils/event.js")
+const time = require("../../utils/util.js")
 const _ = wx.cloud.database().command
 Page({
 
@@ -37,6 +38,8 @@ Page({
     markdownPreviewDelay: app.globalData.markdownPreviewDelay,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
     categoryData: app.globalData.categoryData,
+    timestamp: new Date().getTime(),
+    time: time.formatChsTime(new Date()),
     // 编辑器
     formats: {},
     editorHeight: 300,
@@ -362,7 +365,7 @@ Page({
               title: '正在修改数据',
               mask: true
             })
-            if (!that.data.id) {
+            if (!that.data.id && that.data.id != 0) {
               console.log("noID")
               await wx.cloud.database().collection('note').doc(app.globalData.id).get()
                 .then(res => {
@@ -907,7 +910,24 @@ Page({
       content: e.detail.text,
       contentDelta: e.detail.delta,
     })
-    //
+    //处理Markdown预览
+    if (this.data.useMarkdown && this.data.markdownPreview) {
+      if (this.data.timer) {
+        clearTimeout(this.data.timer);
+        this.data.timer = setTimeout(() => {
+          this.setData({
+            md: e.detail.text
+          })
+        }, this.data.markdownPreviewDelay * 1000);
+      } else {
+        this.data.timer = setTimeout(() => {
+          this.setData({
+            md: e.detail.text
+          })
+        }, this.data.markdownPreviewDelay * 1000);
+      }
+    }
+    //处理图片增删
     const pattern = /timestamp=(\d{13})/g;
     let imgTimestamps = []
     e.detail.delta.ops.forEach(element => {
@@ -1135,7 +1155,7 @@ Page({
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
       //初始化编辑器内容
-      if(that.data.contentDelta){
+      if (that.data.contentDelta) {
         let delta = that.data.contentDelta
         const pattern = /timestamp=(\d{13})/g;
         delta.ops.forEach(element => {
@@ -1145,8 +1165,8 @@ Page({
               pattern.lastIndex = 0; //巨坑
               let matches = pattern.exec(text)
               pattern.lastIndex = 0; //巨坑
-              that.data.galleryDetail.forEach(innerElement=>{
-                if(matches[1] == innerElement.timestamp){
+              that.data.galleryDetail.forEach(innerElement => {
+                if (matches[1] == innerElement.timestamp) {
                   element.insert.image = innerElement.src
                 }
               })

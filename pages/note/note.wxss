@@ -40,7 +40,7 @@
   flex: 0 0 auto;
 }
 
-.btn {
+/* .btn {
   position: relative;
   right: -300rpx;
   display: flex;
@@ -53,7 +53,7 @@
   background: #fff;
   box-shadow: 0 0 10rpx #bbb;
   transition: background .2s ease-in-out, right .5s ease-in-out;
-}
+} */
 
 .btnp {
   background: var(--rgbaprimaryColor--);
@@ -182,7 +182,7 @@
 .preview {
   flex: 1 0 auto;
   width: 100vw;
-  margin: 0 0 500px 0;
+  /* margin: 0 0 500px 0; */
   /* height: 200px; */
   /* background: orange; */
 }
@@ -433,8 +433,16 @@
 }
 
 .preview_container {
-  padding: 0 20px;
+  border-radius: 10px;
+  margin: 0 50rpx;
   min-height: 400rpx;
+  background: #fff;
+  transition: background .2s ease-in-out;
+  box-shadow: 0 0rpx 10rpx #bbb;
+}
+
+.preview_container_heading{
+  font-size: 1.4rem;
 }
 
 .placeholder {

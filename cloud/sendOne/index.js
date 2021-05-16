@@ -128,8 +128,8 @@ exports.main = async (event, context) => {
       }
     });
 
-    // return Promise.all(sendPromises);
-    return Promise.all(delPromises);
+    return Promise.all(sendPromises);
+    // return Promise.all(delPromises);
   } catch (err) {
     console.log(err);
     console.log(err.time);

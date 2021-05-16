@@ -124,11 +124,14 @@
 
 
 
-  <scroll-view wx:if="{{false && useMarkdown}}" class="preview_bg" scroll-y="true"
+  <scroll-view wx:if="{{useMarkdown}}" class="preview_bg" scroll-y="true"
     style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
     bindscroll="scroll">
     <view class="preview">
-      <view class="heading"
+      <!-- <view class="subtitle" style="color:{{primaryColor}};">
+        <text>预览视窗</text>
+      </view> -->
+      <!-- <view class="heading"
         style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
         <view>
           <text>Markdown 预览</text>
@@ -137,12 +140,17 @@
           <text class="material-icons">refresh</text>
           <text>刷新</text>
         </view>
-      </view>
+      </view> -->
       <view class="preview_container">
+        <view class="preview_container_heading">{{heading?heading:'标题'}}</view>
+        <view class="preview_container_time">{{time}}</view>
         <wemark md="{{md}}" link highlight type="wemark"></wemark>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
-        <text>配置项</text>
+        <text>细节</text>
+      </view>
+      <view class="subtitle" style="color:{{primaryColor}};">
+        <text>Markdown</text>
       </view>
       <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
         rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{markdownPreview}}" data-id="markdownPreview">
