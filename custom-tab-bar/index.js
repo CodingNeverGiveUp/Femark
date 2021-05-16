@@ -131,6 +131,7 @@ Component({
     listConfirm() {
       wx.showLoading({
         title: '操作中',
+        mask: true
       })
       let result = [this.data.defaultContent]
       this.data.listData.forEach((element, index) => {

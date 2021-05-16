@@ -38,6 +38,7 @@ Page({
     } else if ((this.data.page == 1 && this.data.buttonContent == "settings") || (this.data.page == 1 && this.data.buttonContent == "priority_high")) {
       wx.showLoading({
         title: '准备中',
+        mask: true
       })
       wx.getUserProfile({
         desc: '完善个人资料',
@@ -78,6 +79,7 @@ Page({
       //上传
       wx.showLoading({
         title: '处理中',
+        mask: true
       })
       database.addArray(this.data.profile)
         .then(() => {
@@ -104,6 +106,7 @@ Page({
     } else if (this.data.page == 3 && this.data.buttonContent == "chevron_right") {
       wx.showLoading({
         title: '请稍等',
+        mask: true
       })
       wx.cloud.callFunction({
         name: "getOpenid"

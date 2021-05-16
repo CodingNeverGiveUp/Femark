@@ -201,10 +201,7 @@
   <!-- <view class="icon material-icons" hover-class="hover" bindtap="addImg">
     <text>add_photo_alternate</text>
   </view> -->
-  <view class="icon material-icons" hover-class="hover" bindtap="addImg">
-    <text>add_photo_alternate</text>
-  </view>
-  <view class="icon material-icons" hover-class="hover" bindtap="">
+  <view class="icon material-icons" hover-class="hover" bindtap="attach">
     <text>attachment</text>
   </view>
   <view class="icon material-icons" hover-class="hover">

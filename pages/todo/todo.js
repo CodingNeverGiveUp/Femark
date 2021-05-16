@@ -44,6 +44,7 @@ Page({
       if (res.confirm) {
         wx.showLoading({
           title: '操作进行中',
+          mask: true
         })
         if (this.data.id == null) {
           console.log("new")
@@ -156,6 +157,7 @@ Page({
         if (res.confirm) {
           wx.showLoading({
             title: '正在删除',
+            mask: true
           })
           wx.cloud.database().collection('note').doc(app.globalData.id).update({
             data: {

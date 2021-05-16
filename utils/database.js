@@ -23,6 +23,7 @@ function uploadImg(imgs) {
     return new Promise((resolve, reject) => {
       wx.showLoading({
         title: `上传中（${index+1}/${array.length}）`,
+        mask: true
       })
       let cloudpath = `image/${app.globalData.openid}/${new Date().getTime()}.jpg`;
       wx.cloud.uploadFile({
@@ -80,6 +81,7 @@ function addNote(object) {
   return new Promise((resolve, reject) => {
     wx.showLoading({
       title: `数据处理中`,
+      mask: true
     })
     const _ = wx.cloud.database().command
     wx.cloud.database().collection('note').where({
@@ -112,6 +114,7 @@ function addTask(object) {
   return new Promise((resolve, reject) => {
     wx.showLoading({
       title: `数据处理中`,
+      mask: true
     })
     const _ = wx.cloud.database().command
     wx.cloud.database().collection('note').where({

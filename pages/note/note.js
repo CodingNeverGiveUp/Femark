@@ -54,6 +54,7 @@ Page({
       if (res.confirm) {
         wx.showLoading({
           title: '操作进行中',
+          mask: true
         })
         if (this.data.id == null) {
           console.log("new")
@@ -179,33 +180,48 @@ Page({
     }
   },
 
-  addImg() {
-    var that = this
+  attach() {
     if (!this.data.edit) {
       this.showSnackbar("请先启用编辑")
     } else {
-      wx.chooseImage({
-        sizeType: ['compressed'],
-        sourceType: ['album', 'camera'],
-        success(res) {
-          console.log(res)
-          // tempFilePath可以作为img标签的src属性显示图片
-          var tempFilePaths = []
-          res.tempFilePaths.map(element => {
-            tempFilePaths.push({
-              src: element,
-              timestamp: new Date().getTime(),
-              fromContent: false
-            })
-          })
-          // console.log(tempFilePaths)
-          that.setData({
-            tempImgs: that.data.tempImgs.concat(tempFilePaths),
-            edited: true
-          })
+      wx.showActionSheet({
+        itemList: ['添加图片到图库','添加附件'],
+      }).then(res=>{
+        if(res.tapIndex == 0){
+          this.addImg()
+        }else if(res.tapIndex == 1){
+          
         }
+      }).catch(err=>{
+        
       })
     }
+  },
+
+  addImg() {
+    var that = this
+    wx.chooseImage({
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        console.log(res)
+        // tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = []
+        res.tempFilePaths.map(element => {
+          tempFilePaths.push({
+            src: element,
+            timestamp: new Date().getTime(),
+            fromContent: false
+          })
+        })
+        // console.log(tempFilePaths)
+        that.setData({
+          tempImgs: that.data.tempImgs.concat(tempFilePaths),
+          edited: true
+        })
+      }
+    })
+
   },
 
   delete() {
@@ -223,6 +239,7 @@ Page({
         if (res.confirm) {
           wx.showLoading({
             title: '正在删除',
+            mask: true
           })
           wx.cloud.database().collection('note').doc(app.globalData.id).update({
             data: {
@@ -258,7 +275,7 @@ Page({
     console.log(e.currentTarget.dataset.url)
     let urls = []
     this.data.galleryDetail.forEach(element => {
-      urls.push(element.tempFileURL)
+      urls.push(element.src)
     })
     wx.previewImage({
       current: e.currentTarget.dataset.url,
@@ -282,6 +299,7 @@ Page({
             var fileID = that.data.galleryDetail[e.currentTarget.dataset.index].fileID;
             wx.showLoading({
               title: '正在删除文件',
+              mask: true
             })
             await wx.cloud.deleteFile({
               fileList: [fileID]
@@ -289,13 +307,14 @@ Page({
             //数据库移除
             wx.showLoading({
               title: '正在修改数据',
+              mask: true
             })
-            if(!that.data.id){
+            if (!that.data.id) {
               await wx.cloud.database().collection('note').doc(app.globalData.id).get()
-              .then(res=>{
-                console.log(res)
-                that.data.id = res.data.note.length - 1
-              })
+                .then(res => {
+                  console.log(res)
+                  that.data.id = res.data.note.length - 1
+                })
             }
             await wx.cloud.database().collection('note').doc(app.globalData.id).update({
               data: {
@@ -304,7 +323,7 @@ Page({
                 })
               }
             })
-            
+
             //如果是混排图片
             let array = that.data.galleryDetail
             let index = e.currentTarget.dataset.index
@@ -421,19 +440,20 @@ Page({
     let array = this.data.galleryDetail
     array.forEach((element, index, array) => {
       if (element.timestamp == timestamp) {
-        async function process(){
+        async function process() {
           wx.showLoading({
             title: '操作进行中',
+            mask: true
           })
           await wx.cloud.deleteFile({
             fileList: [element.fileID]
           })
-          if(!that.data.id){
+          if (!that.data.id) {
             await wx.cloud.database().collection('note').doc(app.globalData.id).get()
-            .then(res=>{
-              console.log(res)
-              that.data.id = res.data.note.length - 1
-            })
+              .then(res => {
+                console.log(res)
+                that.data.id = res.data.note.length - 1
+              })
           }
           await wx.cloud.database().collection('note').doc(app.globalData.id).update({
             data: {
@@ -878,7 +898,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   var that = this
+    var that = this
     event.on('Theme', this, function (data) {
       this.setData({
         theme: data

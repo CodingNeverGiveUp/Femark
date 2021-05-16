@@ -107,6 +107,7 @@ Page({
     event.on('Theme', this, function (data) {
       wx.showLoading({
         title: '应用主题更改',
+        mask: true
       })
       this.setData({
         theme: data

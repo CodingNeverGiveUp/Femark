@@ -28,6 +28,7 @@ Page({
         if (res.confirm) {
           wx.showLoading({
             title: '操作进行中',
+            mask: true
           })
           wx.cloud.database().collection('note').doc(app.globalData.id).update({
             data: {
