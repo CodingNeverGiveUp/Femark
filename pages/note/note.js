@@ -1135,14 +1135,33 @@ Page({
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
       //初始化编辑器内容
-      that.editorCtx.setContents({
-        delta: that.data.contentDelta,
-      })
-      setTimeout(() => {
-        that.setData({
-          edited: false
+      if(that.data.contentDelta){
+        let delta = that.data.contentDelta
+        const pattern = /timestamp=(\d{13})/g;
+        delta.ops.forEach(element => {
+          if (element.attributes && element.attributes['data-custom']) {
+            let text = element.attributes['data-custom']
+            if (pattern.test(text)) {
+              pattern.lastIndex = 0; //巨坑
+              let matches = pattern.exec(text)
+              pattern.lastIndex = 0; //巨坑
+              that.data.galleryDetail.forEach(innerElement=>{
+                if(matches[1] == innerElement.timestamp){
+                  element.insert.image = innerElement.src
+                }
+              })
+            }
+          }
         })
-      }, 200);
+        that.editorCtx.setContents({
+          delta,
+        })
+        setTimeout(() => {
+          that.setData({
+            edited: false
+          })
+        }, 200);
+      }
     }).exec()
   },
   format(e) {

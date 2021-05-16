@@ -236,7 +236,7 @@
   </view>
 </view>
 
-<view class="toolbar" wx:if="{{edit && keyboardHeight > 0 ? true : false}}"
+<view class="toolbar" wx:if="{{edit && keyboardHeight > 0 ? true : true}}"
   style="bottom: {{isIOS ? keyboardHeight : 0}}px;{{toolbarActivated ? 'height:100px':''}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
   <view class="toolbar_section">
     <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
