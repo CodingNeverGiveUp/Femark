@@ -22,7 +22,7 @@ function uploadImg(imgs) {
   function upload(element, index, array) {
     return new Promise((resolve, reject) => {
       wx.showLoading({
-        title: `上传中（${index+1}/${array.length}）`,
+        title: `图片（${index+1}/${array.length}）`,
         mask: true
       })
       let cloudpath = `image/${app.globalData.openid}/${new Date().getTime()}.jpg`;
@@ -59,18 +59,57 @@ function uploadImg(imgs) {
   })
 }
 
-function idToUrl(array){
-  return new Promise(async (resort, reject)=>{
-    try{
-      for(let i = 0; i < array.length; i++){
+function uploadFile(files) {
+  function upload(element, index, array) {
+    return new Promise((resolve, reject)=>{
+      wx.showLoading({
+        title: `文件（${index+1}/${array.length}）`,
+        mask: true
+      })
+      let cloudpath = `file/${app.globalData.openid}/${new Date().getTime()}_${element.name}`;
+      wx.cloud.uploadFile({
+        cloudPath: cloudpath,
+        filePath: element.path
+      }).then(res => {
+        element.fileID = res.fileID
+        resolve()
+      }).catch(err => {
+        reject()
+      })
+    })
+  }
+  return new Promise((resolve, reject) => {
+    async function action() {
+      for (let i = 0; i < files.length; i++) {
+        try {
+          await upload(files[i], i, files)
+        } catch {
+          console.log("upload failed")
+          reject()
+        }
+        if (i == files.length - 1) {
+          console.log("upload finished")
+          // wx.hideLoading()
+          resolve()
+        }
+      }
+    }
+    action()
+  })
+}
+
+function idToUrl(array) {
+  return new Promise(async (resort, reject) => {
+    try {
+      for (let i = 0; i < array.length; i++) {
         await wx.cloud.getTempFileURL({
           fileList: [array[i].fileID]
-        }).then(res=>{
+        }).then(res => {
           array[i].src = res.fileList[0].tempFileURL
         })
       }
       resort()
-    }catch(e){
+    } catch (e) {
       console.log(e)
       reject()
     }
@@ -235,5 +274,6 @@ module.exports = { //注册函数
   getTask,
   addTask2,
   uploadImg,
+  uploadFile,
   idToUrl
 }

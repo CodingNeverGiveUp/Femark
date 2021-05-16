@@ -25,6 +25,7 @@ Page({
     content: null,
     contentDelta: null,
     galleryDetail: [],
+    files: [],
     tempImgs: [],
     tempFiles: [],
     imgTimestamps: [],
@@ -61,13 +62,21 @@ Page({
           console.log("new")
           //新建
           let imgs = this.data.tempImgs
+          let files = this.data.tempFiles
           async function process() {
             try {
               if (imgs.length != 0) {
                 await database.uploadImg(imgs)
                 await database.idToUrl(imgs)
                 that.setData({
-                  galleryDetail: that.data.galleryDetail.concat(imgs)
+                  galleryDetail: that.data.galleryDetail.concat(imgs),
+                })
+              }
+              if (files.length != 0) {
+                await database.uploadFile(files)
+                await database.idToUrl(files)
+                that.setData({
+                  files: that.data.files.concat(files),
                 })
               }
               let object = {
@@ -75,6 +84,7 @@ Page({
                 content: that.data.content,
                 contentDelta: that.data.contentDelta,
                 gallery: imgs,
+                files: files,
                 audio: null,
                 category: that.data.category,
                 encrypt: that.data.encrypt,
@@ -97,6 +107,7 @@ Page({
             //传完清除tempPath
             that.setData({
               tempImgs: [],
+              tempFiles: [],
             })
             // console.log(imgs.IDs)
           }
@@ -105,6 +116,7 @@ Page({
           //修改
           console.log("edit")
           let imgs = this.data.tempImgs
+          let files = this.data.tempFiles
           async function process() {
             try {
               if (imgs.length != 0) {
@@ -116,7 +128,19 @@ Page({
                   }
                 })
                 that.setData({
-                  galleryDetail: that.data.galleryDetail.concat(imgs)
+                  galleryDetail: that.data.galleryDetail.concat(imgs),
+                })
+              }
+              if (files.length != 0) {
+                await database.uploadFile(files)
+                await database.idToUrl(files)
+                await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+                  data: {
+                    [`note.${that.data.id}.files`]: _.push(files)
+                  }
+                })
+                that.setData({
+                  files: that.data.files.concat(files)
                 })
               }
               await wx.cloud.database().collection('note').doc(app.globalData.id).update({
@@ -149,6 +173,7 @@ Page({
             //传完清除tempPath
             that.setData({
               tempImgs: [],
+              tempFiles: [],
             })
           }
           process()
@@ -257,7 +282,150 @@ Page({
     })
   },
 
+  deleteFile(index) {
+    var that = this
+    const _ = wx.cloud.database().command
+    wx.showModal({
+      title: "警告",
+      content: "将同时从云端移除文件，该过程不可逆转，是否继续操作",
+      confirmText: "仍然继续",
+      confirmColor: "#ff5252",
+    }).then(res => {
+      if (res.confirm) {
+        async function process() {
+          try {
+            var fileID = that.data.files[index].fileID;
+            wx.showLoading({
+              title: '正在删除文件',
+              mask: true
+            })
+            await wx.cloud.deleteFile({
+              fileList: [fileID]
+            })
+            //数据库移除
+            wx.showLoading({
+              title: '正在修改数据',
+              mask: true
+            })
+            if (!that.data.id) {
+              console.log("noID")
+              await wx.cloud.database().collection('note').doc(app.globalData.id).get()
+                .then(res => {
+                  that.data.id = res.data.note.length - 1
+                })
+            }
+            await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+              data: {
+                [`note.${that.data.id}.files`]: _.pull({
+                  fileID: fileID
+                })
+              }
+            })
+            //前端移除
+            let array = this.data.files
+            array.splice(index, 1, )
+            this.setData({
+              files: array
+            })
+            wx.showToast({
+              title: "操作成功",
+            })
+          } catch {
+            wx.showToast({
+              icon: "error",
+              title: "操作失败"
+            })
+          }
+        }
+        process()
+      }
+    })
+  },
+
   fileAction(e) {
+    let index = e.currentTarget.dataset.index
+    const pattern = /.*.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/g
+    if (pattern.test(this.data.files[index].name) || this.data.files[index].type == 'image' || this.data.files[index].type == 'video') {
+      pattern.lastIndex = 0; //巨坑
+      var list = ['下载到本地', '删除', '预览']
+    } else {
+      pattern.lastIndex = 0; //巨坑
+      var list = ['下载到本地', '删除']
+    }
+    wx.showActionSheet({
+      itemList: list,
+    }).then(res => {
+      if (res.tapIndex == 0) {
+        this.downloadFile(index)
+      } else if (res.tapIndex == 1) {
+        this.deleteFile(index)
+      } else if (res.tapIndex == 2) {
+        this.previewFile(index)
+      }
+    }).catch(err => {})
+  },
+
+  previewFile(index) {
+    const pattern = /.*.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/g
+    if (pattern.test(this.data.files[index].name)) {
+      pattern.lastIndex = 0; //巨坑
+      console.log(this.data.files[index].src)
+      wx.openDocument({
+        filePath: this.data.files[index].src,
+        showMenu: true,
+      })
+    } else if (this.data.files[index].type == 'image') {
+      pattern.lastIndex = 0; //巨坑
+      // console.log(this.data.files[index].src)
+      wx.previewImage({
+        urls: [this.data.files[index].src],
+      })
+    } else if (this.data.files[index].type == 'video') {
+      pattern.lastIndex = 0; //巨坑
+      console.log(this.data.files[index].src)
+      wx.previewMedia({
+        sources: [{
+          src: [this.data.files[index].src],
+          type: 'video'
+        }],
+      })
+    } else {
+      pattern.lastIndex = 0; //巨坑
+      this.showSnackbar("暂不支持此类文件预览")
+    }
+  },
+
+  downloadFile(index) {
+    var that = this
+    let tempFilePath = this.data.files[index].src
+    wx.showLoading({
+      title: '正在下载文件',
+      mask: true,
+    })
+    let savePath = wx.env.USER_DATA_PATH + '/' + that.data.files[index].name + '.jpg'
+    wx.getFileSystemManager().saveFile({
+      tempFilePath,
+      filePath: savePath,
+      success(res) {
+        wx.saveImageToPhotosAlbum({
+          filePath: savePath,
+          success: res => {
+            wx.setClipboardData({
+              data: that.data.files[index].name,
+            })
+            wx.showModal({
+              title: "保存成功",
+              showCancel: false,
+              content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.jpg后缀即可",
+              confirmColor: that.data.primaryColor,
+            })
+          }
+        })
+      }
+    })
+  },
+
+  tempFileAction(e) {
     let index = e.currentTarget.dataset.index
     const pattern = /.*.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/g
     if (pattern.test(this.data.tempFiles[index].name) || this.data.tempFiles[index].type == 'image' || this.data.tempFiles[index].type == 'video') {
@@ -296,8 +464,12 @@ Page({
       })
     } else if (this.data.tempFiles[index].type == 'video') {
       pattern.lastIndex = 0; //巨坑
+      console.log(this.data.tempFiles[index].path)
       wx.previewMedia({
-        sources: [this.data.tempFiles[index].path],
+        sources: [{
+          url: [this.data.tempFiles[index].path],
+          type: 'video'
+        }],
       })
     } else {
       pattern.lastIndex = 0; //巨坑
@@ -326,14 +498,12 @@ Page({
             wx.showModal({
               title: "保存成功",
               showCancel: false,
-              content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.Jpg后缀即可",
+              content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.jpg后缀即可",
               confirmColor: that.data.primaryColor,
             })
           }
         })
       }
-
-
     })
   },
 
@@ -451,7 +621,7 @@ Page({
             if (!that.data.id) {
               await wx.cloud.database().collection('note').doc(app.globalData.id).get()
                 .then(res => {
-                  console.log(res)
+                  // console.log(res)
                   that.data.id = res.data.note.length - 1
                 })
             }
@@ -1093,6 +1263,13 @@ Page({
       database.idToUrl(gallery).then(
         this.setData({
           galleryDetail: gallery
+        })
+      )
+      //文件预处理
+      let files = res.data.files
+      database.idToUrl(files).then(
+        this.setData({
+          files,
         })
       )
       this.selectAllComponents('.switch').forEach(element => {
