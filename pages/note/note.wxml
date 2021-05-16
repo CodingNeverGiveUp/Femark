@@ -231,7 +231,7 @@
   <view class="icon material-icons" hover-class="hover">
     <text>share</text>
   </view>
-  <view wx:if="{{id}}" class="icon material-icons" hover-class="hover" bindtap="delete">
+  <view wx:if="{{id || id == 0}}" class="icon material-icons" hover-class="hover" bindtap="delete">
     <text>delete</text>
   </view>
 </view>

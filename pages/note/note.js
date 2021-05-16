@@ -377,7 +377,7 @@ Page({
               }
             })
             //前端移除
-            let array = this.data.files
+            let array = that.data.files
             array.splice(index, 1, )
             that.setData({
               files: array
@@ -385,7 +385,8 @@ Page({
             wx.showToast({
               title: "操作成功",
             })
-          } catch {
+          } catch (e) {
+            console.log(e)
             wx.showToast({
               icon: "error",
               title: "操作失败"
@@ -430,7 +431,7 @@ Page({
       })
       wx.cloud.downloadFile({
         fileID: this.data.files[index].fileID,
-      }).then(res=>{
+      }).then(res => {
         console.log("download finished")
         console.log(res.tempFilePath)
         let filePath = res.tempFilePath
@@ -454,7 +455,7 @@ Page({
       })
       wx.cloud.downloadFile({
         fileID: this.data.files[index].fileID,
-      }).then(res=>{
+      }).then(res => {
         console.log("download finished")
         wx.hideLoading()
         wx.previewMedia({
@@ -478,8 +479,8 @@ Page({
     })
     wx.cloud.downloadFile({
       fileID: this.data.files[index].fileID
-    }).then(res=>{
-      let tempFilePath =  res.tempFilePath
+    }).then(res => {
+      let tempFilePath = res.tempFilePath
       let filePath = wx.env.USER_DATA_PATH + '/' + that.data.files[index].name + '.jpg'
       wx.getFileSystemManager().saveFile({
         tempFilePath,
