@@ -211,11 +211,13 @@ Page({
       this.showSnackbar("请先启用编辑")
     } else {
       wx.showActionSheet({
-        itemList: ['添加图片到图库', '添加附件（仅支持会话文件）'],
+        itemList: ['添加图片附件', '添加视频附件', '添加文档附件'],
       }).then(res => {
         if (res.tapIndex == 0) {
           this.addImg()
         } else if (res.tapIndex == 1) {
+          this.chooseMedia()
+        } else if (res.tapIndex == 2) {
           this.chooseFile()
         }
       }).catch(err => {
@@ -274,6 +276,59 @@ Page({
     })
   },
 
+  chooseMedia() {
+    var that = this
+    wx.chooseMedia({
+      mediaType: ['video'],
+      sourceType: ['album'],
+      success(res) {
+        console.log(res)
+        if (res.type == 'image') {
+          wx.showModal({
+            title: "注意",
+            content: "检测到已选择图片类型文件，建议上传至图库",
+            confirmColor: that.data.primaryColor,
+            cancelText: "仍然上传",
+            confirmText: "放弃上传"
+          }).then(res => {
+            if (res.confirm) {} else if (res.cancel) {
+              process()
+            }
+          })
+        } else {
+          process()
+        }
+
+        function process() {
+          var tempFilePaths = res.tempFiles
+          var tooLarge = 0
+          tempFilePaths.forEach((element, index, array) => {
+            if (element.size > 52428000) {
+              tooLarge++;
+              tempFilePaths.splice(index, 1, )
+            } else {
+              element.path = element.tempFilePath
+              element.name = `Media_${new Date().getTime()}`
+              element.type = element.fileType
+            }
+          })
+          that.setData({
+            tempFiles: that.data.tempFiles.concat(tempFilePaths),
+            edited: true
+          })
+          if (tooLarge != 0) {
+            wx.showModal({
+              title: "警告",
+              content: `${tooLarge}个文件超过最大上传大小（50MiB），将不会被上传`,
+              confirmColor: that.data.primaryColor,
+              showCancel: false,
+            })
+          }
+        }
+      }
+    })
+  },
+
   deleteTempFile(index) {
     let array = this.data.tempFiles
     array.splice(index, 1, )
@@ -324,7 +379,7 @@ Page({
             //前端移除
             let array = this.data.files
             array.splice(index, 1, )
-            this.setData({
+            that.setData({
               files: array
             })
             wx.showToast({
@@ -369,10 +424,21 @@ Page({
     const pattern = /.*.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/g
     if (pattern.test(this.data.files[index].name)) {
       pattern.lastIndex = 0; //巨坑
-      console.log(this.data.files[index].src)
-      wx.openDocument({
-        filePath: this.data.files[index].src,
-        showMenu: true,
+      wx.showLoading({
+        title: '正在下载文件',
+        mask: true
+      })
+      wx.cloud.downloadFile({
+        fileID: this.data.files[index].fileID,
+      }).then(res=>{
+        console.log("download finished")
+        console.log(res.tempFilePath)
+        let filePath = res.tempFilePath
+        wx.hideLoading()
+        wx.openDocument({
+          filePath,
+          showMenu: true,
+        })
       })
     } else if (this.data.files[index].type == 'image') {
       pattern.lastIndex = 0; //巨坑
@@ -382,12 +448,21 @@ Page({
       })
     } else if (this.data.files[index].type == 'video') {
       pattern.lastIndex = 0; //巨坑
-      console.log(this.data.files[index].src)
-      wx.previewMedia({
-        sources: [{
-          src: [this.data.files[index].src],
-          type: 'video'
-        }],
+      wx.showLoading({
+        title: '正在下载文件',
+        mask: true
+      })
+      wx.cloud.downloadFile({
+        fileID: this.data.files[index].fileID,
+      }).then(res=>{
+        console.log("download finished")
+        wx.hideLoading()
+        wx.previewMedia({
+          sources: [{
+            url: res.tempFilePath,
+            type: 'video'
+          }],
+        })
       })
     } else {
       pattern.lastIndex = 0; //巨坑
@@ -397,31 +472,35 @@ Page({
 
   downloadFile(index) {
     var that = this
-    let tempFilePath = this.data.files[index].src
     wx.showLoading({
       title: '正在下载文件',
       mask: true,
     })
-    let savePath = wx.env.USER_DATA_PATH + '/' + that.data.files[index].name + '.jpg'
-    wx.getFileSystemManager().saveFile({
-      tempFilePath,
-      filePath: savePath,
-      success(res) {
-        wx.saveImageToPhotosAlbum({
-          filePath: savePath,
-          success: res => {
-            wx.setClipboardData({
-              data: that.data.files[index].name,
-            })
-            wx.showModal({
-              title: "保存成功",
-              showCancel: false,
-              content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.jpg后缀即可",
-              confirmColor: that.data.primaryColor,
-            })
-          }
-        })
-      }
+    wx.cloud.downloadFile({
+      fileID: this.data.files[index].fileID
+    }).then(res=>{
+      let tempFilePath =  res.tempFilePath
+      let filePath = wx.env.USER_DATA_PATH + '/' + that.data.files[index].name + '.jpg'
+      wx.getFileSystemManager().saveFile({
+        tempFilePath,
+        filePath,
+        success(res) {
+          wx.saveImageToPhotosAlbum({
+            filePath: savePath,
+            success: res => {
+              wx.setClipboardData({
+                data: that.data.files[index].name,
+              })
+              wx.showModal({
+                title: "保存成功",
+                showCancel: false,
+                content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.jpg后缀即可",
+                confirmColor: that.data.primaryColor,
+              })
+            }
+          })
+        }
+      })
     })
   },
 
@@ -467,7 +546,7 @@ Page({
       console.log(this.data.tempFiles[index].path)
       wx.previewMedia({
         sources: [{
-          url: [this.data.tempFiles[index].path],
+          url: this.data.tempFiles[index].path,
           type: 'video'
         }],
       })
