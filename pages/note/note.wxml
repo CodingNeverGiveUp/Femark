@@ -40,6 +40,21 @@
           <text>无内容</text>
         </view>
       </view>
+      <view class="attachment">
+        <view class="subtitle" style="color:{{primaryColor}};">
+          <text>附件</text>
+        </view>
+        <view class="empty" style="height: 200rpx;" wx:if="{{tempFiles.length == 0}}">
+          <!-- <image src="/source/img/empty.png" mode="widthFix"></image> -->
+          <text>无内容</text>
+        </view>
+        <view class="files">
+          <view class="file" wx:for="{{tempFiles}}" wx:key="index" hover-class="hover" bindtap="fileAction" data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};">{{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
+            <view class="filename">{{item.name}}</view>
+          </view>
+        </view>
+      </view>
       <view class="settings">
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>配置项</text>

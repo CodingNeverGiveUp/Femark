@@ -416,6 +416,22 @@
   transition: background .2s ease-in-out;
 }
 
+.file{
+  padding: 10px 50rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: background .2s ease-in-out;
+}
+
+.file .material-icons{
+  margin-right: 10px;
+}
+
+.file .filename{
+  font-size: .8rem;
+}
+
 .preview_container {
   padding: 0 20px;
   min-height: 400rpx;

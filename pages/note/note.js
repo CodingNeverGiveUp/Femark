@@ -26,6 +26,7 @@ Page({
     contentDelta: null,
     galleryDetail: [],
     tempImgs: [],
+    tempFiles: [],
     imgTimestamps: [],
     category: 0,
     useMarkdown: true,
@@ -185,17 +186,155 @@ Page({
       this.showSnackbar("请先启用编辑")
     } else {
       wx.showActionSheet({
-        itemList: ['添加图片到图库','添加附件'],
-      }).then(res=>{
-        if(res.tapIndex == 0){
+        itemList: ['添加图片到图库', '添加附件（仅支持会话文件）'],
+      }).then(res => {
+        if (res.tapIndex == 0) {
           this.addImg()
-        }else if(res.tapIndex == 1){
-          
+        } else if (res.tapIndex == 1) {
+          this.chooseFile()
         }
-      }).catch(err=>{
-        
+      }).catch(err => {
+
       })
     }
+  },
+
+  chooseFile: function () {
+    var that = this
+    wx.chooseMessageFile({
+      count: 1,
+      type: 'file',
+      success(res) {
+        console.log(res)
+        // tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFiles
+        if (tempFilePaths[0].size > 52428000) {
+          wx.showModal({
+            title: "警告",
+            content: "文件过大（" + (tempFilePaths[0].size / 1048576).toFixed(2) + "MiB），超出 50 MiB 限制，请重新选择",
+            confirmColor: '#ff5252',
+            confirmText: "重试"
+          }).then(res => {
+            if (res.confirm) {
+              that.chooseFile()
+            }
+          })
+        } else {
+          if (tempFilePaths[0].type == "image") {
+            wx.showModal({
+              title: "注意",
+              content: "检测到已选择图片类型文件，建议上传至图库",
+              confirmColor: that.data.primaryColor,
+              cancelText: "仍然上传",
+              confirmText: "放弃上传"
+            }).then(res => {
+              if (res.confirm) {} else if (res.cancel) {
+                that.setData({
+                  tempFiles: that.data.tempFiles.concat(tempFilePaths),
+                  edited: true
+                })
+              }
+            })
+          } else {
+            that.setData({
+              tempFiles: that.data.tempFiles.concat(tempFilePaths),
+              edited: true
+            })
+          }
+        }
+      },
+      fail(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  deleteTempFile(index) {
+    let array = this.data.tempFiles
+    array.splice(index, 1, )
+    this.setData({
+      tempFiles: array
+    })
+  },
+
+  fileAction(e) {
+    let index = e.currentTarget.dataset.index
+    const pattern = /.*.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/g
+    if (pattern.test(this.data.tempFiles[index].name) || this.data.tempFiles[index].type == 'image' || this.data.tempFiles[index].type == 'video') {
+      pattern.lastIndex = 0; //巨坑
+      var list = ['下载到本地', '删除', '预览']
+    } else {
+      pattern.lastIndex = 0; //巨坑
+      var list = ['下载到本地', '删除']
+    }
+    wx.showActionSheet({
+      itemList: list,
+    }).then(res => {
+      if (res.tapIndex == 0) {
+        this.downloadTempFile(index)
+      } else if (res.tapIndex == 1) {
+        this.deleteTempFile(index)
+      } else if (res.tapIndex == 2) {
+        this.previewTempFile(index)
+      }
+    }).catch(err => {})
+  },
+
+  previewTempFile(index) {
+    const pattern = /.*.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/g
+    if (pattern.test(this.data.tempFiles[index].name)) {
+      pattern.lastIndex = 0; //巨坑
+      wx.openDocument({
+        filePath: this.data.tempFiles[index].path,
+        showMenu: true,
+      })
+    } else if (this.data.tempFiles[index].type == 'image') {
+      pattern.lastIndex = 0; //巨坑
+      console.log(this.data.tempFiles[index].path)
+      wx.previewImage({
+        urls: [this.data.tempFiles[index].path],
+      })
+    } else if (this.data.tempFiles[index].type == 'video') {
+      pattern.lastIndex = 0; //巨坑
+      wx.previewMedia({
+        sources: [this.data.tempFiles[index].path],
+      })
+    } else {
+      pattern.lastIndex = 0; //巨坑
+      this.showSnackbar("暂不支持此类文件预览")
+    }
+  },
+
+  downloadTempFile(index) {
+    var that = this
+    let tempFilePath = this.data.tempFiles[index].path
+    wx.showLoading({
+      title: '正在下载文件',
+      mask: true,
+    })
+    let savePath = wx.env.USER_DATA_PATH + '/' + that.data.tempFiles[index].name + '.jpg'
+    wx.getFileSystemManager().saveFile({
+      tempFilePath,
+      filePath: savePath,
+      success(res) {
+        wx.saveImageToPhotosAlbum({
+          filePath: savePath,
+          success: res => {
+            wx.setClipboardData({
+              data: that.data.tempFiles[index].name,
+            })
+            wx.showModal({
+              title: "保存成功",
+              showCancel: false,
+              content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.Jpg后缀即可",
+              confirmColor: that.data.primaryColor,
+            })
+          }
+        })
+      }
+
+
+    })
   },
 
   addImg() {
