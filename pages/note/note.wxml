@@ -218,7 +218,7 @@
   </view>
 </view>
 
-<view class="toolbar" hidden="{{keyboardHeight > 0 ? false : false}}"
+<view class="toolbar" wx:if="{{edit && keyboardHeight > 0 ? true : false}}"
   style="bottom: {{isIOS ? keyboardHeight : 0}}px;{{toolbarActivated ? 'height:100px':''}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
   <view class="toolbar_section">
     <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
@@ -392,7 +392,7 @@
 </view>
 
 <view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};bottom:{{edit?toolbarActivated?115:65:27}}px;">
-  <view class="float_tools_container" style="{{edited?'width:110px;':'width:0;'}}">
+  <view class="float_tools_container" style="{{edit ? edited?'width:110px;':'width:0;' : 'width:0;'}}">
     <view class="float_tools">
       <view class="icon material-icons" hover-class="hover" catchtouchend="undo">
         <text>undo</text>

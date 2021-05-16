@@ -28,7 +28,7 @@ Page({
         content: "网络错误",
         float: "bottom:50rpx;"
       })
-    },10000)
+    },5000)
     event.on('LoginCheck', this, function (data) {
       clearTimeout(timer)
       if (data == 'register') {

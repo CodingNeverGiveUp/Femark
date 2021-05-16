@@ -71,7 +71,6 @@ function idToUrl(array){
       resort()
     }catch(e){
       console.log(e)
-      console.log("错误！！！！！！！")
       reject()
     }
   })

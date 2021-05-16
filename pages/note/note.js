@@ -102,37 +102,32 @@ Page({
         } else {
           //修改
           console.log("edit")
-          let imgs = {
-            paths: this.data.tempImgs,
-            IDs: new Array
-          }
+          let imgs = this.data.tempImgs
           async function process() {
             try {
-              if (imgs.paths.length != 0) {
+              if (imgs.length != 0) {
                 await database.uploadImg(imgs)
+                await database.idToUrl(imgs)
                 await wx.cloud.database().collection('note').doc(app.globalData.id).update({
                   data: {
-                    [`note.${that.data.id}.gallery`]: _.push(imgs.IDs)
+                    [`note.${that.data.id}.gallery`]: _.push(imgs)
                   }
                 })
-                wx.cloud.getTempFileURL({
-                  fileList: imgs.IDs,
-                }).then(res => {
-                  let newGalleryDetail = that.data.galleryDetail.concat(res.fileList)
-                  that.setData({
-                    galleryDetail: newGalleryDetail,
-                  })
+                that.setData({
+                  galleryDetail: that.data.galleryDetail.concat(imgs)
                 })
               }
               await wx.cloud.database().collection('note').doc(app.globalData.id).update({
                 data: {
                   [`note.${that.data.id}.heading`]: that.data.heading,
                   [`note.${that.data.id}.content`]: that.data.content,
+                  [`note.${that.data.id}.contentDelta`]: _.set(that.data.contentDelta),
                   [`note.${that.data.id}.category`]: that.data.category,
                   [`note.${that.data.id}.encrypt`]: that.data.encrypt,
                   [`note.${that.data.id}.password`]: that.data.password,
                   [`note.${that.data.id}.useMarkdown`]: that.data.useMarkdown,
                   [`note.${that.data.id}.timestamp`]: new Date().getTime(),
+                  [`note.${that.data.id}.imgTimestamps`]: that.data.imgTimestamps,
                 }
               })
               wx.showToast({
@@ -313,7 +308,7 @@ Page({
             //如果是混排图片
             let array = that.data.galleryDetail
             let index = e.currentTarget.dataset.index
-            if (array[index].fromContent) {
+            if (array[index].fromContent && !that.data.contentDelta) {
               let delta = that.data.contentDelta
               delta.ops.forEach((element, innerIndex) => {
                 if (element.attributes && element.attributes['data-custom']) {
@@ -585,6 +580,7 @@ Page({
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
+      console.log("Pick编辑")
       this.setData({
         edited: true,
       })
@@ -606,6 +602,7 @@ Page({
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
     } else {
+      console.log("Switch编辑")
       this.setData({
         edited: true,
       })
@@ -628,7 +625,7 @@ Page({
   input(e) {
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
-    } else {
+      console.log("Input编辑")
       this.setData({
         edited: true,
       })
@@ -728,6 +725,15 @@ Page({
     const that = this
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
+      //初始化编辑器内容
+      that.editorCtx.setContents({
+        delta: that.data.contentDelta,
+      })
+      setTimeout(() => {
+        that.setData({
+          edited: false
+        })
+      }, 200);
     }).exec()
   },
   format(e) {
@@ -743,6 +749,7 @@ Page({
   onStatusChange(e) {
     // console.log(e.detail)
     const formats = e.detail
+    console.log("富文本编辑器编辑")
     this.setData({
       edited: true,
       formats
@@ -754,6 +761,7 @@ Page({
         console.log('insert divider success')
       }
     })
+    console.log("分割线编辑")
     this.setData({
       edited: true
     })
@@ -775,6 +783,7 @@ Page({
   redo() {
     this.editorCtx.redo({
       success: function (res) {
+        console.log(res)
         console.log("redo success")
       }
     })
@@ -810,6 +819,7 @@ Page({
             console.log('insert image success')
           }
         })
+        console.log("插入图片编辑")
         that.setData({
           tempImgs: that.data.tempImgs.concat([{
             src: res.tempFilePaths[0],
@@ -868,6 +878,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+   var that = this
     event.on('Theme', this, function (data) {
       this.setData({
         theme: data
@@ -906,16 +917,25 @@ Page({
         id: res.data.id,
         heading: res.data.heading,
         content: res.data.content,
-        galleryDetail: res.data.galleryDetail,
+        contentDelta: res.data.contentDelta,
+        gallery: res.data.gallery,
         encrypt: res.data.encrypt,
         password: res.data.password,
         useMarkdown: res.data.useMarkdown,
         category: res.data.category,
         timestamp: res.data.timestamp,
+        imgTimestamps: res.data.imgTimestamps,
         headingNum: res.data.heading == null ? 0 : res.data.heading.length,
         contentNum: res.data.content == null ? 0 : res.data.content.length,
         md: res.data.content,
       })
+      //图片预处理
+      let gallery = res.data.gallery
+      database.idToUrl(gallery).then(
+        this.setData({
+          galleryDetail: gallery
+        })
+      )
       this.selectAllComponents('.switch').forEach(element => {
         element.refreshStatus()
       })
@@ -932,7 +952,6 @@ Page({
     this.setData({
       isIOS
     })
-    const that = this
     this.updatePosition(0)
     let keyboardHeight = 0
     wx.onKeyboardHeightChange(res => {
