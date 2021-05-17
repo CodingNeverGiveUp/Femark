@@ -4,7 +4,7 @@
     <view class="weui-half-screen-dialog__hd">
       <view class="weui-half-screen-dialog__hd__side" bindtap="close">
         <a class="weui-icon-btn">
-          <i class="weui-icon-close-thin"></i>
+          <i class="material-icons">close</i>
         </a>
       </view>
       <view class="weui-half-screen-dialog__hd__main">
@@ -13,7 +13,7 @@
       </view>
     </view>
     <movable-area class="target" style="background-color:{{hueColor}}">
-      <movable-view direction="all" bindchange="changeSV" x="{{x}}" y="{{y}}" animation="{{false}}" class="iconfont icon-ios-locate-outline" bindtouchend="onEnd"></movable-view>
+      <movable-view direction="all" bindchange="changeSV" x="{{x}}" y="{{y}}" animation="{{false}}" class="material-icons" bindtouchend="onEnd" style="color:{{pointColor}};">gps_fixed</movable-view>
     </movable-area>
     <slider bindchanging="changeHue" activeColor="transparent" backgroundColor="transparent" class="ribbon" max="360" value="{{hsv.h}}" block-color="{{colorRes}}" bindtouchend="onEnd" />
   </view>

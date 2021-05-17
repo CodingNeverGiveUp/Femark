@@ -79,11 +79,21 @@ Component({
       } = e.detail;
       x = Math.round(x / this.SV.Step);
       y = 100 - Math.round(y / this.SV.Step);
+      // console.log(x,y)
       this.setData({
         "hsv.s":x,
         "hsv.v": y,
         colorRes: this.hsv2rgb(this.data.hsv.h, x, y)
       })
+      if(y > x){
+        this.setData({
+          pointColor: '#000',
+        })
+      }else{
+        this.setData({
+          pointColor: '#fff',
+        })
+      }
     },
     close: function close(e) {
       if (this.data.maskClosable) {
