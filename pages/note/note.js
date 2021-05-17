@@ -40,6 +40,7 @@ Page({
     categoryData: app.globalData.categoryData,
     timestamp: new Date().getTime(),
     time: time.formatChsTime(new Date()),
+    shareCardTheme: app.globalData.systemInfo.theme == 'dark' ? 1 :0,
     // 编辑器
     formats: {},
     editorHeight: 300,
@@ -1023,6 +1024,11 @@ Page({
           category: e.detail.valueKey
         })
       }
+      if (e.currentTarget.dataset.id == "shareCardTheme") {
+        this.setData({
+          shareCardTheme: e.detail.valueKey
+        })
+      }
     }
   },
 
@@ -1370,6 +1376,8 @@ Page({
         headingNum: res.data.heading == null ? 0 : res.data.heading.length,
         contentNum: res.data.content == null ? 0 : res.data.content.length,
         md: res.data.content,
+        timestamp: res.data.timestamp,
+        time: time.formatChsTime(new Date(res.data.timestamp)),
       })
       //图片预处理
       let gallery = res.data.gallery
