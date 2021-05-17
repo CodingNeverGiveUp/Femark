@@ -40,7 +40,7 @@ Page({
     categoryData: app.globalData.categoryData,
     timestamp: new Date().getTime(),
     time: time.formatChsTime(new Date()),
-    shareCardTheme: app.globalData.systemInfo.theme == 'dark' ? 1 :0,
+    shareCardTheme: 0,
     // 编辑器
     formats: {},
     editorHeight: 300,

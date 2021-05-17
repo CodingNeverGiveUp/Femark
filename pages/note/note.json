@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "wemark": "../../components/wemark/wemark"
+    "wemark": "../../components/wemark/wemark",
+    "color-picker":"/components/color-picker/color-picker" 
   }
 }

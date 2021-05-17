@@ -161,7 +161,7 @@
         <text>细节</text>
       </view>
       <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{['亮色','暗色']}}" selected="{{shareCardTheme}}"
+        dataset="{{['跟随系统','亮色','暗色']}}" selected="{{shareCardTheme}}"
         data-id="shareCardTheme">
         <text slot="title">主题</text>
         <text slot="subtitle">选择分享卡片颜色主题</text>
