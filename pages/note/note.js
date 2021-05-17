@@ -56,6 +56,22 @@ Page({
     toolbarActivated: null,
   },
 
+  //转到分享
+  toSharePage() {
+    let heading = this.data.heading;
+    let shareCardTheme = this.data.shareCardTheme;
+    let shareCardColor = this.data.shareCardColor;
+    let shareCardBackgroundColor = this.data.shareCardBackgroundColor;
+    let useMarkdown = this.data.useMarkdown;
+    let md = this.data.md;
+    let time = this.data.time
+    if(useMarkdown){
+      wx.navigateTo({
+        url: `/pages/sharePage/sharePage?heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
+      })
+    }
+  },
+
   // 显示取色器
   toPick: function (e) {
     let id = e.currentTarget.dataset.id

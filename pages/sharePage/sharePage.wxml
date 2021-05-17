@@ -1,0 +1,29 @@
+<!--pages/sharePage/sharePage.wxml-->
+<view
+  class="preview_container {{shareCardTheme==1?'preview_container_light':shareCardTheme==2?'preview_container_dark':''}}"
+  style="background: {{shareCardColor}};">
+  <view>
+    <view
+      class="preview_container_heading {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':''}}">
+      {{heading != 'null'?heading:'标题'}}</view>
+    <view
+      class="preview_container_time {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':''}}">
+      {{time}}</view>
+    <wemark wx:if="{{useMarkdown}}" md="{{md}}" link highlight type="wemark"></wemark>
+    <editor wx:if="{{!useMarkdown}}" id="previewEditor" class="ql-container" read-only="{{true}}"
+      bindready="onPreviewEditorReady">
+    </editor>
+  </view>
+  <view class="preview_container_icon">
+    <image src="/source/img/icon_opacity.png" mode="widthFix"></image>
+    <view>Femark</view>
+  </view>
+</view>
+
+<button open-type="share" id="float_bg" bindtap="floatTap" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+  <view id="float_color" hover-class="hover">
+    <view class="material-icons" style="color:{{primaryColor}};">
+      <text>done</text>
+    </view>
+  </view>
+</button>

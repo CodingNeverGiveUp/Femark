@@ -1,6 +1,6 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
-  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true" lower-threshold="20" 
+  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true" lower-threshold="20"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll"
   bindscrolltoupper="mainToUpper" bindscrolltolower="mainToLower">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
@@ -199,7 +199,7 @@
         </view>
         <view class="component_color" style="background:{{shareCardBackgroundColor}};"></view>
       </view>
-      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toSharePage">
         <view class="component_text">
           <view class="component_title">
             分享该卡片

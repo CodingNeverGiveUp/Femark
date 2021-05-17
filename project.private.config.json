@@ -63,6 +63,12 @@
         {
           "name": "pages/note/note",
           "pathName": "pages/note/note",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/sharePage/sharePage",
+          "pathName": "pages/sharePage/sharePage",
           "scene": null
         }
       ]

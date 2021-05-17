@@ -6,6 +6,7 @@
     "pages/account/account",
     "pages/note/note",
     "pages/todo/todo",
+    "pages/sharePage/sharePage",
     "pages/themeSetting/themeSetting",
     "pages/behaviorSetting/behaviorSetting",
     "pages/about/about",
@@ -22,10 +23,10 @@
     "list": [{
       "pagePath": "pages/index/index",
       "text": "记事"
-    },{
+    }, {
       "pagePath": "pages/category/category",
       "text": "分类"
-    },{
+    }, {
       "pagePath": "pages/account/account",
       "text": "我的"
     }]
@@ -35,6 +36,9 @@
   "darkmode": true,
   "themeLocation": "theme.json",
   "resizable": true,
+  "singlePage": {
+    "navigationBarFit": "squeezed"
+  },
   "usingComponents": {
     "custom-tab-bar": "/custom-tab-bar",
     "md-switch": "/components/switch/switch",
