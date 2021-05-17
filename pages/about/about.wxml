@@ -19,7 +19,8 @@
         </view>
       </view>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard" data-data="ojhdtmail@gmail.com" data-toast="邮箱已复制到剪贴板">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard"
+      data-data="ojhdtmail@gmail.com" data-toast="邮箱已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           发送邮件
@@ -29,7 +30,8 @@
         </view>
       </view>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard" data-data="" data-toast="地址已复制到剪贴板">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="setClipboard"
+      data-data="https://github.com/CodingNeverGiveUp/Femark" data-toast="地址已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           创建分支
@@ -89,7 +91,8 @@
     <view class="subtitle" style="color:{{primaryColor}};">
       <text>开源许可</text>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover" bindtap="setClipboard" data-data="https://github.com/TooBug/wemark" data-toast="地址已复制到剪贴板">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover"
+      bindtap="setClipboard" data-data="https://github.com/TooBug/wemark" data-toast="地址已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           TooBug - wemark
@@ -102,13 +105,28 @@
         </view>
       </view>
     </view>
-    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover" bindtap="setClipboard" data-data="https://github.com/dannnney/weapp-event" data-toast="地址已复制到剪贴板">
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover"
+      bindtap="setClipboard" data-data="https://github.com/dannnney/weapp-event" data-toast="地址已复制到剪贴板">
       <view class="component_text">
         <view class="component_title">
           dannnney - weapp-event
         </view>
         <view class="component_subtitle">
           https://github.com/dannnney/weapp-event
+        </view>
+        <view class="component_subtitle">
+          MIT License
+        </view>
+      </view>
+    </view>
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" hover-class="hover"
+      bindtap="setClipboard" data-data="https://github.com/MakerGYT/mini-color-picker" data-toast="地址已复制到剪贴板">
+      <view class="component_text">
+        <view class="component_title">
+          MakerGYT - mini-color-picker
+        </view>
+        <view class="component_subtitle">
+          https://github.com/MakerGYT/mini-color-picker
         </view>
         <view class="component_subtitle">
           MIT License
