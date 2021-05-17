@@ -67,7 +67,7 @@ Page({
     let time = this.data.time
     if(useMarkdown){
       wx.navigateTo({
-        url: `/pages/sharePage/sharePage?heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
+        url: `/pages/sharePage/sharePage?new=true&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
       })
     }
   },

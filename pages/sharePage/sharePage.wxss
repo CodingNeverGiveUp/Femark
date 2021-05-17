@@ -19,7 +19,7 @@
 
 .preview_container {
   border-radius: 10px;
-  margin: 50px 50rpx;
+  margin: 30vh 50rpx;
   padding: 25px 20px 15px;
   min-height: 420px;
   background: #fff;

@@ -20,7 +20,7 @@
   </view>
 </view>
 
-<button open-type="share" id="float_bg" bindtap="floatTap" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+<button wx:if="{{new}}" open-type="share" id="float_bg" bindtap="floatTap" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
   <view id="float_color" hover-class="hover">
     <view class="material-icons" style="color:{{primaryColor}};">
       <text>done</text>

@@ -15,6 +15,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ["shareAppMessage","shareTimeline"],
+    })
     var that = this
     console.log(options)
     this.setData({
@@ -30,10 +34,7 @@ Page({
   },
 
   floatTap(){
-    wx.showShareMenu({
-      withShareTicket: true,
-      menus: ["shareAppMessage","shareTimeline"],
-    })
+    
   },
 
   /**
@@ -92,7 +93,7 @@ Page({
     let nickName = this.data.nickName
     return {
       title: this.data.heading == 'null' ? `由${nickName}分享的内容` : this.data.heading,
-      path: `/pages/sharePage/sharePage?new="true"&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
+      path: `/pages/sharePage/sharePage?heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
     }
   }
 })
