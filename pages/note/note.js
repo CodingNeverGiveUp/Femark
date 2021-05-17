@@ -25,7 +25,6 @@ Page({
     heading: null,
     content: null,
     contentDelta: null,
-    contentHtml: null,
     galleryDetail: [],
     files: [],
     tempImgs: [],
@@ -59,21 +58,42 @@ Page({
 
   //转到分享
   toSharePage() {
-    let heading = this.data.heading;
-    let shareCardTheme = this.data.shareCardTheme;
-    let shareCardColor = this.data.shareCardColor;
-    let shareCardBackgroundColor = this.data.shareCardBackgroundColor;
-    let useMarkdown = app.globalData.markdownByDefault;
-    let md = this.data.md;
-    let time = this.data.time;
-    let html = this.data.contentHtml
-    if(useMarkdown){
+    let elementm = {
+      newShare: true,
+      heading: this.data.heading,
+      shareCardTheme: this.data.shareCardTheme,
+      shareCardColor: this.data.shareCardColor,
+      shareCardBackgroundColor: this.data.shareCardBackgroundColor,
+      useMarkdown: app.globalData.markdownByDefault,
+      time: this.data.time,
+      md: this.data.md,
+    }
+    let elementd = {
+      newShare: true,
+      heading: this.data.heading,
+      shareCardTheme: this.data.shareCardTheme,
+      shareCardColor: this.data.shareCardColor,
+      shareCardBackgroundColor: this.data.shareCardBackgroundColor,
+      useMarkdown: app.globalData.markdownByDefault,
+      time: this.data.time,
+      delta: this.data.contentDelta,
+    }
+    let textm = JSON.stringify(elementm)
+    let textmr = textm.replace(/=/g, '@@')
+    let textmrr = textmr.replace(/&/g,'~~')
+    let textd = JSON.stringify(elementd)
+    let textdr = textd.replace(/=/g, '@@')
+    let textdrr = textdr.replace(/&/g,'~~')
+    console.log(textdr)
+    if (this.data.useMarkdown) {
       wx.navigateTo({
-        url: `/pages/sharePage/sharePage?new=true&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
+        // url: `/pages/sharePage/sharePage?new=true&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
+        url: `/pages/sharePage/sharePage?json=${textmrr}`,
       })
-    }else{
+    } else {
       wx.navigateTo({
-        url: `/pages/sharePage/sharePage?new=true&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&html=${contentHtml}`,
+        // url: `/pages/sharePage/sharePage?new=true&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&delta=${delta}`,
+        url: `/pages/sharePage/sharePage?json=${textdrr}`,
       })
     }
   },
@@ -969,7 +989,6 @@ Page({
       contentNum: e.detail.text.length - 1,
       content: e.detail.text,
       contentDelta: e.detail.delta,
-      contentHtml: e.detail.html
     })
     //缓存内容
     if (this.data.useMarkdown) {

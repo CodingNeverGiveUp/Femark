@@ -20,18 +20,34 @@ Page({
       menus: ["shareAppMessage","shareTimeline"],
     })
     var that = this
-    console.log(options)
+    let strr = options.json.replace(/~~/, '&')
+    let str = strr.replace(/@@/, '=')
+    let element = JSON.parse(str)
+    let {delta, heading, newShare, shareCardBackgroundColor, shareCardColor ,shareCardTheme, time, useMarkdown, md} = element
+
     this.setData({
-      heading: options.heading,
-      time: options.time,
-      shareCardTheme: Number(options.shareCardTheme),
-      shareCardColor: options.shareCardColor,
-      shareCardBackgroundColor: options.shareCardBackgroundColor,
-      useMarkdown: options.useMarkdown == 'true' ? true : false,
-      new: options.new == 'true' ? true : false,
-      md: options.md,
-      html: options.html
+      heading,
+      time,
+      shareCardTheme,
+      shareCardColor,
+      shareCardBackgroundColor,
+      useMarkdown,
+      newShare,
+      md,
+      delta
     })
+  },
+
+  onPreviewEditorReady() {
+    var that = this
+    wx.createSelectorQuery().select('#previewEditor').context(function (res) {
+      that.previewEditorCtx = res.context
+      if (that.data.delta) {
+        that.previewEditorCtx.setContents({
+          delta: that.data.delta,
+        })
+      }
+    }).exec()
   },
 
   floatTap(){

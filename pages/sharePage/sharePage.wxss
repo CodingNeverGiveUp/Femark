@@ -80,10 +80,15 @@
   color: #ccc;
 }
 
+
+
 #float_bg {
-  position: absolute;
+  position: fixed;
   right: 50rpx;
   bottom: 50rpx;
+  position: relative;
+  bottom: 0;
+  right: 0;
   width: 55px;
   height: 55px;
   border-radius: 100%;
@@ -91,6 +96,7 @@
   justify-content: center;
   align-items: center;
   background: #ffffff;
+  box-shadow: 0 0 10rpx #bbb;
   transition: background .2s ease-in-out;
   z-index: 999;
   padding: 0;
@@ -125,6 +131,7 @@
 
   #float_bg{
     background: #303638;
+    box-shadow: 0 0rpx 10rpx #222;
   }
 
   #float_color{
