@@ -34,6 +34,7 @@ Page({
     useMarkdown: true,
     encrypt: false,
     password: "",
+    onPreview: false,
     markdownPreview: app.globalData.markdownPreview,
     markdownPreviewDelay: app.globalData.markdownPreviewDelay,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
@@ -946,6 +947,8 @@ Page({
       content: e.detail.text,
       contentDelta: e.detail.delta,
     })
+    //缓存内容
+    this.data.temp = e.detail.text
     //处理Markdown预览
     if (this.data.useMarkdown && this.data.markdownPreview) {
       if (this.data.timer) {
@@ -1035,7 +1038,6 @@ Page({
     if (this.data.temp) {
       this.setData({
         md: this.data.temp,
-        btnStyle: "right:-300rpx;"
       })
     }
   },
@@ -1142,20 +1144,52 @@ Page({
     }
   },
 
+  mainToUpper() {
+    if (this.data.theme == 'light') {
+      this.setData({
+        headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+        onPreview: false,
+      })
+    } else if (this.data.theme == 'dark') {
+      this.setData({
+        headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
+        onPreview: false,
+      })
+    }
+  },
+
+  mainScroll() {
+    this.setData({
+      onPreview: false
+    })
+  },
+
+  mainToLower() {
+    this.setData({
+      headbarStyle: "background: rgba(0, 0, 0, 0);",
+      onPreview: true,
+    })
+  },
+
 
   floatTap() {
-    if (this.data.edit) {
-      if (this.data.edited) {
-        this.submit();
+    if (this.data.onPreview) {
+      console.log("previewing")
+      this.previewRefresh()
+    } else {
+      if (this.data.edit) {
+        if (this.data.edited) {
+          this.submit();
+        } else {
+          this.setData({
+            edit: false,
+          })
+        }
       } else {
         this.setData({
-          edit: false,
+          edit: true,
         })
       }
-    } else {
-      this.setData({
-        edit: true,
-      })
     }
     this.selectAllComponents('.switch').forEach(element => {
       element.refreshStatus()

@@ -1,7 +1,7 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
   enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
-  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscrolltoupper="scroll" bindscrolltolower="toUpper">
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll" bindscrolltoupper="mainToUpper" bindscrolltolower="mainToLower">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -130,7 +130,7 @@
 
 
 
-  <scroll-view wx:if="{{useMarkdown}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
+  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
     enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="preview">
       <!-- <view class="subtitle" style="color:{{primaryColor}};">
@@ -469,7 +469,7 @@
   </view>
   <view class="float_bg" bindtap="floatTap">
     <view class="float_color" hover-class="hover">
-      <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text>
+      <view class="material-icons" style="color:{{primaryColor}};"><text>{{onPreview?'refresh':edit?edited?'save':'done':'edit'}}</text>
       </view>
     </view>
   </view>
@@ -480,5 +480,5 @@
   <text>{{snackbarContent}}</text>
 </view>
 
-<color-picker bindchangeColor="pickColor" mask="{{false}}" initColor="{{shareCardColor}}" show="{{showShareCardColorPicker}}" id="cardColor" />
-<color-picker bindchangeColor="pickColor" mask="{{false}}" initColor="{{shareCardBackgroundColor}}" show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />
+<color-picker bindchangeColor="pickColor" initColor="{{shareCardColor}}" show="{{showShareCardColorPicker}}" id="cardColor" />
+<color-picker bindchangeColor="pickColor" initColor="{{shareCardBackgroundColor}}" show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />
