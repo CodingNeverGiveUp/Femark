@@ -32,7 +32,7 @@ Page({
     tempFiles: [],
     imgTimestamps: [],
     category: 0,
-    useMarkdown: true,
+    useMarkdown: app.globalData.markdownByDefault,
     encrypt: false,
     password: "",
     onPreview: false,
@@ -63,7 +63,7 @@ Page({
     let shareCardTheme = this.data.shareCardTheme;
     let shareCardColor = this.data.shareCardColor;
     let shareCardBackgroundColor = this.data.shareCardBackgroundColor;
-    let useMarkdown = this.data.useMarkdown;
+    let useMarkdown = app.globalData.markdownByDefault;
     let md = this.data.md;
     let time = this.data.time;
     let html = this.data.contentHtml
@@ -1466,6 +1466,7 @@ Page({
       primaryColor: app.globalData.primaryColor,
       categoryData: app.globalData.categoryData,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      useMarkdown: app.globalData.markdownByDefault,
       markdownPreview: app.globalData.markdownPreview,
       markdownPreviewDelay: app.globalData.markdownPreviewDelay,
     })

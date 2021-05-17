@@ -200,7 +200,8 @@ App({
             _openid: that.globalData.openid
           }).get()
           .then(res => {
-            if (res.data[0].length == 0) {
+            console.log(res)
+            if (res.data.length == 0) {
               event.emit('LoginCheck', 'register');
             } else {
               that.globalData.id = res.data[0]._id;
@@ -537,7 +538,7 @@ App({
     systemInfo: null,
     isPad: false,
     useSidebar: false,
-    markdownByDefault: true,
+    markdownByDefault: false,
     hitokoto: false,
     bing: true,
     pureTheme: false,
