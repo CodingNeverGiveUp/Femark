@@ -146,10 +146,10 @@
           <text>刷新</text>
         </view>
       </view> -->
-      <view class="preview_container">
+      <view class="preview_container {{shareCardTheme==1?'preview_container_light':shareCardTheme==2?'preview_container_dark':''}}" style="background: {{shareCardColor}};">
         <view>
-          <view class="preview_container_heading">{{heading?heading:'标题'}}</view>
-          <view class="preview_container_time">{{time}}</view>
+          <view class="preview_container_heading {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':''}}">{{heading?heading:'标题'}}</view>
+          <view class="preview_container_time {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':''}}">{{time}}</view>
           <wemark md="{{md}}" link highlight type="wemark"></wemark>
         </view>
         <view class="preview_container_icon">
@@ -164,27 +164,29 @@
         dataset="{{['跟随系统','亮色','暗色']}}" selected="{{shareCardTheme}}"
         data-id="shareCardTheme">
         <text slot="title">主题</text>
-        <text slot="subtitle">选择分享卡片颜色主题</text>
+        <text slot="subtitle">分享卡片颜色主题</text>
       </md-picker>
-      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick" data-id="cardColor">
         <view class="component_text">
           <view class="component_title">
             卡片颜色
           </view>
           <view class="component_subtitle">
-            选择分享卡片底色
+            分享卡片底色
           </view>
         </view>
+        <view class="component_color" style="background:{{shareCardColor}};"></view>
       </view>
-      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick" data-id="cardBackgroundColor">
         <view class="component_text">
           <view class="component_title">
             背景颜色
           </view>
           <view class="component_subtitle">
-            选择分享页面底色
+            分享页面底色
           </view>
         </view>
+        <view class="component_color" style="background:{{shareCardBackgroundColor}};"></view>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>Markdown</text>
@@ -477,3 +479,6 @@
 <view class="snackbar" style="{{snackbarStyle}}">
   <text>{{snackbarContent}}</text>
 </view>
+
+<color-picker bindchangeColor="pickColor" mask="{{false}}" initColor="{{shareCardColor}}" show="{{showShareCardColorPicker}}" id="cardColor" />
+<color-picker bindchangeColor="pickColor" mask="{{false}}" initColor="{{shareCardBackgroundColor}}" show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />

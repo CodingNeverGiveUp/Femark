@@ -16,12 +16,16 @@ Component({
       type: Boolean,
       value: false
     },
+    id: {
+      type: String,
+    },
   },
   data: {
 
   },
   lifetimes: {
     attached() {
+      console.log(this.data.id)
       let { initColor} = this.data;
       this.setData({
         hueColor: this.hsv2rgb((this.rgb2hsv(initColor)).h,100,100)
@@ -56,8 +60,9 @@ Component({
   methods: {
     onEnd() {
       this.triggerEvent('changeColor', {
-        color: this.data.colorRes
-      })
+        color: this.data.colorRes,
+        id: this.data.id,
+      }, {})
     },
     changeHue: function (e) {
       let hue = e.detail.value;

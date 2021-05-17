@@ -40,7 +40,12 @@ Page({
     categoryData: app.globalData.categoryData,
     timestamp: new Date().getTime(),
     time: time.formatChsTime(new Date()),
+    //分享卡片
     shareCardTheme: 0,
+    shareCardColor: app.globalData.systemInfo.theme == 'dark' ? 'rgb(48, 54, 56)' : 'rgb(255, 255, 255)',
+    showShareCardColorPicker: false,
+    shareCardBackgroundColor: app.globalData.systemInfo.theme == 'dark' ? 'rgb(34, 36, 38)' : 'rgb(241, 241, 241)',
+    showShareCardBackgroundColorPicker: false,
     // 编辑器
     formats: {},
     editorHeight: 300,
@@ -48,6 +53,36 @@ Page({
     isIOS: false,
     editorCtx: null,
     toolbarActivated: null,
+  },
+
+  // 显示取色器
+  toPick: function (e) {
+    let id = e.currentTarget.dataset.id
+    if (id == 'cardColor') {
+      this.setData({
+        showShareCardColorPicker: true
+      })
+    } else if (id == 'cardBackgroundColor') {
+      this.setData({
+        showShareCardBackgroundColorPicker: true
+      })
+    }
+
+  },
+  //取色结果回调
+  pickColor(e) {
+    let rgb = e.detail.color;
+    let id = e.currentTarget.id
+    console.log(rgb, id)
+    if (id == 'cardColor') {
+      this.setData({
+        shareCardColor: rgb
+      })
+    } else if (id == 'cardBackgroundColor') {
+      this.setData({
+        shareCardBackgroundColor: rgb
+      })
+    }
   },
 
   submit() {
@@ -1028,6 +1063,23 @@ Page({
         this.setData({
           shareCardTheme: e.detail.valueKey
         })
+        if (e.detail.valueKey == 0) {
+          this.setData({
+            shareCardColor: app.globalData.systemInfo.theme == 'dark' ? 'rgb(48, 54, 56)' : 'rgb(255, 255, 255)',
+            shareCardBackgroundColor: app.globalData.systemInfo.theme == 'dark' ? 'rgb(34, 36, 38)' : 'rgb(241, 241, 241)',
+          })
+        } else if (e.detail.valueKey == 1) {
+          this.setData({
+            shareCardColor: 'rgb(255, 255, 255)',
+            shareCardBackgroundColor: 'rgb(241, 241, 241)',
+          })
+        } else if (e.detail.valueKey == 2) {
+          this.setData({
+            shareCardColor: 'rgb(48, 54, 56)',
+            shareCardBackgroundColor: 'rgb(34, 36, 38)',
+
+          })
+        }
       }
     }
   },
