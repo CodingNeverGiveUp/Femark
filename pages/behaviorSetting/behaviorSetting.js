@@ -162,7 +162,46 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    if (this.data.edited) {
+      wx.showModal({
+        title: "提示",
+        content: "是否保存更改",
+        confirmColor: `${this.data.primaryColor}`,
+      }).then(res => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '操作进行中',
+            mask: true
+          })
+          wx.cloud.database().collection('note').doc(app.globalData.id).update({
+            data: {
+              profile: {
+                markdownByDefault: this.data.markdownByDefault,
+                markdownPreview: this.data.markdownPreview,
+                markdownPreviewDelay: Number(this.data.markdownPreviewDelay),
+              }
+            }
+          }).then(res => {
+            app.globalData.markdownByDefault = this.data.markdownByDefault;
+            app.globalData.markdownPreview = this.data.markdownPreview;
+            app.globalData.markdownPreviewDelay = Number(this.data.markdownPreviewDelay);
+            wx.showToast({
+              title: '已保存',
+              duration: 1000,
+            })
+            const eventChannel = this.getOpenerEventChannel()
+            eventChannel.emit('toAccount', function (data) {
 
+            })
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 1000)
+          })
+        }
+      })
+    }
   },
 
   /**
