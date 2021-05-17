@@ -216,7 +216,7 @@
 }
 
 .preview_bg {
-  border-left: solid 1px #bbb;
+  /* border-left: solid 1px #bbb; */
 }
 
 .heading {

@@ -29,7 +29,8 @@ Page({
       shareCardBackgroundColor: options.shareCardBackgroundColor,
       useMarkdown: options.useMarkdown == 'true' ? true : false,
       new: options.new == 'true' ? true : false,
-      md: options.md
+      md: options.md,
+      html: options.html
     })
   },
 
@@ -91,9 +92,24 @@ Page({
     let md = this.data.md;
     let time = this.data.time
     let nickName = this.data.nickName
+    let html = this.data.html
     return {
-      title: this.data.heading == 'null' ? `由${nickName}分享的内容` : this.data.heading,
-      path: `/pages/sharePage/sharePage?heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
+      title: heading == 'null' ? `由${nickName}分享的内容` : heading,
+      path: `/pages/sharePage/sharePage?heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}&html=${html}`,
     }
-  }
+  },
+
+  onShareTimeLine(){
+    let heading = this.data.heading;
+    let shareCardTheme = this.data.shareCardTheme;
+    let shareCardColor = this.data.shareCardColor;
+    let shareCardBackgroundColor = this.data.shareCardBackgroundColor;
+    let useMarkdown = this.data.useMarkdown;
+    let md = this.data.md;
+    let time = this.data.time
+    let nickName = this.data.nickName
+    return {
+      title: heading == 'null' ? `由${nickName}分享的内容` : heading,
+    }
+  },
 })

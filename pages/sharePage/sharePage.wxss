@@ -19,7 +19,7 @@
 
 .preview_container {
   border-radius: 10px;
-  margin: 30vh 50rpx;
+  margin: 20vh 50rpx 0;
   padding: 25px 20px 15px;
   min-height: 420px;
   background: #fff;
@@ -106,4 +106,28 @@
   align-items: center;
   box-shadow: 0 0 10rpx #bbb;
   transition: background .2s ease-in-out;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .preview_container {
+    background: #303638;
+    box-shadow: 0 0rpx 10rpx #222;
+  }
+
+  .preview_container_heading {
+    border-bottom: #ccc solid 2px;
+  }
+
+  .preview_container_time {
+    color: #ccc;
+  }
+
+  #float_bg{
+    background: #303638;
+  }
+
+  #float_color{
+    box-shadow: 0 0rpx 10rpx #222;
+  }
 }

@@ -25,6 +25,7 @@ Page({
     heading: null,
     content: null,
     contentDelta: null,
+    contentHtml: null,
     galleryDetail: [],
     files: [],
     tempImgs: [],
@@ -64,10 +65,11 @@ Page({
     let shareCardBackgroundColor = this.data.shareCardBackgroundColor;
     let useMarkdown = this.data.useMarkdown;
     let md = this.data.md;
-    let time = this.data.time
+    let time = this.data.time;
+    let html = this.data.contentHtml
     if(useMarkdown){
       wx.navigateTo({
-        url: `/pages/sharePage/sharePage?new=true&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}`,
+        url: `/pages/sharePage/sharePage?new=true&heading=${heading}&time=${time}&shareCardTheme=${shareCardTheme}&shareCardColor=${shareCardColor}&shareCardBackgroundColor=${shareCardBackgroundColor}&useMarkdown=${useMarkdown}&md=${md}&html=${contentHtml}`,
       })
     }
   },
@@ -963,6 +965,7 @@ Page({
       contentNum: e.detail.text.length - 1,
       content: e.detail.text,
       contentDelta: e.detail.delta,
+      contentHtml: e.detail.html
     })
     //缓存内容
     if (this.data.useMarkdown) {

@@ -117,7 +117,7 @@
         </view>
       </view>
       <view class="content_time">最后一次修改于{{time}}</view>
-      <view style="height:200px;"></view>
+      <view style="height:400px;"></view>
       <!-- <view class="content" bindtap="contentTap">
         <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
           placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
@@ -205,7 +205,7 @@
             分享该卡片
           </view>
           <view class="component_subtitle">
-            将该卡片分享至群聊或朋友圈
+            将该卡片分享至群聊
           </view>
         </view>
       </view>
@@ -296,7 +296,7 @@
   <view class="icon material-icons" hover-class="hover">
     <text>keyboard_voice</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" hover-class="hover" bindtap="toSharePage">
     <text>share</text>
   </view>
   <view wx:if="{{id || id == 0}}" class="icon material-icons" hover-class="hover" bindtap="delete">
