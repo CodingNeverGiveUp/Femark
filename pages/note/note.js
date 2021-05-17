@@ -984,6 +984,7 @@ Page({
 
   contentInput(e) {
     var that = this
+    this.editorCtx.scrollIntoView()
     console.log(e)
     this.setData({
       contentNum: e.detail.text.length - 1,

@@ -1,13 +1,14 @@
 <!--pages/sharePage/sharePage.wxml-->
+<view class="bg" style="background:{{shareCardBackgroundColor}};"></view>
 <view
-  class="preview_container {{shareCardTheme==1?'preview_container_light':shareCardTheme==2?'preview_container_dark':''}}"
+  class=" {{shareCardTheme==1?'preview_container_light':shareCardTheme==2?'preview_container_dark':'preview_container'}}"
   style="background: {{shareCardColor}};">
   <view>
     <view
-      class="preview_container_heading {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':''}}">
+      class=" {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':'preview_container_heading'}}">
       {{heading != 'null'?heading:'标题'}}</view>
     <view
-      class="preview_container_time {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':''}}">
+      class=" {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':'preview_container_time'}}">
       {{time}}</view>
     <wemark wx:if="{{useMarkdown}}" md="{{md}}" link highlight type="wemark"></wemark>
     <editor wx:if="{{!useMarkdown}}" id="previewEditor" class="ql-container" read-only="{{true}}"
@@ -19,9 +20,14 @@
     <view>Femark</view>
   </view>
 </view>
+<view style="margin: 30px 50rpx;" class="{{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':'text'}}">
+  <text>由用户 <text class="{{shareCardTheme==1?'main_light':shareCardTheme==2?'main_dark':'main'}}">{{nickName}}</text> 创建的分享\n
+    开始使用<text class="{{shareCardTheme==1?'main_light':shareCardTheme==2?'main_dark':'main'}}">Femark</text>，记下身边的故事与风景
+  </text>
+</view>
 
-<button wx:if="{{newShare}}" open-type="share" id="float_bg" bindtap="floatTap" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
-  <view id="float_color" hover-class="hover">
+<button wx:if="{{newShare}}" open-type="share" class="{{shareCardTheme==1?'float_bg_light':shareCardTheme==2?'float_bg_dark':'float_bg'}}" bindtap="floatTap" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+  <view class=" {{shareCardTheme==1?'float_color_light':shareCardTheme==2?'float_color_dark':'float_color'}}" hover-class="hover">
     <view class="material-icons" style="color:{{primaryColor}};">
       <text>done</text>
     </view>
