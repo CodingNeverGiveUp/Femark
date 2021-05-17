@@ -941,6 +941,7 @@ Page({
   },
 
   contentInput(e) {
+    var that = this
     console.log(e)
     this.setData({
       contentNum: e.detail.text.length - 1,
@@ -948,7 +949,13 @@ Page({
       contentDelta: e.detail.delta,
     })
     //缓存内容
-    this.data.temp = e.detail.text
+    if (this.data.useMarkdown) {
+      this.data.temp = e.detail.text
+    } else {
+      this.previewEditorCtx.setContents({
+        delta: e.detail.delta,
+      })
+    }
     //处理Markdown预览
     if (this.data.useMarkdown && this.data.markdownPreview) {
       if (this.data.timer) {
@@ -1267,6 +1274,17 @@ Page({
             edited: false
           })
         }, 200);
+      }
+    }).exec()
+  },
+  onPreviewEditorReady() {
+    var that = this
+    wx.createSelectorQuery().select('#previewEditor').context(function (res) {
+      that.previewEditorCtx = res.context
+      if (that.data.contentDelta) {
+        that.previewEditorCtx.setContents({
+          delta: that.data.contentDelta,
+        })
       }
     }).exec()
   },

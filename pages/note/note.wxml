@@ -1,7 +1,8 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
   enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
-  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll" bindscrolltoupper="mainToUpper" bindscrolltolower="mainToLower">
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll"
+  bindscrolltoupper="mainToUpper" bindscrolltolower="mainToLower">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -130,8 +131,8 @@
 
 
 
-  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
-    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
+    bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="preview">
       <!-- <view class="subtitle" style="color:{{primaryColor}};">
         <text>预览视窗</text>
@@ -146,11 +147,20 @@
           <text>刷新</text>
         </view>
       </view> -->
-      <view class="preview_container {{shareCardTheme==1?'preview_container_light':shareCardTheme==2?'preview_container_dark':''}}" style="background: {{shareCardColor}};">
+      <view
+        class="preview_container {{shareCardTheme==1?'preview_container_light':shareCardTheme==2?'preview_container_dark':''}}"
+        style="background: {{shareCardColor}};">
         <view>
-          <view class="preview_container_heading {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':''}}">{{heading?heading:'标题'}}</view>
-          <view class="preview_container_time {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':''}}">{{time}}</view>
-          <wemark md="{{md}}" link highlight type="wemark"></wemark>
+          <view
+            class="preview_container_heading {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':''}}">
+            {{heading?heading:'标题'}}</view>
+          <view
+            class="preview_container_time {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':''}}">
+            {{time}}</view>
+          <wemark wx:if="{{useMarkdown}}" md="{{md}}" link highlight type="wemark"></wemark>
+          <editor wx:if="{{!useMarkdown}}" id="previewEditor" class="ql-container" read-only="{{true}}"
+            bindready="onPreviewEditorReady">
+          </editor>
         </view>
         <view class="preview_container_icon">
           <image src="/source/img/icon_opacity.png" mode="widthFix"></image>
@@ -161,12 +171,12 @@
         <text>细节</text>
       </view>
       <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{['跟随系统','亮色','暗色']}}" selected="{{shareCardTheme}}"
-        data-id="shareCardTheme">
+        dataset="{{['跟随系统','亮色','暗色']}}" selected="{{shareCardTheme}}" data-id="shareCardTheme">
         <text slot="title">主题</text>
         <text slot="subtitle">分享卡片颜色主题</text>
       </md-picker>
-      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick" data-id="cardColor">
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick"
+        data-id="cardColor">
         <view class="component_text">
           <view class="component_title">
             卡片颜色
@@ -177,7 +187,8 @@
         </view>
         <view class="component_color" style="background:{{shareCardColor}};"></view>
       </view>
-      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick" data-id="cardBackgroundColor">
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick"
+        data-id="cardBackgroundColor">
         <view class="component_text">
           <view class="component_title">
             背景颜色
@@ -457,7 +468,8 @@
 </view>
 
 <view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};bottom:{{edit?toolbarActivated?115:65:27}}px;">
-  <view class="float_tools_container" style="{{edit ? edited?'width:110px;':'width:0;' : 'width:0;'}}">
+  <view class="float_tools_container"
+    style="{{onPreview?'width:0;':edit ? edited?'width:110px;':'width:0;' : 'width:0;'}}">
     <view class="float_tools">
       <view class="icon material-icons" hover-class="hover" catchtouchend="undo">
         <text>undo</text>
@@ -469,7 +481,8 @@
   </view>
   <view class="float_bg" bindtap="floatTap">
     <view class="float_color" hover-class="hover">
-      <view class="material-icons" style="color:{{primaryColor}};"><text>{{onPreview?'refresh':edit?edited?'save':'done':'edit'}}</text>
+      <view class="material-icons" style="color:{{primaryColor}};">
+        <text>{{onPreview?'refresh':edit?edited?'save':'done':'edit'}}</text>
       </view>
     </view>
   </view>
@@ -480,5 +493,7 @@
   <text>{{snackbarContent}}</text>
 </view>
 
-<color-picker bindchangeColor="pickColor" initColor="{{shareCardColor}}" show="{{showShareCardColorPicker}}" id="cardColor" />
-<color-picker bindchangeColor="pickColor" initColor="{{shareCardBackgroundColor}}" show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />
+<color-picker bindchangeColor="pickColor" initColor="{{shareCardColor}}" show="{{showShareCardColorPicker}}"
+  id="cardColor" />
+<color-picker bindchangeColor="pickColor" initColor="{{shareCardBackgroundColor}}"
+  show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />
