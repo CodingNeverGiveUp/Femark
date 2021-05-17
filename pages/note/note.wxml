@@ -1,7 +1,7 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
   enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
-  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscrolltoupper="scroll">
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscrolltoupper="scroll" bindscrolltolower="toUpper">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -23,7 +23,8 @@
         </view>
         <view class="Imgs">
           <view class="Img" wx:for="{{tempImgs}}" wx:key="index">
-            <image mode="aspectFill" src="{{item.src}}" bindtap="previewTempImg" data-index="{{index}}" data-url="{{item.src}}">
+            <image mode="aspectFill" src="{{item.src}}" bindtap="previewTempImg" data-index="{{index}}"
+              data-url="{{item.src}}">
             </image>
             <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteTempImg" wx:if="{{edit}}">
               <text class="material-icons">clear</text>
@@ -49,14 +50,18 @@
           <text>无内容</text>
         </view>
         <view class="files">
-          <view class="file" wx:for="{{tempFiles}}" wx:key="index" hover-class="hover" bindtap="tempFileAction" data-index="{{index}}">
-            <view class="material-icons" style="color:{{primaryColor}};">{{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
+          <view class="file" wx:for="{{tempFiles}}" wx:key="index" hover-class="hover" bindtap="tempFileAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};">
+              {{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
             <view class="filename">{{item.name}}</view>
           </view>
         </view>
         <view class="files">
-          <view class="file" wx:for="{{files}}" wx:key="index" hover-class="hover" bindtap="fileAction" data-index="{{index}}">
-            <view class="material-icons" style="color:{{primaryColor}};">{{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
+          <view class="file" wx:for="{{files}}" wx:key="index" hover-class="hover" bindtap="fileAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};">
+              {{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
             <view class="filename">{{item.name}}</view>
           </view>
         </view>
@@ -103,13 +108,14 @@
       </view>
       <view class="content">
         <editor id="editor" class="ql-container" placeholder="{{edit ? '请输入内容…' : '无内容'}}" show-img-size="true"
-          show-img-resize="true" show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput" bindstatuschange="onStatusChange"
-          bindready="onEditorReady">
+          show-img-resize="true" show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus"
+          bindblur="contentBlur" bindinput="contentInput" bindstatuschange="onStatusChange" bindready="onEditorReady">
         </editor>
         <view class="num" wx:if="{{edit}}">
           <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
         </view>
       </view>
+      <view class="content_time">最后一次修改于{{time}}</view>
       <view style="height:200px;"></view>
       <!-- <view class="content" bindtap="contentTap">
         <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
@@ -124,9 +130,8 @@
 
 
 
-  <scroll-view wx:if="{{useMarkdown}}" class="preview_bg" scroll-y="true"
-    style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
-    bindscroll="scroll">
+  <scroll-view wx:if="{{useMarkdown}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
+    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="preview">
       <!-- <view class="subtitle" style="color:{{primaryColor}};">
         <text>预览视窗</text>
@@ -142,12 +147,44 @@
         </view>
       </view> -->
       <view class="preview_container">
-        <view class="preview_container_heading">{{heading?heading:'标题'}}</view>
-        <view class="preview_container_time">{{time}}</view>
-        <wemark md="{{md}}" link highlight type="wemark"></wemark>
+        <view>
+          <view class="preview_container_heading">{{heading?heading:'标题'}}</view>
+          <view class="preview_container_time">{{time}}</view>
+          <wemark md="{{md}}" link highlight type="wemark"></wemark>
+        </view>
+        <view class="preview_container_icon">
+          <image src="/source/img/icon_opacity.png" mode="widthFix"></image>
+          <view>Femark</view>
+        </view>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>细节</text>
+      </view>
+      <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        dataset="{{['亮色','暗色']}}" selected="{{theme=='light'?'0':'1'}}" disabled="{{!markdownPreview}}"
+        data-id="markdownPreviewDelay">
+        <text slot="title">主题</text>
+        <text slot="subtitle">选择分享卡片颜色主题</text>
+      </md-picker>
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+        <view class="component_text">
+          <view class="component_title">
+            卡片颜色
+          </view>
+          <view class="component_subtitle">
+            选择分享卡片底色
+          </view>
+        </view>
+      </view>
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+        <view class="component_text">
+          <view class="component_title">
+            背景颜色
+          </view>
+          <view class="component_subtitle">
+            选择分享页面底色
+          </view>
+        </view>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>Markdown</text>

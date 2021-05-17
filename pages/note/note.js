@@ -1067,15 +1067,9 @@ Page({
   },
 
   toUpper() {
-    if (this.data.theme == 'light') {
-      this.setData({
-        headbarStyle: "",
-      })
-    } else if (this.data.theme == 'dark') {
-      this.setData({
-        headbarStyle: "",
-      })
-    }
+    this.setData({
+      headbarStyle: "background: rgba(0, 0, 0, 0);",
+    })
   },
 
   scroll() {
