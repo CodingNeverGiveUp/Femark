@@ -1,6 +1,6 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
-  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
+  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true" lower-threshold="20" 
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll"
   bindscrolltoupper="mainToUpper" bindscrolltolower="mainToLower">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
@@ -168,7 +168,7 @@
         </view>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
-        <text>细节</text>
+        <text>分享预览</text>
       </view>
       <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
         dataset="{{['跟随系统','亮色','暗色']}}" selected="{{shareCardTheme}}" data-id="shareCardTheme">
@@ -194,10 +194,20 @@
             背景颜色
           </view>
           <view class="component_subtitle">
-            分享页面底色
+            分享页面底色，不提供预览
           </view>
         </view>
         <view class="component_color" style="background:{{shareCardBackgroundColor}};"></view>
+      </view>
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
+        <view class="component_text">
+          <view class="component_title">
+            分享该卡片
+          </view>
+          <view class="component_subtitle">
+            将该卡片分享至群聊或朋友圈
+          </view>
+        </view>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
         <text>Markdown</text>
@@ -294,7 +304,7 @@
   </view>
 </view>
 
-<view class="toolbar" wx:if="{{edit && keyboardHeight > 0 ? true : true}}"
+<view class="toolbar" wx:if="{{edit && keyboardHeight > 0 ? true : false}}"
   style="bottom: {{isIOS ? keyboardHeight : 0}}px;{{toolbarActivated ? 'height:100px':''}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
   <view class="toolbar_section">
     <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
