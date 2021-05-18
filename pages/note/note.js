@@ -1560,6 +1560,7 @@ Page({
     this.updatePosition(0)
     let keyboardHeight = 0
     wx.onKeyboardHeightChange(res => {
+      // return
       if (res.height === keyboardHeight) return
       const duration = res.height > 0 ? res.duration * 1000 : 0
       keyboardHeight = res.height
