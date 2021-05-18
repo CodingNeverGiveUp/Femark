@@ -24,6 +24,20 @@
       <text slot="title">刷新延时</text>
       <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
     </md-picker>
+    <view class="subtitle" style="color:{{primaryColor}};">
+      <text>语音</text>
+    </view>
+    <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="recordSetting">
+        <view class="component_text">
+          <view class="component_title">
+            获取授权
+          </view>
+          <view class="component_subtitle">
+            授权小程序使用设备麦克风
+          </view>
+        </view>
+        <view wx:if="{{true}}" class="material-icons"></view>
+      </view>
     <view class="subtitle sub">
       <text>设置将在点击左上角返回后保存生效</text>
     </view>

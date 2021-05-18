@@ -39,6 +39,12 @@
   "singlePage": {
     "navigationBarFit": "squeezed"
   },
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.4",
+      "provider": "wx069ba97219f66d99"
+    }
+  },
   "usingComponents": {
     "custom-tab-bar": "/custom-tab-bar",
     "md-switch": "/components/switch/switch",

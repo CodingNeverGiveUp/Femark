@@ -109,7 +109,7 @@
       </view>
       <view class="content">
         <editor id="editor" class="ql-container" placeholder="{{edit ? '请输入内容…' : '无内容'}}" show-img-size="true"
-          show-img-resize="true" show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus"
+           show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus"
           bindblur="contentBlur" bindinput="contentInput" bindstatuschange="onStatusChange" bindready="onEditorReady">
         </editor>
         <view class="num" wx:if="{{edit}}">
@@ -295,6 +295,9 @@
   </view>
   <view class="icon material-icons" hover-class="hover">
     <text>keyboard_voice</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover" bindtap="startOcr">
+    <text>camera_enhance</text>
   </view>
   <view class="icon material-icons" hover-class="hover" bindtap="toSharePage">
     <text>share</text>

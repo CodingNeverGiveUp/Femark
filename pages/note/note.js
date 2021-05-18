@@ -5,6 +5,8 @@ const database = require("../../utils/database.js")
 const event = require("../../utils/event.js")
 const time = require("../../utils/util.js")
 const _ = wx.cloud.database().command
+var plugin = requirePlugin("WechatSI")
+const manager = plugin.getRecordRecognitionManager()
 Page({
 
   /**
@@ -56,6 +58,71 @@ Page({
     toolbarActivated: null,
   },
 
+  //语音识别
+  touchdown_plugin: function () {
+    var _this = this
+    wx.showToast({
+      title: '正在倾听...',
+    })
+    manager.start({ //开始识别
+      duration: 30000, //30s最长时间  最大60s
+      lang: "zh_CN"
+    })
+  },
+
+  //手指松开 
+  touchup_plugin: function (e) {
+    var searchType = e.currentTarget.dataset.type;
+    this.setData({
+      searchType: searchType,
+      yysb: "长按语音识别"
+    });
+    manager.stop(); //结束识别
+    wx.showToast({
+      title: '正在识别……',
+      icon: 'loading',
+      duration: 2000
+    })
+  },
+
+  //ocr
+  startOcr() {
+    let that = this
+    wx.chooseImage({
+      success: res => {
+        wx.showLoading({
+          title: '正在提取内容',
+        })
+        var filepath = res.tempFilePaths[0]
+        let filebuffer = wx.getFileSystemManager().readFileSync(filepath)
+        // console.log(filebuffer)
+        wx.cloud.callFunction({
+            name: "ocr",
+            data: {
+              buffer: filebuffer
+            }
+          })
+          .then(res => {
+            wx.showToast({
+              title: '已提取文字',
+            })
+            console.log(res)
+            let data = res.result.result.items
+
+            // that.setData({
+            //   res
+            // })
+          }).catch(err => {
+            wx.showToast({
+              title: '网络错误',
+              icon: "error"
+            })
+            console.log(err)
+          })
+      }
+    })
+  },
+
   //转到分享
   toSharePage() {
     let elementm = {
@@ -80,10 +147,10 @@ Page({
     }
     let textm = JSON.stringify(elementm)
     let textmr = textm.replace(/=/g, '@@')
-    let textmrr = textmr.replace(/&/g,'~~')
+    let textmrr = textmr.replace(/&/g, '~~')
     let textd = JSON.stringify(elementd)
     let textdr = textd.replace(/=/g, '@@')
-    let textdrr = textdr.replace(/&/g,'~~')
+    let textdrr = textdr.replace(/&/g, '~~')
     console.log(textdr)
     if (this.data.useMarkdown) {
       wx.navigateTo({
@@ -971,6 +1038,7 @@ Page({
   },
 
   contentFocus() {
+    // this.editorCtx.scrollIntoView()
     this.setData({
       contentNumStyle: `color:${this.data.primaryColor};`
     })
@@ -984,7 +1052,6 @@ Page({
 
   contentInput(e) {
     var that = this
-    this.editorCtx.scrollIntoView()
     console.log(e)
     this.setData({
       contentNum: e.detail.text.length - 1,
@@ -1575,6 +1642,39 @@ Page({
       }, duration)
 
     })
+    //初始化语音识别
+    manager.onRecognize = function (res) { //有新的识别内容返回，则会调用此事件
+      console.log("current result", res.result)
+    }
+    manager.onStop = function (res) { //识别结束事件
+      console.log('识别开始');
+      var result = res.result;
+      console.log(res)
+      // var s = result.indexOf('。') //找到第一次出现下划线的位置
+      // result = result.substring(0, s) //取下划线前的字符
+      var searchType = that.data.searchType;
+      wx.showToast({
+        title: '识别成功',
+      })
+
+      //console.log(result)
+      if (result != "") {
+        that.setData({
+          result: result //这里的result才是最终结果
+        })
+      } else {
+        wx.showToast({
+          title: '请说话',
+        })
+      }
+    }
+    manager.onError = function (res) { //识别错误事件
+      console.log('manager.onError')
+      console.log(res) //报错信息打印
+      wx.showToast({
+        title: "识别出现错误",
+      })
+    }
   },
 
   /**

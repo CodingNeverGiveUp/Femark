@@ -57,12 +57,36 @@
   color: #666;
 }
 
+.component {
+  padding: 10px 50rpx;
+  transition: .2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.component_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.component_subtitle {
+  font-size: .8rem;
+  color: #666;
+}
+
 @media (prefers-color-scheme: dark) {
   .icon{
     color: #bbb;
   }
 
   .sub{
+    color: #ccc;
+  }
+
+  .component_subtitle {
     color: #ccc;
   }
 }

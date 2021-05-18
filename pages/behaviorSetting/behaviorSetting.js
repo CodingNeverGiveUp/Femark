@@ -18,6 +18,20 @@ Page({
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
   },
 
+  //获取授权
+  recordSetting() {
+    var that = this
+    wx.openSetting({
+      success(res) {
+        if (res.authSetting['scope.record']) {
+          that.setData({
+            authed: true
+          })
+        }
+      }
+    })
+  },
+
   back() {
     if (this.data.edited) {
       wx.showModal({
@@ -127,6 +141,12 @@ Page({
       this.setData({
         theme: data
       })
+    })
+    //拉取设置信息
+    wx.getSetting({
+      withSubscriptions: true,
+    }).then(res=>{
+      console.log(res)
     })
   },
 
