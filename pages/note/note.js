@@ -1272,15 +1272,22 @@ Page({
     })
   },
 
-  scroll() {
-    if (this.data.theme == 'light') {
+  scroll(e) {
+    let num = e.detail.scrollTop
+    if (num < 20) {
       this.setData({
-        headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+        headbarStyle: "background: rgba(0, 0, 0, 0);",
       })
-    } else if (this.data.theme == 'dark') {
-      this.setData({
-        headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
-      })
+    } else {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
+        })
+      }
     }
   },
 
@@ -1298,10 +1305,36 @@ Page({
     }
   },
 
-  mainScroll() {
-    this.setData({
-      onPreview: false
-    })
+  mainScroll(e) {
+    // console.log(e.detail.scrollLeft)
+    let screenWidth = app.globalData.systemInfo.screenWidth
+    let num = e.detail.scrollLeft / (e.detail.scrollWidth - screenWidth)
+    if (num < 0.2) {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+          onPreview: false,
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
+          onPreview: false,
+        })
+      }
+    } else if (num > 0.8) {
+      this.setData({
+        onPreview: true,
+        headbarStyle: ""
+      })
+    } else {
+      this.setData({
+        onPreview: false,
+        headbarStyle: ""
+      })
+    }
+    // this.setData({
+    //   onPreview: false
+    // })
   },
 
   mainToLower() {

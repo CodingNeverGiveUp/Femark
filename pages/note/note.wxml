@@ -2,7 +2,7 @@
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
   enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true" 
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll"
-  bindscrolltoupper="mainToUpper" bindscrolltolower="mainToLower">
+  >
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -96,8 +96,8 @@
       </view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscrolltoupper="toUpper"
-    upper-threshold="20" bindscroll="scroll">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
+    bindscroll="scroll">
     <view class="main">
       <view class="heading">
         <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
