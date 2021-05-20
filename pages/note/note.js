@@ -72,11 +72,10 @@ Page({
 
   //手指松开 
   touchup_plugin: function (e) {
-    var searchType = e.currentTarget.dataset.type;
-    this.setData({
-      searchType: searchType,
-      yysb: "长按语音识别"
-    });
+    // var searchType = e.currentTarget.dataset.type;
+    // this.setData({
+    //   searchType: searchType,
+    // });
     manager.stop(); //结束识别
     wx.showToast({
       title: '正在识别……',

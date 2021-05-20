@@ -1,12 +1,12 @@
 <!--index.wxml-->
 <!-- 切换顶条 -->
-<view wx:if="{{!isPad}}" style="{{selectorStyle}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};" class="page_selector">
+<view wx:if="{{!isPad}}" style="{{selectorStyle}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}}" class="page_selector">
   <view class="page_selector_blank"></view>
-  <view class="page_selector_item" style="{{sel1}};" bindtap="sel1" hover-class="hover">
+  <view class="page_selector_item {{currentPage == 1 ? 'page_selector_item_selected' : ''}}" bindtap="sel1" hover-class="hover">
     <text class="material-icons icon">mode</text>
     <text class="text">笔记</text>
   </view>
-  <view class="page_selector_item" style="{{sel2}};" bindtap="sel2" hover-class="hover">
+  <view class="page_selector_item {{currentPage == 2 ? 'page_selector_item_selected' : ''}}" bindtap="sel2" hover-class="hover">
     <text class="material-icons icon">add_task</text>
     <text class="text">待办</text>
   </view>

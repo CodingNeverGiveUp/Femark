@@ -357,8 +357,6 @@ Page({
     let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 2) {
       this.setData({
-        sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
-        sel2: "",
         currentPage: 1
       })
       tabbar.setData({
@@ -380,8 +378,6 @@ Page({
     let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 1) {
       this.setData({
-        sel1: "",
-        sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         currentPage: 2
       })
       tabbar.setData({
