@@ -77,6 +77,16 @@
 
 <view wx:if="{{currentPage==4?false:true}}" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};{{floatStyle}}"
   class="float_container {{isPad?'h_float':useSidebar?'h_float':''}}">
+  <view class="float_selection" style="{{floatDStyle}}">
+    <view class="float_selection_text" style="{{floatTextStyle}}">
+      <text>速记</text>
+    </view>
+    <view class="float_selection_bg" bindtap="record">
+      <view class="float_selection_color" hover-class="t_hover">
+        <view class="material-icons" style="color:{{primaryColor}};"><text>keyboard_voice</text></view>
+      </view>
+    </view>
+  </view>
   <view class="float_selection" style="{{floatCStyle}}">
     <view class="float_selection_text" style="{{floatTextStyle}}">
       <text>新建待办</text>
@@ -159,8 +169,20 @@
     </view>
   </view>
   <view class="content" wx:if="{{useFingerprint}}">
-    <view class="material-icons" style="color:{{primaryColor}};">fingerprint</view>
+    <view class="material-icons fin" style="color:{{primaryColor}};">fingerprint</view>
     <view class="subtitle">{{fingerprintContent}}</view>
     <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="passwordSwitch">使用密码</view>
+  </view>
+</page-container>
+
+<page-container wx:if="{{true || popupRecordIf}}" show="{{true || popupRecord}}" position="bottom" round="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" duration="300"
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};" bind:afterleave="deleteContainer">
+  <view class="content">
+    <view class="voice_input">
+      <textarea id="voice" value="点击开始录音" auto-height="true">.</textarea>
+    </view>
+    <view class="voice_btn material-icons" style="color:{{primaryColor}};" hover-class="btn_hover">keyboard_voice</view>
+    <view class="content_btn_l" style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};" hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ? 'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
   </view>
 </page-container>

@@ -25,9 +25,12 @@ Component({
     popupPasswordIf: false,
     popCategoryEdit: false,
     popCategoryEditIf: false,
+    popupRecord: false,
+    popupRecordIf: false,
     useFingerprint: false,
     fingerprintContent: "请触摸指纹传感器",
     listData: [],
+    uploadVideo: true,
   },
   methods: {
     // showDialog() {
@@ -333,13 +336,15 @@ Component({
       }, 500);
     },
     record() {
-      if (this.data.currentPage != 3) {
-        this.setData({
-          floatAStyle: "transform: rotate(135deg)",
-          slide: true,
-        })
-      }
-      // this.showDialog();
+      var that = this
+      this.setData({
+        floatAStyle: '',
+        floatBStyle: '',
+        floatCStyle: '',
+        floatDStyle: '',
+        floatSelect: false,
+      })
+      this.popupRecord()
     },
     menuTap() {
       if (this.data.slide) {
@@ -370,6 +375,7 @@ Component({
               floatAStyle: "transform: rotate(135deg)",
               floatBStyle: "bottom:80px;width:165px;",
               floatCStyle: "bottom:150px;width:165px;",
+              floatDStyle: "bottom:220px;width:165px;",
               floatSelect: true
             })
           } else if (this.data.currentPage == 3) {
@@ -381,6 +387,7 @@ Component({
             floatAStyle: '',
             floatBStyle: '',
             floatCStyle: '',
+            floatDStyle: '',
             floatSelect: false,
           })
         }
@@ -435,6 +442,18 @@ Component({
       })
     },
 
+    popupRecord() {
+      this.setData({
+        popCategoryEditIf: false,
+        popupPasswordIf: false,
+        popupRecordIf: true,
+      })
+      setTimeout(() => {
+        this.setData({
+          popupRecord: true,
+        })
+      }, 100)
+    },
     popupPassword(e) {
       this.setData({
         popCategoryEditIf: false,
@@ -474,6 +493,12 @@ Component({
           contentPlaceholderStyle: '',
         })
       }
+    },
+
+    videoSwitch(){
+      this.setData({
+        uploadVideo : this.data.uploadVideo ? false : true,
+      })
     },
 
     passwordSwitch() {
@@ -594,6 +619,7 @@ Component({
         this.setData({
           popCategoryEditIf: false,
           popupPasswordIf: false,
+          popupRecordIf: false,
         })
       }, 100);
     },
