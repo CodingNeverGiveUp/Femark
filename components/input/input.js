@@ -46,7 +46,10 @@ Component({
           confirmColor: this.data.primaryColor
         }).then(res => {
           if (res.confirm) {
-            if (res.content.length <= 8) {
+            let pattern = /^\w{1,8}$/
+            pattern.lastIndex = 0; //巨坑
+            if (pattern.test(res.content)) {
+              pattern.lastIndex = 0; //巨坑
               this.setData({
                 result: res.content
               })
@@ -57,8 +60,9 @@ Component({
               var option = {};
               this.triggerEvent('input', detail, option);
             } else {
+              pattern.lastIndex = 0; //巨坑
               wx.showModal({
-                title: "密码过长，仅允许8位密码",
+                title: "仅允许1-8位数字/字母密码",
                 confirmColor: this.data.primaryColor,
                 confirmText: "重试",
               }).then(res => {

@@ -86,7 +86,7 @@
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" value="{{password}}" data-id="password" wx:if="{{encrypt}}"
           disabled="{{!edit}}">
           <text slot="title">访问密码</text>
-          <text slot="subtitle">点击设置密码</text>
+          <text slot="subtitle">仅支持1-8位数字/字母\n部分设备支持指纹验证</text>
         </md-input>
         <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{useMarkdown}}" data-id="useMarkdown" disabled="{{!edit}}">
