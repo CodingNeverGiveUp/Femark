@@ -36,7 +36,7 @@
             授权小程序使用设备麦克风
           </view>
         </view>
-        <view wx:if="{{true}}" class="material-icons"></view>
+        <view wx:if="{{!enableRecord}}" class="material-icons" style="color:{{primaryColor}}">error_outline</view>
       </view>
     <view class="subtitle sub">
       <text>设置将在点击左上角返回后保存生效</text>

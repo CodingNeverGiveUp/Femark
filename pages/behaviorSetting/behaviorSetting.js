@@ -16,6 +16,7 @@ Page({
     theme: app.globalData.systemInfo.theme,
     edited: false,
     markdownPreviewDelayData: [1, 2, 3, 4, 5, 6],
+    enableRecord: false,
   },
 
   //获取授权
@@ -142,12 +143,6 @@ Page({
         theme: data
       })
     })
-    //拉取设置信息
-    wx.getSetting({
-      withSubscriptions: true,
-    }).then(res=>{
-      console.log(res)
-    })
   },
 
   /**
@@ -161,6 +156,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this
+    //拉取设置信息
+    wx.getSetting({
+      withSubscriptions: true,
+    }).then(res => {
+      console.log(res)
+      if (res.authSetting["scope.record"]) {
+        that.setData({
+          enableRecord: true
+        })
+      } else {
+        that.setData({
+          enableRecord: false
+        })
+      }
+    })
     this.setData({
       primaryColor: app.globalData.primaryColor,
       pureTheme: app.globalData.pureTheme,
