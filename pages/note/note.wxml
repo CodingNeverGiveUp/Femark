@@ -131,8 +131,7 @@
 
 
 
-  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
-    bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscroll="scroll">
     <view class="preview">
       <!-- <view class="subtitle" style="color:{{primaryColor}};">
         <text>预览视窗</text>
