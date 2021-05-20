@@ -88,39 +88,63 @@ Page({
   //ocr
   startOcr() {
     let that = this
-    wx.chooseImage({
-      success: res => {
-        wx.showLoading({
-          title: '正在提取内容',
-        })
-        var filepath = res.tempFilePaths[0]
-        let filebuffer = wx.getFileSystemManager().readFileSync(filepath)
-        // console.log(filebuffer)
-        wx.cloud.callFunction({
-            name: "ocr",
-            data: {
-              buffer: filebuffer
+    if (!this.data.edit) {
+      this.showSnackbar("请先启用编辑")
+    } else {
+      wx.showModal({
+        title: "注意",
+        content: "是否启动图片文字提取（OCR）",
+        confirmColor: that.data.primaryColor,
+      }).then(res => {
+        if (res.confirm) {
+          wx.chooseImage({
+            success: res => {
+              wx.showLoading({
+                title: '正在提取内容',
+              })
+              var filepath = res.tempFilePaths[0]
+              let filebuffer = wx.getFileSystemManager().readFileSync(filepath)
+              // console.log(filebuffer)
+              wx.cloud.callFunction({
+                  name: "ocr",
+                  data: {
+                    buffer: filebuffer
+                  }
+                })
+                .then(res => {
+                  wx.showToast({
+                    title: '已提取文字',
+                  })
+                  console.log(res)
+                  let text = ""
+                  let data = res.result.result.items
+                  data.forEach(element => {
+                    text += element.text + '\n'
+                  })
+                  this.setData({
+                    contentDelta: this.data.contentDelta.ops.concat({
+                      insert: text
+                    })
+                  })
+                  that.editorCtx.setContents({
+                    delta: that.data.contentDelta,
+                  })
+
+                  // that.setData({
+                  //   res
+                  // })
+                }).catch(err => {
+                  wx.showToast({
+                    title: '网络错误',
+                    icon: "error"
+                  })
+                  console.log(err)
+                })
             }
           })
-          .then(res => {
-            wx.showToast({
-              title: '已提取文字',
-            })
-            console.log(res)
-            let data = res.result.result.items
-
-            // that.setData({
-            //   res
-            // })
-          }).catch(err => {
-            wx.showToast({
-              title: '网络错误',
-              icon: "error"
-            })
-            console.log(err)
-          })
-      }
-    })
+        }
+      })
+    }
   },
 
   //转到分享
