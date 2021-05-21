@@ -4,7 +4,8 @@ const app = getApp()
 const recordManager = wx.getRecorderManager();
 let plugin = requirePlugin("QCloudAIVoice");
 plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', true); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
-const speechRecognizerManager = plugin.speechRecognizerManager();
+let speechRecognizerManager = plugin.speechRecognizerManager();
+
 Component({
   properties: {},
   data: {
@@ -102,6 +103,7 @@ Component({
     },
 
     startSpeechRecognize() {
+      // this.speechRecognizerManager = plugin.speechRecognizerManager();
       switch (app.globalData.recordLanguage) {
         case 0:
           var lang = '16k_zh'
@@ -151,6 +153,7 @@ Component({
     },
 
     stopSpeechRecognize() {
+      // this.speechRecognizerManager = plugin.speechRecognizerManager();
       speechRecognizerManager.stop();
     },
 
