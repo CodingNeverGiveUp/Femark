@@ -146,7 +146,7 @@
   </view>
   <view class="list_add_item" hover-class="hover" bindtap="listAddItem">
     <view class="icon material-icons" hover-class="hover"><text>add</text></view>
-    <text>新增清单项</text>
+    <text>新增分类</text>
   </view>
   <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="listCancel">取消</view>
   <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="listConfirm">保存

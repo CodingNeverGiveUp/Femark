@@ -47,7 +47,8 @@ Page({
       useMarkdown,
       newShare,
       md,
-      delta
+      delta,
+      nickName
     })
   },
 
@@ -78,7 +79,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    //重新拉取配置
+    this.setData({
+      primaryColor: app.globalData.primaryColor,
+      rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+    })
   },
 
   /**
@@ -201,12 +206,11 @@ Page({
     let textdr = textd.replace(/=/g, '@@')
     let textdrr = textdr.replace(/&/g, '~~')
     if (useMarkdown) {
-      return{
+      return {
         title: heading == 'null' ? `由${nickName}分享的内容` : heading,
         query: `json=${textmrr}`
       }
-    }
-    else {
+    } else {
       return {
         title: heading == 'null' ? `由${nickName}分享的内容` : heading,
         query: `json=${textdrr}`

@@ -156,6 +156,7 @@ Page({
       shareCardBackgroundColor: this.data.shareCardBackgroundColor,
       useMarkdown: app.globalData.markdownByDefault,
       time: this.data.time,
+      nickName: app.globalData.userInfo.nickName,
       md: this.data.md,
     }
     let elementd = {
@@ -166,6 +167,7 @@ Page({
       shareCardBackgroundColor: this.data.shareCardBackgroundColor,
       useMarkdown: app.globalData.markdownByDefault,
       time: this.data.time,
+      nickName: app.globalData.userInfo.nickName,
       delta: this.data.contentDelta,
     }
     let textm = JSON.stringify(elementm)

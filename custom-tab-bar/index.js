@@ -504,30 +504,30 @@ Component({
     },
 
     //语音识别
-    touchdown_plugin: function () {
-      var _this = this
-      wx.showToast({
-        title: '正在倾听...',
-      })
-      manager.start({ //开始识别
-        duration: 30000, //30s最长时间  最大60s
-        lang: "zh_CN"
-      })
-    },
+    // touchdown_plugin: function () {
+    //   var _this = this
+    //   wx.showToast({
+    //     title: '正在倾听...',
+    //   })
+    //   manager.start({ //开始识别
+    //     duration: 30000, //30s最长时间  最大60s
+    //     lang: "zh_CN"
+    //   })
+    // },
 
-    //手指松开 
-    touchup_plugin: function (e) {
-      var searchType = e.currentTarget.dataset.type;
-      this.setData({
-        searchType: searchType,
-      });
-      manager.stop(); //结束识别
-      wx.showToast({
-        title: '正在识别……',
-        icon: 'loading',
-        duration: 2000
-      })
-    },
+    // //手指松开 
+    // touchup_plugin: function (e) {
+    //   var searchType = e.currentTarget.dataset.type;
+    //   this.setData({
+    //     searchType: searchType,
+    //   });
+    //   manager.stop(); //结束识别
+    //   wx.showToast({
+    //     title: '正在识别……',
+    //     icon: 'loading',
+    //     duration: 2000
+    //   })
+    // },
 
     passwordSwitch() {
       if (this.data.useFingerprint) {
@@ -699,38 +699,38 @@ Component({
     attached: function () {
       var that = this
       //初始化语音识别
-      manager.onRecognize = function (res) { //有新的识别内容返回，则会调用此事件
-        console.log("current result", res.result)
-      }
-      manager.onStop = function (res) { //识别结束事件
-        console.log('识别开始');
-        var result = res.result;
-        console.log(res)
-        // var s = result.indexOf('。') //找到第一次出现下划线的位置
-        // result = result.substring(0, s) //取下划线前的字符
-        var searchType = that.data.searchType;
-        wx.showToast({
-          title: '识别成功',
-        })
+      // manager.onRecognize = function (res) { //有新的识别内容返回，则会调用此事件
+      //   console.log("current result", res.result)
+      // }
+      // manager.onStop = function (res) { //识别结束事件
+      //   console.log('识别开始');
+      //   var result = res.result;
+      //   console.log(res)
+      //   // var s = result.indexOf('。') //找到第一次出现下划线的位置
+      //   // result = result.substring(0, s) //取下划线前的字符
+      //   var searchType = that.data.searchType;
+      //   wx.showToast({
+      //     title: '识别成功',
+      //   })
 
-        //console.log(result)
-        if (result != "") {
-          that.setData({
-            result: result //这里的result才是最终结果
-          })
-        } else {
-          wx.showToast({
-            title: '请说话',
-          })
-        }
-      }
-      manager.onError = function (res) { //识别错误事件
-        console.log('manager.onError')
-        console.log(res) //报错信息打印
-        wx.showToast({
-          title: "识别出现错误",
-        })
-      }
+      //   //console.log(result)
+      //   if (result != "") {
+      //     that.setData({
+      //       result: result //这里的result才是最终结果
+      //     })
+      //   } else {
+      //     wx.showToast({
+      //       title: '请说话',
+      //     })
+      //   }
+      // }
+      // manager.onError = function (res) { //识别错误事件
+      //   console.log('manager.onError')
+      //   console.log(res) //报错信息打印
+      //   wx.showToast({
+      //     title: "识别出现错误",
+      //   })
+      // }
     }
   }
 })
