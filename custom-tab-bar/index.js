@@ -38,7 +38,8 @@ Component({
     fingerprintContent: "请触摸指纹传感器",
     listData: [],
     uploadVideo: app.globalData.saveRecordFileByDefault,
-    isRecording: false,
+    recordStatus: 0, //0日常/1识别/2错误
+    voiceBtnBorder: `border:4px solid ${app.colorRgba(app.globalData.primaryColor, .2)};`,
     recordValue: '单击开始'
   },
   methods: {
@@ -78,18 +79,24 @@ Component({
 
     //语音识别
     recordSwitch() {
-      this.setData({
-        isRecording: this.data.isRecording ? false : true
-      })
-      if (this.data.isRecording) {
+      if(this.data.recordStatus != 1){
+        this.setData({
+          recordStatus: 1,
+        })
+      }else{
+        this.setData({
+          recordStatus: 0,
+        })
+      }
+      if (this.data.recordStatus == 1) {
         this.startSpeechRecognize()
         this.timer = setInterval(() => {
           this.setData({
-            voiceBtnBorder: `10px solid ${this.data.rgbaPrimaryColor};`
+            voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
           })
           setTimeout(() => {
             this.setData({
-              voiceBtnBorder: `4px solid ${this.data.rgbaPrimaryColor};`
+              voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
             })
           }, 200);
         }, 800)
@@ -97,7 +104,7 @@ Component({
         this.stopSpeechRecognize()
         clearInterval(this.timer)
         this.setData({
-          voiceBtnBorder: ""
+          voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
         })
       }
     },
@@ -157,7 +164,7 @@ Component({
       speechRecognizerManager.stop();
     },
 
-    recordConfirm(){
+    recordConfirm() {
       this.setData({
         recordValue: "asdf"
       })
@@ -508,6 +515,7 @@ Component({
             floatAStyle: '',
             floatBStyle: '',
             floatCStyle: '',
+            floatDStyle: '',
             floatSelect: false,
           })
         }
@@ -532,6 +540,7 @@ Component({
             floatAStyle: '',
             floatBStyle: '',
             floatCStyle: '',
+            floatDStyle: '',
             floatSelect: false,
           })
         }
@@ -769,9 +778,9 @@ Component({
       //初始化语音识别
       // 开始识别
       speechRecognizerManager.OnRecognitionStart = (res) => {
-        console.log('开始识别', res);
         this.setData({
-          recordValue: "试着说点什么"
+          recordValue: "试着说点什么",
+          recordStatus: 1,
         })
         recordManager.start()
       }
@@ -793,18 +802,33 @@ Component({
       // 识别结束
       speechRecognizerManager.OnRecognitionComplete = (res) => {
         console.log('识别结束', res);
+        clearInterval(this.timer)
+        this.setData({
+          voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
+          recordStatus: 0,
+        })
         recordManager.stop()
       }
       // 识别错误
       speechRecognizerManager.OnError = (res) => {
         console.log('识别失败', res);
+        clearInterval(this.timer)
+        this.setData({
+          voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
+          recordStatus: 2,
+          recordValue: '识别失败'
+        })
       }
       // 录音超过固定时长（最长10分钟）时回调
       speechRecognizerManager.OnRecorderStop = () => {
         console.log('超过录音时长');
+        this.record({
+          recordStatus: 2,
+          recordStatus: '请重新录音'
+        })
       }
       //取得录音文件
-      recordManager.onStop(res=>{
+      recordManager.onStop(res => {
         let tempFilePath = res.tempFilePath
       })
     }
