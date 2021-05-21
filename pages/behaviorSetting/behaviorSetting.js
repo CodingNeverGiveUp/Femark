@@ -51,12 +51,16 @@ Page({
                 markdownByDefault: this.data.markdownByDefault,
                 markdownPreview: this.data.markdownPreview,
                 markdownPreviewDelay: Number(this.data.markdownPreviewDelay),
+                saveRecordFileByDefault: app.globalData.saveRecordFileByDefault,
+                recordLanguage: app.globalData.recordLanguage,
               }
             }
           }).then(res => {
             app.globalData.markdownByDefault = this.data.markdownByDefault;
             app.globalData.markdownPreview = this.data.markdownPreview;
             app.globalData.markdownPreviewDelay = Number(this.data.markdownPreviewDelay);
+            app.globalData.saveRecordFileByDefault = this.data.saveRecordFileByDefault;
+            app.globalData.recordLanguage = this.data.recordLanguage;
             wx.showToast({
               title: '已保存',
               duration: 1000,
@@ -96,6 +100,10 @@ Page({
       this.setData({
         markdownPreview: e.detail.value
       })
+    } else if (e.currentTarget.dataset.id == "saveRecordFileByDefault") {
+      this.setData({
+        saveRecordFileByDefault: e.detail.value
+      })
     }
   },
 
@@ -106,6 +114,10 @@ Page({
     if (e.currentTarget.dataset.id == "markdownPreviewDelay") {
       this.setData({
         markdownPreviewDelay: e.detail.value
+      })
+    } else if (e.currentTarget.dataset.id == "recordLanguage") {
+      this.setData({
+        recordLanguage: e.detail.valueKey
       })
     }
   },
@@ -161,7 +173,7 @@ Page({
     wx.getSetting({
       withSubscriptions: true,
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       if (res.authSetting["scope.record"]) {
         that.setData({
           enableRecord: true
@@ -180,6 +192,8 @@ Page({
       markdownByDefault: app.globalData.markdownByDefault,
       markdownPreview: app.globalData.markdownPreview,
       markdownPreviewDelay: app.globalData.markdownPreviewDelay,
+      saveRecordFileByDefault: app.globalData.saveRecordFileByDefault,
+      recordLanguage: app.globalData.recordLanguage,
     })
     this.selectAllComponents('.switch').forEach(element => {
       element.refreshStatus()
@@ -210,12 +224,17 @@ Page({
                 markdownByDefault: this.data.markdownByDefault,
                 markdownPreview: this.data.markdownPreview,
                 markdownPreviewDelay: Number(this.data.markdownPreviewDelay),
+                saveRecordFileByDefault: this.data.saveRecordFileByDefault,
+                recordLanguage: this.data.recordLanguage,
               }
             }
           }).then(res => {
             app.globalData.markdownByDefault = this.data.markdownByDefault;
             app.globalData.markdownPreview = this.data.markdownPreview;
             app.globalData.markdownPreviewDelay = Number(this.data.markdownPreviewDelay);
+            app.globalData.saveRecordFileByDefault = this.data.saveRecordFileByDefault;
+            app.globalData.recordLanguage = this.data.recordLanguage;
+
             wx.showToast({
               title: '已保存',
               duration: 1000,

@@ -200,7 +200,7 @@ App({
             _openid: that.globalData.openid
           }).get()
           .then(res => {
-            console.log(res)
+            // console.log(res)
             if (res.data.length == 0) {
               event.emit('LoginCheck', 'register');
             } else {
@@ -208,10 +208,16 @@ App({
               db = res
             }
           }).catch(err=>{
+            console.log(err)
             reject()
             event.emit('LoginCheck', 'error');
           })
         //拉取及预处理笔记待办数据
+        if(db == null){
+          console.log("new Account")
+          reject()
+          return
+        }
         for (let i = 0; i < db.data[0].note.length; i++) {
           db.data[0].note[i].color = that.getRandomColor()
           db.data[0].note[i].id = i
@@ -292,6 +298,8 @@ App({
         that.globalData.markdownByDefault = db.data[0].profile.markdownByDefault;
         that.globalData.markdownPreview = db.data[0].profile.markdownPreview;
         that.globalData.markdownPreviewDelay = db.data[0].profile.markdownPreviewDelay;
+        that.globalData.recordLanguage = db.data[0].profile.recordLanguage;
+        that.globalData.saveRecordFileByDefault = db.data[0].profile.saveRecordFileByDefault;
         that.globalData.pureTheme = db.data[0].profile.pureTheme;
         that.globalData.userInfo.nickName = db.data[0].profile.nickName;
         that.globalData.userInfo.avatarUrl = db.data[0].profile.avatarUrl;
@@ -398,6 +406,8 @@ App({
         that.globalData.markdownByDefault = db.data.profile.markdownByDefault;
         that.globalData.markdownPreview = db.data.profile.markdownPreview;
         that.globalData.markdownPreviewDelay = db.data.profile.markdownPreviewDelay;
+        that.globalData.saveRecordFileByDefault = db.data.profile.saveRecordFileByDefault;
+        that.globalData.recordLanguage = db.data.profile.recordLanguage;
         that.globalData.pureTheme = db.data.profile.pureTheme;
         that.globalData.userInfo.nickName = db.data.profile.nickName;
         that.globalData.userInfo.avatarUrl = db.data.profile.avatarUrl;

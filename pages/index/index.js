@@ -120,6 +120,7 @@ Page({
       useSidebar: app.globalData.useSidebar,
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      uploadVideo: app.globalData.saveRecordFileByDefault,
     })
     if (wx.getUserProfile) {
       this.setData({

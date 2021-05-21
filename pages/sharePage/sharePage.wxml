@@ -22,7 +22,7 @@
 </view>
 <view style="margin: 30px 50rpx;" class="{{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':'text'}}">
   <text>由用户 <text class="{{shareCardTheme==1?'main_light':shareCardTheme==2?'main_dark':'main'}}">{{nickName}}</text> 创建的分享\n
-    开始使用<text class="{{shareCardTheme==1?'main_light':shareCardTheme==2?'main_dark':'main'}}">Femark</text>，记下身边的故事与风景
+    开始使用 <text class="{{shareCardTheme==1?'main_light':shareCardTheme==2?'main_dark':'main'}}">Femark</text>，记下身边的故事与风景
   </text>
 </view>
 

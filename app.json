@@ -43,6 +43,10 @@
     "WechatSI": {
       "version": "0.3.4",
       "provider": "wx069ba97219f66d99"
+    },
+    "QCloudAIVoice": {
+      "version": "1.3.0", 
+      "provider": "wx3e17776051baf153"
     }
   },
   "usingComponents": {

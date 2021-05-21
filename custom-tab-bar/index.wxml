@@ -182,7 +182,11 @@
     <view class="voice_input">
       <textarea id="voice" value="点击开始" auto-height="true"></textarea>
     </view>
-    <view class="voice_btn material-icons" style="color:{{primaryColor}};" hover-class="btn_hover" bindtouchstart="touchdown_plugin" bindtouchend="touchup_plugin">keyboard_voice</view>
+    <view class="voice_btn_container">
+      <view class="voice_btn_border" style="border:{{voiceBtnBorder}};">
+        <view class="voice_btn material-icons {{isRecording ? 'voice_btn_activated' : 'voice_btn_inactivated'}}" bindtap="recordSwitch">{{isRecording ? 'mic':'mic_none'}}</view>
+      </view>
+    </view>
     <view class="content_btn_l" style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};" hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ? 'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
     <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="">确认
     </view>

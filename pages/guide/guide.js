@@ -26,6 +26,8 @@ Page({
       markdownByDefault: false,
       markdownPreview: true,
       markdownPreviewDelay: 2,
+      saveRecordFileByDefault: true,
+      recordLanguage: 0,
     },
   },
 
@@ -90,7 +92,8 @@ Page({
             float: "bottom:20vh;right:50vw;transform:translate(50%,50%)"
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           wx.hideLoading()
           wx.showToast({
             title: '网络错误',

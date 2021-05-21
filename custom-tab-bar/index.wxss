@@ -200,7 +200,7 @@
   height: 100px;
   width: 100%;
   padding: 0 50rpx;
-  margin: 20px 0;
+  margin: 0 0 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -215,6 +215,21 @@
   text-align: center;
 }
 
+.voice_btn_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 50px;
+}
+
+.voice_btn_border{
+  transition: border .1s ease-in-out;
+  border-radius: 100%;
+  border-width: 0;
+}
+
 .voice_btn{
   width: 80px;
   height: 80px;
@@ -222,9 +237,18 @@
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  transition: background .2s ease-in-out, border .2s ease-in-out;
-  border: var(--rgbaprimaryColor--) solid 5px;
+  transition: background .2s ease-in-out, border .1s ease-in-out;
   font-size: 3rem;
+}
+
+.voice_btn_activated{
+  color: #fff;
+  background: var(--primaryColor--);
+}
+
+.voice_btn_inactivated{
+  color: var(--primaryColor--);  
+  background: rgba(0,0,0,0);
 }
 
 .btn_hover{
