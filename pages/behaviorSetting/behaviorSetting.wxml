@@ -39,7 +39,7 @@
       <view class="material-icons" style="color:{{primaryColor}}">{{enableRecord? 'check_circle_outline':'error_outline'}}</view>
     </view>
     <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
-        dataset="{{['中文-中国','English','粤语','한국어','中文-臺灣']}}" selected='{{recordLanguage}}'
+        dataset="{{['中文-中国','English','粤语','한국어','中文-臺灣','日本語']}}" selected='{{recordLanguage}}'
         data-id="recordLanguage">
         <text slot="title">语言</text>
         <text slot="subtitle">语音识别使用的语言</text>

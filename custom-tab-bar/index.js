@@ -1,6 +1,7 @@
 const app = getApp()
 // var plugin = requirePlugin("WechatSI")
 // const manager = plugin.getRecordRecognitionManager()
+const recordManager = wx.getRecorderManager();
 let plugin = requirePlugin("QCloudAIVoice");
 plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', true); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
 const speechRecognizerManager = plugin.speechRecognizerManager();
@@ -37,6 +38,7 @@ Component({
     listData: [],
     uploadVideo: app.globalData.saveRecordFileByDefault,
     isRecording: false,
+    recordValue: '单击开始'
   },
   methods: {
     // showDialog() {
@@ -79,6 +81,7 @@ Component({
         isRecording: this.data.isRecording ? false : true
       })
       if (this.data.isRecording) {
+        this.startSpeechRecognize()
         this.timer = setInterval(() => {
           this.setData({
             voiceBtnBorder: `10px solid ${this.data.rgbaPrimaryColor};`
@@ -90,6 +93,7 @@ Component({
           }, 200);
         }, 800)
       } else {
+        this.stopSpeechRecognize()
         clearInterval(this.timer)
         this.setData({
           voiceBtnBorder: ""
@@ -98,6 +102,29 @@ Component({
     },
 
     startSpeechRecognize() {
+      switch (app.globalData.recordLanguage) {
+        case 0:
+          var lang = '16k_zh'
+          break;
+        case 1:
+          var lang = '16k_en'
+          break;
+        case 2:
+          var lang = '16k_ca'
+          break;
+        case 3:
+          var lang = '16k_ko'
+          break;
+        case 4:
+          var lang = '16k_zh-TW'
+          break;
+        case 5:
+          var lang = '16k_ja'
+          break;
+        default:
+          var lang = '16k_zh'
+          break;
+      }
       const params = {
         signCallback: null, // 鉴权函数
         // 用户参数
@@ -109,7 +136,7 @@ Component({
         frameSize: 0.32, //单位:k
 
         // 实时识别接口参数
-        engine_model_type: '16k_zh',
+        engine_model_type: lang,
         // 以下为非必填参数，可跟据业务自行修改
         // hotword_id : '08003a00000000000000000000000000',
         // needvad: 0,
@@ -125,6 +152,12 @@ Component({
 
     stopSpeechRecognize() {
       speechRecognizerManager.stop();
+    },
+
+    recordConfirm(){
+      this.setData({
+        recordValue: "asdf"
+      })
     },
 
     initializeListData() {
@@ -734,6 +767,10 @@ Component({
       // 开始识别
       speechRecognizerManager.OnRecognitionStart = (res) => {
         console.log('开始识别', res);
+        this.setData({
+          recordValue: "试着说点什么"
+        })
+        recordManager.start()
       }
       // 一句话开始
       speechRecognizerManager.OnSentenceBegin = (res) => {
@@ -742,6 +779,9 @@ Component({
       // 识别变化时
       speechRecognizerManager.OnRecognitionResultChange = (res) => {
         console.log('识别变化时', res)
+        this.setData({
+          recordValue: res.voice_text_str
+        })
       }
       // 一句话结束
       speechRecognizerManager.OnSentenceEnd = (res) => {
@@ -750,6 +790,7 @@ Component({
       // 识别结束
       speechRecognizerManager.OnRecognitionComplete = (res) => {
         console.log('识别结束', res);
+        recordManager.stop()
       }
       // 识别错误
       speechRecognizerManager.OnError = (res) => {
@@ -759,6 +800,10 @@ Component({
       speechRecognizerManager.OnRecorderStop = () => {
         console.log('超过录音时长');
       }
+      //取得录音文件
+      recordManager.onStop(res=>{
+        let tempFilePath = res.tempFilePath
+      })
     }
   }
 })

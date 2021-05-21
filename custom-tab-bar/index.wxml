@@ -175,12 +175,12 @@
   </view>
 </page-container>
 
-<page-container wx:if="{{true || popupRecordIf}}" show="{{true || popupRecord}}" position="bottom" round="true"
+<page-container wx:if="{{popupRecordIf}}" show="{{popupRecord}}" position="bottom" round="true"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" duration="300"
   customStyle="max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};" bind:afterleave="deleteContainer">
   <view class="content">
     <view class="voice_input">
-      <textarea id="voice" value="点击开始" auto-height="true"></textarea>
+      <textarea id="voice" value="{{recordValue}}" auto-height="true"></textarea>
     </view>
     <view class="voice_btn_container">
       <view class="voice_btn_border" style="border:{{voiceBtnBorder}};">
@@ -188,7 +188,7 @@
       </view>
     </view>
     <view class="content_btn_l" style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};" hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ? 'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
-    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="">确认
+    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="recordConfirm">确认
     </view>
   </view>
 </page-container>
