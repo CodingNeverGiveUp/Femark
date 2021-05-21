@@ -40,7 +40,8 @@ Component({
     uploadVideo: app.globalData.saveRecordFileByDefault,
     recordStatus: 0, //0日常/1识别/2错误
     voiceBtnBorder: `border:4px solid ${app.colorRgba(app.globalData.primaryColor, .2)};`,
-    recordValue: '单击开始'
+    recordValue: '单击开始',
+    voiceInput: false,
   },
   methods: {
     // showDialog() {
@@ -78,17 +79,26 @@ Component({
     // },
 
     //语音识别
+    voiceFocus() {
+      this.setData({
+        voiceInput: true
+      })
+    },
+
+    voiceBlur() {
+      this.setData({
+        voiceInput: false
+      })
+    },
+
+    voiceInput(e) {
+      this.setData({
+        recordValue: e.detail.value
+      })
+    },
+
     recordSwitch() {
-      if(this.data.recordStatus != 1){
-        this.setData({
-          recordStatus: 1,
-        })
-      }else{
-        this.setData({
-          recordStatus: 0,
-        })
-      }
-      if (this.data.recordStatus == 1) {
+      if (this.data.recordStatus != 1) {
         this.startSpeechRecognize()
         this.timer = setInterval(() => {
           this.setData({
@@ -165,9 +175,17 @@ Component({
     },
 
     recordConfirm() {
-      this.setData({
-        recordValue: "asdf"
-      })
+      var that = this
+      let content = this.data.recordValue
+      if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败') {
+        wx.showModal({
+          title: "是否创建笔记？"
+        }).then(res => {
+          if(res.confirm){
+            
+          }
+        })
+      }
     },
 
     initializeListData() {
@@ -792,7 +810,7 @@ Component({
       speechRecognizerManager.OnRecognitionResultChange = (res) => {
         console.log('识别变化时', res)
         this.setData({
-          recordValue: res.voice_text_str
+          recordValue: res.voice_text_str == '' ? '请提高音量' : res.voice_text_str
         })
       }
       // 一句话结束
@@ -803,6 +821,11 @@ Component({
       speechRecognizerManager.OnRecognitionComplete = (res) => {
         console.log('识别结束', res);
         clearInterval(this.timer)
+        if (this.data.recordValue == '请提高音量') {
+          this.setData({
+            recordValue: '单击开始'
+          })
+        }
         this.setData({
           voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
           recordStatus: 0,
@@ -811,19 +834,21 @@ Component({
       }
       // 识别错误
       speechRecognizerManager.OnError = (res) => {
-        console.log('识别失败', res);
+        console.log(res);
         clearInterval(this.timer)
-        this.setData({
-          voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
-          recordStatus: 2,
-          recordValue: '识别失败'
-        })
+        if (this.data.recordStatus != 0) {
+          this.setData({
+            voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
+            recordStatus: 2,
+            recordValue: '识别失败'
+          })
+        }
       }
       // 录音超过固定时长（最长10分钟）时回调
       speechRecognizerManager.OnRecorderStop = () => {
         console.log('超过录音时长');
         this.record({
-          recordStatus: 2,
+          recordStatus: 0,
           recordStatus: '请重新录音'
         })
       }

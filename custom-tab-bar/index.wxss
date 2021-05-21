@@ -185,9 +185,16 @@
   bottom: 10px;
   right: 20px;
   color: #fff;
-  transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out, background .2s ease-in-out;
   border-radius: 5px;
+  background: var(--primaryColor--);
 }
+
+.content_btn_r_disabled{
+  background: #e0e0e0;
+  color: #666;
+}
+
 
 /* .item>view {
   display: flex;

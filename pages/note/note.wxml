@@ -292,7 +292,7 @@
   <view class="icon material-icons" hover-class="hover" bindtap="attach">
     <text>attachment</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" hover-class="hover" bindtap="popupRecord">
     <text>keyboard_voice</text>
   </view>
   <view class="icon material-icons" hover-class="hover" bindtap="startOcr">
@@ -509,3 +509,21 @@
   id="cardColor" />
 <color-picker bindchangeColor="pickColor" initColor="{{shareCardBackgroundColor}}"
   show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />
+
+  <page-container wx:if="{{popupRecordIf}}" show="{{popupRecord}}" position="bottom" round="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" duration="300"
+  customStyle="max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};" bind:afterleave="deleteContainer">
+  <view class="voice_content">
+    <view class="voice_input">
+      <textarea id="voice" value="{{recordValue}}" auto-height="true"></textarea>
+    </view>
+    <view class="voice_btn_container">
+      <view class="voice_btn_border" style="{{voiceBtnBorder}}">
+        <view class="voice_btn material-icons {{recordStatus == 1 ? 'voice_btn_activated' : recordStatus == 2 ? 'voice_btn_error':'voice_btn_inactivated'}}" bindtap="recordSwitch">{{recordStatus==1 ? 'mic': recordStatus==2?'priority_high':'mic_none'}}</view>
+      </view>
+    </view>
+    <view class="content_btn_l" style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};" hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ? 'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
+    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="recordConfirm">确认
+    </view>
+  </view>
+</page-container>

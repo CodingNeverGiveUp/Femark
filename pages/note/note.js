@@ -5,8 +5,12 @@ const database = require("../../utils/database.js")
 const event = require("../../utils/event.js")
 const time = require("../../utils/util.js")
 const _ = wx.cloud.database().command
-var plugin = requirePlugin("WechatSI")
-const manager = plugin.getRecordRecognitionManager()
+// var plugin = requirePlugin("WechatSI")
+// const manager = plugin.getRecordRecognitionManager()
+const recordManager = wx.getRecorderManager();
+let plugin = requirePlugin("QCloudAIVoice");
+plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', true); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
+let speechRecognizerManager = plugin.speechRecognizerManager();
 Page({
 
   /**
@@ -56,33 +60,139 @@ Page({
     isIOS: false,
     editorCtx: null,
     toolbarActivated: null,
+    //语音识别
+    recordStatus: 0, //0日常/1识别/2错误
+    voiceBtnBorder: `border:4px solid ${app.colorRgba(app.globalData.primaryColor, .2)};`,
+    recordValue: '单击开始'
   },
 
   //语音识别
-  touchdown_plugin: function () {
-    var _this = this
-    wx.showToast({
-      title: '正在倾听...',
+
+  //语音识别
+  popupRecord() {
+    this.setData({
+      popupRecordIf: true,
     })
-    manager.start({ //开始识别
-      duration: 30000, //30s最长时间  最大60s
-      lang: "zh_CN"
+    setTimeout(() => {
+      this.setData({
+        popupRecord: true,
+      })
+    }, 100)
+  },
+  deleteContainer() {
+    setTimeout(() => {
+      this.setData({
+        popupRecordIf: false,
+      })
+    }, 100);
+  },
+  recordSwitch() {
+    if (this.data.recordStatus != 1) {
+      this.startSpeechRecognize()
+      this.timer = setInterval(() => {
+        this.setData({
+          voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
+        })
+        setTimeout(() => {
+          this.setData({
+            voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
+          })
+        }, 200);
+      }, 800)
+    } else {
+      this.stopSpeechRecognize()
+      clearInterval(this.timer)
+      this.setData({
+        voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
+      })
+    }
+  },
+
+  startSpeechRecognize() {
+    this.speechRecognizerManager = plugin.speechRecognizerManager();
+    switch (app.globalData.recordLanguage) {
+      case 0:
+        var lang = '16k_zh'
+        break;
+      case 1:
+        var lang = '16k_en'
+        break;
+      case 2:
+        var lang = '16k_ca'
+        break;
+      case 3:
+        var lang = '16k_ko'
+        break;
+      case 4:
+        var lang = '16k_zh-TW'
+        break;
+      case 5:
+        var lang = '16k_ja'
+        break;
+      default:
+        var lang = '16k_zh'
+        break;
+    }
+    const params = {
+      signCallback: null, // 鉴权函数
+      // 用户参数
+      secretkey: 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU',
+      secretid: 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ',
+      appid: '1305453934',
+      // 录音参数
+      duration: 10000,
+      frameSize: 0.32, //单位:k
+
+      // 实时识别接口参数
+      engine_model_type: lang,
+      // 以下为非必填参数，可跟据业务自行修改
+      // hotword_id : '08003a00000000000000000000000000',
+      // needvad: 0,
+      filter_dirty: 2,
+      filter_modal: 2,
+      filter_punc: 0,
+      convert_num_mode: 1,
+      // word_info: 2,
+      // vad_silence_time: 200
+    };
+    this.speechRecognizerManager.start(params);
+  },
+
+  stopSpeechRecognize() {
+    this.speechRecognizerManager = plugin.speechRecognizerManager();
+    this.speechRecognizerManager.stop();
+  },
+
+  recordConfirm() {
+    this.setData({
+      recordValue: "asdf"
     })
   },
 
-  //手指松开 
-  touchup_plugin: function (e) {
-    // var searchType = e.currentTarget.dataset.type;
-    // this.setData({
-    //   searchType: searchType,
-    // });
-    manager.stop(); //结束识别
-    wx.showToast({
-      title: '正在识别……',
-      icon: 'loading',
-      duration: 2000
-    })
-  },
+  // touchdown_plugin: function () {
+  //   var _this = this
+  //   wx.showToast({
+  //     title: '正在倾听...',
+  //   })
+  //   manager.start({ //开始识别
+  //     duration: 30000, //30s最长时间  最大60s
+  //     lang: "zh_CN"
+  //   })
+  // },
+
+  // //手指松开 
+  // touchup_plugin: function (e) {
+  //   // var searchType = e.currentTarget.dataset.type;
+  //   // this.setData({
+  //   //   searchType: searchType,
+  //   // });
+  //   manager.stop(); //结束识别
+  //   wx.showToast({
+  //     title: '正在识别……',
+  //     icon: 'loading',
+  //     duration: 2000
+  //   })
+  // },
 
   //ocr
   startOcr() {
@@ -1701,38 +1811,96 @@ Page({
 
     })
     //初始化语音识别
-    manager.onRecognize = function (res) { //有新的识别内容返回，则会调用此事件
-      console.log("current result", res.result)
-    }
-    manager.onStop = function (res) { //识别结束事件
-      console.log('识别开始');
-      var result = res.result;
-      console.log(res)
-      // var s = result.indexOf('。') //找到第一次出现下划线的位置
-      // result = result.substring(0, s) //取下划线前的字符
-      var searchType = that.data.searchType;
-      wx.showToast({
-        title: '识别成功',
-      })
+    // manager.onRecognize = function (res) { //有新的识别内容返回，则会调用此事件
+    //   console.log("current result", res.result)
+    // }
+    // manager.onStop = function (res) { //识别结束事件
+    //   console.log('识别开始');
+    //   var result = res.result;
+    //   console.log(res)
+    //   // var s = result.indexOf('。') //找到第一次出现下划线的位置
+    //   // result = result.substring(0, s) //取下划线前的字符
+    //   var searchType = that.data.searchType;
+    //   wx.showToast({
+    //     title: '识别成功',
+    //   })
 
-      //console.log(result)
-      if (result != "") {
-        that.setData({
-          result: result //这里的result才是最终结果
-        })
-      } else {
-        wx.showToast({
-          title: '请说话',
-        })
-      }
+    //   //console.log(result)
+    //   if (result != "") {
+    //     that.setData({
+    //       result: result //这里的result才是最终结果
+    //     })
+    //   } else {
+    //     wx.showToast({
+    //       title: '请说话',
+    //     })
+    //   }
+    // }
+    // manager.onError = function (res) { //识别错误事件
+    //   console.log('manager.onError')
+    //   console.log(res) //报错信息打印
+    //   wx.showToast({
+    //     title: "识别出现错误",
+    //   })
+    // }
+
+
+    //初始化语音识别
+    // 开始识别
+    speechRecognizerManager.OnRecognitionStart = (res) => {
+      this.setData({
+        recordValue: "试着说点什么",
+        recordStatus: 1,
+      })
+      recordManager.start()
     }
-    manager.onError = function (res) { //识别错误事件
-      console.log('manager.onError')
-      console.log(res) //报错信息打印
-      wx.showToast({
-        title: "识别出现错误",
+    // 一句话开始
+    speechRecognizerManager.OnSentenceBegin = (res) => {
+      console.log('一句话开始', res)
+    }
+    // 识别变化时
+    speechRecognizerManager.OnRecognitionResultChange = (res) => {
+      console.log('识别变化时', res)
+      this.setData({
+        recordValue: res.voice_text_str
       })
     }
+    // 一句话结束
+    speechRecognizerManager.OnSentenceEnd = (res) => {
+      console.log('一句话结束', res)
+    }
+    // 识别结束
+    speechRecognizerManager.OnRecognitionComplete = (res) => {
+      console.log('识别结束', res);
+      clearInterval(this.timer)
+      this.setData({
+        voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
+        recordStatus: 0,
+      })
+      recordManager.stop()
+    }
+    // 识别错误
+    speechRecognizerManager.OnError = (res) => {
+      console.log('识别失败', res);
+      clearInterval(this.timer)
+      this.setData({
+        voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
+        recordStatus: 2,
+        recordValue: '识别失败'
+      })
+    }
+    // 录音超过固定时长（最长10分钟）时回调
+    speechRecognizerManager.OnRecorderStop = () => {
+      console.log('超过录音时长');
+      this.record({
+        recordStatus: 2,
+        recordStatus: '请重新录音'
+      })
+    }
+    //取得录音文件
+    recordManager.onStop(res => {
+      let tempFilePath = res.tempFilePath
+    })
   },
 
   /**
