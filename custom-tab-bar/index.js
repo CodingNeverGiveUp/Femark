@@ -1,4 +1,5 @@
 const app = getApp()
+const database = require("../utils/database.js")
 // var plugin = requirePlugin("WechatSI")
 // const manager = plugin.getRecordRecognitionManager()
 const recordManager = wx.getRecorderManager();
@@ -181,8 +182,56 @@ Component({
         wx.showModal({
           title: "是否创建笔记？"
         }).then(res => {
-          if(res.confirm){
-            
+          if (res.confirm) {
+            wx.showLoading({
+              title: '操作进行中',
+              mask: true
+            })
+            async function process() {
+              try {
+                var voices = []
+                if (that.data.uploadVideo && that.data.uploadVideoDetail) {
+                  voices = [{
+                    tempFilePath: that.data.uploadVideoDetail.tempFilePath,
+                    duration: that.data.uploadVideoDetail.duration,
+                    name: 'Record_' + new Date().getTime()
+                  }]
+                  await database.uploadVoice(voices)
+                }
+                let delta = {
+                  ops: [{
+                    insert: content + '\n'
+                  }]
+                }
+                let object = {
+                  heading: null,
+                  content,
+                  contentDelta: delta,
+                  gallery: [],
+                  files: [],
+                  voices: voices,
+                  category: 0,
+                  encrypt: false,
+                  password: '',
+                  useMarkdown: false,
+                  timestamp: new Date().getTime(),
+                  imgTimestamps: []
+                }
+                await database.addNote(object)
+                wx.showToast({
+                  title: '已保存更改',
+                })
+                that.setData({
+                  popupRecord: false
+                })
+                setTimeout(() => {
+                  that.deleteContainer()
+                }, 100);
+              } catch (e) {
+                console.log(e)
+              }
+            }
+            process()
           }
         })
       }
@@ -854,7 +903,9 @@ Component({
       }
       //取得录音文件
       recordManager.onStop(res => {
-        let tempFilePath = res.tempFilePath
+        this.setData({
+          uploadVideoDetail: res
+        })
       })
     }
   }
