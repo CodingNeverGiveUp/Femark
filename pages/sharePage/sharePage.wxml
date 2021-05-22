@@ -6,7 +6,7 @@
   <view>
     <view
       class=" {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':'preview_container_heading'}}">
-      {{heading != 'null'?heading:'标题'}}</view>
+      {{heading != null?heading:'标题'}}</view>
     <view
       class=" {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':'preview_container_time'}}">
       {{time}}</view>

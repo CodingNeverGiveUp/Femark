@@ -44,18 +44,18 @@
           <view class="file" wx:for="{{tempVoices}}" wx:key="index" hover-class="hover" catchtap="tempVoiceAction"
             data-index="{{index}}">
             <view class="material-icons" style="color:{{primaryColor}};" catchtap="previewTempVoice" data-index="{{index}}">
-             {{playingTime == null?'play_arrow':'pause'}}</view>
-            <view wx:if="{{playingTime == null}}" class="filename">{{item.name}}</view>
-            <view wx:else class="filename">{{playingTime}}</view>
+             {{item.playingTime == null?'play_arrow':'pause'}}</view>
+            <view wx:if="{{item.playingTime == null}}" class="filename">{{item.name}}</view>
+            <view wx:else class="filename">{{item.playingTime}}</view>
           </view>
         </view>
         <view class="files">
           <view class="file" wx:for="{{voices}}" wx:key="index" hover-class="hover" catchtap="voiceAction"
             data-index="{{index}}">
             <view class="material-icons" style="color:{{primaryColor}};" catchtap="previewVoice" data-index="{{index}}">
-             {{playingTime == null?'play_arrow':'pause'}}</view>
-            <view wx:if="{{playingTime == null}}" class="filename">{{item.name}}</view>
-            <view wx:else class="filename">{{playingTime}}</view>
+             {{item.playingTime == null?'play_arrow':'pause'}}</view>
+            <view wx:if="{{item.playingTime == null}}" class="filename">{{item.name}}</view>
+            <view wx:else class="filename">{{item.playingTime}}</view>
           </view>
         </view>
       </view>
@@ -310,7 +310,7 @@
   <view class="icon material-icons" hover-class="hover" bindtap="attach">
     <text>attachment</text>
   </view>
-  <view class="icon material-icons" hover-class="hover" bindtap="voiceAction">
+  <view class="icon material-icons" hover-class="hover" bindtap="voiAction">
     <text>keyboard_voice</text>
   </view>
   <view class="icon material-icons" hover-class="hover" bindtap="startOcr">

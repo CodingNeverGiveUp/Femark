@@ -77,7 +77,6 @@ Page({
     recordBtnBorder: `border:4px solid ${app.colorRgba(app.globalData.primaryColor, .2)};
     `,
     uploadVoice: false,
-    playingTime: null,
     //计时器
     hours: '0' + 0, // 时
     minute: '0' + 0, // 分
@@ -202,6 +201,9 @@ Page({
   previewVoice(e) {
     console.log(e)
     let index = e.currentTarget.dataset.index
+    this.setData({
+      playingIndex: index
+    })
     if (innerAudioContext.paused) {
       innerAudioContext.src = this.data.voices[index].fileID
       innerAudioContext.play()
@@ -261,6 +263,9 @@ Page({
   previewTempVoice(e) {
     console.log(e)
     let index = e.currentTarget.dataset.index
+    this.setData({
+      tempPlayingIndex: index
+    })
     if (innerAudioContext.paused) {
       innerAudioContext.src = this.data.tempVoices[index].tempFilePath
       innerAudioContext.play()
@@ -270,16 +275,20 @@ Page({
   },
 
 
-  voiceAction() {
-    wx.showActionSheet({
-      itemList: ['语音识别', '录音'],
-    }).then(res => {
-      if (res.tapIndex == 0) {
-        this.popupRecord()
-      } else if (res.tapIndex == 1) {
-        this.popupVoice()
-      }
-    })
+  voiAction() {
+    if (!this.data.edit) {
+      this.showSnackbar("请先启用编辑")
+    } else {
+      wx.showActionSheet({
+        itemList: ['语音识别', '录音'],
+      }).then(res => {
+        if (res.tapIndex == 0) {
+          this.popupRecord()
+        } else if (res.tapIndex == 1) {
+          this.popupVoice()
+        }
+      })
+    }
   },
   //计时器
   setTimer: function () {
@@ -680,6 +689,8 @@ Page({
         }).then(res => {
           wx.hideToast()
           this.showSnackbar('已复制内容到剪贴板')
+        }).catch(err => {
+          this.showSnackbar('内容为空')
         })
       }
     })
@@ -2398,13 +2409,32 @@ Page({
     })
     //初始化录音播放
     innerAudioContext.onEnded(res => {
+      if (this.data.playingIndex != null) {
+        this.setData({
+          [`voices[${Number(this.data.playingIndex)}].playingTime`]: null,
+        })
+      } else if (this.data.tempPlayingIndex != null) {
+        this.setData({
+          [`tempVoices[${Number(this.data.tempPlayingIndex)}].playingTime`]: null
+        })
+      }
+      this.setData({
+        playingIndex: null,
+        tempPlayingIndex: null,
+      })
       innerAudioContext.stop()
     })
 
     innerAudioContext.onPause(res => {
-      this.setData({
-        playingTime: null
-      })
+      if (this.data.playingIndex != null) {
+        this.setData({
+          [`voices[${Number(this.data.playingIndex)}].playingTime`]: null
+        })
+      } else if (this.data.tempPlayingIndex != null) {
+        this.setData({
+          [`tempVoices[${Number(this.data.tempPlayingIndex)}].playingTime`]: null
+        })
+      }
     })
 
     innerAudioContext.onTimeUpdate(res => {
@@ -2413,9 +2443,17 @@ Page({
           return `0${num}`
         }
       }
-      this.setData({
-        playingTime: `${Zero(Math.floor(innerAudioContext.currentTime / 60))}:${Zero(Math.floor(innerAudioContext.currentTime % 60))}/${Zero(Math.floor(innerAudioContext.duration / 60))}:${Zero(Math.floor(innerAudioContext.duration % 60))}`
-      })
+      if (this.data.playingIndex != null) {
+        console.log("playingMain")
+        this.setData({
+          [`voices[${Number(this.data.playingIndex)}].playingTime`]: `${Zero(Math.floor(innerAudioContext.currentTime / 60))}:${Zero(Math.floor(innerAudioContext.currentTime % 60))}/${Zero(Math.floor(innerAudioContext.duration / 60))}:${Zero(Math.floor(innerAudioContext.duration % 60))}`
+        })
+      } else if (this.data.tempPlayingIndex != null) {
+        console.log("playingTemp")
+        this.setData({
+          [`tempVoices[${Number(this.data.tempPlayingIndex)}].playingTime`]: `${Zero(Math.floor(innerAudioContext.currentTime / 60))}:${Zero(Math.floor(innerAudioContext.currentTime % 60))}/${Zero(Math.floor(innerAudioContext.duration / 60))}:${Zero(Math.floor(innerAudioContext.duration % 60))}`
+        })
+      }
     })
   },
 
