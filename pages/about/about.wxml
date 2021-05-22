@@ -1,10 +1,10 @@
 <!--pages/about/about.wxml-->
-<scroll-view class="scroll" scroll-y="true" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
+<scroll-view class="scroll" scroll-y="true" enhanced="true" 
   bindscroll="scroll" enable-flex="true">
   <view class="main" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
     <view class="version">
       <image src="{{theme=='dark'?'/source/img/icon_gray.png':'/source/img/icon_white.png'}}"></image>
-      <text>Femark 1.7.5_210521</text>
+      <text>Femark 1.8.0_210523</text>
     </view>
     <view class="subtitle" style="color:{{primaryColor}};">
       <text>帮助</text>

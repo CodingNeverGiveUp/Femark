@@ -1,5 +1,5 @@
 <!--pages/themeSetting/themeSetting.wxml-->
-<scroll-view class="scroll" scroll-y="true" enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20"
+<scroll-view class="scroll" scroll-y="true" enhanced="true"
   bindscroll="scroll" enable-flex="true">
   <view class="main" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
     <view class="subtitle" style="color:{{primaryColor}};">

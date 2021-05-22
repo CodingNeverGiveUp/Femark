@@ -144,15 +144,28 @@ Page({
     }
   },
 
-  scroll() {
-    if (this.data.theme == 'light') {
-      this.setData({
-        headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
-      })
-    } else if (this.data.theme == 'dark') {
-      this.setData({
-        headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
-      })
+  scroll(e) {
+    let num = e.detail.scrollTop
+    if (num < 20) {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "",
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "",
+        })
+      }
+    } else {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
+        })
+      }
     }
   },
 
