@@ -86,12 +86,18 @@ Page({
 
 
   //音频操作栏
-  tempVoiceAction(e){
+  tempVoiceAction(e) {
     let index = e.currentTarget.dataset.index
     wx.showActionSheet({
-      itemList: ['下载到本地'],
-    }).then(res=>{
-      if(res.tapIndex == 0){
+      itemList: ['移除', '下载到本地'],
+    }).then(res => {
+      if (res.tapIndex == 0) {
+        let array = this.data.tempVoices
+        array.splice(index, 1, )
+        this.setData({
+          tempVoices: array
+        })
+      } else if (res.tapIndex == 1) {
         this.downloadTempVoice(index)
       }
     })
@@ -127,13 +133,13 @@ Page({
     })
   },
 
-  previewTempVoice(e){
+  previewTempVoice(e) {
     console.log(e)
     let index = e.currentTarget.dataset.index
-    if(innerAudioContext.paused){
+    if (innerAudioContext.paused) {
       innerAudioContext.src = this.data.tempVoices[index].tempFilePath
       innerAudioContext.play()
-    }else{
+    } else {
       innerAudioContext.pause()
     }
   },
@@ -2194,19 +2200,19 @@ Page({
       })
     })
     //初始化录音播放
-    innerAudioContext.onEnded(res=>{
+    innerAudioContext.onEnded(res => {
       innerAudioContext.stop()
     })
 
-    innerAudioContext.onPause(res=>{
+    innerAudioContext.onPause(res => {
       this.setData({
         playingTime: null
       })
     })
 
-    innerAudioContext.onTimeUpdate(res=>{
-      function Zero(num){
-        if(num >= 0 && num < 10){
+    innerAudioContext.onTimeUpdate(res => {
+      function Zero(num) {
+        if (num >= 0 && num < 10) {
           return `0${num}`
         }
       }

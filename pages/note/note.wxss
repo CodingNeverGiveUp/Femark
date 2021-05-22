@@ -468,6 +468,7 @@
 
 .file .filename {
   font-size: .8rem;
+  overflow: hidden;
 }
 
 .preview_container {
