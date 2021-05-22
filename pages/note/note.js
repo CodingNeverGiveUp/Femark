@@ -204,9 +204,11 @@ Page({
     this.setData({
       playingIndex: index
     })
-    if (innerAudioContext.paused) {
-      innerAudioContext.src = this.data.voices[index].fileID
-      innerAudioContext.play()
+    innerAudioContext.src = this.data.voices[index].fileID
+    if (this.data.voices[index].playingTime == null) {
+      setTimeout(() => {
+        innerAudioContext.play()
+      }, 10)
     } else {
       innerAudioContext.pause()
     }
@@ -266,9 +268,12 @@ Page({
     this.setData({
       tempPlayingIndex: index
     })
-    if (innerAudioContext.paused) {
-      innerAudioContext.src = this.data.tempVoices[index].tempFilePath
-      innerAudioContext.play()
+    innerAudioContext.src = this.data.tempVoices[index].tempFilePath
+
+    if (this.data.tempVoices[index].playingTime == null) {
+      setTimeout(() => {
+        innerAudioContext.play()
+      }, 10)
     } else {
       innerAudioContext.pause()
     }
@@ -398,7 +403,8 @@ Page({
   stopRecord() {
     if (this.data.voiceStatus == 2) {
       this.setData({
-        uploadVoice: true
+        uploadVoice: true,
+        edited: true
       })
       clearInterval(this.timer)
       clearInterval(this.recordTimer)
@@ -580,7 +586,8 @@ Page({
             insert: content + '\n'
           })
           this.setData({
-            ['contentDelta.ops']: array
+            ['contentDelta.ops']: array,
+            edited: true
           })
           that.editorCtx.setContents({
             delta: that.data.contentDelta,
