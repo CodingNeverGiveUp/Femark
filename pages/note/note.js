@@ -84,8 +84,133 @@ Page({
     second: '0' + 0 // 秒
   },
 
-
   //音频操作栏
+  voiceAction(e){
+    let index = e.currentTarget.dataset.index
+    wx.showActionSheet({
+      itemList: ['移除', '下载到本地'],
+    }).then(res => {
+      if (res.tapIndex == 0) {
+        this.deleteVoice(index)
+        //
+        let array = this.data.voices
+        array.splice(index, 1, )
+        this.setData({
+          voices: array
+        })
+      } else if (res.tapIndex == 1) {
+        this.downloadVoice(index)
+      }
+    })
+  },
+
+  downloadVoice(index) {
+    var that = this
+    wx.showLoading({
+      title: '正在下载文件',
+      mask: true,
+    })
+    wx.cloud.downloadFile({
+      fileID: this.data.voices[index].fileID
+    }).then(res => {
+      let tempFilePath = res.tempFilePath
+      let filePath = wx.env.USER_DATA_PATH + '/' + that.data.voices[index].name + '.jpg'
+      wx.getFileSystemManager().saveFile({
+        tempFilePath,
+        filePath,
+        success(res) {
+          wx.saveImageToPhotosAlbum({
+            filePath: savePath,
+            success: res => {
+              wx.setClipboardData({
+                data: that.data.voices[index].name,
+              })
+              wx.showModal({
+                title: "保存成功",
+                showCancel: false,
+                content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.jpg后缀即可",
+                confirmColor: that.data.primaryColor,
+              })
+            }
+          })
+        }
+      })
+    })
+  },
+
+  deleteVoice(index) {
+    var that = this
+    const _ = wx.cloud.database().command
+    wx.showModal({
+      title: "警告",
+      content: "将同时从云端移除文件，该过程不可逆转，是否继续操作",
+      confirmText: "仍然继续",
+      confirmColor: "#ff5252",
+    }).then(res => {
+      if (res.confirm) {
+        async function process() {
+          try {
+            var fileID = that.data.voices[index].fileID;
+            wx.showLoading({
+              title: '正在删除文件',
+              mask: true
+            })
+            await wx.cloud.deleteFile({
+              fileList: [fileID]
+            })
+            //数据库移除
+            wx.showLoading({
+              title: '正在修改数据',
+              mask: true
+            })
+            if (!that.data.id && that.data.id != 0) {
+              console.log("noID")
+              await wx.cloud.database().collection('note').doc(app.globalData.id).get()
+                .then(res => {
+                  that.data.id = res.data.note.length - 1
+                })
+            }
+            await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+              data: {
+                [`note.${that.data.id}.voices`]: _.pull({
+                  fileID: fileID
+                })
+              }
+            })
+            //前端移除
+            let array = that.data.voices
+            array.splice(index, 1, )
+            that.setData({
+              voices: array
+            })
+            wx.showToast({
+              title: "操作成功",
+            })
+          } catch (e) {
+            console.log(e)
+            wx.showToast({
+              icon: "error",
+              title: "操作失败"
+            })
+          }
+        }
+        process()
+      }
+    })
+  },
+
+  previewVoice(e) {
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    if (innerAudioContext.paused) {
+      innerAudioContext.src = this.data.voices[index].fileID
+      innerAudioContext.play()
+    } else {
+      innerAudioContext.pause()
+    }
+  },
+
+  //临时音频操作栏
   tempVoiceAction(e) {
     let index = e.currentTarget.dataset.index
     wx.showActionSheet({
@@ -671,7 +796,6 @@ Page({
                 gallery: imgs,
                 files: files,
                 voices: voices,
-                audio: null,
                 category: that.data.category,
                 encrypt: that.data.encrypt,
                 password: that.data.password,

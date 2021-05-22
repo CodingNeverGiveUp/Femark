@@ -49,14 +49,15 @@
             <view wx:else class="filename">{{playingTime}}</view>
           </view>
         </view>
-        <!-- <view class="files">
-          <view class="file" wx:for="{{files}}" wx:key="index" hover-class="hover" bindtap="fileAction"
+        <view class="files">
+          <view class="file" wx:for="{{voices}}" wx:key="index" hover-class="hover" catchtap="voiceAction"
             data-index="{{index}}">
-            <view class="material-icons" style="color:{{primaryColor}};">
-              {{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
-            <view class="filename">{{item.name}}</view>
+            <view class="material-icons" style="color:{{primaryColor}};" catchtap="previewVoice" data-index="{{index}}">
+             {{playingTime == null?'play_arrow':'pause'}}</view>
+            <view wx:if="{{playingTime == null}}" class="filename">{{item.name}}</view>
+            <view wx:else class="filename">{{playingTime}}</view>
           </view>
-        </view> -->
+        </view>
       </view>
       <view class="attachment">
         <view class="subtitle" style="color:{{primaryColor}};">
