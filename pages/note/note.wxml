@@ -1,8 +1,7 @@
 <!--pages/note/note.wxml-->
 <scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
-  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true" 
-  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll"
-  >
+  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -37,10 +36,27 @@
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>音频</text>
         </view>
-        <view class="empty" style="height: 200rpx;" wx:if="{{true}}">
+        <view class="empty" style="height: 200rpx;" wx:if="{{tempVoices.length == 0 && voices.length == 0}}">
           <!-- <image src="/source/img/empty.png" mode="widthFix"></image> -->
           <text>无内容</text>
         </view>
+        <view class="files">
+          <view class="file" wx:for="{{tempVoices}}" wx:key="index" hover-class="hover" catchtap="tempVoiceAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};" catchtap="previewTempVoice" data-index="{{index}}">
+             {{playingTime == null?'play_arrow':'pause'}}</view>
+            <view wx:if="{{playingTime == null}}" class="filename">{{item.name}}</view>
+            <view wx:else class="filename">{{playingTime}}</view>
+          </view>
+        </view>
+        <!-- <view class="files">
+          <view class="file" wx:for="{{files}}" wx:key="index" hover-class="hover" bindtap="fileAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};">
+              {{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
+            <view class="filename">{{item.name}}</view>
+          </view>
+        </view> -->
       </view>
       <view class="attachment">
         <view class="subtitle" style="color:{{primaryColor}};">
@@ -96,8 +112,7 @@
       </view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
-    bindscroll="scroll">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscroll="scroll">
     <view class="main">
       <view class="heading">
         <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
@@ -109,8 +124,8 @@
       </view>
       <view class="content">
         <editor id="editor" class="ql-container" placeholder="{{edit ? '请输入内容…' : '无内容'}}" show-img-size="true"
-           show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus"
-          bindblur="contentBlur" bindinput="contentInput" bindstatuschange="onStatusChange" bindready="onEditorReady">
+          show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus" bindblur="contentBlur"
+          bindinput="contentInput" bindstatuschange="onStatusChange" bindready="onEditorReady">
         </editor>
         <view class="num" wx:if="{{edit}}">
           <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
@@ -131,7 +146,8 @@
 
 
 
-  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscroll="scroll">
+  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
+    bindscroll="scroll">
     <view class="preview">
       <!-- <view class="subtitle" style="color:{{primaryColor}};">
         <text>预览视窗</text>
@@ -198,7 +214,8 @@
         </view>
         <view class="component_color" style="background:{{shareCardBackgroundColor}};"></view>
       </view>
-      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toSharePage">
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover"
+        bindtap="toSharePage">
         <view class="component_text">
           <view class="component_title">
             分享该卡片
@@ -292,7 +309,7 @@
   <view class="icon material-icons" hover-class="hover" bindtap="attach">
     <text>attachment</text>
   </view>
-  <view class="icon material-icons" hover-class="hover" bindtap="popupRecord">
+  <view class="icon material-icons" hover-class="hover" bindtap="voiceAction">
     <text>keyboard_voice</text>
   </view>
   <view class="icon material-icons" hover-class="hover" bindtap="startOcr">
@@ -306,7 +323,7 @@
   </view>
 </view>
 
-<view class="toolbar" wx:if="{{edit && keyboardHeight > 0 ? true : false}}"
+<view class="toolbar" wx:if="{{edit && !useMarkdown && keyboardHeight > 0 ? true : false}}"
   style="bottom: {{isIOS ? keyboardHeight : 0}}px;{{toolbarActivated ? 'height:100px':''}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
   <view class="toolbar_section">
     <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
@@ -474,7 +491,8 @@
     </view>
     <view class="icon material-icons {{formats.list ? 'ql-active' : ''}}" catchtouchend="popupToolbox"
       hover-class="hover" data-name="list">
-      <text>{{formats.list?formats.list=='checked' || formats.list=='unchecked'?"check_box":formats.list=='ordered'?'format_list_numbered':'format_list_bulleted':'format_list_bulleted'}}</text>
+      <text>{{formats.list?formats.list=='checked' ||
+        formats.list=='unchecked'?"check_box":formats.list=='ordered'?'format_list_numbered':'format_list_bulleted':'format_list_bulleted'}}</text>
     </view>
   </view>
 </view>
@@ -510,20 +528,53 @@
 <color-picker bindchangeColor="pickColor" initColor="{{shareCardBackgroundColor}}"
   show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />
 
-  <page-container wx:if="{{popupRecordIf}}" show="{{popupRecord}}" position="bottom" round="true"
+<page-container wx:if="{{popupRecordIf}}" show="{{popupRecord}}" position="bottom" round="true"
   style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" duration="300"
-  customStyle="max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};" bind:afterleave="deleteContainer">
+  overlayStyle="z-index:1000;"
+  customStyle="z-index:1000;max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};"
+  bind:afterleave="deleteContainer">
   <view class="voice_content">
     <view class="voice_input">
-      <textarea id="voice" value="{{recordValue}}" auto-height="true"></textarea>
+      <textarea id="voice" style="{{voiceInput?'border-color:'+primaryColor:''}}!important;" value="{{recordValue}}"
+        auto-height="true" bindfocus="voiceFocus" bindblur="voiceBlur" bindinput="voiceInput"></textarea>
     </view>
     <view class="voice_btn_container">
       <view class="voice_btn_border" style="{{voiceBtnBorder}}">
-        <view class="voice_btn material-icons {{recordStatus == 1 ? 'voice_btn_activated' : recordStatus == 2 ? 'voice_btn_error':'voice_btn_inactivated'}}" bindtap="recordSwitch">{{recordStatus==1 ? 'mic': recordStatus==2?'priority_high':'mic_none'}}</view>
+        <view
+          class="voice_btn material-icons {{recordStatus == 1 ? 'voice_btn_activated' : recordStatus == 2 ? 'voice_btn_error':'voice_btn_inactivated'}}"
+          bindtap="recordSwitch" hover-class="hover">{{recordStatus==1 ? 'mic':
+          recordStatus==2?'priority_high':'mic_none'}}</view>
       </view>
     </view>
-    <view class="content_btn_l" style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};" hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ? 'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
-    <view class="content_btn_r" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="recordConfirm">确认
+    <view class="content_btn_l"
+      style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};"
+      hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ?
+        'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
+    <view
+      class="content_btn_r {{recordValue != '' && recordValue != '单击开始' && recordValue != '试着说点什么' && recordValue != '请提高音量' && recordValue != '识别失败' ? '':'content_btn_r_disabled'}}"
+      hover-class="c_hover" bindtap="recordConfirm">确认
+    </view>
+  </view>
+</page-container>
+
+<page-container wx:if="{{popupVoiceIf}}" show="{{popupVoice}}" position="bottom" round="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" duration="300"
+  overlayStyle="z-index:1000;"
+  customStyle="z-index:1000;max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};"
+  bind:afterleave="deleteContainer">
+  <view class="voice_content">
+    <view class="content_title">录制音频</view>
+    <view class="content_subtitle">{{voiceStatus == 0 ? '点击下方按钮开始' : hours+':'+minute+':'+second}}</view>
+    <view class="voice_btn_container">
+      <view class="voice_btn_border" style="{{recordBtnBorder}}">
+        <view
+          class="voice_btn material-icons {{voiceStatus == 1 ? 'record_btn_activated' : 'record_btn_inactivated'}}"
+          bindtap="voiceSwitch" hover-class="hover">{{voiceStatus==1 ? 'pause':
+          voiceStatus==2?'play_arrow':'mic_none'}}</view>
+      </view>
+    </view>
+    <view class="content_btn_l" style="color:{{voiceStatus == 2 ? primaryColor : theme == 'light' ? '#ccc' : '#666'}};" hover-class="{{voiceStatus == 2 ?'hover':''}}" bindtap="deleteRecord">删除</view>
+    <view class="content_btn_r {{voiceStatus == 2 ? '' : 'content_btn_r_disabled'}}" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="stopRecord">保存
     </view>
   </view>
 </page-container>

@@ -11,6 +11,7 @@ const recordManager = wx.getRecorderManager();
 let plugin = requirePlugin("QCloudAIVoice");
 plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', true); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
 let speechRecognizerManager = plugin.speechRecognizerManager();
+let innerAudioContext = wx.createInnerAudioContext()
 Page({
 
   /**
@@ -33,8 +34,10 @@ Page({
     contentDelta: null,
     galleryDetail: [],
     files: [],
+    voices: [],
     tempImgs: [],
     tempFiles: [],
+    tempVoices: [],
     imgTimestamps: [],
     category: 0,
     useMarkdown: app.globalData.markdownByDefault,
@@ -61,14 +64,250 @@ Page({
     editorCtx: null,
     toolbarActivated: null,
     //语音识别
+    popupRecord: false,
+    popupRecordIf: false,
+    uploadVideo: app.globalData.saveRecordFileByDefault,
     recordStatus: 0, //0日常/1识别/2错误
     voiceBtnBorder: `border:4px solid ${app.colorRgba(app.globalData.primaryColor, .2)};`,
-    recordValue: '单击开始'
+    recordValue: '单击开始',
+    //录音
+    popupVoice: false,
+    popupVoiceIf: false,
+    voiceStatus: 0, //0日常1录制2暂停
+    recordBtnBorder: `border:4px solid ${app.colorRgba(app.globalData.primaryColor, .2)};
+    `,
+    uploadVoice: false,
+    playingTime: null,
+    //计时器
+    hours: '0' + 0, // 时
+    minute: '0' + 0, // 分
+    second: '0' + 0 // 秒
+  },
+
+
+  //音频操作栏
+  tempVoiceAction(e){
+    let index = e.currentTarget.dataset.index
+    wx.showActionSheet({
+      itemList: ['下载到本地'],
+    }).then(res=>{
+      if(res.tapIndex == 0){
+        this.downloadTempVoice(index)
+      }
+    })
+  },
+
+  downloadTempVoice(index) {
+    var that = this
+    let tempFilePath = this.data.tempVoices[index].tempFilePath
+    wx.showLoading({
+      title: '正在下载文件',
+      mask: true,
+    })
+    let savePath = wx.env.USER_DATA_PATH + '/' + that.data.tempVoices[index].name + '.jpg'
+    wx.getFileSystemManager().saveFile({
+      tempFilePath,
+      filePath: savePath,
+      success(res) {
+        wx.saveImageToPhotosAlbum({
+          filePath: savePath,
+          success: res => {
+            wx.setClipboardData({
+              data: that.data.tempVoices[index].name,
+            })
+            wx.showModal({
+              title: "保存成功",
+              showCancel: false,
+              content: "文件已保存至sdcard/Pitcure/WeiXin下。原文件名已复制到剪贴板，手动重命名更改.jpg后缀即可",
+              confirmColor: that.data.primaryColor,
+            })
+          }
+        })
+      }
+    })
+  },
+
+  previewTempVoice(e){
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    if(innerAudioContext.paused){
+      innerAudioContext.src = this.data.tempVoices[index].tempFilePath
+      innerAudioContext.play()
+    }else{
+      innerAudioContext.pause()
+    }
+  },
+
+
+  voiceAction() {
+    wx.showActionSheet({
+      itemList: ['语音识别', '录音'],
+    }).then(res => {
+      if (res.tapIndex == 0) {
+        this.popupRecord()
+      } else if (res.tapIndex == 1) {
+        this.popupVoice()
+      }
+    })
+  },
+  //计时器
+  setTimer: function () {
+    const that = this
+    var second = that.data.second
+    var minute = that.data.minute
+    var hours = that.data.hours
+    this.recordTimer = setInterval(function () { // 设置定时器
+      second++
+      if (second >= 60) {
+        second = 0 //  大于等于60秒归零
+        minute++
+        if (minute >= 60) {
+          minute = 0 //  大于等于60分归零
+          hours++
+          if (hours < 10) {
+            // 少于10补零
+            that.setData({
+              hours: '0' + hours
+            })
+          } else {
+            that.setData({
+              hours: hours
+            })
+          }
+        }
+        if (minute < 10) {
+          // 少于10补零
+          that.setData({
+            minute: '0' + minute
+          })
+        } else {
+          that.setData({
+            minute: minute
+          })
+        }
+      }
+      if (second < 10) {
+        // 少于10补零
+        that.setData({
+          second: '0' + second
+        })
+      } else {
+        that.setData({
+          second: second
+        })
+      }
+    }, 1000)
+  },
+
+  //录音
+  voiceSwitch() {
+    if (this.data.voiceStatus == 0) {
+      this.startRecord()
+      this.setTimer()
+      this.timer = setInterval(() => {
+        this.setData({
+          recordBtnBorder: `border:10px solid ${app.colorRgba('#ff5252',.2)};`
+        })
+        setTimeout(() => {
+          this.setData({
+            recordBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`
+          })
+        }, 200);
+      }, 800)
+    } else if (this.data.voiceStatus == 1) {
+      this.pauseRecord()
+      clearInterval(this.timer)
+      clearInterval(this.recordTimer)
+      this.setData({
+        recordBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
+      })
+    } else if (this.data.voiceStatus == 2) {
+      this.setTimer()
+      this.resumeRecord()
+      this.timer = setInterval(() => {
+        this.setData({
+          recordBtnBorder: `border:10px solid ${app.colorRgba('#ff5252',.2)};`
+        })
+        setTimeout(() => {
+          this.setData({
+            recordBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`
+          })
+        }, 200);
+      }, 800)
+    }
+  },
+
+  startRecord() {
+    this.setData({
+      voiceStatus: 1,
+    })
+    recordManager.start()
+  },
+  pauseRecord() {
+    this.setData({
+      voiceStatus: 2,
+    })
+    recordManager.pause()
+  },
+  resumeRecord() {
+    this.setData({
+      voiceStatus: 1,
+    })
+    recordManager.resume()
+  },
+  stopRecord() {
+    if (this.data.voiceStatus == 2) {
+      this.setData({
+        uploadVoice: true
+      })
+      clearInterval(this.timer)
+      clearInterval(this.recordTimer)
+      recordManager.stop({
+        a: true
+      })
+      wx.showToast({
+        title: '已保存至媒体库',
+      })
+    }
+  },
+
+  deleteRecord() {
+    if (this.data.voiceStatus == 2) {
+      clearInterval(this.timer)
+      clearInterval(this.recordTimer)
+      recordManager.stop(false)
+      this.setData({
+        voiceStatus: 0,
+      })
+    }
   },
 
   //语音识别
 
-  //语音识别
+  voiceFocus() {
+    this.setData({
+      voiceInput: true
+    })
+  },
+
+  voiceBlur() {
+    this.setData({
+      voiceInput: false
+    })
+  },
+
+  voiceInput(e) {
+    this.setData({
+      recordValue: e.detail.value
+    })
+  },
+
+  videoSwitch() {
+    this.setData({
+      uploadVideo: this.data.uploadVideo ? false : true,
+    })
+  },
+
   popupRecord() {
     this.setData({
       popupRecordIf: true,
@@ -79,10 +318,25 @@ Page({
       })
     }, 100)
   },
+
+  popupVoice() {
+    this.setData({
+      popupVoiceIf: true,
+    })
+    setTimeout(() => {
+      this.setData({
+        popupVoice: true,
+      })
+    }, 100)
+  },
+
   deleteContainer() {
+    this.stopRecord()
+    this.stopSpeechRecognize()
     setTimeout(() => {
       this.setData({
         popupRecordIf: false,
+        popupVoiceIf: false,
       })
     }, 100);
   },
@@ -109,7 +363,7 @@ Page({
   },
 
   startSpeechRecognize() {
-    this.speechRecognizerManager = plugin.speechRecognizerManager();
+    // this.speechRecognizerManager = plugin.speechRecognizerManager();
     switch (app.globalData.recordLanguage) {
       case 0:
         var lang = '16k_zh'
@@ -155,18 +409,26 @@ Page({
       // word_info: 2,
       // vad_silence_time: 200
     };
-    this.speechRecognizerManager.start(params);
+    speechRecognizerManager.start(params);
   },
 
   stopSpeechRecognize() {
-    this.speechRecognizerManager = plugin.speechRecognizerManager();
-    this.speechRecognizerManager.stop();
+    // this.speechRecognizerManager = plugin.speechRecognizerManager();
+    speechRecognizerManager.stop();
   },
 
   recordConfirm() {
-    this.setData({
-      recordValue: "asdf"
-    })
+    var that = this
+    let content = this.data.recordValue
+    if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败') {
+      wx.showModal({
+        title: "是否创建笔记？"
+      }).then(res => {
+        if (res.confirm) {
+
+        }
+      })
+    }
   },
 
   // touchdown_plugin: function () {
@@ -1724,6 +1986,7 @@ Page({
       useMarkdown: app.globalData.markdownByDefault,
       markdownPreview: app.globalData.markdownPreview,
       markdownPreviewDelay: app.globalData.markdownPreviewDelay,
+      uploadVideo: app.globalData.saveRecordFileByDefault,
     })
     const eventChannel = this.getOpenerEventChannel();
     eventChannel.on('addNote', (res) => {
@@ -1862,7 +2125,7 @@ Page({
     speechRecognizerManager.OnRecognitionResultChange = (res) => {
       console.log('识别变化时', res)
       this.setData({
-        recordValue: res.voice_text_str
+        recordValue: res.voice_text_str == '' ? '请提高音量' : res.voice_text_str
       })
     }
     // 一句话结束
@@ -1873,6 +2136,11 @@ Page({
     speechRecognizerManager.OnRecognitionComplete = (res) => {
       console.log('识别结束', res);
       clearInterval(this.timer)
+      if (this.data.recordValue == '请提高音量') {
+        this.setData({
+          recordValue: '单击开始'
+        })
+      }
       this.setData({
         voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
         recordStatus: 0,
@@ -1881,25 +2149,70 @@ Page({
     }
     // 识别错误
     speechRecognizerManager.OnError = (res) => {
-      console.log('识别失败', res);
+      console.log(res);
       clearInterval(this.timer)
-      this.setData({
-        voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
-        recordStatus: 2,
-        recordValue: '识别失败'
-      })
+      if (this.data.recordStatus != 0) {
+        this.setData({
+          voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
+          recordStatus: 2,
+          recordValue: '识别失败'
+        })
+      }
     }
     // 录音超过固定时长（最长10分钟）时回调
     speechRecognizerManager.OnRecorderStop = () => {
       console.log('超过录音时长');
-      this.record({
-        recordStatus: 2,
+      this.setData({
+        recordStatus: 0,
         recordStatus: '请重新录音'
       })
     }
     //取得录音文件
+
+
+    //初始化录音
+    recordManager.onStart(res => {
+      console.log("start record")
+    })
+    recordManager.onError()
     recordManager.onStop(res => {
-      let tempFilePath = res.tempFilePath
+      console.log(res)
+      if (this.data.uploadVoice) {
+        let array = this.data.tempVoices
+        array.push({
+          tempFilePath: res.tempFilePath,
+          name: 'Record_' + new Date().getTime(),
+          duration: res.duration
+        })
+        this.setData({
+          tempVoices: array
+        })
+      }
+      this.setData({
+        voiceStatus: 0,
+        uploadVoice: false
+      })
+    })
+    //初始化录音播放
+    innerAudioContext.onEnded(res=>{
+      innerAudioContext.stop()
+    })
+
+    innerAudioContext.onPause(res=>{
+      this.setData({
+        playingTime: null
+      })
+    })
+
+    innerAudioContext.onTimeUpdate(res=>{
+      function Zero(num){
+        if(num >= 0 && num < 10){
+          return `0${num}`
+        }
+      }
+      this.setData({
+        playingTime: `${Zero(Math.floor(innerAudioContext.currentTime / 60))}:${Zero(Math.floor(innerAudioContext.currentTime % 60))}/${Zero(Math.floor(innerAudioContext.duration / 60))}:${Zero(Math.floor(innerAudioContext.duration % 60))}`
+      })
     })
   },
 

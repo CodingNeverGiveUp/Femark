@@ -847,7 +847,7 @@ Component({
       // 录音超过固定时长（最长10分钟）时回调
       speechRecognizerManager.OnRecorderStop = () => {
         console.log('超过录音时长');
-        this.record({
+        this.setData({
           recordStatus: 0,
           recordStatus: '请重新录音'
         })

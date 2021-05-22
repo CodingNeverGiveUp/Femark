@@ -553,6 +553,7 @@ App({
     bing: true,
     pureTheme: false,
     categoryData: [],
-    lastColor: "#ae6060"
+    lastColor: "#ae6060",
+    saveRecordFileByDefault: true,
   }
 })

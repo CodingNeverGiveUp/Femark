@@ -2,7 +2,7 @@
 @import "/source/icon.wxss";
 
 .hover {
-  background: var(--rgbaprimaryColor--);
+  background: var(--rgbaprimaryColor--)!important;
 }
 
 .f_hover {
@@ -572,6 +572,15 @@
   z-index: 1000;
 }
 
+.content_title {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.content_subtitle {
+  margin-bottom: 30px;
+}
+
 .content_btn_l {
   position: absolute;
   width: 80px;
@@ -599,6 +608,11 @@
   transition: opacity .2s ease-in-out, background .2s ease-in-out;
   border-radius: 5px;
   background: var(--primaryColor--);
+}
+
+.content_btn_r_disabled{
+  background: #e0e0e0!important;
+  color: #666;
 }
 
 
@@ -662,6 +676,16 @@
 
 .voice_btn_error{
   color: #ff5252;  
+  background: rgba(0,0,0,0);
+}
+
+.record_btn_activated{
+  color: #fff;
+  background: #ff5252;
+}
+
+.record_btn_inactivated{
+  color: var(--primaryColor--);  
   background: rgba(0,0,0,0);
 }
 
