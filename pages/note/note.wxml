@@ -315,7 +315,7 @@
   <view class="icon material-icons" hover-class="hover" bindtap="startOcr">
     <text>camera_enhance</text>
   </view>
-  <view class="icon material-icons" hover-class="hover" bindtap="toSharePage">
+  <view class="icon material-icons" hover-class="hover" bindtap="shareAction">
     <text>share</text>
   </view>
   <view wx:if="{{id || id == 0}}" class="icon material-icons" hover-class="hover" bindtap="delete">

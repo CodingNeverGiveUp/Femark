@@ -268,9 +268,7 @@ Page({
       })
       clearInterval(this.timer)
       clearInterval(this.recordTimer)
-      recordManager.stop({
-        a: true
-      })
+      recordManager.stop()
       wx.showToast({
         title: '已保存至媒体库',
       })
@@ -431,7 +429,16 @@ Page({
         title: "是否创建笔记？"
       }).then(res => {
         if (res.confirm) {
-
+          let array = this.data.contentDelta.ops
+          array.push({
+            insert: content+'\n'
+          })
+          this.setData({
+            ['contentDelta.ops']: array
+          })
+          that.editorCtx.setContents({
+            delta: that.data.contentDelta,
+          })
         }
       })
     }
@@ -524,6 +531,24 @@ Page({
     }
   },
 
+  shareAction(){
+    wx.showActionSheet({
+      itemList: ['以卡片形式分享','复制内容到剪贴板'],
+    }).then(res=>{
+      if(res.tapIndex == 0){
+        this.toSharePage()
+      }else if(res.tapIndex == 1){
+        wx.setClipboardData({
+          data: this.data.content
+        }).then(res=>{
+          wx.hideToast()
+          this.showSnackbar('已复制内容到剪贴板')
+        })
+      }
+    })
+  },
+
+
   //转到分享
   toSharePage() {
     let elementm = {
@@ -615,6 +640,7 @@ Page({
           //新建
           let imgs = this.data.tempImgs
           let files = this.data.tempFiles
+          let voices = this.data.tempVoices
           async function process() {
             try {
               if (imgs.length != 0) {
@@ -625,10 +651,17 @@ Page({
                 })
               }
               if (files.length != 0) {
-                await database.uploadFile(files)
-                await database.idToUrl(files)
+                await database.uploadVoice(files)
+                // await database.idToUrl(files)
                 that.setData({
                   files: that.data.files.concat(files),
+                })
+              }
+              if (voices.length != 0) {
+                await database.uploadFile(voices)
+                await database.idToUrl(voices)
+                that.setData({
+                  voices: that.data.voices.concat(voices),
                 })
               }
               let object = {
@@ -637,6 +670,7 @@ Page({
                 contentDelta: that.data.contentDelta,
                 gallery: imgs,
                 files: files,
+                voices: voices,
                 audio: null,
                 category: that.data.category,
                 encrypt: that.data.encrypt,
@@ -660,6 +694,7 @@ Page({
             that.setData({
               tempImgs: [],
               tempFiles: [],
+              tempVoices: [],
             })
             // console.log(imgs.IDs)
           }
@@ -669,6 +704,7 @@ Page({
           console.log("edit")
           let imgs = this.data.tempImgs
           let files = this.data.tempFiles
+          let voices = this.data.tempVoices
           async function process() {
             try {
               if (imgs.length != 0) {
@@ -693,6 +729,18 @@ Page({
                 })
                 that.setData({
                   files: that.data.files.concat(files)
+                })
+              }
+              if (voices.length != 0) {
+                await database.uploadVoice(voices)
+                // await database.idToUrl(files)
+                await wx.cloud.database().collection('note').doc(app.globalData.id).update({
+                  data: {
+                    [`note.${that.data.id}.voices`]: _.push(voices)
+                  }
+                })
+                that.setData({
+                  voices: that.data.voices.concat(voices)
                 })
               }
               await wx.cloud.database().collection('note').doc(app.globalData.id).update({
@@ -726,6 +774,7 @@ Page({
             that.setData({
               tempImgs: [],
               tempFiles: [],
+              tempVoices: [],
             })
           }
           process()
@@ -2151,6 +2200,15 @@ Page({
         voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
         recordStatus: 0,
       })
+      if(this.data.uploadVideo){
+        this.setData({
+          uploadVoice: true,
+        })
+      }else{
+        this.setData({
+          uploadVoice: false,
+        })
+      }
       recordManager.stop()
     }
     // 识别错误

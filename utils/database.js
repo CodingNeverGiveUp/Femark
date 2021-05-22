@@ -98,6 +98,45 @@ function uploadFile(files) {
   })
 }
 
+function uploadVoice(voices) {
+  function upload(element, index, array) {
+    return new Promise((resolve, reject)=>{
+      wx.showLoading({
+        title: `录音（${index+1}/${array.length}）`,
+        mask: true
+      })
+      let cloudpath = `voice/${app.globalData.openid}/${new Date().getTime()}_${element.name}`;
+      wx.cloud.uploadFile({
+        cloudPath: cloudpath,
+        filePath: element.tempFilePath
+      }).then(res => {
+        element.fileID = res.fileID
+        resolve()
+      }).catch(err => {
+        reject()
+      })
+    })
+  }
+  return new Promise((resolve, reject) => {
+    async function action() {
+      for (let i = 0; i < voices.length; i++) {
+        try {
+          await upload(voices[i], i, voices)
+        } catch {
+          console.log("upload failed")
+          reject()
+        }
+        if (i == voices.length - 1) {
+          console.log("upload finished")
+          // wx.hideLoading()
+          resolve()
+        }
+      }
+    }
+    action()
+  })
+}
+
 function idToUrl(array) {
   return new Promise(async (resort, reject) => {
     try {
@@ -275,5 +314,6 @@ module.exports = { //注册函数
   addTask2,
   uploadImg,
   uploadFile,
+  uploadVoice,
   idToUrl
 }
