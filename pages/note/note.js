@@ -85,7 +85,7 @@ Page({
   },
 
   //音频操作栏
-  voiceAction(e){
+  voiceAction(e) {
     let index = e.currentTarget.dataset.index
     wx.showActionSheet({
       itemList: ['移除', '下载到本地'],
@@ -393,6 +393,11 @@ Page({
       })
       clearInterval(this.timer)
       clearInterval(this.recordTimer)
+      this.setData({
+        hours: '0' + 0, // 时
+        minute: '0' + 0, // 分
+        second: '0' + 0 // 秒
+      })
       recordManager.stop()
       wx.showToast({
         title: '已保存至媒体库',
@@ -404,10 +409,17 @@ Page({
     if (this.data.voiceStatus == 2) {
       clearInterval(this.timer)
       clearInterval(this.recordTimer)
-      recordManager.stop(false)
       this.setData({
-        voiceStatus: 0,
+        hours: '0' + 0, // 时
+        minute: '0' + 0, // 分
+        second: '0' + 0 // 秒
       })
+      recordManager.stop(false)
+      setTimeout(() => {
+        this.setData({
+          voiceStatus: 0,
+        })
+      }, 200);
     }
   },
 
@@ -556,7 +568,7 @@ Page({
         if (res.confirm) {
           let array = this.data.contentDelta.ops
           array.push({
-            insert: content+'\n'
+            insert: content + '\n'
           })
           this.setData({
             ['contentDelta.ops']: array
@@ -656,16 +668,16 @@ Page({
     }
   },
 
-  shareAction(){
+  shareAction() {
     wx.showActionSheet({
-      itemList: ['以卡片形式分享','复制内容到剪贴板'],
-    }).then(res=>{
-      if(res.tapIndex == 0){
+      itemList: ['以卡片形式分享', '复制内容到剪贴板'],
+    }).then(res => {
+      if (res.tapIndex == 0) {
         this.toSharePage()
-      }else if(res.tapIndex == 1){
+      } else if (res.tapIndex == 1) {
         wx.setClipboardData({
           data: this.data.content
-        }).then(res=>{
+        }).then(res => {
           wx.hideToast()
           this.showSnackbar('已复制内容到剪贴板')
         })
@@ -1613,10 +1625,12 @@ Page({
     })
   },
 
-  contentFocus() {
+  contentFocus(e) {
     // this.editorCtx.scrollIntoView()
     this.setData({
-      contentNumStyle: `color:${this.data.primaryColor};`
+      contentNumStyle: `color:${this.data.primaryColor};`,
+      contentNum: e.detail.text.length - 1,
+      content: e.detail.text,
     })
   },
 
@@ -1633,6 +1647,7 @@ Page({
       contentNum: e.detail.text.length - 1,
       content: e.detail.text,
       contentDelta: e.detail.delta,
+      edited: true
     })
     //缓存内容
     if (this.data.useMarkdown) {
@@ -2324,11 +2339,11 @@ Page({
         voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
         recordStatus: 0,
       })
-      if(this.data.uploadVideo){
+      if (this.data.uploadVideo) {
         this.setData({
           uploadVoice: true,
         })
-      }else{
+      } else {
         this.setData({
           uploadVoice: false,
         })

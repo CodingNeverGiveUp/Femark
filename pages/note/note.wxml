@@ -184,7 +184,7 @@
         </view>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
-        <text>分享预览</text>
+        <text>预览</text>
       </view>
       <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
         dataset="{{['跟随系统','亮色','暗色']}}" selected="{{shareCardTheme}}" data-id="shareCardTheme">
