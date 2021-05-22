@@ -806,15 +806,15 @@ Page({
                 })
               }
               if (files.length != 0) {
-                await database.uploadVoice(files)
-                // await database.idToUrl(files)
+                await database.uploadFile(files)
+                await database.idToUrl(files)
                 that.setData({
                   files: that.data.files.concat(files),
                 })
               }
               if (voices.length != 0) {
-                await database.uploadFile(voices)
-                await database.idToUrl(voices)
+                await database.uploadVoice(voices)
+                // await database.idToUrl(voices)
                 that.setData({
                   voices: that.data.voices.concat(voices),
                 })
@@ -2251,6 +2251,13 @@ Page({
           files,
         })
       )
+      //音频预处理
+      let voices = res.data.voices
+      // database.idToUrl(files).then(
+      this.setData({
+        voices,
+      })
+      // )
       this.selectAllComponents('.switch').forEach(element => {
         element.refreshStatus()
       })
@@ -2415,6 +2422,19 @@ Page({
       })
     })
     //初始化录音播放
+    innerAudioContext.onWaiting(res => {
+      wx.showLoading({
+        title: '正在请求',
+        mask: true
+      })
+    })
+
+    innerAudioContext.onPlay(res => {
+      wx.hideLoading({
+        success: (res) => {},
+      })
+    })
+
     innerAudioContext.onEnded(res => {
       if (this.data.playingIndex != null) {
         this.setData({
