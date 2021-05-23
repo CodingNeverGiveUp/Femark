@@ -10,10 +10,9 @@ const _ = wx.cloud.database().command
 const recordManager = wx.getRecorderManager();
 let plugin = requirePlugin("QCloudAIVoice");
 plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', true); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
-let speechRecognizerManager = plugin.speechRecognizerManager();
 let innerAudioContext = wx.createInnerAudioContext()
+let speechRecognizerManager = plugin.speechRecognizerManager();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -499,22 +498,8 @@ Page({
   recordSwitch() {
     if (this.data.recordStatus != 1) {
       this.startSpeechRecognize()
-      this.timer = setInterval(() => {
-        this.setData({
-          voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
-        })
-        setTimeout(() => {
-          this.setData({
-            voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
-          })
-        }, 200);
-      }, 800)
     } else {
       this.stopSpeechRecognize()
-      clearInterval(this.timer)
-      this.setData({
-        voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
-      })
     }
   },
 
@@ -2334,6 +2319,16 @@ Page({
         recordValue: "试着说点什么",
         recordStatus: 1,
       })
+      this.timer = setInterval(() => {
+        this.setData({
+          voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
+        })
+        setTimeout(() => {
+          this.setData({
+            voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
+          })
+        }, 200);
+      }, 800)
       recordManager.start()
     }
     // 一句话开始
@@ -2392,7 +2387,7 @@ Page({
       console.log('超过录音时长');
       this.setData({
         recordStatus: 0,
-        recordStatus: '请重新录音'
+        recordValue: '请重新录音'
       })
     }
     //取得录音文件
