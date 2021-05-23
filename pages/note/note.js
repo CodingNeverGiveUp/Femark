@@ -90,12 +90,6 @@ Page({
     }).then(res => {
       if (res.tapIndex == 0) {
         this.deleteVoice(index)
-        //
-        let array = this.data.voices
-        array.splice(index, 1, )
-        this.setData({
-          voices: array
-        })
       } else if (res.tapIndex == 1) {
         this.downloadVoice(index)
       }
@@ -2429,12 +2423,11 @@ Page({
     })
 
     innerAudioContext.onPlay(res => {
-      wx.hideLoading({
-        success: (res) => {},
-      })
+      wx.hideLoading()
     })
 
     innerAudioContext.onEnded(res => {
+      wx.hideLoading()
       if (this.data.playingIndex != null) {
         this.setData({
           [`voices[${Number(this.data.playingIndex)}].playingTime`]: null,
@@ -2464,6 +2457,7 @@ Page({
     })
 
     innerAudioContext.onTimeUpdate(res => {
+      wx.hideLoading()
       function Zero(num) {
         if (num >= 0 && num < 10) {
           return `0${num}`

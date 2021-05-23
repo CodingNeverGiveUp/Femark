@@ -788,6 +788,11 @@
   .snackbar {
     background: #5d5d5d;
   }
+
+  .content_btn_r_disabled{
+    background: #494949!important;
+    color: #808080;
+  }
 }
 
 @media only screen and (min-width: 600px) {

@@ -540,4 +540,9 @@
   .content_btn_l {
     color: #ccc;
   }
+
+  .content_btn_r_disabled{
+    background: #494949;
+    color: #808080;
+  }
 }
