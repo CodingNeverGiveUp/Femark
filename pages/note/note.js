@@ -543,7 +543,7 @@ Page({
         var lang = '16k_zh'
         break;
     }
-    const params = {
+    let params = {
       signCallback: null, // 鉴权函数
       // 用户参数
       secretkey: 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU',
