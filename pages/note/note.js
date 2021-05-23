@@ -119,7 +119,7 @@ Page({
         filePath,
         success(res) {
           wx.saveImageToPhotosAlbum({
-            filePath: savePath,
+            filePath: filePath,
             success: res => {
               wx.setClipboardData({
                 data: that.data.voices[index].name,
@@ -1242,7 +1242,7 @@ Page({
         filePath,
         success(res) {
           wx.saveImageToPhotosAlbum({
-            filePath: savePath,
+            filePath: filePath,
             success: res => {
               wx.setClipboardData({
                 data: that.data.files[index].name,
