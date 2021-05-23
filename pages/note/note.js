@@ -496,10 +496,10 @@ Page({
     }, 100);
   },
   recordSwitch() {
-    if (this.data.recordStatus != 1) {
-      this.startSpeechRecognize()
-    } else {
+    if (this.data.recordStatus == 1) {
       this.stopSpeechRecognize()
+    } else if (this.data.recordStatus == 3) {} else {
+      this.startSpeechRecognize()
     }
   },
 
@@ -551,6 +551,10 @@ Page({
       // vad_silence_time: 200
     };
     speechRecognizerManager.start(params);
+    this.setData({
+      recordStatus: 3,
+      recordValue: '启动中',
+    })
   },
 
   stopSpeechRecognize() {
@@ -694,7 +698,7 @@ Page({
     let elementm = {
       newShare: true,
       heading: this.data.heading,
-      shareCardTheme: this.data.shareCardTheme,
+      shareCardTheme: this.data.shareCardTheme == 0 ? this.data.theme == 'light' ? 1 : 2 : this.data.shareCardTheme,
       shareCardColor: this.data.shareCardColor,
       shareCardBackgroundColor: this.data.shareCardBackgroundColor,
       useMarkdown: app.globalData.markdownByDefault,

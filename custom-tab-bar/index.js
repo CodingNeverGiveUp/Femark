@@ -100,10 +100,10 @@ Component({
 
     recordSwitch() {
       console.log('recordStatus', this.data.recordStatus)
-      if (this.data.recordStatus != 1) {
-        this.startSpeechRecognize()
-      } else {
+      if (this.data.recordStatus == 1) {
         this.stopSpeechRecognize()
+      } else if (this.data.recordStatus == 3) {} else {
+        this.startSpeechRecognize()
       }
     },
 
@@ -156,6 +156,10 @@ Component({
         // vad_silence_time: 200
       };
       speechRecognizerManager.start(params);
+      this.setData({
+        recordStatus: 3,
+        recordValue: '启动中',
+      })
     },
 
     stopSpeechRecognize() {
@@ -835,23 +839,23 @@ Component({
       //初始化语音识别
       // 开始识别
       speechRecognizerManager.OnRecognitionStart = (res => {
-          console.log('开始识别', res)
+        console.log('开始识别', res)
+        that.setData({
+          recordValue: "试着说点什么",
+          recordStatus: 1,
+        })
+        that.timer = setInterval(() => {
           that.setData({
-            recordValue: "试着说点什么",
-            recordStatus: 1,
+            voiceBtnBorder: `border:10px solid ${that.data.rgbaPrimaryColor};`
           })
-          that.timer = setInterval(() => {
+          setTimeout(() => {
             that.setData({
-              voiceBtnBorder: `border:10px solid ${that.data.rgbaPrimaryColor};`
+              voiceBtnBorder: `border:4px solid ${that.data.rgbaPrimaryColor};`
             })
-            setTimeout(() => {
-              that.setData({
-                voiceBtnBorder: `border:4px solid ${that.data.rgbaPrimaryColor};`
-              })
-            }, 200);
-          }, 800)
-          console.log("recordManager")
-          recordManager.start()
+          }, 200);
+        }, 800)
+        console.log("recordManager")
+        recordManager.start()
 
       })
       // 一句话开始
