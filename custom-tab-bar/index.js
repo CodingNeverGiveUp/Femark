@@ -99,29 +99,17 @@ Component({
     },
 
     recordSwitch() {
+      console.log('recordStatus',this.data.recordStatus)
       if (this.data.recordStatus != 1) {
-        this.startSpeechRecognize()
-        this.timer = setInterval(() => {
-          this.setData({
-            voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
-          })
-          setTimeout(() => {
-            this.setData({
-              voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
-            })
-          }, 200);
-        }, 800)
+        this.startSpeechRecognize()   
       } else {
         this.stopSpeechRecognize()
-        clearInterval(this.timer)
-        this.setData({
-          voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
-        })
       }
     },
 
     startSpeechRecognize() {
       // this.speechRecognizerManager = plugin.speechRecognizerManager();
+      console.log('lang',app.globalData.recordLanguage)
       switch (app.globalData.recordLanguage) {
         case 0:
           var lang = '16k_zh'
@@ -178,7 +166,7 @@ Component({
     recordConfirm() {
       var that = this
       let content = this.data.recordValue
-      if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败') {
+      if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败' && recordValue != '请重新录音') {
         wx.showModal({
           title: "是否创建笔记？"
         }).then(res => {
@@ -849,6 +837,16 @@ Component({
           recordValue: "试着说点什么",
           recordStatus: 1,
         })
+        this.timer = setInterval(() => {
+          this.setData({
+            voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
+          })
+          setTimeout(() => {
+            this.setData({
+              voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
+            })
+          }, 200);
+        }, 800)
         recordManager.start()
       }
       // 一句话开始
@@ -898,7 +896,7 @@ Component({
         console.log('超过录音时长');
         this.setData({
           recordStatus: 0,
-          recordStatus: '请重新录音'
+          recordValue: '请重新录音'
         })
       }
       //取得录音文件

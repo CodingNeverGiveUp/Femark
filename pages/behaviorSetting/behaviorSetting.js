@@ -51,8 +51,8 @@ Page({
                 markdownByDefault: this.data.markdownByDefault,
                 markdownPreview: this.data.markdownPreview,
                 markdownPreviewDelay: Number(this.data.markdownPreviewDelay),
-                saveRecordFileByDefault: app.globalData.saveRecordFileByDefault,
-                recordLanguage: app.globalData.recordLanguage,
+                saveRecordFileByDefault: this.data.saveRecordFileByDefault,
+                recordLanguage: this.data.recordLanguage,
               }
             }
           }).then(res => {
