@@ -11,6 +11,7 @@ Page({
     nickName: app.globalData.userInfo.nickName ? app.globalData.userInfo.nickName : 'Femark用户',
     md: '',
     delta: {},
+    newShare: false,
   },
 
   /**
@@ -157,12 +158,12 @@ Page({
     let textdrr = textdr.replace(/&/g, '~~')
     if (this.data.useMarkdown) {
       return {
-        title: heading == 'null' ? `由${nickName}分享的内容` : heading,
+        title: this.data.heading == 'null' ? `由${nickName}分享的内容` : this.data.heading,
         path: `/pages/sharePage/sharePage?json=${textmrr}`,
       }
     } else {
       return {
-        title: heading == 'null' ? `由${nickName}分享的内容` : heading,
+        title: this.data.heading == 'null' ? `由${nickName}分享的内容` : this.data.heading,
         path: `/pages/sharePage/sharePage?json=${textdrr}`,
       }
     }
@@ -207,12 +208,12 @@ Page({
     let textdrr = textdr.replace(/&/g, '~~')
     if (useMarkdown) {
       return {
-        title: heading == 'null' ? `由${nickName}分享的内容` : heading,
+        title: this.data.heading == 'null' ? `由${nickName}分享的内容` : this.data.heading,
         query: `json=${textmrr}`
       }
     } else {
       return {
-        title: heading == 'null' ? `由${nickName}分享的内容` : heading,
+        title: this.data.heading == 'null' ? `由${nickName}分享的内容` : this.data.heading,
         query: `json=${textdrr}`
       }
     }

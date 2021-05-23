@@ -33,3 +33,10 @@
     </view>
   </view>
 </button>
+<navigator wx:if="{{!newShare}}" open-type="exit" target="miniProgram" class="{{shareCardTheme==1?'float_bg_light':shareCardTheme==2?'float_bg_dark':'float_bg'}}" bindtap="floatTap" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
+  <view class=" {{shareCardTheme==1?'float_color_light':shareCardTheme==2?'float_color_dark':'float_color'}}" hover-class="hover">
+    <view class="material-icons" style="color:{{primaryColor}};">
+      <text>exit_to_app</text>
+    </view>
+  </view>
+</navigator>
