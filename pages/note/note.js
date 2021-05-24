@@ -689,6 +689,7 @@ Page({
 
   //转到分享
   toSharePage() {
+    // console.log(this.data.shareCardTheme,typeof(this.data.shareCardTheme))
     let elementm = {
       newShare: true,
       heading: this.data.heading,
@@ -703,7 +704,7 @@ Page({
     let elementd = {
       newShare: true,
       heading: this.data.heading,
-      shareCardTheme: this.data.shareCardTheme,
+      shareCardTheme: this.data.shareCardTheme == 0 ? this.data.theme == 'light' ? 1 : 2 : this.data.shareCardTheme,
       shareCardColor: this.data.shareCardColor,
       shareCardBackgroundColor: this.data.shareCardBackgroundColor,
       useMarkdown: app.globalData.markdownByDefault,
