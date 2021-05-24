@@ -2015,6 +2015,7 @@ Page({
   onPreviewEditorReady() {
     var that = this
     wx.createSelectorQuery().select('#previewEditor').context(function (res) {
+      console.log(res)
       that.previewEditorCtx = res.context
       if (that.data.contentDelta) {
         that.previewEditorCtx.setContents({
