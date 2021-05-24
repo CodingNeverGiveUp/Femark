@@ -107,6 +107,7 @@ Page({
     event.on('Theme', this, function (data) {
       wx.showLoading({
         title: '应用主题更改',
+        mask: true
       })
       this.setData({
         theme: data
@@ -119,6 +120,7 @@ Page({
       useSidebar: app.globalData.useSidebar,
       primaryColor: app.globalData.primaryColor,
       rgbaPrimaryColor: app.colorRgba(app.globalData.primaryColor, .2),
+      uploadVideo: app.globalData.saveRecordFileByDefault,
     })
     if (wx.getUserProfile) {
       this.setData({
@@ -329,7 +331,7 @@ Page({
           hw2 = Math.round(res.height)
           // console.log(hw2)
         }).exec();
-        await timeOut(300);
+        await timeOut(200);
         if (hw1 <= hw2) {
           noteLeft.push(that.data.note[i])
         } else {
@@ -356,8 +358,6 @@ Page({
     let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 2) {
       this.setData({
-        sel1: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
-        sel2: "",
         currentPage: 1
       })
       tabbar.setData({
@@ -379,8 +379,6 @@ Page({
     let tabbar = this.getTabBar()
     if (app.globalData.currentPage == 1) {
       this.setData({
-        sel1: "",
-        sel2: `color:${this.data.primaryColor};background:${this.data.rgbaPrimaryColor};`,
         currentPage: 2
       })
       tabbar.setData({

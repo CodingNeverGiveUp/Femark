@@ -85,7 +85,7 @@
       </md-switch>
     </view>
     <view>
-      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="true" data-id="markdownByDefault">
+      <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}" data-id="markdownByDefault">
         <text slot="title">默认使用 Markdown</text>
         <text slot="subtitle">Markdown 作为新建笔记默认格式</text>
       </md-switch>
@@ -105,7 +105,7 @@
   <view class="page">
     <view class="text">
       <text class="title">欢迎使用 Femark\n</text>
-      <text class="subtitle">记下身边的故事与风景\n左划以开始</text>
+      <text class="subtitle">记录身边的故事与风景\n左划以开始</text>
     </view>
   </view>
   <view class="page">

@@ -1,7 +1,7 @@
 <!--pages/note/note.wxml-->
-<scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}" enable-flex="true"
-  enhanced="true" showScrollbar="false" paging-enabled="true" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}"
-  bindscrolltoupper="scroll">
+<scroll-view class="scroll" scroll-x="true" scroll-left="{{edit?'425rpx':useMarkdown?'1175rpx':'425rpx'}}"
+  enable-flex="true" enhanced="true" showScrollbar="false" paging-enabled="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" bindscroll="mainScroll">
   <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" class="side_bg">
     <view class="side">
       <view class="photos">
@@ -14,8 +14,8 @@
         </view>
         <view class="Imgs">
           <view class="Img" wx:for="{{galleryDetail}}" wx:key="index">
-            <image mode="aspectFill" src="{{item.tempFileURL}}" bindtap="previewImg" data-index="{{index}}"
-              data-url="{{item.tempFileURL}}"></image>
+            <image mode="aspectFill" src="{{item.src}}" bindtap="previewImg" data-index="{{index}}"
+              data-url="{{item.src}}"></image>
             <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteImg" wx:if="{{edit}}">
               <text class="material-icons">clear</text>
             </view>
@@ -23,7 +23,8 @@
         </view>
         <view class="Imgs">
           <view class="Img" wx:for="{{tempImgs}}" wx:key="index">
-            <image mode="aspectFill" src="{{item}}" bindtap="previewTempImg" data-index="{{index}}" data-url="{{item}}">
+            <image mode="aspectFill" src="{{item.src}}" bindtap="previewTempImg" data-index="{{index}}"
+              data-url="{{item.src}}">
             </image>
             <view class="deleteImg" hover-class="hover" data-index="{{index}}" bindtap="deleteTempImg" wx:if="{{edit}}">
               <text class="material-icons">clear</text>
@@ -35,9 +36,52 @@
         <view class="subtitle" style="color:{{primaryColor}};">
           <text>音频</text>
         </view>
-        <view class="empty" style="height: 200rpx;" wx:if="{{true}}">
+        <view class="empty" style="height: 200rpx;" wx:if="{{tempVoices.length == 0 && voices.length == 0}}">
           <!-- <image src="/source/img/empty.png" mode="widthFix"></image> -->
           <text>无内容</text>
+        </view>
+        <view class="files">
+          <view class="file" wx:for="{{tempVoices}}" wx:key="index" hover-class="hover" catchtap="tempVoiceAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};" catchtap="previewTempVoice" data-index="{{index}}">
+             {{item.playingTime == null?'play_arrow':'pause'}}</view>
+            <view wx:if="{{item.playingTime == null}}" class="filename">{{item.name}}</view>
+            <view wx:else class="filename">{{item.playingTime}}</view>
+          </view>
+        </view>
+        <view class="files">
+          <view class="file" wx:for="{{voices}}" wx:key="index" hover-class="hover" catchtap="voiceAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};" catchtap="previewVoice" data-index="{{index}}">
+             {{item.playingTime == null?'play_arrow':'pause'}}</view>
+            <view wx:if="{{item.playingTime == null}}" class="filename">{{item.name}}</view>
+            <view wx:else class="filename">{{item.playingTime}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="attachment">
+        <view class="subtitle" style="color:{{primaryColor}};">
+          <text>附件</text>
+        </view>
+        <view class="empty" style="height: 200rpx;" wx:if="{{tempFiles.length == 0 && files.length == 0}}">
+          <!-- <image src="/source/img/empty.png" mode="widthFix"></image> -->
+          <text>无内容</text>
+        </view>
+        <view class="files">
+          <view class="file" wx:for="{{tempFiles}}" wx:key="index" hover-class="hover" bindtap="tempFileAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};">
+              {{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
+            <view class="filename">{{item.name}}</view>
+          </view>
+        </view>
+        <view class="files">
+          <view class="file" wx:for="{{files}}" wx:key="index" hover-class="hover" bindtap="fileAction"
+            data-index="{{index}}">
+            <view class="material-icons" style="color:{{primaryColor}};">
+              {{item.type=="image"?"image":item.type=="video"?"movie":"insert_drive_file"}}</view>
+            <view class="filename">{{item.name}}</view>
+          </view>
         </view>
       </view>
       <view class="settings">
@@ -59,43 +103,57 @@
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" value="{{password}}" data-id="password" wx:if="{{encrypt}}"
           disabled="{{!edit}}">
           <text slot="title">访问密码</text>
-          <text slot="subtitle">点击设置密码</text>
+          <text slot="subtitle">仅支持1-8位数字/字母\n部分设备支持指纹验证</text>
         </md-input>
         <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{useMarkdown}}" data-id="useMarkdown" disabled="{{!edit}}">
           <text slot="title">Markdown 模式</text>
-          <text slot="subtitle">使用 Markdown 渲染\n同时启用预览视窗</text>
+          <text slot="subtitle">使用 Markdown 渲染\n将停用富文本编辑器</text>
         </md-switch>
       </view>
     </view>
   </scroll-view>
-  <scroll-view wx:if="{{!isPad}}" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
-    bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+  <scroll-view scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true" bindscroll="scroll">
     <view class="main">
-      <form action="" method="post" bindsubmit="submit" bindreset="reset">
-        <view class="heading">
-          <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
-            placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
-            bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
-          <view class="num" wx:if="{{edit}}">
-            <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
-          </view>
+      <view class="heading">
+        <input type="text" value="{{heading}}" disabled="{{!edit}}" style="{{headingStyle}}" placeholder="标题"
+          placeholder-class="placeholder" name="heading" maxlength="20" cursor-spacing="300" confirm-type="next"
+          bindfocus="headingFocus" bindblur="headingBlur" bindinput="headingInput"></input>
+        <view class="num" wx:if="{{edit}}">
+          <text style="{{headingNumStyle}}">{{headingNum}}/20</text>
         </view>
-        <view class="content" bindtap="contentTap">
-          <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
-            placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
-            confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
-          <view class="num" wx:if="{{edit}}">
-            <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
-          </view>
+      </view>
+      <view class="content">
+        <editor id="editor" class="ql-container" placeholder="{{edit ? '请输入内容…' : '无内容'}}" show-img-size="true"
+          show-img-toolbar="false" read-only="{{!edit}}" bindfocus="contentFocus" bindblur="contentBlur"
+          bindinput="contentInput" bindstatuschange="onStatusChange" bindready="onEditorReady">
+        </editor>
+        <view class="num" wx:if="{{edit}}">
+          <text style="{{contentNumStyle}}">{{contentNum}}/∞</text>
         </view>
-      </form>
+      </view>
+      <view class="content_time">最后一次修改于{{time}}</view>
+      <view style="height:400px;"></view>
+      <!-- <view class="content" bindtap="contentTap">
+        <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
+          placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""
+          confirm-type="return" bindfocus="contentFocus" bindblur="contentBlur" bindinput="contentInput"></textarea>
+      </view> -->
     </view>
   </scroll-view>
-  <scroll-view wx:if="{{!isPad && useMarkdown}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
-    enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
+
+
+
+
+
+
+  <scroll-view class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;" enhanced="true"
+    bindscroll="scroll">
     <view class="preview">
-      <view class="heading"
+      <!-- <view class="subtitle" style="color:{{primaryColor}};">
+        <text>预览视窗</text>
+      </view> -->
+      <!-- <view class="heading"
         style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
         <view>
           <text>Markdown 预览</text>
@@ -104,12 +162,72 @@
           <text class="material-icons">refresh</text>
           <text>刷新</text>
         </view>
-      </view>
-      <view class="preview_container">
-        <wemark md="{{md}}" link highlight type="wemark"></wemark>
+      </view> -->
+      <view
+        class="preview_container {{shareCardTheme==1?'preview_container_light':shareCardTheme==2?'preview_container_dark':''}}"
+        style="background: {{shareCardColor}};">
+        <view>
+          <view
+            class="preview_container_heading {{shareCardTheme==1?'preview_container_heading_light':shareCardTheme==2?'preview_container_heading_dark':''}}">
+            {{heading?heading:'标题'}}</view>
+          <view
+            class="preview_container_time {{shareCardTheme==1?'preview_container_time_light':shareCardTheme==2?'preview_container_time_dark':''}}">
+            {{time}}</view>
+          <wemark wx:if="{{useMarkdown}}" md="{{md}}" link highlight type="wemark"></wemark>
+          <editor wx:if="{{!useMarkdown}}" id="previewEditor" class="ql-container" read-only="{{true}}"
+            bindready="onPreviewEditorReady">
+          </editor>
+        </view>
+        <view class="preview_container_icon">
+          <image src="/source/img/icon_opacity.png" mode="widthFix"></image>
+          <view>Femark</view>
+        </view>
       </view>
       <view class="subtitle" style="color:{{primaryColor}};">
-        <text>配置项</text>
+        <text>预览</text>
+      </view>
+      <md-picker class="picker" bind:pick="pick" primaryColor="{{primaryColor}}" rgbaPrimaryColor="{{rgbaPrimaryColor}}"
+        dataset="{{['跟随系统','亮色','暗色']}}" selected="{{shareCardTheme}}" data-id="shareCardTheme">
+        <text slot="title">主题</text>
+        <text slot="subtitle">分享卡片颜色主题</text>
+      </md-picker>
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick"
+        data-id="cardColor">
+        <view class="component_text">
+          <view class="component_title">
+            卡片颜色
+          </view>
+          <view class="component_subtitle">
+            分享卡片底色
+          </view>
+        </view>
+        <view class="component_color" style="background:{{shareCardColor}};"></view>
+      </view>
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover" bindtap="toPick"
+        data-id="cardBackgroundColor">
+        <view class="component_text">
+          <view class="component_title">
+            背景颜色
+          </view>
+          <view class="component_subtitle">
+            分享页面底色，不提供预览
+          </view>
+        </view>
+        <view class="component_color" style="background:{{shareCardBackgroundColor}};"></view>
+      </view>
+      <view class="component" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover"
+        bindtap="toSharePage">
+        <view class="component_text">
+          <view class="component_title">
+            分享该卡片
+          </view>
+          <view class="component_subtitle">
+            将该卡片分享至群聊
+          </view>
+        </view>
+      </view>
+      <view class="subtitle" style="color:{{primaryColor}};">
+        <text>Markdown</text>
       </view>
       <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
         rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{markdownPreview}}" data-id="markdownPreview">
@@ -125,7 +243,7 @@
     </view>
   </scroll-view>
   <!-- 平板上下布局 -->
-  <scroll-view wx:if="{{isPad}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
+  <!-- <scroll-view wx:if="{{isPad}}" class="preview_bg" scroll-y="true" style="height:{{windowHeight-130}}px;"
     enhanced="true" bindscrolltoupper="toUpper" upper-threshold="20" bindscroll="scroll">
     <view class="main">
       <form action="" method="post" bindsubmit="submit" bindreset="reset">
@@ -176,7 +294,7 @@
         <text slot="subtitle">自动刷新等待的无操作时间（秒）\n过低的秒数可能影响性能</text>
       </md-picker>
     </view>
-  </scroll-view>
+  </scroll-view> -->
 
 </scroll-view>
 
@@ -186,27 +304,278 @@
   </view>
 </view>
 <view class="bottom_bar" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};">
-  <view class="icon material-icons" hover-class="hover" bindtap="addImg">
+  <!-- <view class="icon material-icons" hover-class="hover" bindtap="addImg">
     <text>add_photo_alternate</text>
+  </view> -->
+  <view class="icon material-icons" hover-class="hover" bindtap="attach">
+    <text>attachment</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" hover-class="hover" bindtap="voiAction">
     <text>keyboard_voice</text>
   </view>
-  <view class="icon material-icons" hover-class="hover">
+  <view class="icon material-icons" hover-class="hover" bindtap="startOcr">
+    <text>camera_enhance</text>
+  </view>
+  <view class="icon material-icons" hover-class="hover" bindtap="shareAction">
     <text>share</text>
   </view>
-  <view class="icon material-icons" hover-class="hover" bindtap="delete">
+  <view wx:if="{{id || id == 0}}" class="icon material-icons" hover-class="hover" bindtap="delete">
     <text>delete</text>
   </view>
 </view>
 
-<view class="float" style="{{floatStyle}}" bindtap="floatTap">
-  <view class="float_color" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}" hover-class="hover">
-    <view class="material-icons" style="color:{{primaryColor}};"><text>{{edit?edited?'save':'done':'edit'}}</text>
+<view class="toolbar" wx:if="{{edit && !useMarkdown && keyboardHeight > 0 ? true : false}}"
+  style="bottom: {{isIOS ? keyboardHeight : 0}}px;{{toolbarActivated ? 'height:100px':''}};--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};">
+  <view class="toolbar_section">
+    <view class="format_size" wx:if="{{toolbarActivated == 'size'}}">
+      <view class="description">文字大小</view>
+      <slider min="1" max="6" value="{{formats.header ? formats.header : 4}}" backgroundColor="#666"
+        activeColor="{{primaryColor}}" block-size="12" block-color="{{primaryColor}}" show-value="true"
+        bindchange="formatSize"></slider>
+    </view>
+
+    <view class="format_color" wx:if="{{toolbarActivated == 'color'}}">
+      <view class="description">文字颜色</view>
+      <view class="colors">
+        <view class="color_bg" catchtouchend="formatColor" data-color="#000000"
+          style="{{!formats.color || formats.color == '#000000' ? 'border-color:#000000' : ''}}">
+          <view class="color" style="background:#000;"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatColor" data-color="#44546a"
+          style="{{formats.color == '#44546a' ? 'border-color:#44546a' : ''}}">
+          <view class="color" style="background:#44546a;"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatColor" data-color="#7f7f7f"
+          style="{{formats.color == '#7f7f7f' ? 'border-color:#7f7f7f' : ''}}">
+          <view class="color" style="background:#7f7f7f;"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatColor" data-color="#ff0000"
+          style="{{formats.color == '#ff0000' ? 'border-color:#ff0000' : ''}}">
+          <view class="color" style="background:#ff0000"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatColor" data-color="#ffc000"
+          style="{{formats.color == '#ffc000' ? 'border-color:#ffc000' : ''}}">
+          <view class="color" style="background:#ffc000"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatColor" data-color="#00b050"
+          style="{{formats.color == '#00b050' ? 'border-color:#00b050' : ''}}">
+          <view class="color" style="background:#00b050"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatColor" data-color="#0070c0"
+          style="{{formats.color == '#0070c0' ? 'border-color:#0070c0' : ''}}">
+          <view class="color" style="background:#0070c0"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatColor" data-color="#7030a0"
+          style="{{formats.color == '#7030a0' ? 'border-color:#7030a0' : ''}}">
+          <view class="color" style="background:#7030a0"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="format_color" wx:if="{{toolbarActivated == 'paint'}}">
+      <view class="description">背景颜色</view>
+      <view class="colors">
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#ffffff">
+          <view class="material-icons" style="font-size:18px">block</view>
+        </view>
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#fff3a7"
+          style="{{formats.backgroundColor == '#fff3a7' ? 'border-color:#fff3a7' : ''}}">
+          <view class="color" style="background:#fff3a7;"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#cdf2dc"
+          style="{{formats.backgroundColor == '#cdf2dc' ? 'border-color:#cdf2dc' : ''}}">
+          <view class="color" style="background:#cdf2dc;"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#d7ecfd"
+          style="{{formats.backgroundColor == '#d7ecfd' ? 'border-color:#d7ecfd' : ''}}">
+          <view class="color" style="background:#d7ecfd"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#dddef0"
+          style="{{formats.backgroundColor == '#dddef0' ? 'border-color:#dddef0' : ''}}">
+          <view class="color" style="background:#dddef0"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#fee0d6"
+          style="{{formats.backgroundColor == '#fee0d6' ? 'border-color:#fee0d6' : ''}}">
+          <view class="color" style="background:#fee0d6"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#ffdfc0"
+          style="{{formats.backgroundColor == '#ffdfc0' ? 'border-color:#ffdfc0' : ''}}">
+          <view class="color" style="background:#ffdfc0"></view>
+        </view>
+        <view class="color_bg" catchtouchend="formatPaint" data-color="#dadbda"
+          style="{{formats.backgroundColor == '#dadbda' ? 'border-color:#dadbda' : ''}}">
+          <view class="color" style="background:#dadbda"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="format_align" wx:if="{{toolbarActivated == 'align'}}">
+      <view class="format_align_section"
+        style="{{!formats.align || formats.align == 'left' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="left">
+        <text class="material-icons">format_align_left</text>
+        <text>靠左对齐</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.align == 'right' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="right">
+        <text class="material-icons">format_align_right</text>
+        <text>靠右对齐</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.align == 'center' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="center">
+        <text class="material-icons">format_align_center</text>
+        <text>居中对齐</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.align == 'justify' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="align" data-value="justify">
+        <text class="material-icons">format_align_justify</text>
+        <text>两端对齐</text>
+      </view>
+    </view>
+
+    <view class="format_list" wx:if="{{toolbarActivated == 'list'}}">
+      <view class="format_align_section"
+        style="{{formats.list == 'bullet' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="list" data-value="bullet">
+        <text class="material-icons">format_list_bulleted</text>
+        <text>符号列表</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.list == 'ordered' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="list" data-value="ordered">
+        <text class="material-icons">format_list_numbered</text>
+        <text>编号列表</text>
+      </view>
+      <view class="format_align_section"
+        style="{{formats.list == 'checked' || formats.list == 'unchecked' ? 'background:'+rgbaPrimaryColor+';color:'+primaryColor : ''}}"
+        catchtouchend="format" data-name="list" data-value="check">
+        <text class="material-icons">check_box</text>
+        <text>复选框列表</text>
+      </view>
+      <view class="format_align_section" hover-class="f_hover" catchtouchend="insertDivider">
+        <text class="material-icons">horizontal_rule</text>
+        <text>分割线</text>
+      </view>
+    </view>
+  </view>
+  <view class="toolbar_main">
+    <view class="icon material-icons" catchtouchend="insertImage" hover-class="hover">
+      <text>add_photo_alternate</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="size">
+      <text>format_size</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="color">
+      <text>colorize</text>
+    </view>
+    <view class="icon material-icons {{formats.backgroundColor ? 'ql-active' : ''}}" catchtouchend="popupToolbox"
+      hover-class="hover" data-name="paint">
+      <text>format_paint</text>
+    </view>
+    <view class="icon material-icons" catchtouchend="popupToolbox" hover-class="hover" data-name="align">
+      <text>{{formats.align?'format_align_'+formats.align:'format_align_left'}}</text>
+    </view>
+    <view class="icon material-icons {{formats.bold ? 'ql-active' : ''}}" catchtouchend="format" hover-class="hover"
+      data-name="bold">
+      <text>format_bold</text>
+    </view>
+    <view class="icon material-icons {{formats.italic ? 'ql-active' : ''}}" catchtouchend="format" hover-class="hover"
+      data-name="italic">
+      <text>format_italic</text>
+    </view>
+    <view class="icon material-icons {{formats.underline ? 'ql-active' : ''}}" catchtouchend="format"
+      hover-class="hover" data-name="underline">
+      <text>format_underlined</text>
+    </view>
+    <view class="icon material-icons {{formats.list ? 'ql-active' : ''}}" catchtouchend="popupToolbox"
+      hover-class="hover" data-name="list">
+      <text>{{formats.list?formats.list=='checked' ||
+        formats.list=='unchecked'?"check_box":formats.list=='ordered'?'format_list_numbered':'format_list_bulleted':'format_list_bulleted'}}</text>
     </view>
   </view>
 </view>
 
+<view class="float" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};bottom:{{edit?toolbarActivated?115:65:27}}px;">
+  <view class="float_tools_container"
+    style="{{onPreview?'width:0;':edit ? edited?'width:110px;':'width:0;' : 'width:0;'}}">
+    <view class="float_tools">
+      <view class="icon material-icons" hover-class="hover" catchtouchend="undo">
+        <text>undo</text>
+      </view>
+      <view class="icon material-icons" hover-class="hover" catchtouchend="redo">
+        <text>redo</text>
+      </view>
+    </view>
+  </view>
+  <view class="float_bg" bindtap="floatTap">
+    <view class="float_color" hover-class="hover">
+      <view class="material-icons" style="color:{{primaryColor}};">
+        <text>{{onPreview?'refresh':edit?edited?'save':'done':'edit'}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+
 <view class="snackbar" style="{{snackbarStyle}}">
   <text>{{snackbarContent}}</text>
 </view>
+
+<color-picker bindchangeColor="pickColor" initColor="{{shareCardColor}}" show="{{showShareCardColorPicker}}"
+  id="cardColor" />
+<color-picker bindchangeColor="pickColor" initColor="{{shareCardBackgroundColor}}"
+  show="{{showShareCardBackgroundColorPicker}}" id="cardBackgroundColor" />
+
+<page-container wx:if="{{popupRecordIf}}" show="{{popupRecord}}" position="bottom" round="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" duration="300"
+  overlayStyle="z-index:1000;"
+  customStyle="z-index:1000;max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};"
+  bind:afterleave="deleteContainer">
+  <view class="voice_content">
+    <view class="voice_input">
+      <textarea id="voice" style="{{voiceInput?'border-color:'+primaryColor:''}}!important;" value="{{recordValue}}"
+        auto-height="true" bindfocus="voiceFocus" bindblur="voiceBlur" bindinput="voiceInput"></textarea>
+    </view>
+    <view class="voice_btn_container">
+      <view class="voice_btn_border" style="{{voiceBtnBorder}}">
+        <view
+          class="voice_btn material-icons {{recordStatus == 1 ? 'voice_btn_activated' : recordStatus == 2 ? 'voice_btn_error':'voice_btn_inactivated'}}"
+          bindtap="recordSwitch" hover-class="hover">{{recordStatus==1 ? 'mic':
+          recordStatus==2?'priority_high':'mic_none'}}</view>
+      </view>
+    </view>
+    <view class="content_btn_l"
+      style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};"
+      hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ?
+        'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
+    <view
+      class="content_btn_r {{recordValue != '' && recordValue != '单击开始' && recordValue != '试着说点什么' && recordValue != '请提高音量' && recordValue != '识别失败' ? '':'content_btn_r_disabled'}}"
+      hover-class="c_hover" bindtap="recordConfirm">确认
+    </view>
+  </view>
+</page-container>
+
+<page-container wx:if="{{popupVoiceIf}}" show="{{popupVoice}}" position="bottom" round="true"
+  style="--rgbaprimaryColor--:{{rgbaPrimaryColor}};--primaryColor--:{{primaryColor}};" duration="300"
+  overlayStyle="z-index:1000;"
+  customStyle="z-index:1000;max-width: 500px;left:0;right:0;margin:auto;background:{{theme=='dark'?'#303638':''}};"
+  bind:afterleave="deleteContainer">
+  <view class="voice_content">
+    <view class="content_title">录制音频</view>
+    <view class="content_subtitle">{{voiceStatus == 0 ? '点击下方按钮开始' : hours+':'+minute+':'+second}}</view>
+    <view class="voice_btn_container">
+      <view class="voice_btn_border" style="{{recordBtnBorder}}">
+        <view
+          class="voice_btn material-icons {{voiceStatus == 1 ? 'record_btn_activated' : 'record_btn_inactivated'}}"
+          bindtap="voiceSwitch" hover-class="hover">{{voiceStatus==1 ? 'pause':
+          voiceStatus==2?'play_arrow':'mic_none'}}</view>
+      </view>
+    </view>
+    <view class="content_btn_l" style="color:{{voiceStatus == 2 ? primaryColor : theme == 'light' ? '#ccc' : '#666'}};" hover-class="{{voiceStatus == 2 ?'hover':''}}" bindtap="deleteRecord">删除</view>
+    <view class="content_btn_r {{voiceStatus == 2 ? '' : 'content_btn_r_disabled'}}" hover-class="c_hover" style="background:{{primaryColor}};" bindtap="stopRecord">保存
+    </view>
+  </view>
+</page-container>

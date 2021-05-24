@@ -27,6 +27,7 @@ Page({
         if (res.confirm) {
           wx.showLoading({
             title: '操作进行中',
+            mask: true
           })
           wx.cloud.database().collection('note').doc(app.globalData.id).update({
             data: {
@@ -143,15 +144,28 @@ Page({
     }
   },
 
-  scroll() {
-    if (this.data.theme == 'light') {
-      this.setData({
-        headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
-      })
-    } else if (this.data.theme == 'dark') {
-      this.setData({
-        headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
-      })
+  scroll(e) {
+    let num = e.detail.scrollTop
+    if (num < 20) {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "",
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "",
+        })
+      }
+    } else {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
+        })
+      }
     }
   },
 
@@ -208,7 +222,50 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    if (this.data.edited) {
+      wx.showModal({
+        title: "提示",
+        content: "是否保存更改",
+        confirmColor: `${this.data.primaryColor}`,
+      }).then(res => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '操作进行中',
+            mask: true
+          })
+          wx.cloud.database().collection('note').doc(app.globalData.id).update({
+            data: {
+              profile: {
+                primaryColor: this.data.primaryColor,
+                pureTheme: this.data.pureTheme,
+                useSidebar: this.data.useSidebar,
+                bing: this.data.bing,
+                hitokoto: this.data.hitokoto,
+              }
+            }
+          }).then(res => {
+            app.globalData.primaryColor = this.data.primaryColor;
+            app.globalData.pureTheme = this.data.pureTheme;
+            app.globalData.useSidebar = this.data.useSidebar;
+            app.globalData.bing = this.data.bing;
+            app.globalData.hitokoto = this.data.hitokoto;
+            wx.showToast({
+              title: '已保存',
+              duration: 1000,
+            })
+            const eventChannel = this.getOpenerEventChannel()
+            eventChannel.emit('toAccount', function (data) {
 
+            })
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 1000)
+          })
+        }
+      })
+    }
   },
 
   /**

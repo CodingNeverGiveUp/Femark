@@ -54,128 +54,268 @@ App({
   },
 
   //初始化
+  // initialize() {
+  //   event.emit('LoginCheck', '检查用户信息');
+  //   //获取openid及_id
+  //   wx.cloud.callFunction({
+  //       name: "getOpenid"
+  //     }).then(res => {
+  //       // console.log("step1")
+  //       let openid = res.result.openid;
+  //       this.globalData.openid = openid;
+  //       //获取用户配置
+  //       event.emit('LoginCheck', '获取用户配置');
+  //       wx.cloud.database().collection('note').where({
+  //           _openid: openid
+  //         }).get()
+  //         .then(res => {
+  //           if (res.data.length == 0) {
+  //             event.emit('LoginCheck', 'register');
+  //           } else {
+  //             // console.log("step2")
+  //             // console.log(res)
+  //             this.globalData.id = res.data[0]._id;
+  //             this.globalData.useSidebar = res.data[0].profile.useSidebar;
+  //             this.globalData.markdownByDefault = res.data[0].profile.markdownByDefault;
+  //             this.globalData.markdownPreview = res.data[0].profile.markdownPreview;
+  //             this.globalData.markdownPreviewDelay = res.data[0].profile.markdownPreviewDelay;
+  //             this.globalData.pureTheme = res.data[0].profile.pureTheme;
+  //             this.globalData.userInfo.nickName = res.data[0].profile.nickName;
+  //             this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
+  //             this.globalData.primaryColor = res.data[0].profile.primaryColor;
+  //             this.globalData.categoryData = res.data[0].profile.categoryData;
+  //             this.globalData.bing = res.data[0].profile.bing;
+  //             this.globalData.hitokoto = res.data[0].profile.hitokoto;
+  //             //提前拉取及预处理笔记待办数据
+  //             res.data[0].note.forEach((element, index) => {
+  //               element.color = this.getRandomColor()
+  //               element.id = index
+  //               if (element.gallery.length != 0) {
+  //                 wx.cloud.getTempFileURL({
+  //                   fileList: [element.gallery[0].fileID],
+  //                 }).then(res => {
+  //                   console.log(res)
+  //                   element.preview = res.fileList[0]
+  //                 })
+  //               }
+  //             })
+  //             res.data[0].task.forEach((element, index) => {
+  //               element.color = this.getRandomColor()
+  //               element.id = index
+  //               if (element.heading == null) {
+  //                 if (element.list) {
+  //                   let tempHeading = ""
+  //                   element.listData.forEach(element => {
+  //                     tempHeading += element.content + " "
+  //                   })
+  //                   element.heading = tempHeading
+  //                 } else {
+  //                   element.heading = element.content
+  //                 }
+  //               }
+  //               let monthNum = new Date(element.notificationTimestamp).getMonth() + 1
+  //               var monthStr
+  //               switch (monthNum) {
+  //                 case 1:
+  //                   monthStr = "Jan"
+  //                   break;
+  //                 case 2:
+  //                   monthStr = "Feb"
+  //                   break;
+  //                 case 3:
+  //                   monthStr = "Mar"
+  //                   break;
+  //                 case 4:
+  //                   monthStr = "Apr"
+  //                   break;
+  //                 case 5:
+  //                   monthStr = "May"
+  //                   break;
+  //                 case 6:
+  //                   monthStr = "Jun"
+  //                   break;
+  //                 case 7:
+  //                   monthStr = "Jul"
+  //                   break;
+  //                 case 8:
+  //                   monthStr = "Aug"
+  //                   break;
+  //                 case 9:
+  //                   monthStr = "Sep"
+  //                   break;
+  //                 case 10:
+  //                   monthStr = "Oct"
+  //                   break;
+  //                 case 11:
+  //                   monthStr = "Nov"
+  //                   break;
+  //                 case 12:
+  //                   monthStr = "Dec"
+  //                   break;
+  //                 default:
+  //                   monthStr = "NaN"
+  //                   break;
+  //               }
+  //               element.month = monthStr
+  //               element.date = new Date(element.notificationTimestamp).getDate()
+  //               element.time = `${monthStr} ${element.date}, ${time.formatNumber(new Date(element.notificationTimestamp).getHours())}:${time.formatNumber(new Date(element.notificationTimestamp).getMinutes())}`
+  //             })
+  //             this.globalData.note = res.data[0].note;
+  //             console.log(this.globalData.note)
+  //             this.globalData.task = res.data[0].task;
+  //             //修改
+  //             setTimeout(() => {
+  //               event.emit('LoginCheck', 'finished');
+  //             }, 500)
+  //           }
+  //         })
+  //         .catch(err => {
+  //           event.emit('LoginCheck', 'error');
+  //         })
+  //     })
+  //     .catch(err => {
+  //       // console.log("failed")
+  //       console.log(err)
+  //       event.emit('LoginCheck', 'error');
+  //     })
+  // },
+
   initialize() {
-    event.emit('LoginCheck', '检查用户信息');
-    //获取openid及_id
-    wx.cloud.callFunction({
-        name: "getOpenid"
-      }).then(res => {
-        // console.log("step1")
-        let openid = res.result.openid;
-        this.globalData.openid = openid;
-        //获取用户配置
+    var that = this
+    var db
+    return new Promise((resort, reject) => {
+      async function process() {
+        event.emit('LoginCheck', '检查用户信息');
+        //获取openid及_id
+        await wx.cloud.callFunction({
+          name: "getOpenid"
+        }).then(res => {
+          that.globalData.openid = res.result.openid;
+        }).catch(err=>{
+          reject()
+          event.emit('LoginCheck', 'error');
+        })
         event.emit('LoginCheck', '获取用户配置');
-        wx.cloud.database().collection('note').where({
-            _openid: openid
+        await wx.cloud.database().collection('note').where({
+            _openid: that.globalData.openid
           }).get()
           .then(res => {
+            // console.log(res)
             if (res.data.length == 0) {
               event.emit('LoginCheck', 'register');
             } else {
-              // console.log("step2")
-              // console.log(res)
-              this.globalData.id = res.data[0]._id;
-              this.globalData.useSidebar = res.data[0].profile.useSidebar;
-              this.globalData.markdownByDefault = res.data[0].profile.markdownByDefault;
-              this.globalData.markdownPreview = res.data[0].profile.markdownPreview;
-              this.globalData.markdownPreviewDelay = res.data[0].profile.markdownPreviewDelay;
-              // console.log(this.globalData.useSidebar)
-              this.globalData.pureTheme = res.data[0].profile.pureTheme;
-              this.globalData.userInfo.nickName = res.data[0].profile.nickName;
-              this.globalData.userInfo.avatarUrl = res.data[0].profile.avatarUrl;
-              this.globalData.primaryColor = res.data[0].profile.primaryColor;
-              this.globalData.categoryData = res.data[0].profile.categoryData;
-              this.globalData.bing = res.data[0].profile.bing;
-              this.globalData.hitokoto = res.data[0].profile.hitokoto;
-              //提前拉取及预处理笔记待办数据
-              res.data[0].note.forEach((element, index) => {
-                element.color = this.getRandomColor()
-                element.id = index
-                wx.cloud.getTempFileURL({
-                  fileList: element.gallery,
-                }).then(res => {
-                  element.galleryDetail = res.fileList
-                })
-              })
-              res.data[0].task.forEach((element, index) => {
-                element.color = this.getRandomColor()
-                element.id = index
-                if (element.heading == null) {
-                  if (element.list) {
-                    let tempHeading = ""
-                    element.listData.forEach(element => {
-                      tempHeading += element.content + " "
-                    })
-                    element.heading = tempHeading
-                  } else {
-                    element.heading = element.content
-                  }
-                }
-                let monthNum = new Date(element.notificationTimestamp).getMonth() + 1
-                var monthStr
-                switch (monthNum) {
-                  case 1:
-                    monthStr = "Jan"
-                    break;
-                  case 2:
-                    monthStr = "Feb"
-                    break;
-                  case 3:
-                    monthStr = "Mar"
-                    break;
-                  case 4:
-                    monthStr = "Apr"
-                    break;
-                  case 5:
-                    monthStr = "May"
-                    break;
-                  case 6:
-                    monthStr = "Jun"
-                    break;
-                  case 7:
-                    monthStr = "Jul"
-                    break;
-                  case 8:
-                    monthStr = "Aug"
-                    break;
-                  case 9:
-                    monthStr = "Sep"
-                    break;
-                  case 10:
-                    monthStr = "Oct"
-                    break;
-                  case 11:
-                    monthStr = "Nov"
-                    break;
-                  case 12:
-                    monthStr = "Dec"
-                    break;
-                  default:
-                    monthStr = "NaN"
-                    break;
-                }
-                element.month = monthStr
-                element.date = new Date(element.notificationTimestamp).getDate()
-                element.time = `${monthStr} ${element.date}, ${time.formatNumber(new Date(element.notificationTimestamp).getHours())}:${time.formatNumber(new Date(element.notificationTimestamp).getMinutes())}`
-              })
-              this.globalData.note = res.data[0].note;
-              this.globalData.task = res.data[0].task;
-              //修改
-              setTimeout(() => {
-                event.emit('LoginCheck', 'finished');
-              }, 500)
+              that.globalData.id = res.data[0]._id;
+              db = res
             }
-          })
-          .catch(err => {
+          }).catch(err=>{
+            console.log(err)
+            reject()
             event.emit('LoginCheck', 'error');
           })
-      })
-      .catch(err => {
-        // console.log("failed")
-        console.log(err)
-        event.emit('LoginCheck', 'error');
-      })
+        //拉取及预处理笔记待办数据
+        if(db == null){
+          console.log("new Account")
+          reject()
+          return
+        }
+        for (let i = 0; i < db.data[0].note.length; i++) {
+          db.data[0].note[i].color = that.getRandomColor()
+          db.data[0].note[i].id = i
+          if(db.data[0].note[i].gallery.length != 0){
+            await wx.cloud.getTempFileURL({
+              fileList: [db.data[0].note[i].gallery[0].fileID],
+            }).then(res=>{
+              db.data[0].note[i].preview = res.fileList[0]
+            }).catch(err=>{
+              reject()
+              event.emit('LoginCheck', 'error');
+            })
+          }
+        }
+        db.data[0].task.forEach((element, index) => {
+          element.color = that.getRandomColor()
+          element.id = index
+          if (element.heading == null) {
+            if (element.list) {
+              let tempHeading = ""
+              element.listData.forEach(element => {
+                tempHeading += element.content + " "
+              })
+              element.heading = tempHeading
+            } else {
+              element.heading = element.content
+            }
+          }
+          let monthNum = new Date(element.notificationTimestamp).getMonth() + 1
+          var monthStr
+          switch (monthNum) {
+            case 1:
+              monthStr = "Jan"
+              break;
+            case 2:
+              monthStr = "Feb"
+              break;
+            case 3:
+              monthStr = "Mar"
+              break;
+            case 4:
+              monthStr = "Apr"
+              break;
+            case 5:
+              monthStr = "May"
+              break;
+            case 6:
+              monthStr = "Jun"
+              break;
+            case 7:
+              monthStr = "Jul"
+              break;
+            case 8:
+              monthStr = "Aug"
+              break;
+            case 9:
+              monthStr = "Sep"
+              break;
+            case 10:
+              monthStr = "Oct"
+              break;
+            case 11:
+              monthStr = "Nov"
+              break;
+            case 12:
+              monthStr = "Dec"
+              break;
+            default:
+              monthStr = "NaN"
+              break;
+          }
+          element.month = monthStr
+          element.date = new Date(element.notificationTimestamp).getDate()
+          element.time = `${monthStr} ${element.date}, ${time.formatNumber(new Date(element.notificationTimestamp).getHours())}:${time.formatNumber(new Date(element.notificationTimestamp).getMinutes())}`
+        })
+        //拉取配置
+        that.globalData.useSidebar = db.data[0].profile.useSidebar;
+        that.globalData.markdownByDefault = db.data[0].profile.markdownByDefault;
+        that.globalData.markdownPreview = db.data[0].profile.markdownPreview;
+        that.globalData.markdownPreviewDelay = db.data[0].profile.markdownPreviewDelay;
+        that.globalData.recordLanguage = db.data[0].profile.recordLanguage;
+        that.globalData.saveRecordFileByDefault = db.data[0].profile.saveRecordFileByDefault;
+        that.globalData.pureTheme = db.data[0].profile.pureTheme;
+        that.globalData.userInfo.nickName = db.data[0].profile.nickName;
+        that.globalData.userInfo.avatarUrl = db.data[0].profile.avatarUrl;
+        that.globalData.primaryColor = db.data[0].profile.primaryColor;
+        that.globalData.categoryData = db.data[0].profile.categoryData;
+        that.globalData.bing = db.data[0].profile.bing;
+        that.globalData.hitokoto = db.data[0].profile.hitokoto;
+        that.globalData.note = db.data[0].note;
+        that.globalData.task = db.data[0].task;
+        event.emit('LoginCheck', 'finished');
+        resort()
+      }
+      process()
+    })
   },
+
 
   refresh() {
     var that = this
@@ -186,33 +326,20 @@ App({
           .then(res => {
             db = res
           })
-        console.log(db)
         //拉取及预处理笔记待办数据
         for (let i = 0; i < db.data.note.length; i++) {
           db.data.note[i].color = that.getRandomColor()
           db.data.note[i].id = i
-          await wx.cloud.getTempFileURL({
-            fileList: db.data.note[i].gallery,
-          }).then(res => {
-            console.log("get url * 1")
-            db.data.note[i].galleryDetail = res.fileList
-          }).catch(err => {
-            reject()
-          })
+          if(db.data.note[i].gallery.length != 0){
+            await wx.cloud.getTempFileURL({
+              fileList: [db.data.note[i].gallery[0].fileID],
+            }).then(res=>{
+              db.data.note[i].preview = res.fileList[0]
+            }).catch(err=>{
+              reject()
+            })
+          }
         }
-        // db.data.note.forEach((element, index) => {
-        //   element.color = that.getRandomColor()
-        //   element.id = index
-        //   wx.cloud.getTempFileURL({
-        //     fileList: element.gallery,
-        //   }).then(res => {
-        //     console.log("get url * 1")
-        //     element.galleryDetail = res.fileList
-        //   }).catch(err=>{
-        //     reject()
-        //   })
-        // })
-        console.log("other")
         db.data.task.forEach((element, index) => {
           element.color = that.getRandomColor()
           element.id = index
@@ -279,6 +406,8 @@ App({
         that.globalData.markdownByDefault = db.data.profile.markdownByDefault;
         that.globalData.markdownPreview = db.data.profile.markdownPreview;
         that.globalData.markdownPreviewDelay = db.data.profile.markdownPreviewDelay;
+        that.globalData.saveRecordFileByDefault = db.data.profile.saveRecordFileByDefault;
+        that.globalData.recordLanguage = db.data.profile.recordLanguage;
         that.globalData.pureTheme = db.data.profile.pureTheme;
         that.globalData.userInfo.nickName = db.data.profile.nickName;
         that.globalData.userInfo.avatarUrl = db.data.profile.avatarUrl;
@@ -331,9 +460,9 @@ App({
   // 获取随机颜色
   getRandomColor() {
     if (this.globalData.pureTheme) {
-      if(this.globalData.systemInfo.theme == 'light'){
+      if (this.globalData.systemInfo.theme == 'light') {
         return "#ffffff"
-      }else{
+      } else {
         return "#303638"
       }
     } else {
@@ -419,11 +548,12 @@ App({
     systemInfo: null,
     isPad: false,
     useSidebar: false,
-    markdownByDefault: true,
+    markdownByDefault: false,
     hitokoto: false,
     bing: true,
     pureTheme: false,
     categoryData: [],
-    lastColor: "#ae6060"
+    lastColor: "#ae6060",
+    saveRecordFileByDefault: true,
   }
 })

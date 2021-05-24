@@ -59,7 +59,7 @@
           <text slot="title">提醒</text>
           <text slot="subtitle">于目标时间发送通知\n需要获取通知权限\n更改目标时间后需重新授权</text>
         </md-switch>
-        <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
+        <!-- <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
           rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{autoDelete}}" data-id="autoDelete" disabled="{{!edit}}">
           <text slot="title">自清理</text>
           <text slot="subtitle">过期一段时间后自动删除</text>
@@ -69,7 +69,7 @@
           data-id="autoDeleteDelay">
           <text slot="title">自清理执行时间</text>
           <text slot="subtitle">清理延后时间（天）</text>
-        </md-picker>
+        </md-picker> -->
         <!-- <view class="blank"></view> -->
       <!-- </form> -->
     </view>

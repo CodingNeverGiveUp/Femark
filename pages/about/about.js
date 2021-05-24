@@ -26,6 +26,7 @@ Page({
         if (res.confirm) {
           wx.showLoading({
             title: '操作进行中',
+            mask: true
           })
           wx.cloud.database().collection('note').doc(app.globalData.id).update({
             data: {
@@ -100,15 +101,29 @@ Page({
     }
   },
 
-  scroll() {
-    if (this.data.theme == 'light') {
-      this.setData({
-        headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
-      })
-    } else if (this.data.theme == 'dark') {
-      this.setData({
-        headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
-      })
+  scroll(e) {
+    let num = e.detail.scrollTop
+    // console.log(num)
+    if (num < 200) {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "",
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "",
+        })
+      }
+    } else {
+      if (this.data.theme == 'light') {
+        this.setData({
+          headbarStyle: "background:#fff;box-shadow: 0 0rpx 10rpx #bbb;",
+        })
+      } else if (this.data.theme == 'dark') {
+        this.setData({
+          headbarStyle: "background:#303638;box-shadow: 0 0rpx 10rpx #222;",
+        })
+      }
     }
   },
 

@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
     return `${year}年${month}月${day}日 ${[hour, minute, second].map(formatNumber).join(':')}`
   }
   var messages = [];
-  var dels = [];
+  // var dels = [];
   //获取当前时间戳和时间
   var currenttime = (new Date()).valueOf();
   var currentdate = new Date(currenttime);
@@ -56,14 +56,14 @@ exports.main = async (event, context) => {
               }
               messages.push(message)
             }
-            if (innerElement.autoDelete == true && currenttime > innerElement.autoDeleteTimestamp) {
-              let del = {
-                _openid: element._openid,
-                _id: element._id,
-                timestamp: element.timestamp,
-              }
-              dels.push(del)
-            }
+            // if (innerElement.autoDelete == true && currenttime > innerElement.autoDeleteTimestamp) {
+            //   let del = {
+            //     _openid: element._openid,
+            //     _id: element._id,
+            //     timestamp: element.timestamp,
+            //   }
+            //   dels.push(del)
+            // }
           })
         })
       })
@@ -71,19 +71,19 @@ exports.main = async (event, context) => {
     //循环删除列表
 
 
-    const delPromises = dels.map(del => {
-      try {
-        return db.collection('note').doc(del._id).update({
-          data: {
-            task: _.pull({
-              timestamp: del.timestamp
-            })
-          }
-        })
-      } catch (e) {
-        return e;
-      }
-    });
+    // const delPromises = dels.map(del => {
+    //   try {
+    //     return db.collection('note').doc(del._id).update({
+    //       data: {
+    //         task: _.pull({
+    //           timestamp: del.timestamp
+    //         })
+    //       }
+    //     })
+    //   } catch (e) {
+    //     return e;
+    //   }
+    // });
 
     // 循环消息列表
     const sendPromises = messages.map(async message => {
@@ -128,8 +128,8 @@ exports.main = async (event, context) => {
       }
     });
 
-    // return Promise.all(sendPromises);
-    return Promise.all(delPromises);
+    return Promise.all(sendPromises);
+    // return Promise.all(delPromises);
   } catch (err) {
     console.log(err);
     console.log(err.time);
