@@ -55,7 +55,7 @@ Component({
               })
               var detail = {
                 disabled: this.data.disabled,
-                value: this.data.result,
+                value: res.content,
               };
               var option = {};
               this.triggerEvent('input', detail, option);

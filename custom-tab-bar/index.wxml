@@ -169,7 +169,7 @@
     </view>
   </view>
   <view class="content" wx:if="{{useFingerprint}}">
-    <view class="material-icons fin" style="color:{{primaryColor}};">fingerprint</view>
+    <view class="material-icons" style="color:{{primaryColor}};margin: 50px;font-size: 3rem;">fingerprint</view>
     <view class="subtitle">{{fingerprintContent}}</view>
     <view class="content_btn_l" style="color:{{primaryColor}};" hover-class="hover" bindtap="passwordSwitch">使用密码</view>
   </view>

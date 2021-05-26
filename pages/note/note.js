@@ -1822,17 +1822,19 @@ Page({
   },
 
   input(e) {
+    // console.log(e.currentTarget.dataset.id)
     if (e.detail.disabled) {
       this.showSnackbar("请先启用编辑")
-      console.log("Input编辑")
+      // console.log("Input编辑")
+      // this.setData({
+      //   edited: true,
+      // })
+    }
+    if (e.currentTarget.dataset.id == 'password') {
       this.setData({
+        password: e.detail.value,
         edited: true,
       })
-      if (e.currentTarget.dataset.id == "password") {
-        this.setData({
-          password: e.detail.value
-        })
-      }
     }
   },
 
@@ -2460,6 +2462,7 @@ Page({
 
     innerAudioContext.onTimeUpdate(res => {
       wx.hideLoading()
+
       function Zero(num) {
         if (num >= 0 && num < 10) {
           return `0${num}`
