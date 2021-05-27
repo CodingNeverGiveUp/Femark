@@ -7,11 +7,12 @@ const time = require("../../utils/util.js")
 const _ = wx.cloud.database().command
 // var plugin = requirePlugin("WechatSI")
 // const manager = plugin.getRecordRecognitionManager()
-const recordManager = wx.getRecorderManager();
+// const recordManager = wx.getRecorderManager();
 let plugin = requirePlugin("QCloudAIVoice");
-plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', true); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
+plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', false); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
 let innerAudioContext = wx.createInnerAudioContext()
-let speechRecognizerManager = plugin.speechRecognizerManager();
+// let speechRecognizerManager = plugin.speechRecognizerManager();
+let httpSpeechRecognizerManager = plugin.getRecordRecognitionManager();
 Page({
   /**
    * 页面的初始数据
@@ -522,29 +523,42 @@ Page({
         var lang = '16k_zh'
         break;
     }
-    let params = {
-      signCallback: null, // 鉴权函数
-      // 用户参数
-      secretkey: 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU',
-      secretid: 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ',
-      appid: '1305453934',
-      // 录音参数
-      duration: 10000,
-      frameSize: 0.32, //单位:k
 
-      // 实时识别接口参数
+    httpSpeechRecognizerManager.start({
+      duration: 30000,
       engine_model_type: lang,
       // 以下为非必填参数，可跟据业务自行修改
-      // hotword_id : '08003a00000000000000000000000000',
-      // needvad: 0,
+      hotword_id: '08003a00000000000000000000000000',
       filter_dirty: 2,
       filter_modal: 2,
       filter_punc: 0,
       convert_num_mode: 1,
-      // word_info: 2,
-      // vad_silence_time: 200
-    };
-    speechRecognizerManager.start(params);
+      // needvad = 1
+    })
+
+    // let params = {
+    //   signCallback: null, // 鉴权函数
+    //   // 用户参数
+    //   secretkey: 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU',
+    //   secretid: 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ',
+    //   appid: '1305453934',
+    //   // 录音参数
+    //   duration: 10000,
+    //   frameSize: 0.32, //单位:k
+
+    //   // 实时识别接口参数
+    //   engine_model_type: lang,
+    //   // 以下为非必填参数，可跟据业务自行修改
+    //   // hotword_id : '08003a00000000000000000000000000',
+    //   // needvad: 0,
+    //   filter_dirty: 2,
+    //   filter_modal: 2,
+    //   filter_punc: 0,
+    //   convert_num_mode: 1,
+    //   // word_info: 2,
+    //   // vad_silence_time: 200
+    // };
+    // speechRecognizerManager.start(params);
     this.setData({
       recordStatus: 3,
       recordValue: '启动中',
@@ -553,7 +567,18 @@ Page({
 
   stopSpeechRecognize() {
     // this.speechRecognizerManager = plugin.speechRecognizerManager();
-    speechRecognizerManager.stop();
+    // speechRecognizerManager.stop();
+    httpSpeechRecognizerManager.stop()
+    clearInterval(this.timer)
+    this.setData({
+      voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
+      recordStatus: 3,
+    })
+    // if(this.data.recordValue == '请提高音量'){
+    //   this.setData({
+    //     recordValue: '停止中'
+    //   })
+    // }
   },
 
   recordConfirm() {
@@ -2314,9 +2339,9 @@ Page({
     // }
 
 
-    //初始化语音识别
-    // 开始识别
-    speechRecognizerManager.OnRecognitionStart = (res) => {
+    //HTTP语音识别
+    httpSpeechRecognizerManager.onStart((res) => {
+      console.log('recorder start', res.msg);
       this.setData({
         recordValue: "试着说点什么",
         recordStatus: 1,
@@ -2331,50 +2356,20 @@ Page({
           })
         }, 200);
       }, 800)
-      recordManager.start()
-    }
-    // 一句话开始
-    speechRecognizerManager.OnSentenceBegin = (res) => {
-      console.log('一句话开始', res)
-    }
-    // 识别变化时
-    speechRecognizerManager.OnRecognitionResultChange = (res) => {
-      console.log('识别变化时', res)
+    })
+    httpSpeechRecognizerManager.onStop((res) => {
+      console.log('recorder stop', res.tempFilePath);
       this.setData({
-        recordValue: res.voice_text_str == '' ? '请提高音量' : res.voice_text_str
+        recordStatus: 0,
       })
-    }
-    // 一句话结束
-    speechRecognizerManager.OnSentenceEnd = (res) => {
-      console.log('一句话结束', res)
-    }
-    // 识别结束
-    speechRecognizerManager.OnRecognitionComplete = (res) => {
-      console.log('识别结束', res);
-      clearInterval(this.timer)
-      if (this.data.recordValue == '请提高音量') {
+      if(this.data.recordValue == '请提高音量'){
         this.setData({
           recordValue: '单击开始'
         })
       }
-      this.setData({
-        voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
-        recordStatus: 0,
-      })
-      if (this.data.uploadVideo) {
-        this.setData({
-          uploadVoice: true,
-        })
-      } else {
-        this.setData({
-          uploadVoice: false,
-        })
-      }
-      recordManager.stop()
-    }
-    // 识别错误
-    speechRecognizerManager.OnError = (res) => {
-      console.log(res);
+    })
+    httpSpeechRecognizerManager.onError((res) => {
+      console.log('recorder error', res.errMsg);
       clearInterval(this.timer)
       if (this.data.recordStatus != 0) {
         this.setData({
@@ -2383,16 +2378,97 @@ Page({
           recordValue: '识别失败'
         })
       }
-    }
-    // 录音超过固定时长（最长10分钟）时回调
-    speechRecognizerManager.OnRecorderStop = () => {
-      console.log('超过录音时长');
-      this.setData({
-        recordStatus: 0,
-        recordValue: '请重新录音'
-      })
-    }
-    //取得录音文件
+    })
+    httpSpeechRecognizerManager.onRecognize((res) => {
+      if (res.result || res.resList) {
+        console.log("current result:", res.result);
+        this.setData({
+          recordValue: res.result == '' ? '请提高音量' : res.result
+        })
+      } else if (res.errMsg) {
+        console.log("recognize error", res.errMsg);
+      }
+    })
+
+
+    // //初始化语音识别
+    // // 开始识别
+    // speechRecognizerManager.OnRecognitionStart = (res) => {
+    //   this.setData({
+    //     recordValue: "试着说点什么",
+    //     recordStatus: 1,
+    //   })
+    //   this.timer = setInterval(() => {
+    //     this.setData({
+    //       voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
+    //     })
+    //     setTimeout(() => {
+    //       this.setData({
+    //         voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
+    //       })
+    //     }, 200);
+    //   }, 800)
+    //   recordManager.start()
+    // }
+    // // 一句话开始
+    // speechRecognizerManager.OnSentenceBegin = (res) => {
+    //   console.log('一句话开始', res)
+    // }
+    // // 识别变化时
+    // speechRecognizerManager.OnRecognitionResultChange = (res) => {
+    //   console.log('识别变化时', res)
+    //   this.setData({
+    //     recordValue: res.voice_text_str == '' ? '请提高音量' : res.voice_text_str
+    //   })
+    // }
+    // // 一句话结束
+    // speechRecognizerManager.OnSentenceEnd = (res) => {
+    //   console.log('一句话结束', res)
+    // }
+    // // 识别结束
+    // speechRecognizerManager.OnRecognitionComplete = (res) => {
+    //   console.log('识别结束', res);
+    //   clearInterval(this.timer)
+    //   if (this.data.recordValue == '请提高音量') {
+    //     this.setData({
+    //       recordValue: '单击开始'
+    //     })
+    //   }
+    //   this.setData({
+    //     voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
+    //     recordStatus: 0,
+    //   })
+    //   if (this.data.uploadVideo) {
+    //     this.setData({
+    //       uploadVoice: true,
+    //     })
+    //   } else {
+    //     this.setData({
+    //       uploadVoice: false,
+    //     })
+    //   }
+    //   recordManager.stop()
+    // }
+    // // 识别错误
+    // speechRecognizerManager.OnError = (res) => {
+    //   console.log(res);
+    //   clearInterval(this.timer)
+    //   if (this.data.recordStatus != 0) {
+    //     this.setData({
+    //       voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
+    //       recordStatus: 2,
+    //       recordValue: '识别失败'
+    //     })
+    //   }
+    // }
+    // // 录音超过固定时长（最长10分钟）时回调
+    // speechRecognizerManager.OnRecorderStop = () => {
+    //   console.log('超过录音时长');
+    //   this.setData({
+    //     recordStatus: 0,
+    //     recordValue: '请重新录音'
+    //   })
+    // }
 
 
     //初始化录音
