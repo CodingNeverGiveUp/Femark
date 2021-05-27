@@ -898,9 +898,9 @@ Page({
                 title: "已保存更改",
               })
               const eventChannel = that.getOpenerEventChannel()
-              eventChannel.emit('toIndex', function (data) {
+              // eventChannel.emit('toIndex', function (data) {
 
-              })
+              // })
             } catch (e) {
               console.log(e)
               wx.showToast({
