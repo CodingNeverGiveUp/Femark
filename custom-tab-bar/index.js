@@ -3,10 +3,7 @@ const database = require("../utils/database.js")
 // var plugin = requirePlugin("WechatSI")
 // const manager = plugin.getRecordRecognitionManager()
 // const recordManager = wx.getRecorderManager();
-let plugin = requirePlugin("QCloudAIVoice");
-plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', false); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
-// let speechRecognizerManager = plugin.speechRecognizerManager();
-let httpSpeechRecognizerManager = plugin.getRecordRecognitionManager();
+
 
 Component({
   properties: {},
@@ -111,40 +108,8 @@ Component({
     startSpeechRecognize() {
       // this.speechRecognizerManager = plugin.speechRecognizerManager();
       console.log('lang', app.globalData.recordLanguage)
-      switch (app.globalData.recordLanguage) {
-        case 0:
-          var lang = '16k_zh'
-          break;
-        case 1:
-          var lang = '16k_en'
-          break;
-        case 2:
-          var lang = '16k_ca'
-          break;
-        case 3:
-          var lang = '16k_ko'
-          break;
-        case 4:
-          var lang = '16k_zh-TW'
-          break;
-        case 5:
-          var lang = '16k_ja'
-          break;
-        default:
-          var lang = '16k_zh'
-          break;
-      }
-      httpSpeechRecognizerManager.start({
-        duration: 30000,
-        engine_model_type: lang,
-        // 以下为非必填参数，可跟据业务自行修改
-        hotword_id: '08003a00000000000000000000000000',
-        filter_dirty: 2,
-        filter_modal: 2,
-        filter_punc: 0,
-        convert_num_mode: 1,
-        // needvad = 1
-      })
+      let pages = getCurrentPages()
+      pages[pages.length - 1].startAsr()
       // let params = {
       //   signCallback: null, // 鉴权函数
       //   // 用户参数
@@ -177,7 +142,8 @@ Component({
     stopSpeechRecognize() {
       // this.speechRecognizerManager = plugin.speechRecognizerManager();
       // speechRecognizerManager.stop();
-      httpSpeechRecognizerManager.stop()
+      let pages = getCurrentPages()
+      pages[pages.length - 1].stopAsr()
       clearInterval(this.timer)
       this.setData({
         voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
@@ -186,6 +152,7 @@ Component({
     },
 
     recordConfirm() {
+      this.stopSpeechRecognize()
       var that = this
       let content = this.data.recordValue
       if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败' && content != '请重新录音') {
@@ -232,7 +199,8 @@ Component({
                   title: '已保存更改',
                 })
                 that.setData({
-                  popupRecord: false
+                  popupRecord: false,
+                  recordValue: '单击开始',
                 })
                 setTimeout(() => {
                   that.deleteContainer()
@@ -855,58 +823,58 @@ Component({
     attached: function () {
       var that = this
       //HTTP语音识别
-      httpSpeechRecognizerManager.onStart((res) => {
-        console.log('recorder start', res.msg);
-        this.setData({
-          recordValue: "试着说点什么",
-          recordStatus: 1,
-        })
-        this.timer = setInterval(() => {
-          this.setData({
-            voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
-          })
-          setTimeout(() => {
-            this.setData({
-              voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
-            })
-          }, 200);
-        }, 800)
-      })
-      httpSpeechRecognizerManager.onStop((res) => {
-        console.log('recorder stop', res.tempFilePath);
-        this.setData({
-          tempVoicePath: res.tempFilePath
-        })
-        this.setData({
-          recordStatus: 0,
-        })
-        if (this.data.recordValue == '请提高音量') {
-          this.setData({
-            recordValue: '单击开始'
-          })
-        }
-      })
-      httpSpeechRecognizerManager.onError((res) => {
-        console.log('recorder error', res.errMsg);
-        clearInterval(this.timer)
-        if (this.data.recordStatus != 0) {
-          this.setData({
-            voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
-            recordStatus: 2,
-            recordValue: '识别失败'
-          })
-        }
-      })
-      httpSpeechRecognizerManager.onRecognize((res) => {
-        if (res.result || res.resList) {
-          console.log("current result:", res.result);
-          this.setData({
-            recordValue: res.result == '' ? '请提高音量' : res.result
-          })
-        } else if (res.errMsg) {
-          console.log("recognize error", res.errMsg);
-        }
-      })
+      // httpSpeechRecognizerManager.onStart((res) => {
+      //   console.log('recorder start', res.msg);
+      //   this.setData({
+      //     recordValue: "试着说点什么",
+      //     recordStatus: 1,
+      //   })
+      //   this.timer = setInterval(() => {
+      //     this.setData({
+      //       voiceBtnBorder: `border:10px solid ${this.data.rgbaPrimaryColor};`
+      //     })
+      //     setTimeout(() => {
+      //       this.setData({
+      //         voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`
+      //       })
+      //     }, 200);
+      //   }, 800)
+      // })
+      // httpSpeechRecognizerManager.onStop((res) => {
+      //   console.log('recorder stop', res.tempFilePath);
+      //   this.setData({
+      //     tempVoicePath: res.tempFilePath
+      //   })
+      //   this.setData({
+      //     recordStatus: 0,
+      //   })
+      //   if (this.data.recordValue == '请提高音量') {
+      //     this.setData({
+      //       recordValue: '单击开始'
+      //     })
+      //   }
+      // })
+      // httpSpeechRecognizerManager.onError((res) => {
+      //   console.log('recorder error', res.errMsg);
+      //   clearInterval(this.timer)
+      //   if (this.data.recordStatus != 0) {
+      //     this.setData({
+      //       voiceBtnBorder: `border:4px solid ${app.colorRgba('#ff5252',.2)};`,
+      //       recordStatus: 2,
+      //       recordValue: '识别失败'
+      //     })
+      //   }
+      // })
+      // httpSpeechRecognizerManager.onRecognize((res) => {
+      //   if (res.result || res.resList) {
+      //     console.log("current result:", res.result);
+      //     this.setData({
+      //       recordValue: res.result == '' ? '请提高音量' : res.result
+      //     })
+      //   } else if (res.errMsg) {
+      //     console.log("recognize error", res.errMsg);
+      //   }
+      // })
       //初始化语音识别
       // // 开始识别
       // speechRecognizerManager.OnRecognitionStart = (res => {

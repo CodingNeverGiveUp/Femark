@@ -582,6 +582,7 @@ Page({
   },
 
   recordConfirm() {
+    this.stopSpeechRecognize()
     var that = this
     let content = this.data.recordValue
     if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败') {
@@ -595,7 +596,8 @@ Page({
           })
           this.setData({
             ['contentDelta.ops']: array,
-            edited: true
+            edited: true,
+            recordValue: '单击开始',
           })
           that.editorCtx.setContents({
             delta: that.data.contentDelta,
