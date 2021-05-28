@@ -133,7 +133,7 @@
         </view>
       </view>
       <view class="content_time">最后一次修改于{{time}}</view>
-      <view style="height:400px;"></view>
+      <!-- <view style="height:400px;"></view> -->
       <!-- <view class="content" bindtap="contentTap">
         <textarea name="content" value="{{content}}" disabled="{{!edit}}" placeholder="内容"
           placeholder-class="placeholder" maxlength="-1" auto-height="true" cursor-spacing="300" id=""

@@ -2051,6 +2051,15 @@ Page({
             edited: false
           })
         }, 200);
+      } else {
+        console.log("加空格")
+        that.editorCtx.setContents({
+          delta: {
+            ops: [{
+              insert: "\n\n\n\n\n\n\n\n"
+            }]
+          }
+        })
       }
     }).exec()
   },
@@ -2308,13 +2317,19 @@ Page({
       const duration = res.height > 0 ? res.duration * 1000 : 0
       keyboardHeight = res.height
       setTimeout(() => {
-        wx.pageScrollTo({
-          scrollTop: 0,
-          success() {
-            that.updatePosition(keyboardHeight)
-            that.editorCtx.scrollIntoView()
-          }
+        this.setData({
+          contentTop: 0
+        }, () => {
+          that.updatePosition(keyboardHeight)
+          // that.editorCtx.scrollIntoView()
         })
+        // wx.pageScrollTo({
+        //   scrollTop: 0,
+        //   success() {
+        //     that.updatePosition(keyboardHeight)
+        //     that.editorCtx.scrollIntoView()
+        //   }
+        // })
       }, duration)
 
     })
@@ -2379,7 +2394,7 @@ Page({
       this.setData({
         recordStatus: 0,
       })
-      if(this.data.recordValue == '请提高音量'){
+      if (this.data.recordValue == '请提高音量') {
         this.setData({
           recordValue: '单击开始'
         })
