@@ -278,13 +278,33 @@ Page({
     if (!this.data.edit) {
       this.showSnackbar("请先启用编辑")
     } else {
-      wx.showActionSheet({
-        itemList: ['语音识别', '录音'],
+      wx.getSetting({
+        withSubscriptions: true,
       }).then(res => {
-        if (res.tapIndex == 0) {
-          this.popupRecord()
-        } else if (res.tapIndex == 1) {
-          this.popupVoice()
+        // console.log(res)
+        if (res.authSetting["scope.record"]) {
+          wx.showActionSheet({
+            itemList: ['语音识别', '录音'],
+          }).then(res => {
+            if (res.tapIndex == 0) {
+              this.popupRecord()
+            } else if (res.tapIndex == 1) {
+              this.popupVoice()
+            }
+          })
+        } else {
+          wx.showModal({
+            title: "警告",
+            content: "需授权录音权限",
+            confirmText: "前往授权",
+            confirmColor: this.data.primaryColor
+          }).then(res => {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '/pages/behaviorSetting/behaviorSetting',
+              })
+            }
+          })
         }
       })
     }
@@ -585,7 +605,7 @@ Page({
     this.stopSpeechRecognize()
     var that = this
     let content = this.data.recordValue
-    if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败') {
+    if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败' && content != '启动中') {
       wx.showModal({
         title: "是否附加识别内容？"
       }).then(res => {
@@ -2056,7 +2076,7 @@ Page({
         that.editorCtx.setContents({
           delta: {
             ops: [{
-              insert: "\n\n\n\n\n\n\n\n"
+              insert: "\n\n\n\n\n\n\n\n\n\n"
             }]
           }
         })

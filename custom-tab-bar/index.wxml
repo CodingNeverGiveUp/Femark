@@ -188,7 +188,7 @@
       </view>
     </view>
     <view class="content_btn_l" style="width:110px;background:{{uploadVideo?rgbaPrimaryColor:'rgba(0,0,0,0)'}};color:{{uploadVideo?primaryColor:''}};" hover-class="hover" bindtap="videoSwitch"><text class="material-icons" style="margin-right:5px;">{{uploadVideo ? 'cloud_upload' : 'cloud_off'}}</text>{{uploadVideo?'保存音频':'舍弃音频'}}</view>
-    <view class="content_btn_r {{recordValue != '' && recordValue != '单击开始' && recordValue != '试着说点什么' && recordValue != '请提高音量' && recordValue != '识别失败' && recordValue != '请重新录音' ? '':'content_btn_r_disabled'}}" hover-class="c_hover" bindtap="recordConfirm">确认
+    <view class="content_btn_r {{recordValue != '' && recordValue != '单击开始' && recordValue != '试着说点什么' && recordValue != '请提高音量' && recordValue != '识别失败' && recordValue != '请重新录音' && content != '启动中' ? '':'content_btn_r_disabled'}}" hover-class="c_hover" bindtap="recordConfirm">确认
     </view>
   </view>
 </page-container>

@@ -3,7 +3,7 @@
 .page {
   position: absolute;
   top: 0;
-  width: 750rpx;
+  width: 100vw;
   height: 100vh;
   background: #f1f1f1;
   display: flex;

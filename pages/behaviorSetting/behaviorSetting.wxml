@@ -42,7 +42,7 @@
         dataset="{{['中文-中国','English','粤语','한국어','中文-臺灣','日本語']}}" selected='{{recordLanguage}}'
         data-id="recordLanguage">
         <text slot="title">语言</text>
-        <text slot="subtitle">语音识别使用的语言</text>
+        <text slot="subtitle">语音识别使用的语言\n更改后需重启小程序</text>
       </md-picker>
     <md-switch class="switch" bind:switch="switch" primaryColor="{{primaryColor}}"
       rgbaPrimaryColor="{{rgbaPrimaryColor}}" selected="{{saveRecordFileByDefault}}" data-id="saveRecordFileByDefault">
@@ -50,7 +50,7 @@
       <text slot="subtitle">同时保存录音文件到笔记附件</text>
     </md-switch>
     <view class="subtitle sub">
-      <text>设置将在点击左上角返回后保存生效</text>
+      <text>设置将在点击左上角返回后保存生效（语言设置除外）</text>
     </view>
     <!-- <view class="subtitle" style="color:#ff5252;">
       <text>危险区</text>

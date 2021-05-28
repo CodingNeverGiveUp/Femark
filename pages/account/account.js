@@ -23,7 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
@@ -79,7 +79,7 @@ Page({
     }, 250)
   },
 
-  themeSetting(){
+  themeSetting() {
     var that = this
     wx.navigateTo({
       url: '/pages/themeSetting/themeSetting',
@@ -90,13 +90,12 @@ Page({
         },
       },
       success(res) {
-        res.eventChannel.emit('toThemeSetting', {
-        })
+        res.eventChannel.emit('toThemeSetting', {})
       }
     })
   },
 
-  behaviorSetting(){
+  behaviorSetting() {
     var that = this
     wx.navigateTo({
       url: '/pages/behaviorSetting/behaviorSetting',
@@ -107,13 +106,12 @@ Page({
         },
       },
       success(res) {
-        res.eventChannel.emit('toBehaviorSetting', {
-        })
+        res.eventChannel.emit('toBehaviorSetting', {})
       }
     })
   },
 
-  about(){
+  about() {
     wx.navigateTo({
       url: '/pages/about/about',
       events: {
@@ -123,8 +121,7 @@ Page({
         },
       },
       success(res) {
-        res.eventChannel.emit('toAbout', {
-        })
+        res.eventChannel.emit('toAbout', {})
       }
     })
   },
@@ -252,14 +249,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return{
+    return {
       title: "Femark: 记下身边的故事与风景",
       path: '/pages/logincheck/logincheck'
     }
   },
 
-  onShareTimeline(){
-    return{
+  onShareTimeline() {
+    return {
       title: "Femark: 记下身边的故事与风景",
     }
   }

@@ -155,7 +155,7 @@ Component({
       this.stopSpeechRecognize()
       var that = this
       let content = this.data.recordValue
-      if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败' && content != '请重新录音') {
+      if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败' && content != '请重新录音' && content != '启动中') {
         wx.showModal({
           title: "是否创建笔记？"
         }).then(res => {
@@ -308,6 +308,8 @@ Component({
         wx.showToast({
           title: '已保存',
         })
+        let pages = getCurrentPages()
+        pages[pages.length - 1].onPullDownRefresh()
       }).catch(err => {
         wx.showToast({
           title: '网络错误',
@@ -500,7 +502,27 @@ Component({
         floatDStyle: '',
         floatSelect: false,
       })
-      this.popupRecord()
+      wx.getSetting({
+        withSubscriptions: true,
+      }).then(res => {
+        // console.log(res)
+        if (res.authSetting["scope.record"]) {
+          this.popupRecord()
+        } else {
+          wx.showModal({
+            title: "警告",
+            content: "需授权录音权限",
+            confirmText: "前往授权",
+            confirmColor: this.data.primaryColor
+          }).then(res => {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '/pages/behaviorSetting/behaviorSetting',
+              })
+            }
+          })
+        }
+      })
     },
     menuTap() {
       if (this.data.slide) {

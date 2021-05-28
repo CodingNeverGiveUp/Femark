@@ -23,14 +23,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let timer = setTimeout(()=>{
-      this.setData({
-        content: "网络错误",
-        float: "bottom:50rpx;"
-      })
-    },5000)
     event.on('LoginCheck', this, function (data) {
-      clearTimeout(timer)
+      clearTimeout(this.timer)
       if (data == 'register') {
         wx.navigateTo({
           url: '/pages/guide/guide',
@@ -63,7 +57,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.timer = setTimeout(()=>{
+      this.setData({
+        content: "网络错误",
+        float: "bottom:50rpx;"
+      })
+    },5000)
   },
 
   /**
