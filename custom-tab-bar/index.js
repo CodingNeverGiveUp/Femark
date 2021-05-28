@@ -172,7 +172,7 @@ Component({
                 //   }, 2000);
                 // })
                 var voices = []
-                console.log("成功",that.data.uploadVideoDetail)
+                // console.log("成功",that.data.uploadVideoDetail)
                 if (that.data.uploadVideo && that.data.uploadVideoDetail) {
                   voices = [{
                     tempFilePath: that.data.uploadVideoDetail.tempFilePath,

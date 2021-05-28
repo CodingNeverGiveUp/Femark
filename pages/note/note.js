@@ -603,13 +603,13 @@ Page({
             delta: that.data.contentDelta,
           })
         }
-        if (this.data.uploadVoice) {
-          this
+        if (this.data.uploadVideo && this.data.uploadVideoDetail) {
+          // console.log(this.data.uploadVideoDetail)
           let array = this.data.tempVoices
           array.push({
-            tempFilePath: this.data.tempVoicePath,
+            tempFilePath: this.data.uploadVideoDetail.tempFilePath,
             name: 'Record_' + new Date().getTime(),
-            duration: res.duration
+            duration: this.data.uploadVideoDetail.duration
           })
           this.setData({
             tempVoices: array
@@ -2374,7 +2374,7 @@ Page({
     httpSpeechRecognizerManager.onStop((res) => {
       console.log('recorder stop', res.tempFilePath);
       this.setData({
-        tempVoicePath: res.tempFilePath
+        uploadVideoDetail: res
       })
       this.setData({
         recordStatus: 0,
