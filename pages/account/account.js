@@ -49,7 +49,7 @@ Page({
     //重新拉取配置
     this.setData({
       avatarUrl: app.globalData.userInfo.avatarUrl,
-      nickName: app.globalData.userInfo.nickName,
+      nickName: app.globalData.userInfo.nickName ? app.globalData.userInfo.nickName : "微信用户",
       pureTheme: app.globalData.pureTheme,
       primaryColor: app.globalData.primaryColor,
       bing: app.globalData.bing,
@@ -77,6 +77,16 @@ Page({
         sld3: '',
       })
     }, 250)
+  },
+
+  register() {
+    console.log("Register")
+    console.log(this.data.nickName)
+    if (this.data.nickName == "微信用户") {
+      wx.navigateTo({
+        url: '/pages/guide/guide',
+      })
+    }
   },
 
   themeSetting() {

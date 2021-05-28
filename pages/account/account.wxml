@@ -47,7 +47,7 @@
         </view>
       </scroll-view> -->
       <view class="user_info">
-        <view class="user_card">
+        <view class="user_card" catchtap="register">
           <image src="{{avatarUrl}}"></image>
           <view>
             <text class="user_name">{{nickName}}</text>
