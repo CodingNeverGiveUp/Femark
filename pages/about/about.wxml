@@ -4,7 +4,7 @@
   <view class="main" style="--rgbaprimaryColor--:{{rgbaPrimaryColor}}">
     <view class="version">
       <image src="{{theme=='dark'?'/source/img/icon_gray.png':'/source/img/icon_white.png'}}"></image>
-      <text>Femark 1.9.1_210528</text>
+      <text>Femark 1.9.2_210528</text>
     </view>
     <view class="subtitle" style="color:{{primaryColor}};">
       <text>帮助</text>

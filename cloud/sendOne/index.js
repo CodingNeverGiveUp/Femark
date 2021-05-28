@@ -17,13 +17,12 @@ exports.main = async (event, context) => {
 
     return `${year}年${month}月${day}日 ${[hour, minute, second].map(formatNumber).join(':')}`
   }
-  var messages = [];
-  // var dels = [];
+  var messages = []
   //获取当前时间戳和时间
   var currenttime = (new Date()).valueOf();
   var currentdate = new Date(currenttime);
   try {
-    // 从云开发数据库中查询等待发送的消息列表及到时删除的消息列表
+    // 从云开发数据库中查询等待发送的消息列表
     await db
       .collection('note').field({
         task: true,
@@ -35,55 +34,21 @@ exports.main = async (event, context) => {
         res.data.forEach((element, index) => {
           element.task.forEach((innerElement, innerIndex) => {
             if (innerElement.notification == true && innerElement.done == false && currenttime < innerElement.notificationTimestamp && currenttime + 120000 > innerElement.notificationTimestamp) {
-              if(innerElement.content == null || innerElement.content){
-                if(innerElement.listData.length != 0){
-                  let content = `${innerElement.listData[0].content} 等${innerElement.listData.length}项`
-                }else{
-                  let content = '空'
-                }
-              }else{
-                let content = innerElement.content
-              }
               let message = {
                 _openid: element._openid,
                 _id: element._id,
-                heading: innerElement.heading == null || innerElement.heading == '' ? '无' : innerElement.heading,
+                heading: innerElement.heading == null || innerElement.heading == '' ? '空' : innerElement.heading,
                 time: formatTime(new Date(innerElement.notificationTimestamp)),
                 urgency: "紧急且重要",
-                content: content,
+                content: innerElement.content == null || innerElement.content == '' ? '空' : innerElement.content,
                 reminderStatus: "待确认",
                 index: innerIndex,
               }
               messages.push(message)
             }
-            // if (innerElement.autoDelete == true && currenttime > innerElement.autoDeleteTimestamp) {
-            //   let del = {
-            //     _openid: element._openid,
-            //     _id: element._id,
-            //     timestamp: element.timestamp,
-            //   }
-            //   dels.push(del)
-            // }
           })
         })
       })
-
-    //循环删除列表
-
-
-    // const delPromises = dels.map(del => {
-    //   try {
-    //     return db.collection('note').doc(del._id).update({
-    //       data: {
-    //         task: _.pull({
-    //           timestamp: del.timestamp
-    //         })
-    //       }
-    //     })
-    //   } catch (e) {
-    //     return e;
-    //   }
-    // });
 
     // 循环消息列表
     const sendPromises = messages.map(async message => {
@@ -129,7 +94,6 @@ exports.main = async (event, context) => {
     });
 
     return Promise.all(sendPromises);
-    // return Promise.all(delPromises);
   } catch (err) {
     console.log(err);
     console.log(err.time);
