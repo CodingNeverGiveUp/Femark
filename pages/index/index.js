@@ -95,8 +95,9 @@ Page({
     httpSpeechRecognizerManager.onStop((res) => {
       clearInterval(this.timer)
       console.log('recorder stop', res.tempFilePath);
+      console.log(res)
       tabbar.setData({
-        tempVoicePath: res.tempFilePath
+        uploadVideoDetail: res
       })
       tabbar.setData({
         voiceBtnBorder: `border:4px solid ${this.data.rgbaPrimaryColor};`,
