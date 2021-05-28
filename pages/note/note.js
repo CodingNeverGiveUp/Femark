@@ -7,12 +7,12 @@ const time = require("../../utils/util.js")
 const _ = wx.cloud.database().command
 // var plugin = requirePlugin("WechatSI")
 // const manager = plugin.getRecordRecognitionManager()
-// const recordManager = wx.getRecorderManager();
 let plugin = requirePlugin("QCloudAIVoice");
 plugin.setQCloudSecret(1305453934, 'AKIDf8KFuIODm56qJWS7VLvEGaiaDahY9UaQ', 'cy95lBLHxNXS7WfYDcleHfnfHelbCYeU', false); //设置腾讯云账号信息，其中appid是数字，secret是字符串，openConsole是布尔值(true/false)，为控制台打印日志开关
+let httpSpeechRecognizerManager = plugin.getRecordRecognitionManager();
+let recordManager = wx.getRecorderManager();
 let innerAudioContext = wx.createInnerAudioContext()
 // let speechRecognizerManager = plugin.speechRecognizerManager();
-let httpSpeechRecognizerManager = plugin.getRecordRecognitionManager();
 Page({
   /**
    * 页面的初始数据
@@ -586,7 +586,7 @@ Page({
     let content = this.data.recordValue
     if (content != '' && content != '单击开始' && content != '试着说点什么' && content != '请提高音量' && content != '识别失败') {
       wx.showModal({
-        title: "是否创建笔记？"
+        title: "是否附加识别内容？"
       }).then(res => {
         if (res.confirm) {
           let array = this.data.contentDelta.ops
@@ -599,6 +599,18 @@ Page({
           })
           that.editorCtx.setContents({
             delta: that.data.contentDelta,
+          })
+        }
+        if (this.data.uploadVoice) {
+          this
+          let array = this.data.tempVoices
+          array.push({
+            tempFilePath: this.data.tempVoicePath,
+            name: 'Record_' + new Date().getTime(),
+            duration: res.duration
+          })
+          this.setData({
+            tempVoices: array
           })
         }
       })
@@ -2360,6 +2372,9 @@ Page({
     httpSpeechRecognizerManager.onStop((res) => {
       console.log('recorder stop', res.tempFilePath);
       this.setData({
+        tempVoicePath: res.tempFilePath
+      })
+      this.setData({
         recordStatus: 0,
       })
       if(this.data.recordValue == '请提高音量'){
@@ -2472,10 +2487,10 @@ Page({
 
 
     //初始化录音
-    recordManager.onStart(res => {
-      console.log("start record")
-    })
-    recordManager.onError()
+    // recordManager.onStart(res => {
+    //   console.log("start record")
+    // })
+    // recordManager.onError()
     recordManager.onStop(res => {
       console.log(res)
       if (this.data.uploadVoice) {
