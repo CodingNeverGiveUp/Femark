@@ -105,7 +105,7 @@
   paging-enabled="true" scroll-into-view="{{scrollTo}}" scroll-with-animation="true" bindscrolltoupper="cancelStatus"
   bindscrolltolower="setStatus">
   <view class="page">
-    <view class="text">
+    <view class="text" id="ss">
       <text class="title">欢迎使用 Femark\n</text>
       <text class="subtitle">记录身边的故事与风景\n左划以开始</text>
     </view>

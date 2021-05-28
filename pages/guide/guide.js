@@ -37,7 +37,7 @@ Page({
       this.setData({
         scrollTo: 'sss',
       })
-    }else if(this.data.page == 1 && this.data.buttonContent == "priority_high"){
+    } else if (this.data.page == 1 && this.data.buttonContent == "priority_high") {
       wx.showModal({
         title: "警告",
         content: "是否略过授权？将无法使用大部分功能",
@@ -45,39 +45,14 @@ Page({
         cancelText: "重新授权",
         cancelColor: this.data.primaryColor,
         confirmColor: "#ff5252",
-      }).then(res=>{
-        if(res.confirm){
+      }).then(res => {
+        if (res.confirm) {
           wx.switchTab({
             url: '/pages/index/index',
           })
-        }else{
-          wx.showLoading({
-            title: '准备中',
-            mask: true
-          })
-          wx.getUserProfile({
-            desc: '完善个人资料',
-            success: function (res) {
-              wx.hideLoading()
-              var userInfo = res.userInfo
-              that.setData({
-                buttonContent: "done",
-                ['profile.nickName']: userInfo.nickName,
-                ['profile.avatarUrl']: userInfo.avatarUrl,
-              })
-              app.globalData.userInfo = userInfo
-              console.log('userInfo==>', userInfo)
-              // wx.setStorageSync('storage_info', 1); //本地标记
-              //下面将userInfo存入服务器中的用户个人资料
-              //...
-            },
-            fail() {
-              wx.hideLoading()
-              that.setData({
-                buttonContent: "priority_high"
-              })
-              console.log("用户拒绝授权")
-            }
+        } else if (res.cancel) {
+          this.setData({
+            scrollTo: 'ss',
           })
         }
       })
@@ -148,7 +123,7 @@ Page({
       app.globalData.pureTheme = this.data.profile.pureTheme;
       app.globalData.useSidebar = this.data.profile.useSidebar;
       app.globalData.bing = true;
-      app.globalData.hitokoto = false; 
+      app.globalData.hitokoto = false;
 
     } else if (this.data.page == 3 && this.data.buttonContent == "chevron_right") {
       wx.showLoading({
@@ -161,15 +136,15 @@ Page({
         let openid = res.result.openid;
         app.globalData.openid = openid;
         wx.cloud.database().collection('note').where({
-          _openid: openid
-        }).get()
-        .then(res=>{
-          app.globalData.id = res.data[0]._id;
-          wx.hideLoading()
-          wx.switchTab({
-            url: '/pages/index/index',
+            _openid: openid
+          }).get()
+          .then(res => {
+            app.globalData.id = res.data[0]._id;
+            wx.hideLoading()
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
           })
-        })
       })
     }
   },
