@@ -36,9 +36,10 @@ Page({
       time,
       useMarkdown,
       md,
-      nickName
+      nickName,
+      fromTimeLine,
     } = element
-    console.log(newShare,typeof(newShare))
+    console.log(newShare, typeof (newShare))
     this.setData({
       newShare,
       heading,
@@ -60,6 +61,14 @@ Page({
     //     newShare: true,
     //   })
     // }
+    setTimeout(() => {
+      if (fromTimeLine) {
+        wx.navigateTo({
+          url: '/pages/logincheck/logincheck',
+        })
+        app.initialize();
+      }
+    }, 1000);
   },
 
   onPreviewEditorReady() {
@@ -122,9 +131,39 @@ Page({
     let textd = JSON.stringify(elementd)
     let textdr = textd.replace(/=/g, '@@')
     let textdrr = textdr.replace(/&/g, '~~')
+    let telementm = {
+      newShare: false,
+      heading: this.data.heading,
+      shareCardTheme: this.data.shareCardTheme,
+      shareCardColor: this.data.shareCardColor,
+      shareCardBackgroundColor: this.data.shareCardBackgroundColor,
+      useMarkdown: this.data.useMarkdown,
+      time: this.data.time,
+      nickName: this.data.nickName,
+      md: this.data.md,
+      fromTimeLine: true,
+    }
+    let telementd = {
+      newShare: false,
+      heading: this.data.heading,
+      shareCardTheme: this.data.shareCardTheme,
+      shareCardColor: this.data.shareCardColor,
+      shareCardBackgroundColor: this.data.shareCardBackgroundColor,
+      useMarkdown: this.data.useMarkdown,
+      time: this.data.time,
+      nickName: this.data.nickName,
+      delta: this.data.delta,
+      fromTimeLine: true,
+    }
+    let ttextm = JSON.stringify(telementm)
+    let ttextmr = ttextm.replace(/=/g, '@@')
+    let ttextmrr = ttextmr.replace(/&/g, '~~')
+    let ttextd = JSON.stringify(telementd)
+    let ttextdr = ttextd.replace(/=/g, '@@')
+    let ttextdrr = ttextdr.replace(/&/g, '~~')
     this.setData({
-      textdrr,
-      textmrr,
+      ttextdrr,
+      ttextmrr,
     })
   },
 
@@ -170,7 +209,7 @@ Page({
     return {
       title: this.data.heading ? this.data.heading : `由 ${this.data.nickName} 分享的内容`,
       // title: this.data.heading == 'null' ? `由${this.data.nickName}分享的内容` : this.data.heading,
-      query: `json=${this.data.useMarkdown ? this.data.textmrr : this.data.textdrr}`
+      query: `json=${this.data.useMarkdown ? this.data.ttextmrr : this.data.ttextdrr}`
     }
   },
 })

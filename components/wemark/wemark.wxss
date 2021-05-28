@@ -144,3 +144,30 @@
 	color: blue;
 	word-wrap:break-word;
 }
+
+@media (prefers-color-scheme: dark) {
+	.wemark_block_h2{
+		border-bottom:1px solid #222426;
+	}
+
+	.wemark_block_blockquote_p{
+		background:#222426;
+		border-left:5px solid #323436;
+	}
+
+	.wemark_block_code{
+		border:1px solid #222426;
+	}
+
+	.wemark_inline_table_td{
+		border: 1px solid #323436;
+	}
+
+	.wemark_inline_table_th{
+		background:#222426;
+	}
+
+	.wemark_inline_code{
+		background:#222426;
+	}
+}

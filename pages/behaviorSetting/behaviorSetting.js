@@ -246,8 +246,6 @@ Page({
             app.globalData.markdownPreview = this.data.markdownPreview;
             app.globalData.markdownPreviewDelay = Number(this.data.markdownPreviewDelay);
             app.globalData.saveRecordFileByDefault = this.data.saveRecordFileByDefault;
-            app.globalData.recordLanguage = this.data.recordLanguage;
-
             wx.showToast({
               title: '已保存',
               duration: 1000,
